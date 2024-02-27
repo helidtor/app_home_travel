@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "629045118682",
+    "project_id": "home-travel-0262",
+    "storage_bucket": "home-travel-0262.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629045118682:android:4e27cb2c5201a35bfe87e3",
+        "android_client_info": {
+          "package_name": "com.example.mobile_home_travel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5IAsRDGm_boOrfaXplSyLM8ysHf5HwWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,7 +19,7 @@ Future signInWithGoogle() async {
   // Once signed in, return the UserCredential
   await FirebaseAuth.instance.signInWithCredential(credential);
   print(googleUser?.displayName);
-  router.go(RouteName.home);
+  router.go(RouteName.navigator);
 }
 
 Future SignOutGoogle() async {

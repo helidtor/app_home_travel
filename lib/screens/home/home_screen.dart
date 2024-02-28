@@ -5,7 +5,7 @@ import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_bloc.
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_state.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
-import 'package:mobile_home_travel/widgets/bar/navigation_bar.dart';
+import 'package:mobile_home_travel/screens/navigator_bar.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 import 'package:toastification/toastification.dart';
@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: const NavigationBarWidget(),
       body: BlocConsumer<HomestayBloc, HomestayState>(
           bloc: _bloc,
           listener: (context, state) async {
@@ -44,6 +43,7 @@ class _HomePageState extends State<HomePage> {
             } else if (state is HomestayError) {
               toastification.show(
                   pauseOnHover: false,
+                  showProgressBar: false,
                   progressBarTheme: const ProgressIndicatorThemeData(
                     color: Colors.red,
                   ),
@@ -54,15 +54,15 @@ class _HomePageState extends State<HomePage> {
                   foregroundColor: Colors.black,
                   context: context,
                   type: ToastificationType.error,
-                  style: ToastificationStyle.minimal,
+                  style: ToastificationStyle.flatColored,
                   title: TextContent(
                     contentText: state.error,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
-                  autoCloseDuration: const Duration(milliseconds: 1500),
+                  autoCloseDuration: const Duration(milliseconds: 2500),
                   animationDuration: const Duration(milliseconds: 500),
-                  alignment: Alignment.topRight);
+                  alignment: Alignment.bottomCenter);
             }
           },
           builder: (context, state) {

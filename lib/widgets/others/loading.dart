@@ -4,28 +4,36 @@ import 'will.pop.scope.dart';
 
 void onLoading(context) {
   showDialog(
-    barrierColor: const Color.fromARGB(0, 158, 158, 158),
+    barrierColor: Colors.transparent,
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return WillPS(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              // child: CircularProgressIndicator(
-              //   color: Colors.blue,
-              // ),
-              child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Image.asset(
-                    "assets/gifs/loading.gif",
-                    fit: BoxFit.cover,
-                  )),
+      return Stack(
+        children: [
+          Container(
+            color: const Color.fromARGB(200, 254, 250, 250),
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          // Widget loading
+          WillPS(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Image.asset(
+                      "assets/gifs/loading.gif",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       );
     },
   );

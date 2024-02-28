@@ -46,18 +46,19 @@ class _HomestayState extends State<HomestayPreview> {
           ]),
       child: Column(children: [
         Container(
-          width: 200,
+          width: 250,
           height: 200,
           decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromARGB(253, 255, 255, 255),
-            ),
             color: const Color.fromARGB(253, 255, 255, 255),
             borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-            image: const DecorationImage(
-                fit: BoxFit.contain,
-                image: AssetImage("assets/images/logo-new.png")),
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: (homestayModel.imageHomes!.isEmpty)
+                  ? const AssetImage("assets/images/homestay_default.jpg")
+                  : Image.network(homestayModel.imageHomes!.first.imageURL!)
+                      .image,
+            ),
           ),
         ),
         Row(
@@ -74,7 +75,8 @@ class _HomestayState extends State<HomestayPreview> {
               width: 5,
             ),
             Text(
-              '${homestayModel.services?.first.serviceName}',
+              // '${homestayModel.services?.first.serviceName}',
+              '${homestayModel.location?.cityName}',
               style: const TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -102,7 +104,8 @@ class _HomestayState extends State<HomestayPreview> {
           width: 5,
         ),
         Text(
-          '${homestayModel.services?.first.price}',
+          // '${homestayModel.services?.first.price}',
+          '${homestayModel.location?.cityName}',
           style: const TextStyle(
               fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
         ),

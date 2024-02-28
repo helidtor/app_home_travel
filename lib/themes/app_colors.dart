@@ -9,6 +9,8 @@ class AppColors {
   static const secondaryColor1 = Color.fromARGB(235, 255, 214, 0);
   static const secondaryColor2 = Color.fromARGB(255, 81, 90, 226);
 
+  static const backgroundApp = Color.fromARGB(255, 245, 242, 242);
+
   static const successColor = Color.fromARGB(255, 76, 203, 48);
   static const failColor = Color.fromARGB(255, 219, 54, 54);
   static const whiteColor = Color(0xFFFFFFFF);

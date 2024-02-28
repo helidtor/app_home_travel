@@ -61,16 +61,32 @@ class _LoginScreenState extends State<LoginScreen> {
               //     .read<AuthenticationRepository>()
               //     .updateUser(state.userProfileModel);
               router.go(RouteName.navigator);
-              showToast(
-                context: context,
-                colorText: Colors.white,
-                msg:
-                    "Chào mừng ${state.userProfileModel.firstName} ${state.userProfileModel.lastName}",
-                color: AppColors.successColor,
-                icon: const Icon(Icons.waving_hand_sharp, color: Colors.white),
-                top: 100,
-                right: 650,
-              );
+              toastification.show(
+                  showProgressBar: false,
+                  pauseOnHover: false,
+                  progressBarTheme: const ProgressIndicatorThemeData(
+                    color: Colors.green,
+                  ),
+                  icon: const Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  ),
+                  foregroundColor: Colors.black,
+                  context: context,
+                  type: ToastificationType.success,
+                  style: ToastificationStyle.flatColored,
+                  title: const TextContent(
+                    contentText: "Đăng nhập thành công!",
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  description: TextContent(
+                    contentText: "Chào mừng ${state.userProfileModel.userName}",
+                    color: Colors.black,
+                  ),
+                  autoCloseDuration: const Duration(milliseconds: 1500),
+                  animationDuration: const Duration(milliseconds: 500),
+                  alignment: Alignment.topRight);
             } else if (state is LoginFailure) {
               toastification.show(
                   showProgressBar: false,

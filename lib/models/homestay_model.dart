@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import 'package:mobile_home_travel/models/image_home_model.dart';
 import 'package:mobile_home_travel/models/location_model.dart';
 import 'package:mobile_home_travel/models/service_model.dart';
 
@@ -12,12 +13,14 @@ class HomestayModel {
   String? acreage;
   LocationModel? location;
   List<ServiceModel>? services;
+  List<ImageHomeModel>? imageHomes;
   HomestayModel({
     this.homeStayId,
     this.homeStayName,
     this.acreage,
     this.location,
     this.services,
+    this.imageHomes,
   });
 
   HomestayModel copyWith({
@@ -26,6 +29,7 @@ class HomestayModel {
     String? acreage,
     LocationModel? location,
     List<ServiceModel>? services,
+    List<ImageHomeModel>? imageHomes,
   }) {
     return HomestayModel(
       homeStayId: homeStayId ?? this.homeStayId,
@@ -33,6 +37,7 @@ class HomestayModel {
       acreage: acreage ?? this.acreage,
       location: location ?? this.location,
       services: services ?? this.services,
+      imageHomes: imageHomes ?? this.imageHomes,
     );
   }
 
@@ -43,6 +48,7 @@ class HomestayModel {
       'acreage': acreage,
       'location': location?.toMap(),
       'services': services?.map((x) => x.toMap()).toList(),
+      'imageHomes': imageHomes?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -62,9 +68,34 @@ class HomestayModel {
               ),
             )
           : null,
+      imageHomes: map['imageHomes'] != null
+          ? List<ImageHomeModel>.from(
+              (map['imageHomes'] as List<dynamic>).map<ImageHomeModel?>(
+                (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
+// factory HomestayModel.fromMap(Map<String, dynamic> map) {
+//     return HomestayModel(
+//       homeStayId: map['homeStayId'] != null ? map['homeStayId'] as int : null,
+//       homeStayName:
+//           map['homeStayName'] != null ? map['homeStayName'] as String : null,
+//       acreage: map['acreage'] != null ? map['acreage'] as String : null,
+//       location: map['location'] != null
+//           ? LocationModel.fromMap(map['location'] as Map<String, dynamic>)
+//           : null,
+//       services: map['services'] != null
+//           ? List<ServiceModel>.from(
+//               (map['services'] as List<dynamic>).map<ServiceModel?>(
+//                 (x) => ServiceModel.fromMap(x as Map<String, dynamic>),
+//               ),
+//             )
+//           : null,
+//     );
+//   }
   String toJson() => json.encode(toMap());
 
   factory HomestayModel.fromJson(String source) =>
@@ -72,7 +103,7 @@ class HomestayModel {
 
   @override
   String toString() {
-    return 'HomestayModel(homeStayId: $homeStayId, homeStayName: $homeStayName, acreage: $acreage, location: $location, services: $services)';
+    return 'HomestayModel(homeStayId: $homeStayId, homeStayName: $homeStayName, acreage: $acreage, location: $location, services: $services, imageHomes: $imageHomes)';
   }
 
   @override
@@ -83,7 +114,8 @@ class HomestayModel {
         other.homeStayName == homeStayName &&
         other.acreage == acreage &&
         other.location == location &&
-        listEquals(other.services, services);
+        listEquals(other.services, services) &&
+        listEquals(other.imageHomes, imageHomes);
   }
 
   @override
@@ -92,6 +124,7 @@ class HomestayModel {
         homeStayName.hashCode ^
         acreage.hashCode ^
         location.hashCode ^
-        services.hashCode;
+        services.hashCode ^
+        imageHomes.hashCode;
   }
 }

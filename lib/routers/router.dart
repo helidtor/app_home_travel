@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mobile_home_travel/screens/login/login_screen.dart';
 import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
 import 'package:mobile_home_travel/screens/signup/signup_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 
@@ -10,6 +11,7 @@ class RouteName {
   static const String signup = '/signup';
   static const String home = '/home';
   static const String navigator = '/navigator';
+  static const String setting = '/setting';
 
   static const publicRoutes = [
     login,
@@ -47,6 +49,10 @@ final router = GoRouter(
     GoRoute(
       path: RouteName.home,
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: RouteName.setting,
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );

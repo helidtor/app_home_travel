@@ -5,7 +5,7 @@ class UserProfileModel {
   int? id;
   String? firstName;
   String? lastName;
-  String? username;
+  String? userName;
   String? passwordHash;
   String? email;
   String? phoneNumber;
@@ -15,7 +15,7 @@ class UserProfileModel {
     this.id,
     this.firstName,
     this.lastName,
-    this.username,
+    this.userName,
     this.passwordHash,
     this.email,
     this.phoneNumber,
@@ -27,7 +27,7 @@ class UserProfileModel {
     int? id,
     String? firstName,
     String? lastName,
-    String? username,
+    String? userName,
     String? passwordHash,
     String? email,
     String? phoneNumber,
@@ -38,7 +38,7 @@ class UserProfileModel {
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      username: username ?? this.username,
+      userName: userName ?? this.userName,
       passwordHash: passwordHash ?? this.passwordHash,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -52,7 +52,7 @@ class UserProfileModel {
       'id': id,
       'firstName': firstName,
       'lastName': lastName,
-      'username': username,
+      'userName': userName,
       'passwordHash': passwordHash,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -66,7 +66,7 @@ class UserProfileModel {
       id: map['id'] != null ? map['id'] as int : null,
       firstName: map['firstName'] != null ? map['firstName'] as String : null,
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
-      username: map['username'] != null ? map['username'] as String : null,
+      userName: map['userName'] != null ? map['userName'] as String : null,
       passwordHash:
           map['passwordHash'] != null ? map['passwordHash'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
@@ -84,7 +84,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, username: $username, passwordHash: $passwordHash, email: $email, phoneNumber: $phoneNumber, avatar: $avatar, status: $status)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, passwordHash: $passwordHash, email: $email, phoneNumber: $phoneNumber, avatar: $avatar, status: $status)';
   }
 
   @override
@@ -94,7 +94,7 @@ class UserProfileModel {
     return other.id == id &&
         other.firstName == firstName &&
         other.lastName == lastName &&
-        other.username == username &&
+        other.userName == userName &&
         other.passwordHash == passwordHash &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
@@ -107,7 +107,7 @@ class UserProfileModel {
     return id.hashCode ^
         firstName.hashCode ^
         lastName.hashCode ^
-        username.hashCode ^
+        userName.hashCode ^
         passwordHash.hashCode ^
         email.hashCode ^
         phoneNumber.hashCode ^

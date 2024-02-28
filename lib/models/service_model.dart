@@ -7,14 +7,12 @@ class ServiceModel {
   String? description;
   double? price;
   bool? status;
-  int? homeStayId;
   ServiceModel({
     this.serviceId,
     this.serviceName,
     this.description,
     this.price,
     this.status,
-    this.homeStayId,
   });
 
   ServiceModel copyWith({
@@ -23,7 +21,6 @@ class ServiceModel {
     String? description,
     double? price,
     bool? status,
-    int? homeStayId,
   }) {
     return ServiceModel(
       serviceId: serviceId ?? this.serviceId,
@@ -31,7 +28,6 @@ class ServiceModel {
       description: description ?? this.description,
       price: price ?? this.price,
       status: status ?? this.status,
-      homeStayId: homeStayId ?? this.homeStayId,
     );
   }
 
@@ -42,7 +38,6 @@ class ServiceModel {
       'description': description,
       'price': price,
       'status': status,
-      'homeStayId': homeStayId,
     };
   }
 
@@ -55,7 +50,6 @@ class ServiceModel {
           map['description'] != null ? map['description'] as String : null,
       price: map['price'] != null ? map['price'] as double : null,
       status: map['status'] != null ? map['status'] as bool : null,
-      homeStayId: map['homeStayId'] != null ? map['homeStayId'] as int : null,
     );
   }
 
@@ -66,7 +60,7 @@ class ServiceModel {
 
   @override
   String toString() {
-    return 'ServiceModel(serviceId: $serviceId, serviceName: $serviceName, description: $description, price: $price, status: $status, homeStayId: $homeStayId)';
+    return 'ServiceModel(serviceId: $serviceId, serviceName: $serviceName, description: $description, price: $price, status: $status)';
   }
 
   @override
@@ -77,8 +71,7 @@ class ServiceModel {
         other.serviceName == serviceName &&
         other.description == description &&
         other.price == price &&
-        other.status == status &&
-        other.homeStayId == homeStayId;
+        other.status == status;
   }
 
   @override
@@ -87,7 +80,6 @@ class ServiceModel {
         serviceName.hashCode ^
         description.hashCode ^
         price.hashCode ^
-        status.hashCode ^
-        homeStayId.hashCode;
+        status.hashCode;
   }
 }

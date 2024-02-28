@@ -43,9 +43,9 @@ class _NavigatorBarState extends State<NavigatorBar> {
             }
           });
         },
-        height: 60,
+        height: 55,
         gradient: AppColors.myGradient,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
         buttonBackgroundColor: const Color.fromARGB(235, 136, 78, 207),
         items: const [
           Icon(Icons.home, color: Colors.white),

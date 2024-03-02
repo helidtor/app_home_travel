@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   autoCloseDuration: const Duration(milliseconds: 2500),
                   animationDuration: const Duration(milliseconds: 500),
-                  alignment: Alignment.topRight);
+                  alignment: Alignment.topCenter);
               Navigator.pop(context);
             }
           },
@@ -121,28 +121,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                   child: Column(
                     children: [
+                      const SizedBox(height: 10),
                       SizedBox(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            SizedBox(height: media.height * 0.05),
-                            const Text(
-                              "Home Travel",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 20,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w700,
+                            Container(
+                              width: 150,
+                              height: 150,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(253, 255, 255, 255),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image:
+                                      AssetImage("assets/images/logo-new.png"),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: media.height * 0.1),
+                      const SizedBox(height: 30),
                       RoundTextField(
                         hintText: "Tài khoản",
                         icon: "assets/icons/message_icon.png",
@@ -184,16 +183,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: media.height * 0.05),
                       RoundGradientButton(
                         title: "Đăng nhập",
-                        // onPressed: () async {
-                        //   setState(() {
-                        //     userController.text.isEmpty
-                        //         ? _validateEmail = true
-                        //         : _validateEmail = false;
-                        //     passwordController.text.isEmpty
-                        //         ? _validatePassword = true
-                        //         : _validatePassword = false;
-                        //   });
-                        // },
                         onPressed: () {
                           String username = userController.text;
                           String password = passwordController.text;
@@ -227,36 +216,39 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              signInWithGoogle();
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color:
-                                      AppColors.primaryColor1.withOpacity(0.5),
-                                  width: 1,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 26.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                signInWithGoogle();
+                              },
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: AppColors.primaryColor1
+                                        .withOpacity(0.5),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  "assets/icons/google_icon.png",
+                                  width: 20,
+                                  height: 20,
                                 ),
                               ),
-                              child: Image.asset(
-                                "assets/icons/google_icon.png",
-                                width: 20,
-                                height: 20,
-                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 30,
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 20,

@@ -44,72 +44,77 @@ class _HomestayState extends State<HomestayPreview> {
               offset: const Offset(0, 3),
             )
           ]),
-      child: Column(children: [
-        Container(
-          width: 250,
-          height: 200,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(253, 255, 255, 255),
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: (homestayModel.imageHomes!.isEmpty)
-                  ? const AssetImage("assets/images/homestay_default.jpg")
-                  : Image.network(homestayModel.imageHomes!.first.imageURL!)
-                      .image,
+      child: Column(
+        children: [
+          Container(
+            width: 250,
+            height: 200,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(253, 255, 255, 255),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: (homestayModel.imageHomes!.isEmpty)
+                    ? const AssetImage("assets/images/homestay_default.jpg")
+                    : Image.network(homestayModel.imageHomes!.first.imageURL!)
+                        .image,
+              ),
             ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${homestayModel.acreage}',
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              // '${homestayModel.services?.first.serviceName}',
-              '${homestayModel.location?.cityName}',
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          '${homestayModel.homeStayName}',
-          style: const TextStyle(
-              fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          '${homestayModel.location?.cityName}',
-          style: const TextStyle(
-              fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          // '${homestayModel.services?.first.price}',
-          '${homestayModel.location?.cityName}',
-          style: const TextStyle(
-              fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-      ]),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${homestayModel.acreage}',
+                style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                // '${homestayModel.services?.first.serviceName}',
+                '${homestayModel.location?.cityName}',
+                style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            '${homestayModel.homeStayName}',
+            style: const TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            '${homestayModel.location?.cityName}',
+            style: const TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            // '${homestayModel.services?.first.price}',
+            '${homestayModel.location?.cityName}',
+            style: const TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }

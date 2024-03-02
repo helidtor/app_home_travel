@@ -23,8 +23,10 @@ class _NavigatorBarState extends State<NavigatorBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: body,
       bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.transparent,
         animationDuration: const Duration(milliseconds: 300),
         index: sttPage,
         onTap: (value) async {
@@ -45,7 +47,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         },
         height: 55,
         gradient: AppColors.myGradient,
-        backgroundColor: const Color.fromARGB(0, 255, 255, 255),
+        // backgroundColor: const Color.fromARGB(0, 255, 255, 255),
         buttonBackgroundColor: const Color.fromARGB(235, 136, 78, 207),
         items: const [
           Icon(Icons.home, color: Colors.white),

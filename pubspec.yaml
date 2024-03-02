@@ -49,6 +49,7 @@ dependencies:
   fluttertoast: ^8.2.4
   toastification: ^1.2.1
   flutter_launcher_icons: ^0.13.1
+  material_floating_search_bar_2: ^0.5.0
 
 dev_dependencies:
   flutter_test:

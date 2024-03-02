@@ -85,7 +85,7 @@ class ApiProvider {
       print("TEST get profile: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
-        userProfileModel = UserProfileModel.fromMap(bodyConvert);
+        userProfileModel = UserProfileModel.fromMap(bodyConvert['data']);
         print("Thông tin model từ get profile: $userProfileModel");
         return userProfileModel;
       }
@@ -109,7 +109,7 @@ class ApiProvider {
       print("TEST get all homestay: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
-        print("Xem body sau khi convert: $bodyConvert");
+        // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         homestay = (postsJson as List)
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))

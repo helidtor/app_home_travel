@@ -10,7 +10,6 @@ class UserProfileModel {
   String? email;
   String? phoneNumber;
   String? avatar;
-  String? status;
   UserProfileModel({
     this.id,
     this.firstName,
@@ -20,7 +19,6 @@ class UserProfileModel {
     this.email,
     this.phoneNumber,
     this.avatar,
-    this.status,
   });
 
   UserProfileModel copyWith({
@@ -32,7 +30,6 @@ class UserProfileModel {
     String? email,
     String? phoneNumber,
     String? avatar,
-    String? status,
   }) {
     return UserProfileModel(
       id: id ?? this.id,
@@ -43,7 +40,6 @@ class UserProfileModel {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       avatar: avatar ?? this.avatar,
-      status: status ?? this.status,
     );
   }
 
@@ -57,7 +53,6 @@ class UserProfileModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'avatar': avatar,
-      'status': status,
     };
   }
 
@@ -73,7 +68,6 @@ class UserProfileModel {
       phoneNumber:
           map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
-      status: map['status'] != null ? map['status'] as String : null,
     );
   }
 
@@ -84,7 +78,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, passwordHash: $passwordHash, email: $email, phoneNumber: $phoneNumber, avatar: $avatar, status: $status)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, passwordHash: $passwordHash, email: $email, phoneNumber: $phoneNumber, avatar: $avatar)';
   }
 
   @override
@@ -98,8 +92,7 @@ class UserProfileModel {
         other.passwordHash == passwordHash &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
-        other.avatar == avatar &&
-        other.status == status;
+        other.avatar == avatar;
   }
 
   @override
@@ -111,7 +104,6 @@ class UserProfileModel {
         passwordHash.hashCode ^
         email.hashCode ^
         phoneNumber.hashCode ^
-        avatar.hashCode ^
-        status.hashCode;
+        avatar.hashCode;
   }
 }

@@ -7,6 +7,7 @@ class RowSetting extends StatefulWidget {
   final String? textHeader;
   final String? textDescribe;
   final IconData icon;
+  final IconData? iconLast;
   final VoidCallback? onPressed;
 
   const RowSetting({
@@ -14,7 +15,9 @@ class RowSetting extends StatefulWidget {
     required this.weightLine,
     this.textHeader,
     this.textDescribe,
-    required this.icon, this.onPressed,
+    required this.icon,
+    this.onPressed,
+    this.iconLast,
   }) : super(key: key);
 
   @override
@@ -40,7 +43,8 @@ class _RowSettingState extends State<RowSetting> {
               Icon(
                 widget.icon,
                 size: 25,
-                color: const Color.fromARGB(255, 119, 118, 118),
+                // color: const Color.fromARGB(255, 119, 118, 118),
+                color: AppColors.primaryColor3,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -72,6 +76,14 @@ class _RowSettingState extends State<RowSetting> {
                     )
                   ],
                 ),
+              ),
+              const Spacer(),
+              Icon(
+                widget.iconLast ?? Icons.abc,
+                size: 25,
+                color: widget.iconLast != null
+                    ? AppColors.primaryColor3
+                    : const Color.fromARGB(0, 119, 118, 118),
               ),
             ],
           ),

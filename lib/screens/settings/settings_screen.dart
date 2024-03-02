@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_home_travel/api/api_provider.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/models/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/others/row_setting.dart';
@@ -10,6 +12,11 @@ Future<void> clearToken() async {
   prefs.setString(myToken, "token");
 }
 
+Future<UserProfileModel?> getUser() async {
+  var userLogined = await ApiProvider.getProfile();
+  return userLogined;
+}
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -18,13 +25,28 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  UserProfileModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+  }
+
+  Future<void> _loadUser() async {
+    final profile = await getUser();
+    setState(() {
+      user = profile;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Cài đặt",
+          "Tài khoản",
           style: TextStyle(
               color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
@@ -48,7 +70,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -75,13 +96,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(253, 255, 255, 255),
                           borderRadius: BorderRadius.circular(500),
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             fit: BoxFit.fill,
-                            // image: (inforUpdate.avatarUrl != null)
-                            //     ? Image.network(inforUpdate.avatarUrl!).image
-                            //     : const AssetImage(
-                            //         "assets/images/ava_default.png"),
-                            image: AssetImage("assets/images/meo.jpg"),
+                            image: (user?.avatar != null)
+                                ? Image.network(user!.avatar!).image
+                                : const AssetImage(
+                                    "assets/gifs/loading_ava.gif"),
                           ),
                         ),
                       ),
@@ -90,26 +110,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       width: 20,
                     ),
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Trường Ngô',
-                            style: TextStyle(
+                            text: (user?.firstName != null &&
+                                    user?.lastName != null)
+                                ? ('${user!.firstName} ${user!.lastName}')
+                                : '...',
+                            style: const TextStyle(
                               color: Color.fromARGB(205, 0, 0, 0),
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text: '\ntourist@gmail.com',
-                            style: TextStyle(
+                            text: (user?.email != null)
+                                ? '\n${user!.email}'
+                                : '\n...',
+                            style: const TextStyle(
                               fontSize: 15,
                               color: Color.fromARGB(132, 0, 0, 0),
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        router.go(RouteName.profile);
+                      },
+                      icon: const Icon(
+                        Icons.mode_edit_outlined,
+                        color: AppColors.primaryColor3,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                   ],
                 ),
               ),
@@ -128,25 +166,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ],
                 ),
-                child: const Column(
+                child: Column(
                   children: [
                     RowSetting(
                       weightLine: 0,
-                      textDescribe: "Xem chi tiết hồ sơ cá nhân",
-                      textHeader: "Hồ sơ",
-                      icon: Icons.person,
+                      textHeader: "Cài đặt",
+                      textDescribe: "Tùy chỉnh ứng dụng",
+                      icon: Icons.settings,
+                      onPressed: () {
+                        router.go(RouteName.profile);
+                      },
+                      iconLast: Icons.keyboard_arrow_right,
                     ),
-                    RowSetting(
+                    const RowSetting(
                       weightLine: 1,
                       textDescribe: "Cho chúng tôi biết cảm nghĩ của bạn",
                       textHeader: "Gửi phản hồi",
                       icon: Icons.mail,
+                      iconLast: Icons.keyboard_arrow_right,
                     ),
-                    RowSetting(
+                    const RowSetting(
                       weightLine: 1,
                       textHeader: "Chính sách",
                       textDescribe: "Xem thêm chính sách",
                       icon: Icons.format_align_center_rounded,
+                      iconLast: Icons.keyboard_arrow_right,
                     ),
                   ],
                 ),

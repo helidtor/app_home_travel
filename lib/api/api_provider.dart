@@ -122,4 +122,30 @@ class ApiProvider {
 
     return homestay;
   }
+
+  //Update profile
+  static Future<bool> updateProfile(
+      UserProfileModel userProfileModel, int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    try {
+      var url = "$baseUrl/api/AppUsers/$id";
+      Map<String, String> header = await getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var body = json.encode(userProfileModel.toMap());
+      var response = await http.put(Uri.parse(url.toString()),
+          headers: header, body: body);
+      if (response.statusCode == 200) {
+        print("Update profile xong");
+        return true;
+      } else {
+        print("Update profile thất bại");
+        return false;
+      }
+    } catch (e) {
+      print("Loi update profile: $e");
+      return false;
+    }
+    return false;
+  }
 }

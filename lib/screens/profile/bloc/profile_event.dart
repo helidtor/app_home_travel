@@ -16,8 +16,9 @@ class UpdateAvatarEvent extends ProfileEvent {
 }
 
 class UpdateProfileEvent extends ProfileEvent {
+  final int id;
   final UserProfileModel userProfileModel;
-  const UpdateProfileEvent({required this.userProfileModel});
+  const UpdateProfileEvent(this.id, {required this.userProfileModel});
 }
 
 class ChangePassEvent extends ProfileEvent {

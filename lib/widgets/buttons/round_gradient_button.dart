@@ -3,10 +3,11 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class RoundGradientButton extends StatelessWidget {
   final String title;
+  final double? width;
   final VoidCallback? onPressed;
 
   const RoundGradientButton(
-      {Key? key, required this.title, required this.onPressed})
+      {Key? key, required this.title, required this.onPressed, this.width})
       : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class RoundGradientButton extends StatelessWidget {
                   color: Colors.black26, blurRadius: 2, offset: Offset(0, 2))
             ]),
         child: MaterialButton(
-          minWidth: double.maxFinite,
+          minWidth: width ?? double.maxFinite,
           height: 50,
           onPressed: onPressed,
           shape:

@@ -35,3 +35,4 @@ class ChangeAvatarSuccess extends ProfileState {}
 class UpdateProfileSuccess extends ProfileState {}
 
 class ChangePasswordSuccess extends ProfileState {}
+

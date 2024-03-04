@@ -3,6 +3,7 @@ import 'package:mobile_home_travel/api/api_provider.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/profile/profile_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/others/row_setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,9 +36,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadUser() async {
     final profile = await getUser();
-    setState(() {
-      user = profile;
-    });
+    if (mounted) {
+      setState(() {
+        user = profile;
+      });
+    }
   }
 
   @override
@@ -138,7 +141,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const Spacer(),
                     IconButton(
                       onPressed: () {
-                        router.go(RouteName.profile);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProfileScreen()),
+                        );
                       },
                       icon: const Icon(
                         Icons.mode_edit_outlined,

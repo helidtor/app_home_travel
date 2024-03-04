@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/homestay_model.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_bloc.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
@@ -121,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 27,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
+                                // fontFamily: GoogleFonts.nunito().fontFamily,
                               ),
                             ),
                           ],
@@ -175,35 +177,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 10),
-                      //   child: Row(
-                      //     mainAxisAlignment:
-                      //         MainAxisAlignment.start, // Căn chỉn
-                      //     children: [
-                      //       Text(
-                      //         (listHomestay.length > 1) ? "Xu hướng" : "",
-                      //         style: const TextStyle(
-                      //           fontSize: 27,
-                      //           color: Colors.black,
-                      //           fontWeight: FontWeight.bold,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // GridView.count(
-                      //   crossAxisCount: 2, // Số cột
-                      //   children: List.generate(4, (index) {
-                      //     // Tạo danh sách hình ảnh
-                      //     return GridTile(
-                      //       child: Image.asset(
-                      //         'assets/images/image$index.jpg', // Thay đổi tên tập tin hình ảnh tùy thuộc vào tên thực tế của bạn
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     );
-                      //   }),
-                      // ),
                     ],
                   ),
                 ),

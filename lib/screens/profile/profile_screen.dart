@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_bloc.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_event.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_state.dart';
+import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/field_profile.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
@@ -33,11 +34,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              router.go(RouteName.navigator);
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.keyboard_arrow_left),
           ),
@@ -59,7 +61,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.pop(context);
                 user = state.userProfileModel;
                 isShow = true;
+              } else if (state is UpdateProfileSuccess) {
+                Navigator.pop(context);
+                toastification.show(
+                    pauseOnHover: false,
+                    progressBarTheme: const ProgressIndicatorThemeData(
+                      color: Colors.green,
+                    ),
+                    icon: const Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ),
+                    foregroundColor: Colors.black,
+                    context: context,
+                    type: ToastificationType.success,
+                    style: ToastificationStyle.minimal,
+                    title: const TextContent(
+                      contentText: "Cập nhật thành công!",
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    autoCloseDuration: const Duration(milliseconds: 1500),
+                    animationDuration: const Duration(milliseconds: 500),
+                    alignment: Alignment.topRight);
               } else if (state is ProfileStateFailure) {
+                Navigator.pop(context);
                 toastification.show(
                     pauseOnHover: false,
                     showProgressBar: false,
@@ -116,6 +142,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(
                                 height: 30,
                               ),
+                              FieldProfile(
+                                icon: Icons.person,
+                                label: 'Tài khoản',
+                                widthInput: 0.8,
+                                readOnly: true,
+                                content: user.userName ?? "...",
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -123,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     icon: Icons.person,
                                     label: 'Họ',
                                     controller: firstNameController,
-                                    widthInput: 0.4,
+                                    widthInput: 0.38,
                                     readOnly: false,
                                     content: user.firstName ?? "...",
                                     onChangeText: (value) {
@@ -132,33 +165,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       });
                                     },
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
                                   FieldProfile(
                                     icon: Icons.person,
                                     label: 'Tên',
                                     controller: lastNameController,
-                                    widthInput: 0.4,
-                                    readOnly: true,
+                                    widthInput: 0.38,
+                                    readOnly: false,
                                     content: user.lastName ?? "...",
+                                    onChangeText: (value) {
+                                      setState(() {
+                                        inforUpdate.lastName = value;
+                                      });
+                                    },
                                   ),
                                 ],
-                              ),
-                              FieldProfile(
-                                icon: Icons.person,
-                                label: 'Tên đăng nhập',
-                                widthInput: 0.8,
-                                readOnly: true,
-                                content: user.userName ?? "...",
                               ),
                               FieldProfile(
                                 icon: Icons.phone,
                                 label: 'SĐT',
                                 controller: phoneController,
                                 widthInput: 0.8,
-                                readOnly: true,
+                                readOnly: false,
                                 content: user.phoneNumber ?? "...",
+                                onChangeText: (value) {
+                                  setState(() {
+                                    inforUpdate.phoneNumber = value;
+                                  });
+                                },
+                              ),
+                              RoundGradientButton(
+                                width: screenWidth * 0.8,
+                                title: "Lưu",
+                                onPressed: () {
+                                  _bloc.add(UpdateProfileEvent(user.id!,
+                                      userProfileModel: inforUpdate));
+                                },
                               ),
                             ],
                           ),

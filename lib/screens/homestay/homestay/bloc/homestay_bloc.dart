@@ -21,7 +21,7 @@ class HomestayBloc extends Bloc<HomestayEvent, HomestayState> {
         emit(const HomestayError(error: "Lỗi bài homestay"));
       }
     } catch (e) {
-      print("Loi: $e");
+      print("Loi bai homestay: $e");
       emit(const HomestayError(error: "Lỗi tải bài"));
     }
   }

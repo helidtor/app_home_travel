@@ -20,6 +20,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } else {
           emit(const ProfileStateFailure(error: "Lỗi thông tin"));
         }
+      } else if (event is UpdateProfileEvent) {
+        var check = await ApiProvider.updateProfile(event.userProfileModel, event.id);
+        if (check == true) {
+          emit(UpdateProfileSuccess());
+        } else {
+          emit(const ProfileStateFailure(error: "Lỗi update profile"));
+        }
       }
     } catch (e) {
       emit(const ProfileStateFailure(error: "Lỗi"));

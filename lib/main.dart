@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
       title: 'Home Travel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        canvasColor: Colors.transparent,
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,

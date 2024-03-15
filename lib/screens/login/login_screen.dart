@@ -22,9 +22,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final userController = TextEditingController();
+  final phoneController = TextEditingController();
   final passwordController = TextEditingController();
-  final bool _validateEmail = false;
+  final bool _validatePhone = false;
   final bool _validatePassword = false;
   bool checkLogin = false;
   final _bloc = LoginBloc();
@@ -143,12 +143,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 30),
                       RoundTextField(
-                        hintText: "Tài khoản",
+                        hintText: "Số điện thoại",
                         icon: "assets/icons/message_icon.png",
-                        textEditingController: userController,
+                        textEditingController: phoneController,
                         textInputType: TextInputType.emailAddress,
-                        errorText:
-                            _validateEmail ? 'Vui lòng nhập tài khoản!' : null,
+                        errorText: _validatePhone
+                            ? 'Vui lòng nhập số điện thoại!'
+                            : null,
                       ),
                       const SizedBox(height: 15),
                       RoundTextField(
@@ -184,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       RoundGradientButton(
                         title: "Đăng nhập",
                         onPressed: () {
-                          String username = userController.text;
+                          String username = phoneController.text;
                           String password = passwordController.text;
                           _bloc.add(StartLoginEvent(
                               username: username, password: password));

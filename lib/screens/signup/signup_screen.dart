@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_home_travel/api/api_provider.dart';
+import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/firebase/auth_firebase.dart';
-import 'package:mobile_home_travel/models/sign_up_user_model.dart';
+import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
@@ -140,25 +140,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 5,
                 ),
                 RoundTextField(
-                  hintText: "Tên đăng nhập",
+                  hintText: "Số điện thoại",
                   icon: "assets/icons/message_icon.png",
                   textEditingController: userNameController,
                   textInputType: TextInputType.name,
-                  onChangeText: (value) {
-                    setState(() {
-                      userSignUpModel.userName = value;
-                    });
-                  },
-                  errorText: _validateEmail ? 'Please input email!' : null,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                RoundTextField(
-                  hintText: "Số điện thoại",
-                  icon: "assets/icons/message_icon.png",
-                  textEditingController: phoneNumberController,
-                  textInputType: TextInputType.phone,
                   onChangeText: (value) {
                     setState(() {
                       userSignUpModel.phoneNumber = value;
@@ -166,6 +151,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   errorText: _validateEmail ? 'Please input email!' : null,
                 ),
+                const SizedBox(
+                  height: 5,
+                ),
+
                 const SizedBox(
                   height: 5,
                 ),
@@ -226,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   isObscureText: true,
                   onChangeText: (value) {
                     setState(() {
-                      userSignUpModel.confirmPassword = value;
+                      // userSignUpModel.confirmPassword = value;
                     });
                   },
                   rightIcon: TextButton(

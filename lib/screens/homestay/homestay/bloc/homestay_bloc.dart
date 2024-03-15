@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_home_travel/api/api_provider.dart';
+import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_state.dart';
 
@@ -15,7 +15,7 @@ class HomestayBloc extends Bloc<HomestayEvent, HomestayState> {
     emit(HomestayLoading());
     try {
       if (event is GetAllListHomestay) {
-        var listHomestay = await ApiProvider.getAllHomestay();
+        var listHomestay = await ApiHomestay.getAllHomestay();
         emit(HomestaySuccess(list: listHomestay!));
       } else {
         emit(const HomestayError(error: "Lỗi bài homestay"));

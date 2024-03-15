@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/models/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_bloc.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_state.dart';
@@ -66,119 +66,116 @@ class _HomePageState extends State<HomePage> {
             }
           },
           builder: (context, state) {
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 40,
-                          child: TextField(
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Bạn muốn đi đâu?',
-                              prefixIcon: const Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                                gapPadding: 5.0,
-                              ),
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 40,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Bạn muốn đi đâu?',
+                            prefixIcon: const Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                              gapPadding: 5.0,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 50,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start, // Căn chỉnh
+                        children: [
+                          Text(
+                            (listHomestay.length > 1) ? "Nổi bật" : "",
+                            style: const TextStyle(
+                              fontSize: 27,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              // fontFamily: GoogleFonts.nunito().fontFamily,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                    ),
+                    SizedBox(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
                         child: Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.start, // Căn chỉnh
-                          children: [
-                            Text(
-                              (listHomestay.length > 1) ? "Nổi bật" : "",
-                              style: const TextStyle(
-                                fontSize: 27,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                // fontFamily: GoogleFonts.nunito().fontFamily,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                              listHomestay.length,
-                              (index) => Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: HomestayPreview(
-                                    homestayModel: listHomestay[index]),
-                              ),
+                          children: List.generate(
+                            listHomestay.length,
+                            (index) => Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: HomestayPreview(
+                                  homestayModel: listHomestay[index]),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 50,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            (listHomestay.length > 1) ? "Xu hướng" : "",
+                            style: const TextStyle(
+                              fontSize: 27,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                    ),
+                    SizedBox(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              (listHomestay.length > 1) ? "Xu hướng" : "",
-                              style: const TextStyle(
-                                fontSize: 27,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                              listHomestay.length,
-                              (index) => Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: HomestayPreview(
-                                    homestayModel: listHomestay[index]),
-                              ),
+                          children: List.generate(
+                            listHomestay.length,
+                            (index) => Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: HomestayPreview(
+                                  homestayModel: listHomestay[index]),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

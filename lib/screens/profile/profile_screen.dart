@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_home_travel/models/profile_user_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_bloc.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_event.dart';
@@ -118,27 +118,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.all(12),
                           child: Column(
                             children: [
-                              Container(
-                                // ảnh ava
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(253, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(500),
-                                  border: Border.all(
-                                      color: const Color.fromARGB(
-                                          194, 172, 146, 243),
-                                      width: 4),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: (user.avatar != null)
-                                        ? Image.network(user.avatar!).image
-                                        : const AssetImage(
-                                            "assets/gifs/loading_ava.gif"),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   // ảnh ava
+                              //   width: 150,
+                              //   height: 150,
+                              //   decoration: BoxDecoration(
+                              //     color:
+                              //         const Color.fromARGB(253, 255, 255, 255),
+                              //     borderRadius: BorderRadius.circular(500),
+                              //     border: Border.all(
+                              //         color: const Color.fromARGB(
+                              //             194, 172, 146, 243),
+                              //         width: 4),
+                              //     image: DecorationImage(
+                              //       fit: BoxFit.cover,
+                              //       image: (user.avatar != null)
+                              //           ? Image.network(user.avatar!).image
+                              //           : const AssetImage(
+                              //               "assets/gifs/loading_ava.gif"),
+                              //     ),
+                              //   ),
+                              // ),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -197,7 +197,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 width: screenWidth * 0.8,
                                 title: "Lưu",
                                 onPressed: () {
-                                  _bloc.add(UpdateProfileEvent(user.id!,
+                                  _bloc.add(UpdateProfileEvent(
+                                      id: user.id!,
                                       userProfileModel: inforUpdate));
                                 },
                               ),

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_home_travel/api/api_provider.dart';
+import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_event.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_state.dart';
@@ -15,13 +15,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoading());
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
+
       if (event is CheckLoginEvent) {
-        var userModel = await ApiProvider.getProfile();
-        if (userModel != null) {
-          // var password = prefs.getString("password");
-          // await AuthService().signInWithEmailAndPassword(
-          //     userModel.email ?? "", password ?? "");
-          emit(LoginSecondState(userProfileModel: userModel));
+        String? id = prefs.getString("id");
+        if (id != null) {
+          var userModel = await ApiProvider.getProfile(id: id);
+          if (userModel != null) {
+            emit(LoginSecondState(userProfileModel: userModel));
+          } else {
+            emit(LoginFirstState());
+          }
         } else {
           emit(LoginFirstState());
         }
@@ -30,15 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(const LoginFailure(
               error: "Tài khoản & mật khẩu không được để trống!"));
         } else {
-          var user = await ApiProvider.logins(
-              username: event.username, password: event.password);
+          var user = await ApiProvider.login(
+              phoneNumber: event.username, password: event.password);
           if (user != null) {
             prefs.setString(myToken, user.token ?? "");
-            prefs.setString("password", event.password);
-            var userLogin = await ApiProvider.getProfile();
-            // await AuthService()
-            //     .signInWithEmailAndPassword(user.email ?? "", event.password);
-            // await ApiProvider.postToken();
+            prefs.setString("id", user.id!);
+            var userLogin = await ApiProvider.getProfile(id: user.id!);
             emit(LoginSuccessState(userProfileModel: userLogin!));
           } else {
             emit(const LoginFailure(

@@ -29,7 +29,7 @@ class AppColors {
   static Gradient myGradient = const LinearGradient(
     colors: [
       Color.fromARGB(255, 111, 77, 202),
-      Color.fromARGB(235, 124, 70, 191),
+      Color.fromARGB(255, 146, 88, 218),
       Color.fromARGB(255, 168, 50, 165),
     ],
     begin: Alignment.topLeft,

@@ -2,70 +2,65 @@
 import 'dart:convert';
 
 class UserLoginModel {
+  String? id;
   String? firstName;
   String? lastName;
-  String? username;
+  String? phoneNumber;
   String? password;
-  String? email;
-  String? phone;
+  String? role;
   String? token;
-  String? status;
   UserLoginModel({
+    this.id,
     this.firstName,
     this.lastName,
-    this.username,
+    this.phoneNumber,
     this.password,
-    this.email,
-    this.phone,
+    this.role,
     this.token,
-    this.status,
   });
+ 
 
   UserLoginModel copyWith({
+    String? id,
     String? firstName,
     String? lastName,
-    String? username,
+    String? phoneNumber,
     String? password,
-    String? email,
-    String? phone,
+    String? role,
     String? token,
-    String? status,
   }) {
     return UserLoginModel(
+      id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      username: username ?? this.username,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       password: password ?? this.password,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
+      role: role ?? this.role,
       token: token ?? this.token,
-      status: status ?? this.status,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'firstName': firstName,
       'lastName': lastName,
-      'username': username,
+      'phoneNumber': phoneNumber,
       'password': password,
-      'email': email,
-      'phone': phone,
+      'role': role,
       'token': token,
-      'status': status,
     };
   }
 
   factory UserLoginModel.fromMap(Map<String, dynamic> map) {
     return UserLoginModel(
+      id: map['id'] != null ? map['id'] as String : null,
       firstName: map['firstName'] != null ? map['firstName'] as String : null,
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
-      username: map['username'] != null ? map['username'] as String : null,
+      phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
-      email: map['email'] != null ? map['email'] as String : null,
-      phone: map['phone'] != null ? map['phone'] as String : null,
+      role: map['role'] != null ? map['role'] as String : null,
       token: map['token'] != null ? map['token'] as String : null,
-      status: map['status'] != null ? map['status'] as String : null,
     );
   }
 
@@ -75,7 +70,7 @@ class UserLoginModel {
 
   @override
   String toString() {
-    return 'UserLoginModel(firstName: $firstName, lastName: $lastName, username: $username, password: $password, email: $email, phone: $phone, token: $token, status: $status)';
+    return 'UserLoginModel(id: $id, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, password: $password, role: $role, token: $token)';
   }
 
   @override
@@ -83,25 +78,23 @@ class UserLoginModel {
     if (identical(this, other)) return true;
   
     return 
+      other.id == id &&
       other.firstName == firstName &&
       other.lastName == lastName &&
-      other.username == username &&
+      other.phoneNumber == phoneNumber &&
       other.password == password &&
-      other.email == email &&
-      other.phone == phone &&
-      other.token == token &&
-      other.status == status;
+      other.role == role &&
+      other.token == token;
   }
 
   @override
   int get hashCode {
-    return firstName.hashCode ^
+    return id.hashCode ^
+      firstName.hashCode ^
       lastName.hashCode ^
-      username.hashCode ^
+      phoneNumber.hashCode ^
       password.hashCode ^
-      email.hashCode ^
-      phone.hashCode ^
-      token.hashCode ^
-      status.hashCode;
+      role.hashCode ^
+      token.hashCode;
   }
 }

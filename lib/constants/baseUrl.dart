@@ -1,1 +1,1 @@
-String baseUrl = 'https://hometravel.azurewebsites.net';
+String baseUrl = 'https://home-travel.azurewebsites.net/';

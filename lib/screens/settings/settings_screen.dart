@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_home_travel/api/api_provider.dart';
+import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
-import 'package:mobile_home_travel/models/profile_user_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/profile/profile_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -11,10 +11,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> clearToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(myToken, "token");
+  prefs.setString("id", "");
 }
 
 Future<UserProfileModel?> getUser() async {
-  var userLogined = await ApiProvider.getProfile();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? id = prefs.getString("id");
+  var userLogined = await ApiProvider.getProfile(id: id!);
   return userLogined;
 }
 
@@ -89,26 +92,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 15, left: 40, top: 15, right: 20),
-                      child: Container(
-                        // ảnh ava
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(253, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(500),
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: (user?.avatar != null)
-                                ? Image.network(user!.avatar!).image
-                                : const AssetImage(
-                                    "assets/gifs/loading_ava.gif"),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       bottom: 15, left: 40, top: 15, right: 20),
+                    //   child: Container(
+                    //     // ảnh ava
+                    //     width: 60,
+                    //     height: 60,
+                    //     decoration: BoxDecoration(
+                    //       color: const Color.fromARGB(253, 255, 255, 255),
+                    //       borderRadius: BorderRadius.circular(500),
+                    //       image: DecorationImage(
+                    //         fit: BoxFit.fill,
+                    //         image: (user?.avatar != null)
+                    //             ? Image.network(user!.avatar!).image
+                    //             : const AssetImage(
+                    //                 "assets/gifs/loading_ava.gif"),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       width: 20,
                     ),

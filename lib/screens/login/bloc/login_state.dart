@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile_home_travel/models/login_user_model.dart';
-import 'package:mobile_home_travel/models/profile_user_model.dart';
+import 'package:mobile_home_travel/models/user/login_user_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 
 abstract class LoginState extends Equatable {
   const LoginState();

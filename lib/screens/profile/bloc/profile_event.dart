@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile_home_travel/models/profile_user_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 
 abstract class ProfileEvent extends Equatable {
   const ProfileEvent();
@@ -16,9 +16,10 @@ class UpdateAvatarEvent extends ProfileEvent {
 }
 
 class UpdateProfileEvent extends ProfileEvent {
-  final int id;
+  final String id;
   final UserProfileModel userProfileModel;
-  const UpdateProfileEvent(this.id, {required this.userProfileModel});
+
+  const UpdateProfileEvent({required this.id, required this.userProfileModel});
 }
 
 class ChangePassEvent extends ProfileEvent {

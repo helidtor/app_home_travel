@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'package:mobile_home_travel/models/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/homestay_detail.dart';
+import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class HomestayPreview extends StatefulWidget {
   HomestayModel homestayModel;
@@ -55,80 +57,88 @@ class _HomestayState extends State<HomestayPreview> {
               )
             ]),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //image đợi thêm api
             Container(
               width: 250,
               height: 200,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(253, 255, 255, 255),
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(253, 255, 255, 255),
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: (homestayModel.imageHomes!.isEmpty)
-                      ? const AssetImage("assets/images/homestay_default.jpg")
-                      : Image.network(homestayModel.imageHomes!.first.imageURL!)
-                          .image,
+                  // image: (homestayModel.image!.isEmpty)
+                  //     ? const AssetImage("assets/images/homestay_default.jpg")
+                  //     : Image.network(homestayModel.image!.first).image,
+                  image: AssetImage("assets/images/homestay_default.jpg"),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${homestayModel.acreage}m\u00b2',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  // '${homestayModel.services?.first.serviceName}',
-                  '${homestayModel.location?.cityName}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              '${homestayModel.homeStayName}',
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              '${homestayModel.location?.cityName}',
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              // '${homestayModel.services?.first.price}',
-              '${homestayModel.location?.cityName}',
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${homestayModel.acreage}m\u00b2',
+                        style: TextStyle(
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        // '${homestayModel.services?.first.serviceName}',
+                        '${homestayModel.totalCapacity} người',
+                        style: TextStyle(
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    '${homestayModel.name}',
+                    style: TextStyle(
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 18,
+                        color: AppColors.primaryColor3,
+                      ),
+                      Text(
+                        '${homestayModel.city}',
+                        style: TextStyle(
+                            fontFamily: GoogleFonts.nunito().fontFamily,
+                            fontSize: 13,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

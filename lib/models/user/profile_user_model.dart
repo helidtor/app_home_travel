@@ -10,6 +10,7 @@ class UserProfileModel {
   String? phoneNumber;
   bool? gender;
   String? dateOfBirth;
+  String? avatar;
   UserProfileModel({
     this.id,
     this.firstName,
@@ -19,8 +20,8 @@ class UserProfileModel {
     this.phoneNumber,
     this.gender,
     this.dateOfBirth,
+    this.avatar,
   });
-  
 
   UserProfileModel copyWith({
     String? id,
@@ -31,6 +32,7 @@ class UserProfileModel {
     String? phoneNumber,
     bool? gender,
     String? dateOfBirth,
+    String? avatar,
   }) {
     return UserProfileModel(
       id: id ?? this.id,
@@ -41,6 +43,7 @@ class UserProfileModel {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       gender: gender ?? this.gender,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      avatar: avatar ?? this.avatar,
     );
   }
 
@@ -54,6 +57,7 @@ class UserProfileModel {
       'phoneNumber': phoneNumber,
       'gender': gender,
       'dateOfBirth': dateOfBirth,
+      'avatar': avatar,
     };
   }
 
@@ -64,45 +68,50 @@ class UserProfileModel {
       lastName: map['lastName'] != null ? map['lastName'] as String : null,
       userName: map['userName'] != null ? map['userName'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
-      phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
+      phoneNumber:
+          map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
       gender: map['gender'] != null ? map['gender'] as bool : null,
-      dateOfBirth: map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
+      dateOfBirth:
+          map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserProfileModel.fromJson(String source) => UserProfileModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserProfileModel.fromJson(String source) =>
+      UserProfileModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth, avatar: $avatar)';
   }
 
   @override
   bool operator ==(covariant UserProfileModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.firstName == firstName &&
-      other.lastName == lastName &&
-      other.userName == userName &&
-      other.email == email &&
-      other.phoneNumber == phoneNumber &&
-      other.gender == gender &&
-      other.dateOfBirth == dateOfBirth;
+
+    return other.id == id &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.userName == userName &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.gender == gender &&
+        other.dateOfBirth == dateOfBirth &&
+        other.avatar == avatar;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      firstName.hashCode ^
-      lastName.hashCode ^
-      userName.hashCode ^
-      email.hashCode ^
-      phoneNumber.hashCode ^
-      gender.hashCode ^
-      dateOfBirth.hashCode;
+        firstName.hashCode ^
+        lastName.hashCode ^
+        userName.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        gender.hashCode ^
+        dateOfBirth.hashCode ^
+        avatar.hashCode;
   }
 }

@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> clearToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(myToken, "token");
+  prefs.setString(myToken, "");
   prefs.setString("id", "");
 }
 
@@ -92,26 +92,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Row(
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.only(
-                    //       bottom: 15, left: 40, top: 15, right: 20),
-                    //   child: Container(
-                    //     // ảnh ava
-                    //     width: 60,
-                    //     height: 60,
-                    //     decoration: BoxDecoration(
-                    //       color: const Color.fromARGB(253, 255, 255, 255),
-                    //       borderRadius: BorderRadius.circular(500),
-                    //       image: DecorationImage(
-                    //         fit: BoxFit.fill,
-                    //         image: (user?.avatar != null)
-                    //             ? Image.network(user!.avatar!).image
-                    //             : const AssetImage(
-                    //                 "assets/gifs/loading_ava.gif"),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 15, left: 40, top: 15, right: 20),
+                      child: Container(
+                        // ảnh ava
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(253, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(500),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: (user?.avatar != null)
+                                ? Image.network(user!.avatar!).image
+                                : const AssetImage(
+                                    "assets/gifs/loading_ava.gif"),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       width: 20,
                     ),

@@ -6,18 +6,18 @@ import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
-class HomestayPreview extends StatefulWidget {
+class ResultPreview extends StatefulWidget {
   HomestayModel homestayModel;
-  HomestayPreview({
+  ResultPreview({
     Key? key,
     required this.homestayModel,
   }) : super(key: key);
 
   @override
-  State<HomestayPreview> createState() => _HomestayState();
+  State<ResultPreview> createState() => _ResultState();
 }
 
-class _HomestayState extends State<HomestayPreview> {
+class _ResultState extends State<ResultPreview> {
   late HomestayModel homestayModel;
 
   @override
@@ -40,7 +40,7 @@ class _HomestayState extends State<HomestayPreview> {
       ),
       child: Container(
         height: 310,
-        width: 260,
+        width: screenSize.width * 0.9,
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(253, 255, 255, 255),
@@ -58,9 +58,8 @@ class _HomestayState extends State<HomestayPreview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //image đợi thêm api
             Container(
-              width: 260,
+              width: screenSize.width * 0.9,
               height: 200,
               decoration: const BoxDecoration(
                 color: Color.fromARGB(253, 255, 255, 255),
@@ -77,7 +76,7 @@ class _HomestayState extends State<HomestayPreview> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, top: 8, right: 10),
+              padding: const EdgeInsets.only(left: 12, top: 8, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -88,12 +87,9 @@ class _HomestayState extends State<HomestayPreview> {
                         '${homestayModel.acreage}m\u00b2',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: Colors.black,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
                       ),
                       Text(
                         // '${homestayModel.services?.first.serviceName}',
@@ -101,7 +97,7 @@ class _HomestayState extends State<HomestayPreview> {
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 11,
+                          fontSize: 14,
                           color: Colors.black,
                         ),
                       ),
@@ -114,7 +110,7 @@ class _HomestayState extends State<HomestayPreview> {
                     '${homestayModel.name}',
                     style: TextStyle(
                         fontFamily: GoogleFonts.nunito().fontFamily,
-                        fontSize: 18,
+                        fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
@@ -125,14 +121,14 @@ class _HomestayState extends State<HomestayPreview> {
                     children: [
                       const Icon(
                         Icons.location_on,
-                        size: 18,
+                        size: 22,
                         color: AppColors.primaryColor3,
                       ),
                       Text(
                         '${homestayModel.city}',
                         style: TextStyle(
                             fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 13,
+                            fontSize: 15,
                             color: Colors.black),
                       ),
                     ],

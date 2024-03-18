@@ -81,7 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.black,
                   ),
                   description: TextContent(
-                    contentText: "Chào mừng ${state.userProfileModel.userName}",
+                    contentText:
+                        "Chào mừng ${state.userProfileModel.firstName} ${state.userProfileModel.lastName}",
                     color: Colors.black,
                   ),
                   autoCloseDuration: const Duration(milliseconds: 1500),
@@ -146,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: "Số điện thoại",
                         icon: "assets/icons/message_icon.png",
                         textEditingController: phoneController,
-                        textInputType: TextInputType.emailAddress,
+                        textInputType: TextInputType.phone,
                         errorText: _validatePhone
                             ? 'Vui lòng nhập số điện thoại!'
                             : null,

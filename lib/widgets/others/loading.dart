@@ -11,7 +11,7 @@ void onLoading(context) {
       return Stack(
         children: [
           Container(
-            color: const Color.fromARGB(200, 254, 250, 250),
+            color: Colors.white,
             width: double.infinity,
             // height: double.infinity,
           ),

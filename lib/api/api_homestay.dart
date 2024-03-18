@@ -34,4 +34,33 @@ class ApiHomestay {
 
     return homestay;
   }
+
+  // <<<< Search homestay by location and capacity>>>>
+  static Future<List<HomestayModel>?> searchHomestay(
+      int? capacity, String location) async {
+    List<HomestayModel>? homestay;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    print("Location là: $location");
+    try {
+      var url = "$baseUrl/api/v1/HomeStays?totalCapacity=0&location=$location";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST search homestay: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        homestay = (postsJson as List)
+            .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
+            .toList();
+        print("Thông tin search homestay: $homestay");
+      }
+    } catch (e) {
+      print("Loi search homestay: $e");
+    }
+
+    return homestay;
+  }
 }

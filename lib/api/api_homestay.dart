@@ -71,7 +71,8 @@ class ApiHomestay {
     String? token = prefs.getString(myToken);
     print("Location là: $location");
     try {
-      var url = "$baseUrl/api/v1/HomeStays?totalCapacity=0&location=$location";
+      var url =
+          "$baseUrl/api/v1/HomeStays?totalCapacity=${(capacity != null) ? capacity : 0}&location=$location";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);

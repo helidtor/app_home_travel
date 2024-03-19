@@ -90,7 +90,9 @@ class _ResultState extends State<ResultPreview> {
                       ),
                       Text(
                         // '${homestayModel.services?.first.serviceName}',
-                        '${homestayModel.totalCapacity} người',
+                        (homestayModel.totalCapacity != null)
+                            ? '${homestayModel.totalCapacity} người'
+                            : '',
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: GoogleFonts.nunito().fontFamily,

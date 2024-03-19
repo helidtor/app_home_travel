@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/constants/keyMap.dart';
-import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_event.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/result_search_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/widgets/buttons/gradient_button.dart';
+import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class AutocompleteMap extends StatefulWidget {
   const AutocompleteMap({super.key});
@@ -33,6 +35,7 @@ class FullMapState extends State<AutocompleteMap> {
   String selectedText = "";
   bool isShow = false;
   bool isHidden = true;
+  String capacity = '0';
 
   Future<void> fetchData(String input) async {
     try {
@@ -55,6 +58,8 @@ class FullMapState extends State<AutocompleteMap> {
   }
 
   Widget _buildListView() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return ListView.builder(
       itemCount: places.length,
       itemBuilder: (context, index) {
@@ -79,23 +84,104 @@ class FullMapState extends State<AutocompleteMap> {
                     color: Colors.black54,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           onTap: () async {
             setState(() {
               isShow = false;
               isHidden = false;
+              //lấy địa điểm search
               selectedText = coordinate['description'];
               print("Địa điểm đã chọn: $selectedText");
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ResultSearchScreen(
-                          stringLocation: selectedText,
-                        )),
+              //-------------------------Tìm kiếm--------------------------------
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    titlePadding: EdgeInsets.zero,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Nhập số người đi',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              fontFamily: GoogleFonts.nunito().fontFamily,
+                              color: AppColors.primaryColor3.withOpacity(0.9),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: AppColors.primaryColor3.withOpacity(0.9),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: '',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: AppColors.primaryColor3,
+                                width: 2,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: AppColors.primaryColor3,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          onChanged: (text) {
+                            setState(() {
+                              capacity = text;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 5),
+                        RoundGradientButton(
+                            title: 'Tìm kiếm',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResultSearchScreen(
+                                          stringLocation: selectedText,
+                                          capacity: capacity,
+                                        )),
+                              );
+                            })
+                      ],
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: const BorderSide(width: 1, color: Colors.grey),
+                    ),
+                  );
+                },
               );
             });
+
             final url = Uri.parse(
                 'https://rsapi.goong.io/geocode?address=${coordinate['description']}&api_key=HZHyZbGnVTYLMnnm0v4RY7RVSXlScGp9nwd7LS6l');
             var response = await http.get(url);
@@ -143,7 +229,7 @@ class FullMapState extends State<AutocompleteMap> {
                 controller: _searchController,
                 onChanged: (text) {
                   setState(() {
-                    searchText = text;
+                    capacity = text;
                   });
                   fetchData(text);
                   isHidden = true;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/format/format.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
-import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,7 +61,6 @@ class _HomestayState extends State<HomestayPreview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //image đợi thêm api
             Container(
               width: 260,
               height: 200,
@@ -87,7 +86,7 @@ class _HomestayState extends State<HomestayPreview> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${homestayModel.acreage}m\u00b2',
+                        '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 13,
@@ -99,7 +98,9 @@ class _HomestayState extends State<HomestayPreview> {
                       ),
                       Text(
                         // '${homestayModel.services?.first.serviceName}',
-                        '${homestayModel.totalCapacity} người',
+                        (homestayModel.totalCapacity != null)
+                            ? '${homestayModel.totalCapacity} người'
+                            : '',
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: GoogleFonts.nunito().fontFamily,
@@ -131,7 +132,9 @@ class _HomestayState extends State<HomestayPreview> {
                         color: AppColors.primaryColor3,
                       ),
                       Text(
-                        '${homestayModel.city}',
+                        (homestayModel.city != null)
+                            ? '${homestayModel.city}'
+                            : 'Đang đợi cập nhật',
                         style: TextStyle(
                             fontFamily: GoogleFonts.nunito().fontFamily,
                             fontSize: 13,

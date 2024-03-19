@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
+
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
@@ -12,13 +14,15 @@ import 'package:mobile_home_travel/screens/result_search.dart/result_preview.dar
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
-import 'package:toastification/toastification.dart';
 
 class ResultSearchScreen extends StatefulWidget {
   String stringLocation;
+  String capacity;
+
   ResultSearchScreen({
     Key? key,
     required this.stringLocation,
+    required this.capacity,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,7 @@ class ResultSearchScreen extends StatefulWidget {
 
 class _ResultSearchScreenState extends State<ResultSearchScreen> {
   final _bloc = SearchBloc();
+  int capacity = 0;
   List<HomestayModel> listHomestay = [];
   String displayScreen = 'assets/images/empty_search.png';
   double widthDisplay = 350;
@@ -37,7 +42,8 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
     String input = widget.stringLocation;
     List<String> parts = input.split(',');
     String location = parts.first.trim();
-    _bloc.add(SearchHomestay(location: location));
+    capacity = int.parse(widget.capacity);
+    _bloc.add(SearchHomestay(location: location, capacity: capacity));
   }
 
   @override
@@ -71,30 +77,35 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
                   color: Colors.white.withOpacity(0),
                   borderRadius: BorderRadius.circular(100)),
               alignment: Alignment.centerLeft,
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    flex: 8,
-                    child: Text(
-                      widget.stringLocation,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                        fontSize: 17,
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Text(
+                          widget.stringLocation,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.search,
-                        color: AppColors.primaryColor3.withOpacity(0.7),
+                      Expanded(
+                        flex: 1,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.search,
+                            color: AppColors.primaryColor3.withOpacity(0.7),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -152,17 +163,34 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
             return listHomestay.isNotEmpty
                 ? SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: Center(
-                      child: Column(
-                        children: List.generate(
-                          listHomestay.length,
-                          (index) => Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ResultPreview(
-                                homestayModel: listHomestay[index]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: TextButton.icon(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.person,
+                                color: AppColors.primaryColor3,
+                              ),
+                              label: Text(capacity.toString())),
+                        ),
+                        Center(
+                          child: Column(
+                            children: List.generate(
+                              listHomestay.length,
+                              (index) => Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: ResultPreview(
+                                    homestayModel: listHomestay[index]),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   )
                 : Center(

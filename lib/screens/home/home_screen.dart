@@ -9,6 +9,7 @@ import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_bloc.
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_state.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
+import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +48,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocConsumer<HomestayBloc, HomestayState>(
@@ -95,124 +99,192 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             return listHomestay.isNotEmpty
                 ? SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 30,
+                    child: Stack(
+                      children: [
+                        // Màu fade
+                        Container(
+                          height: screenHeight * 0.25,
+                          width: screenWidth,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                AppColors.primaryColor3,
+                                Color.fromARGB(0, 255, 255, 255),
+                                Color.fromARGB(0, 255, 255, 255),
+                              ], // Thay đổi màu sắc gradient tại đây
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: SizedBox(
-                              height: 40,
-                              child: TextFormField(
-                                readOnly: true,
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AutocompleteMap()),
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: 'Bạn muốn đi đâu?',
-                                  prefixIcon: const Icon(Icons.search),
-                                  border: OutlineInputBorder(
+                        ),
+                        Container(
+                          height: screenHeight * 0.25,
+                          width: screenWidth,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.primaryColor1,
+                                Color.fromARGB(0, 255, 255, 255),
+                                Color.fromARGB(0, 255, 255, 255),
+                              ], // Thay đổi màu sắc gradient tại đây
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                // width: 80,
+                                height: 50,
+                                // child: Image.asset(
+                                //   'assets/images/logo-notext.png',
+                                //   fit: BoxFit.cover,
+                                // ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.primaryColor1
+                                            .withOpacity(0.2), // Màu của bóng
+                                        spreadRadius: 1, // Bán kính bóng
+                                        blurRadius: 4, // Độ mờ của bóng
+                                        offset: const Offset(
+                                            2, 2), // Độ lệch của bóng
+                                      ),
+                                    ],
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
+
+                                    // border: Border.all(
+                                    //     width: 1,
+                                    //     color: AppColors.primaryColor3),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                    gapPadding: 5.0,
+                                  height: 60,
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AutocompleteMap()),
+                                    ),
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Bạn muốn đi đâu?',
+                                      hintStyle: TextStyle(
+                                          fontFamily:
+                                              GoogleFonts.nunito().fontFamily,
+                                          fontSize: 17,
+                                          color: const Color.fromARGB(
+                                              194, 158, 158, 158)),
+                                      prefixIcon: const Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 10,
+                                          bottom: 2,
+                                        ),
+                                        child: Icon(
+                                          Icons.search,
+                                          color: AppColors.primaryColor1,
+                                          size: 25,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.start, // Căn chỉnh
-                              children: [
-                                Text(
-                                  (listHomestay.length > 1) ? "Nổi bật" : "",
-                                  style: const TextStyle(
-                                    fontSize: 27,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    // fontFamily: GoogleFonts.nunito().fontFamily,
-                                  ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.start, // Căn chỉnh
+                                  children: [
+                                    Text(
+                                      (listHomestay.length > 1)
+                                          ? "Nổi bật"
+                                          : "",
+                                      style: const TextStyle(
+                                        fontSize: 27,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        // fontFamily: GoogleFonts.nunito().fontFamily,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(
-                                  listHomestay.length,
-                                  (index) => Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: HomestayPreview(
-                                        homestayModel: listHomestay[index]),
+                              ),
+                              SizedBox(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: List.generate(
+                                      listHomestay.length,
+                                      (index) => Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: HomestayPreview(
+                                            homestayModel: listHomestay[index]),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  (listHomestay.length > 1) ? "Xu hướng" : "",
-                                  style: const TextStyle(
-                                    fontSize: 27,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      (listHomestay.length > 1)
+                                          ? "Xu hướng"
+                                          : "",
+                                      style: const TextStyle(
+                                        fontSize: 27,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(
-                                  listHomestay.length,
-                                  (index) => Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: HomestayPreview(
-                                        homestayModel: listHomestay[index]),
+                              ),
+                              SizedBox(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: List.generate(
+                                      listHomestay.length,
+                                      (index) => Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: HomestayPreview(
+                                            homestayModel: listHomestay[index]),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              const SizedBox(
+                                height: 80,
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   )
                 : Center(

@@ -25,6 +25,9 @@ class _HomePageState extends State<HomePage> {
   List<HomestayModel> listHomestay = [];
   final _bloc = HomestayBloc();
   String? token;
+  String displayScreen = 'assets/images/error_loading.png';
+  double widthDisplay = 270;
+  double heightDisplay = 270;
 
   Future<void> checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,13 +53,21 @@ class _HomePageState extends State<HomePage> {
           bloc: _bloc,
           listener: (context, state) async {
             if (state is HomestayLoading) {
-              onLoading(context);
-              return;
+              // onLoading(context);
+              // return;
+              setState(() {
+                widthDisplay = 50;
+                heightDisplay = 50;
+                displayScreen = 'assets/gifs/loading.gif';
+              });
             } else if (state is HomestaySuccess) {
-              Navigator.pop(context);
+              // Navigator.pop(context);
               listHomestay = state.list;
             } else if (state is HomestayError) {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              widthDisplay = 270;
+              heightDisplay = 270;
+              displayScreen = 'assets/images/error_loading.png';
               toastification.show(
                   pauseOnHover: false,
                   showProgressBar: false,
@@ -103,9 +114,6 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) =>
                                           const AutocompleteMap()),
                                 ),
-                                onChanged: (value) {
-                                  setState(() {});
-                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -209,10 +217,10 @@ class _HomePageState extends State<HomePage> {
                   )
                 : Center(
                     child: SizedBox(
-                      width: 270,
-                      height: 270,
+                      width: widthDisplay,
+                      height: heightDisplay,
                       child: Image.asset(
-                        "assets/images/error_loading.png",
+                        displayScreen,
                         fit: BoxFit.cover,
                       ),
                     ),

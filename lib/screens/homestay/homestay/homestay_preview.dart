@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomestayPreview extends StatefulWidget {
   HomestayModel homestayModel;
@@ -18,7 +19,7 @@ class HomestayPreview extends StatefulWidget {
 }
 
 class _HomestayState extends State<HomestayPreview> {
-  late HomestayModel homestayModel;
+  HomestayModel homestayModel = HomestayModel();
 
   @override
   void initState() {
@@ -31,13 +32,15 @@ class _HomestayState extends State<HomestayPreview> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomeStayDetail(
-                  homestayModel: homestayModel,
-                )),
-      ),
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("idHomestay", homestayModel.id!);
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeStayDetail()),
+        );
+      },
       child: Container(
         height: 310,
         width: 260,
@@ -62,17 +65,16 @@ class _HomestayState extends State<HomestayPreview> {
             Container(
               width: 260,
               height: 200,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(253, 255, 255, 255),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(253, 255, 255, 255),
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  // image: (homestayModel.image!.isEmpty)
-                  //     ? const AssetImage("assets/images/homestay_default.jpg")
-                  //     : Image.network(homestayModel.image!.first).image,
-                  image: AssetImage("assets/images/homestay_default.jpg"),
+                  image: (homestayModel.images!.isEmpty)
+                      ? const AssetImage("assets/images/homestay_default.jpg")
+                      : Image.network(homestayModel.images!.first.url!).image,
                 ),
               ),
             ),

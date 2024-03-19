@@ -28,7 +28,9 @@ class ResultSearchScreen extends StatefulWidget {
 class _ResultSearchScreenState extends State<ResultSearchScreen> {
   final _bloc = SearchBloc();
   List<HomestayModel> listHomestay = [];
-
+  String displayScreen = 'assets/images/empty_search.png';
+  double widthDisplay = 350;
+  double heightDisplay = 350;
   @override
   void initState() {
     super.initState();
@@ -103,15 +105,25 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
           bloc: _bloc,
           listener: (context, state) async {
             if (state is SearchLoading) {
-              onLoading(context);
-              return;
+              setState(() {
+                widthDisplay = 50;
+                heightDisplay = 50;
+                displayScreen = 'assets/gifs/loading.gif';
+              });
             } else if (state is SearchSuccess) {
-              Navigator.pop(context);
               listHomestay = state.list;
             } else if (state is SearchEmpty) {
-              Navigator.pop(context);
+              setState(() {
+                widthDisplay = 350;
+                heightDisplay = 350;
+                displayScreen = 'assets/images/empty_search.png';
+              });
             } else if (state is SearchError) {
-              Navigator.pop(context);
+              setState(() {
+                widthDisplay = 350;
+                heightDisplay = 350;
+                displayScreen = 'assets/images/error_loading.png';
+              });
               toastification.show(
                   pauseOnHover: false,
                   showProgressBar: false,
@@ -155,10 +167,10 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
                   )
                 : Center(
                     child: SizedBox(
-                      width: 350,
-                      height: 350,
+                      width: widthDisplay,
+                      height: heightDisplay,
                       child: Image.asset(
-                        "assets/images/empty_search.png",
+                        displayScreen,
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_provider.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +34,33 @@ class ApiHomestay {
     }
 
     return homestay;
+  }
+
+  // <<<< Get detail homestay by id >>>>
+  static Future<HomestayDetailModel?> getDetailHomestay(
+      {required String idHomestay}) async {
+    HomestayDetailModel? detailHomestay;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+
+    try {
+      var url = "$baseUrl/api/v1/Homestays/$idHomestay";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST get detail homestay: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        detailHomestay = HomestayDetailModel.fromMap(postsJson);
+        print("Thông tin get detail homestay: $detailHomestay");
+      }
+    } catch (e) {
+      print("Loi get detail homestay: $e");
+    }
+
+    return detailHomestay;
   }
 
   // <<<< Search homestay by location and capacity>>>>

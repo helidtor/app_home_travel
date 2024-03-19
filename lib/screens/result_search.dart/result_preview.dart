@@ -33,10 +33,7 @@ class _ResultState extends State<ResultPreview> {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => HomeStayDetail(
-                  homestayModel: homestayModel,
-                )),
+        MaterialPageRoute(builder: (context) => const HomeStayDetail()),
       ),
       child: Container(
         height: 310,

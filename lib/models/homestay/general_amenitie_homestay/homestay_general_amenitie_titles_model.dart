@@ -8,13 +8,13 @@ import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/gen
 
 class HomeStayGeneralAmenitieTitlesModel {
   String? id;
-  String? name;
+  String? homeStayId;
   String? generalAmenitieTitleId;
   GeneralAmenitieTitleModel? generalAmenitieTitle;
   List<GeneralAmenitieSelectedsModel>? generalAmenitieSelecteds;
   HomeStayGeneralAmenitieTitlesModel({
     this.id,
-    this.name,
+    this.homeStayId,
     this.generalAmenitieTitleId,
     this.generalAmenitieTitle,
     this.generalAmenitieSelecteds,
@@ -22,14 +22,14 @@ class HomeStayGeneralAmenitieTitlesModel {
 
   HomeStayGeneralAmenitieTitlesModel copyWith({
     String? id,
-    String? name,
+    String? homeStayId,
     String? generalAmenitieTitleId,
     GeneralAmenitieTitleModel? generalAmenitieTitle,
     List<GeneralAmenitieSelectedsModel>? generalAmenitieSelecteds,
   }) {
     return HomeStayGeneralAmenitieTitlesModel(
       id: id ?? this.id,
-      name: name ?? this.name,
+      homeStayId: homeStayId ?? this.homeStayId,
       generalAmenitieTitleId:
           generalAmenitieTitleId ?? this.generalAmenitieTitleId,
       generalAmenitieTitle: generalAmenitieTitle ?? this.generalAmenitieTitle,
@@ -41,7 +41,7 @@ class HomeStayGeneralAmenitieTitlesModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
+      'homeStayId': homeStayId,
       'generalAmenitieTitleId': generalAmenitieTitleId,
       'generalAmenitieTitle': generalAmenitieTitle?.toMap(),
       'generalAmenitieSelecteds':
@@ -52,7 +52,8 @@ class HomeStayGeneralAmenitieTitlesModel {
   factory HomeStayGeneralAmenitieTitlesModel.fromMap(Map<String, dynamic> map) {
     return HomeStayGeneralAmenitieTitlesModel(
       id: map['id'] != null ? map['id'] as String : null,
-      name: map['name'] != null ? map['name'] as String : null,
+      homeStayId:
+          map['homeStayId'] != null ? map['homeStayId'] as String : null,
       generalAmenitieTitleId: map['generalAmenitieTitleId'] != null
           ? map['generalAmenitieTitleId'] as String
           : null,
@@ -80,7 +81,7 @@ class HomeStayGeneralAmenitieTitlesModel {
 
   @override
   String toString() {
-    return 'HomeStayGeneralAmenitieTitlesModel(id: $id, name: $name, generalAmenitieTitleId: $generalAmenitieTitleId, generalAmenitieTitle: $generalAmenitieTitle, generalAmenitieSelecteds: $generalAmenitieSelecteds)';
+    return 'HomeStayGeneralAmenitieTitlesModel(id: $id, homeStayId: $homeStayId, generalAmenitieTitleId: $generalAmenitieTitleId, generalAmenitieTitle: $generalAmenitieTitle, generalAmenitieSelecteds: $generalAmenitieSelecteds)';
   }
 
   @override
@@ -88,7 +89,7 @@ class HomeStayGeneralAmenitieTitlesModel {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.name == name &&
+        other.homeStayId == homeStayId &&
         other.generalAmenitieTitleId == generalAmenitieTitleId &&
         other.generalAmenitieTitle == generalAmenitieTitle &&
         listEquals(other.generalAmenitieSelecteds, generalAmenitieSelecteds);
@@ -97,7 +98,7 @@ class HomeStayGeneralAmenitieTitlesModel {
   @override
   int get hashCode {
     return id.hashCode ^
-        name.hashCode ^
+        homeStayId.hashCode ^
         generalAmenitieTitleId.hashCode ^
         generalAmenitieTitle.hashCode ^
         generalAmenitieSelecteds.hashCode;

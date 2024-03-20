@@ -1,24 +1,32 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class NavigatorBar extends StatefulWidget {
-  const NavigatorBar({super.key});
+  final int? stt;
+  const NavigatorBar({
+    Key? key,
+    this.stt,
+  }) : super(key: key);
 
   @override
   State<NavigatorBar> createState() => _NavigatorBarState();
 }
 
 class _NavigatorBarState extends State<NavigatorBar> {
-  int sttPage = 0;
-  Widget body = const HomePage();
+  late int sttPage;
+  late Widget body;
 
   @override
   void initState() {
     super.initState();
+    sttPage = widget.stt ?? 0;
+    body = (sttPage == 0) ? const HomePage() : const SettingsScreen();
   }
 
   @override
@@ -33,7 +41,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         onTap: (value) async {
           setState(() {
             sttPage = value;
-            if (value == 0) {
+            if (sttPage == 0) {
               body = const HomePage();
             } else if (value == 1) {
               body = const AutocompleteMap();

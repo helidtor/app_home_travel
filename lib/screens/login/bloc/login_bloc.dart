@@ -18,8 +18,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (event is CheckLoginEvent) {
         String? id = prefs.getString("id");
-        if (id != null) {
-          var userModel = await ApiProvider.getProfile(id: id);
+        if (id != "") {
+          var userModel = await ApiProvider.getProfile(id: id!);
           if (userModel != null) {
             emit(LoginSecondState(userProfileModel: userModel));
           } else {

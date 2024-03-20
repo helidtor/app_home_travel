@@ -9,6 +9,7 @@ import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 Future<HomestayDetailModel?> getHomestayDetail() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,8 +28,9 @@ class HomeStayDetail extends StatefulWidget {
 }
 
 class _HomeStayDetailState extends State<HomeStayDetail> {
+  final controller = PageController(viewportFraction: 1);
   HomestayDetailModel? homestayDetail;
-
+  List<String> listImagesHomestay = [];
   @override
   void initState() {
     super.initState();
@@ -40,6 +42,11 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
     if (mounted) {
       setState(() {
         homestayDetail = homestay!;
+        if (homestayDetail!.images!.isNotEmpty) {
+          listImagesHomestay =
+              homestayDetail!.images!.map((e) => e.url as String).toList();
+          print('List sau khi trích xuất: $listImagesHomestay');
+        }
       });
     }
   }
@@ -71,28 +78,63 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 280,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryColor3.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
+                  //ảnh homestay
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 280,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryColor3.withOpacity(0.3),
+                              spreadRadius: 0.1,
+                              blurRadius: 6,
+                              // offset: const Offset(0, 3),
+                            ),
+                          ],
+                          //ảnh mặc định khi homestay không có ảnh
+                          color: const Color.fromARGB(253, 255, 255, 255),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: (homestayDetail!.images!.isEmpty)
+                                ? const AssetImage(
+                                    "assets/images/homestay_default.jpg")
+                                : Image.network(
+                                        homestayDetail!.images!.first.url!)
+                                    .image,
+                          ),
                         ),
-                      ],
-                      color: const Color.fromARGB(253, 255, 255, 255),
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: (homestayDetail!.images!.isEmpty)
-                            ? const AssetImage(
-                                "assets/images/homestay_default.jpg")
-                            : Image.network(homestayDetail!.images!.first.url!)
-                                .image,
+                        //carouse image homestay
+                        child: PageView.builder(
+                            controller: controller,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: (listImagesHomestay.isEmpty)
+                                ? 0
+                                : listImagesHomestay.length,
+                            itemBuilder: (context, index) {
+                              return Image.network(
+                                listImagesHomestay[index],
+                                fit: BoxFit.cover,
+                              );
+                            }),
                       ),
-                    ),
+                      SmoothPageIndicator(
+                        controller: controller,
+                        count: (listImagesHomestay.isEmpty)
+                            ? 1
+                            : listImagesHomestay.length,
+                        effect: ScaleEffect(
+                          scale: 1.4,
+                          dotColor: Colors.white.withOpacity(0.4),
+                          activeDotColor:
+                              const Color.fromARGB(235, 255, 255, 255),
+                          dotHeight: 2,
+                          dotWidth: 15,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
@@ -186,7 +228,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dịch vụ',
+                          'Tiện ích chung',
                           style: TextStyle(
                               fontFamily: GoogleFonts.nunito().fontFamily,
                               fontSize: 25,

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_provider.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
@@ -8,6 +10,7 @@ import 'package:mobile_home_travel/models/user/login_user_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ApiProvider {
 //Login
@@ -104,12 +107,52 @@ class ApiProvider {
         print("Update profile xong");
         return true;
       } else {
-        print("Update profile thất bại");
+        print("Update profile thất bại $userProfileModel");
         return false;
       }
     } catch (e) {
       print("Loi update profile: $e");
       return false;
+    }
+  }
+
+  //Upload avatar
+  static Future<String?> uploadImage(File image, String imageName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    final url = Uri.parse('$baseUrl/api/v1/Files');
+    final headers = {
+      'accept': '*/*',
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'multipart/form-data',
+    };
+
+    final request = http.MultipartRequest('POST', url)
+      ..headers.addAll(headers)
+      ..files.add(
+        http.MultipartFile.fromBytes(
+          'file',
+          await image.readAsBytes(),
+          filename: imageName, // Tên tệp tinh chỉnh
+          contentType: MediaType('image', 'jpeg'), // Định dạng của hình ảnh
+        ),
+      );
+
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        print('Upload thành công: ${jsonResponse['data']['url']}');
+        return jsonResponse['data']['url'];
+      } else {
+        print('Lỗi upload: ${response.toString()}');
+        return null;
+      }
+    } catch (e) {
+      print('Upload lỗi: $e');
+      return null;
     }
   }
 }

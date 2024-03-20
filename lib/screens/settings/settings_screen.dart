@@ -103,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: const Color.fromARGB(253, 255, 255, 255),
                           borderRadius: BorderRadius.circular(500),
                           image: DecorationImage(
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             image: (user?.avatar != null)
                                 ? Image.network(user!.avatar!).image
                                 : const AssetImage(
@@ -115,32 +115,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     const SizedBox(
                       width: 20,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: (user?.firstName != null &&
-                                    user?.lastName != null)
-                                ? ('${user!.firstName} ${user!.lastName}')
-                                : '...',
-                            style: const TextStyle(
-                              color: Color.fromARGB(205, 0, 0, 0),
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                    (user?.firstName != null &&
+                            user?.lastName != null &&
+                            user?.email != null)
+                        ? RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${user!.firstName} ${user!.lastName}',
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(205, 0, 0, 0),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '\n${user!.email}',
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(132, 0, 0, 0),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : SizedBox(
+                            height: 40,
+                            child: Image.asset(
+                              'assets/gifs/loading_text.gif',
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          TextSpan(
-                            text: (user?.email != null)
-                                ? '\n${user!.email}'
-                                : '\n...',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Color.fromARGB(132, 0, 0, 0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     const Spacer(),
                     IconButton(
                       onPressed: () {

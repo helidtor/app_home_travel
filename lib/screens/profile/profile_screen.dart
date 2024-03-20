@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_bloc.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_event.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_state.dart';
@@ -19,13 +24,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  File? selectedImage;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final _bloc = ProfileBloc();
   bool isShow = false;
   UserProfileModel user = UserProfileModel();
-  UserProfileModel inforUpdate = UserProfileModel();
+  UserProfileModel? inforUpdate;
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +46,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NavigatorBar(
+                          stt: 4,
+                        )),
+              );
             },
             icon: const Icon(Icons.keyboard_arrow_left),
           ),
@@ -118,24 +131,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.all(12),
                           child: Column(
                             children: [
-                              Container(
-                                // ảnh ava
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(253, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(500),
-                                  border: Border.all(
-                                      color: const Color.fromARGB(
-                                          194, 172, 146, 243),
-                                      width: 4),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: (user.avatar != null)
-                                        ? Image.network(user.avatar!).image
-                                        : const AssetImage(
-                                            "assets/gifs/loading_ava.gif"),
+                              GestureDetector(
+                                onTap: () async {
+                                  pickImage();
+                                },
+                                child: Container(
+                                  // ảnh ava
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        253, 255, 255, 255),
+                                    borderRadius: BorderRadius.circular(500),
+                                    border: Border.all(
+                                        color: const Color.fromARGB(
+                                            194, 172, 146, 243),
+                                        width: 4),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: (user.avatar != null)
+                                          ? Image.network(user.avatar!).image
+                                          : const AssetImage(
+                                              "assets/gifs/loading_ava.gif"),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -161,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     content: user.firstName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate.firstName = value;
+                                        inforUpdate?.firstName = value;
                                       });
                                     },
                                   ),
@@ -174,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     content: user.lastName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate.lastName = value;
+                                        inforUpdate?.lastName = value;
                                       });
                                     },
                                   ),
@@ -189,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 content: user.phoneNumber ?? "...",
                                 onChangeText: (value) {
                                   setState(() {
-                                    inforUpdate.phoneNumber = value;
+                                    inforUpdate?.phoneNumber = value;
                                   });
                                 },
                               ),
@@ -199,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onPressed: () {
                                   _bloc.add(UpdateProfileEvent(
                                       id: user.id!,
-                                      userProfileModel: inforUpdate));
+                                      userProfileModel: inforUpdate!));
                                 },
                               ),
                             ],
@@ -227,5 +245,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     );
             }));
+  }
+
+// Hàm xử lý khi chọn ảnh
+  void handleImageSelection() async {
+    if (selectedImage != null) {
+      var result = await ApiProvider.uploadImage(
+        selectedImage!,
+        selectedImage!.path,
+      );
+      if (result != null) {
+        user.avatar = result;
+        _bloc.add(UpdateProfileEvent(id: user.id!, userProfileModel: user));
+      }
+    }
+  }
+
+  Future pickImage() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      selectedImage = File(returnedImage!.path);
+      handleImageSelection();
+    });
   }
 }

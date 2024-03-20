@@ -31,7 +31,7 @@ final router = GoRouter(
     if (RouteName.publicRoutes.contains(state.fullPath)) {
       return null;
     }
-    return RouteName.navigator;
+    return RouteName.login;
   },
   routes: [
     // GoRoute(

@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       if (id != null) {
         if (event is GetProfileEvent) {
-          var user = await ApiProvider.getProfile(id: id);
+          var user = await ApiUser.getProfile(id: id);
           if (user != null) {
             emit(ProfileStateSuccess(userProfileModel: user));
           } else {
@@ -27,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           }
         } else if (event is UpdateProfileEvent) {
           var check =
-              await ApiProvider.updateProfile(event.userProfileModel, event.id);
+              await ApiUser.updateProfile(event.userProfileModel, event.id);
           if (check == true) {
             emit(UpdateProfileSuccess());
           } else {

@@ -44,6 +44,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
+          shadowColor: Colors.grey,
           leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -250,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 // Hàm xử lý khi chọn ảnh
   void handleImageSelection() async {
     if (selectedImage != null) {
-      var result = await ApiProvider.uploadImage(
+      var result = await ApiUser.uploadImage(
         selectedImage!,
         selectedImage!.path,
       );

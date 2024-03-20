@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:mobile_home_travel/api/api_provider.dart';
+import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
@@ -12,7 +12,7 @@ import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
-class ApiProvider {
+class ApiUser {
 //Login
   static Future<UserLoginModel?> login(
       {required String phoneNumber, required String password}) async {

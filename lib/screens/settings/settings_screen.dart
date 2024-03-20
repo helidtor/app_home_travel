@@ -17,7 +17,7 @@ Future<void> clearToken() async {
 Future<UserProfileModel?> getUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? id = prefs.getString("id");
-  var userLogined = await ApiProvider.getProfile(id: id!);
+  var userLogined = await ApiUser.getProfile(id: id!);
   return userLogined;
 }
 

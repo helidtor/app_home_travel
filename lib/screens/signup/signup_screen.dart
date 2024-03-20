@@ -267,7 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   title: "Đăng ký",
                   onPressed: () async {
                     try {
-                      var checkSignUp = await ApiProvider.signup(
+                      var checkSignUp = await ApiUser.signup(
                           userSignUpModel: userSignUpModel);
                       if (checkSignUp == "success") {
                         router.go(RouteName.login);

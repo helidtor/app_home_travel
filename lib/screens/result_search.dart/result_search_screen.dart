@@ -52,21 +52,20 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: kToolbarHeight + 10,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: IconButton(
-              onPressed: () {
-                Navigator.popUntil(
-                  context,
-                  ModalRoute.withName('/navigator'),
-                );
-              },
-              icon: Icon(
-                Icons.close,
-                color: AppColors.primaryColor3.withOpacity(0.7),
-                size: 25,
-              ),
+          surfaceTintColor: Colors.white,
+          shadowColor: Colors.grey,
+          toolbarHeight: kToolbarHeight + 5,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName('/navigator'),
+              );
+            },
+            icon: Icon(
+              Icons.home_outlined,
+              color: AppColors.primaryColor3.withOpacity(0.7),
+              size: 30,
             ),
           ),
           actions: [
@@ -102,6 +101,7 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
                           icon: Icon(
                             Icons.search,
                             color: AppColors.primaryColor3.withOpacity(0.7),
+                            size: 28,
                           ),
                         ),
                       ),

@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (event is CheckLoginEvent) {
         String? id = prefs.getString("id");
         if (id != "") {
-          var userModel = await ApiProvider.getProfile(id: id!);
+          var userModel = await ApiUser.getProfile(id: id!);
           if (userModel != null) {
             emit(LoginSecondState(userProfileModel: userModel));
           } else {
@@ -33,12 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(const LoginFailure(
               error: "Tài khoản & mật khẩu không được để trống!"));
         } else {
-          var user = await ApiProvider.login(
+          var user = await ApiUser.login(
               phoneNumber: event.username, password: event.password);
           if (user != null) {
             prefs.setString(myToken, user.token ?? "");
             prefs.setString("id", user.id!);
-            var userLogin = await ApiProvider.getProfile(id: user.id!);
+            var userLogin = await ApiUser.getProfile(id: user.id!);
             emit(LoginSuccessState(userProfileModel: userLogin!));
           } else {
             emit(const LoginFailure(

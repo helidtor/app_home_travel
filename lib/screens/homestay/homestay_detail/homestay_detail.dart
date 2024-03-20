@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
+import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_selecteds_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_general_amenitie_titles_model.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
+import 'package:mobile_home_travel/screens/room/room_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +35,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
   final controller = PageController(viewportFraction: 1);
   HomestayDetailModel? homestayDetail;
   List<String> listImagesHomestay = [];
+  List<HomeStayGeneralAmenitieTitlesModel> listGeneralAmenitie = [];
+  List<GeneralAmenitieSelectedsModel> listAmenitieSelected = [];
   @override
   void initState() {
     super.initState();
@@ -41,11 +47,19 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
     final homestay = await getHomestayDetail();
     if (mounted) {
       setState(() {
+        //get list images homestay
         homestayDetail = homestay!;
         if (homestayDetail!.images!.isNotEmpty) {
           listImagesHomestay =
               homestayDetail!.images!.map((e) => e.url as String).toList();
-          print('List sau khi trích xuất: $listImagesHomestay');
+          // print('List image sau khi trích xuất: $listImagesHomestay');
+        }
+        //get list general amenitie homestay
+        if (homestayDetail!.homeStayGeneralAmenitieTitles!.isNotEmpty) {
+          listGeneralAmenitie = homestayDetail!.homeStayGeneralAmenitieTitles!
+              .map((e) => e)
+              .toList();
+          // print('List tiện ích sau khi trích xuất: $listImagesHomestay');
         }
       });
     }
@@ -56,6 +70,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.grey,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -126,12 +142,12 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                             ? 1
                             : listImagesHomestay.length,
                         effect: ScaleEffect(
-                          scale: 1.4,
+                          scale: 2,
                           dotColor: Colors.white.withOpacity(0.4),
                           activeDotColor:
                               const Color.fromARGB(235, 255, 255, 255),
                           dotHeight: 2,
-                          dotWidth: 15,
+                          dotWidth: 7.5,
                         ),
                       ),
                     ],
@@ -195,20 +211,25 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'chỉ từ ',
+                                text: (homestayDetail!.rooms!.isNotEmpty)
+                                    ? 'Số phòng: ${homestayDetail!.rooms!.length} - '
+                                    : 'Không có phòng',
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 17, // Kích thước chữ mặc định
-                                  color: Colors.black, // Màu chữ mặc định
+                                  fontSize: 15,
+                                  color: Colors.black.withOpacity(0.35),
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               TextSpan(
-                                text: '300k/ngày',
+                                text: (homestayDetail!.totalCapacity != null)
+                                    ? 'Sức chứa: ${homestayDetail!.totalCapacity}'
+                                    : '',
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 18, // Kích thước chữ in đậm
-                                  fontWeight: FontWeight.bold, // Chữ in đậm
-                                  color: Colors.black, // Màu chữ
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black.withOpacity(0.35),
                                 ),
                               ),
                             ],
@@ -235,140 +256,82 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
-                        ///////////////////////////////////////////// cắt từ đoạn này
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Row(
-                            children: [
-                              Column(
+                        //GridView general amenitie homestay
+                        Container(
+                          width: screenWidth,
+                          height: 50.0 + listGeneralAmenitie.length * 20.0,
+                          margin: const EdgeInsets.only(top: 25),
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                            ),
+                            itemCount: listGeneralAmenitie.length,
+                            itemBuilder: (context, index) {
+                              //element in list general amenitie
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.wind_power,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        Text(
-                                          'Máy lạnh',
-                                          style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        ),
-                                      ],
+                                    Text(
+                                      (listGeneralAmenitie[index]
+                                                  .generalAmenitieTitle
+                                                  ?.name !=
+                                              null)
+                                          ? listGeneralAmenitie[index]
+                                              .generalAmenitieTitle!
+                                              .name!
+                                          : 'Tiêu đề trống',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily:
+                                            GoogleFonts.nunito().fontFamily,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     const SizedBox(
-                                      height: 15,
+                                      height: 8,
                                     ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.wifi,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        Text(
-                                          'Wifi',
-                                          style: TextStyle(
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 20),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.done_outline_sharp,
+                                            color: AppColors.primaryColor3,
+                                            size: 15,
+                                          ),
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          Text(
+                                            (listGeneralAmenitie[index]
+                                                    .generalAmenitieSelecteds!
+                                                    .isNotEmpty)
+                                                ? listGeneralAmenitie[index]
+                                                    .generalAmenitieSelecteds!
+                                                    .first
+                                                    .generalAmenitie!
+                                                    .name!
+                                                : 'Không có tiện ích',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
                                               fontFamily: GoogleFonts.nunito()
                                                   .fontFamily,
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        ),
-                                      ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.local_parking_sharp,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        Text(
-                                          'Bãi đỗ xe',
-                                          style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
-                              const SizedBox(
-                                width: 100,
-                              ),
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.chalet_sharp,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        // Text(
-                                        //   '${homestayDetail.acreage}m\u00b2',
-                                        //   style: TextStyle(
-                                        //       fontFamily:
-                                        //           GoogleFonts.nunito().fontFamily,
-                                        //       fontSize: 16,
-                                        //       color: Colors.black),
-                                        // ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.shower,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        Text(
-                                          'Bồn tắm',
-                                          style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.electrical_services_rounded,
-                                          size: 25,
-                                          color: AppColors.primaryColor3,
-                                        ),
-                                        Text(
-                                          'Dịch vụ khác',
-                                          style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
-                                              fontSize: 16,
-                                              color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
-                            ],
+                                  ],
+                                ),
+                              );
+                            },
                           ),
-                        ),
-                        /////////////////////////////////////////////
+                        )
                       ],
                     ),
                   ),
@@ -408,6 +371,45 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
+                        left: 20, right: 20, top: 25, bottom: 25),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Danh sách phòng',
+                            style: TextStyle(
+                                fontFamily: GoogleFonts.nunito().fontFamily,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: List.generate(
+                                  homestayDetail!.rooms!.length,
+                                  (index) => Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: RoomPreview(
+                                        roomModel:
+                                            homestayDetail!.rooms![index]),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ),
+                  const Divider(
+                    thickness: 25,
+                    color: AppColors.backgroundApp,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
                         left: 20, right: 20, top: 10, bottom: 10),
                     child: Row(
                       children: [
@@ -415,21 +417,21 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'chỉ từ ',
+                                text: 'nhận ',
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 18, // Kích thước chữ mặc định
-                                  color: Colors.black, // Màu chữ mặc định
+                                  fontSize: 18,
+                                  color: Colors.black,
                                 ),
                               ),
                               TextSpan(
-                                text: '300k/ngày',
+                                text: 'Ưu Đãi Hot',
                                 style: TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 20, // Kích thước chữ in đậm
-                                  fontWeight: FontWeight.bold, // Chữ in đậm
-                                  color: Colors.black, // Màu chữ
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
                               ),
                             ],

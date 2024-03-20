@@ -6,4 +6,10 @@ class FormatProvider {
     final number = int.parse(input);
     return formatter.format(number);
   }
+
+  String formatPrice(String input) {
+    final formatter = NumberFormat("#,###");
+    final number = int.parse(input);
+    return formatter.format(number);
+  }
 }

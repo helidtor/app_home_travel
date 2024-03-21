@@ -42,7 +42,7 @@ class _HomestayState extends State<HomestayPreview> {
         );
       },
       child: Container(
-        height: 310,
+        height: 280,
         width: 260,
         decoration: BoxDecoration(
             border: Border.all(
@@ -63,7 +63,7 @@ class _HomestayState extends State<HomestayPreview> {
           children: [
             Container(
               width: 260,
-              height: 200,
+              height: 180,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(253, 255, 255, 255),
                 borderRadius: const BorderRadius.only(
@@ -113,13 +113,19 @@ class _HomestayState extends State<HomestayPreview> {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    '${homestayModel.name}',
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.nunito().fontFamily,
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 25,
+                    child: Text(
+                      (homestayModel.name != null)
+                          ? '${homestayModel.name}'
+                          : 'Đợi cập nhật nha bé ơi bé à bé ăn trứng gà',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(
                     height: 5,

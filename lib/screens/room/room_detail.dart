@@ -160,7 +160,7 @@ class _roomDetailState extends State<roomDetail> {
                           '${roomDetail!.name}',
                           style: TextStyle(
                               fontFamily: GoogleFonts.nunito().fontFamily,
-                              fontSize: 25,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
@@ -212,7 +212,7 @@ class _roomDetailState extends State<roomDetail> {
                           'Tiện ích phòng',
                           style: TextStyle(
                               fontFamily: GoogleFonts.nunito().fontFamily,
-                              fontSize: 25,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),

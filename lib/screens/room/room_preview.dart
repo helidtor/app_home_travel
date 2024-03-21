@@ -43,7 +43,7 @@ class _RoomPreviewState extends State<RoomPreview> {
       },
       child: Container(
         // height: 315,
-        width: 260,
+        width: 240,
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(253, 255, 255, 255),
@@ -62,8 +62,8 @@ class _RoomPreviewState extends State<RoomPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 260,
-              height: 120,
+              width: 240,
+              height: 100,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(253, 255, 255, 255),
                 borderRadius: const BorderRadius.only(
@@ -124,13 +124,16 @@ class _RoomPreviewState extends State<RoomPreview> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    '${roomModel.name}',
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.nunito().fontFamily,
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 45,
+                    child: Text(
+                      '${roomModel.name}',
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.nunito().fontFamily,
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(
                     height: 5,

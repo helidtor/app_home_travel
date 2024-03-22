@@ -8,6 +8,7 @@ import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/hom
 import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_general_amenitie_titles_model.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
+import 'package:mobile_home_travel/screens/booking/pick_date.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
 import 'package:mobile_home_travel/screens/room/room_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -221,10 +222,9 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                     : 'Số phòng: 0 - ',
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  // fontStyle: FontStyle.italic,
-                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                  color: Colors.black.withOpacity(0.35),
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               TextSpan(
@@ -233,7 +233,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                     : 'Sức chứa: 0',
                                 style: TextStyle(
                                   fontFamily: GoogleFonts.nunito().fontFamily,
-                                  fontSize: 15,
+                                  fontSize: 13,
                                   color: Colors.black.withOpacity(0.35),
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -255,7 +255,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Mô tả',
+                            'Mô Tả',
                             style: TextStyle(
                                 fontFamily: GoogleFonts.nunito().fontFamily,
                                 fontSize: 16,
@@ -368,7 +368,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Danh sách phòng',
+                            'Danh Sách Phòng',
                             style: TextStyle(
                                 fontFamily: GoogleFonts.nunito().fontFamily,
                                 fontSize: 16,
@@ -433,7 +433,13 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                         RoundGradientButton(
                           title: 'Đặt phòng ngay',
                           width: 130,
-                          onPressed: () {},
+                          onPressed: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const PickDate()),
+                            // );
+                          },
                         ),
                       ],
                     ),

@@ -160,17 +160,18 @@ class FullMapState extends State<AutocompleteMap> {
                         ),
                         const SizedBox(height: 5),
                         RoundGradientButton(
-                            title: 'Tìm kiếm',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResultSearchScreen(
-                                          stringLocation: selectedText,
-                                          capacity: capacity,
-                                        )),
-                              );
-                            })
+                          title: 'Tìm kiếm',
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultSearchScreen(
+                                        stringLocation: selectedText,
+                                        capacity: capacity,
+                                      )),
+                            );
+                          },
+                        )
                       ],
                     ),
                     shape: RoundedRectangleBorder(

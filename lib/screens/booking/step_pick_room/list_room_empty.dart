@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/api/api_room.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/row_room.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListRoomEmpty extends StatefulWidget {
@@ -56,6 +58,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -71,7 +74,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         ),
         // centerTitle: true,
         title: Text(
-          "Chọn phòng để đặt",
+          "Chọn phòng",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),
@@ -94,15 +97,36 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         ],
       ),
       body: listRoom.isNotEmpty
-          ? Container(
-              alignment: Alignment.topCenter,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: List.generate(listRoom.length,
-                      (index) => RowRoom(room: listRoom[index])),
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  alignment: Alignment.topCenter,
+                  height: screenHeight * 0.77,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: List.generate(listRoom.length,
+                          (index) => RowRoom(room: listRoom[index])),
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: RoundGradientButton(
+                    title: 'Tiếp tục',
+                    height: 25,
+                    width: 110,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ReviewBooking()),
+                      );
+                    },
+                  ),
+                ),
+              ],
             )
           : Center(
               child: SizedBox(

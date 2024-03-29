@@ -215,11 +215,13 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       (listHomestay.length > 1)
-                                          ? "Homestays xu hướng"
+                                          ? "Homestay xu hướng"
                                           : "",
-                                      style: const TextStyle(
-                                        fontSize: 27,
-                                        color: Colors.black,
+                                      style: TextStyle(
+                                        fontFamily:
+                                            GoogleFonts.nunito().fontFamily,
+                                        fontSize: 25,
+                                        color: Colors.black.withOpacity(0.75),
                                         fontWeight: FontWeight.bold,
                                         // fontFamily: GoogleFonts.nunito().fontFamily,
                                       ),
@@ -254,9 +256,11 @@ class _HomePageState extends State<HomePage> {
                                       (listHomestay.length > 1)
                                           ? "Homestay yêu thích"
                                           : "",
-                                      style: const TextStyle(
-                                        fontSize: 27,
-                                        color: Colors.black,
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.black.withOpacity(0.75),
+                                        fontFamily:
+                                            GoogleFonts.nunito().fontFamily,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

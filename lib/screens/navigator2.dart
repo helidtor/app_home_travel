@@ -1,7 +1,9 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
+import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class Navigator extends StatefulWidget {
   const Navigator({super.key});
@@ -23,8 +25,8 @@ class _NavigatorState extends State<Navigator> {
 
   final List<Widget> bottomBarPages = [
     const HomePage(),
+    const AutocompleteMap(),
     const SettingsScreen(),
-    const HomePage(),
     const HomePage(),
     const SettingsScreen(),
   ];
@@ -39,68 +41,70 @@ class _NavigatorState extends State<Navigator> {
             bottomBarPages.length, (index) => bottomBarPages[index]),
       ),
       bottomNavigationBar: AnimatedNotchBottomBar(
+        showShadow: true,
+        notchGradient: AppColors.myGradient,
         notchBottomBarController: _controller,
-        color: Colors.white,
+        color: const Color.fromARGB(255, 136, 78, 207),
         showLabel: false,
-        notchColor: const Color.fromARGB(235, 136, 78, 207),
         removeMargins: false,
         bottomBarWidth: 500,
-        durationInMilliSeconds: 400,
-        bottomBarItems: const [
+        bottomBarHeight: 50,
+        durationInMilliSeconds: 300,
+        bottomBarItems: [
           BottomBarItem(
             inActiveItem: Icon(
               Icons.home_filled,
-              color: Colors.blueGrey,
+              color: Colors.grey[200],
             ),
-            activeItem: Icon(
+            activeItem: const Icon(
               Icons.home_filled,
               color: Colors.white,
             ),
-            itemLabel: 'Home',
+            itemLabel: 'Trang chủ',
           ),
           BottomBarItem(
             inActiveItem: Icon(
               Icons.chat,
-              color: Colors.blueGrey,
+              color: Colors.grey[200],
             ),
-            activeItem: Icon(
+            activeItem: const Icon(
               Icons.chat,
+              color: Colors.white,
+            ),
+            itemLabel: 'Tìm kiếm',
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.payment,
+              color: Colors.grey[200],
+            ),
+            activeItem: const Icon(
+              Icons.payment,
               color: Colors.white,
             ),
             itemLabel: 'Chat',
           ),
           BottomBarItem(
             inActiveItem: Icon(
-              Icons.payment,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.payment,
-              color: Colors.white,
-            ),
-            itemLabel: 'Payment',
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
               Icons.history,
-              color: Colors.blueGrey,
+              color: Colors.grey[200],
             ),
-            activeItem: Icon(
+            activeItem: const Icon(
               Icons.history,
               color: Colors.white,
             ),
-            itemLabel: 'History',
+            itemLabel: 'Lịch sử',
           ),
           BottomBarItem(
             inActiveItem: Icon(
               Icons.settings,
-              color: Colors.blueGrey,
+              color: Colors.grey[200],
             ),
-            activeItem: Icon(
+            activeItem: const Icon(
               Icons.settings,
               color: Colors.white,
             ),
-            itemLabel: 'Settings',
+            itemLabel: 'Cài đặt',
           ),
         ],
         onTap: (index) {

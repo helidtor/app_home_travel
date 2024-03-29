@@ -42,7 +42,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
           setState(() {
             sttPage = value;
             if (sttPage == 0) {
-              
               body = const HomePage();
             } else if (value == 1) {
               body = const AutocompleteMap();

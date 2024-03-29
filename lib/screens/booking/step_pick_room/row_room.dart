@@ -65,39 +65,44 @@ class _RowRoomState extends State<RowRoom> {
                       color: Colors.black.withOpacity(0.65)),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${roomEmpty.capacity}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: GoogleFonts.nunito().fontFamily,
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.person,
+                      color: AppColors.primaryColor3,
+                      size: 20,
                     ),
-                  ),
-                  const Icon(
-                    Icons.person,
-                    color: AppColors.primaryColor3,
-                    size: 20,
-                  ),
-                ],
+                    Text(
+                      '${roomEmpty.capacity}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${FormatProvider().formatPrice((roomEmpty.price != null) ? roomEmpty.price.toString() : '0')} ',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: GoogleFonts.nunito().fontFamily,
+              SizedBox(
+                width: 100,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.payments_outlined,
+                      color: AppColors.primaryColor3,
+                      size: 20,
                     ),
-                  ),
-                  const Icon(
-                    Icons.payments_outlined,
-                    color: AppColors.primaryColor3,
-                    size: 20,
-                  ),
-                ],
+                    Text(
+                      ' ${FormatProvider().formatPrice((roomEmpty.price != null) ? roomEmpty.price.toString() : '0')} ',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Checkbox(
                 activeColor: AppColors.primaryColor3,

@@ -24,12 +24,43 @@ class ApiRoom {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         roomDetail = RoomModel.fromMap(postsJson);
-        print("Thông tin get room: $roomDetail");
+        // print("Thông tin get room: $roomDetail");
       }
     } catch (e) {
       print("Loi get detail homestay: $e");
     }
-
     return roomDetail;
+  }
+
+  // <<<< Get all room empty by date >>>>
+  static Future<List<RoomModel>?> getAllRoomEmptyByDate(
+      {required String homeStayId,
+      required String dateCheckIn,
+      required String dateCheckOut}) async {
+    List<RoomModel>? listRoom;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+
+    try {
+      var url =
+          "$baseUrl/api/v1/Rooms/emptyRooms?pageSize=50&homeStayId=$homeStayId&startDate=$dateCheckIn&endDate=$dateCheckOut";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST get all room empty: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listRoom = (postsJson as List)
+            .map<RoomModel>((postJson) => RoomModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get all room empty: $listRoom");
+      }
+    } catch (e) {
+      print("Loi get all room empty: $e");
+    }
+
+    return listRoom;
   }
 }

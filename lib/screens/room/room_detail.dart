@@ -48,7 +48,7 @@ class _roomDetailState extends State<roomDetail> {
         if (roomDetail!.images!.isNotEmpty) {
           listImagesHomestay =
               roomDetail!.images!.map((e) => e.url as String).toList();
-          print('List sau khi trích xuất: $listImagesHomestay');
+          // print('List sau khi trích xuất: $listImagesHomestay');
         }
       });
     }

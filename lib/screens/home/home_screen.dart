@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       (listHomestay.length > 1)
-                                          ? "Nổi bật"
+                                          ? "Homestays xu hướng"
                                           : "",
                                       style: const TextStyle(
                                         fontSize: 27,
@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       (listHomestay.length > 1)
-                                          ? "Xu hướng"
+                                          ? "Homestay yêu thích"
                                           : "",
                                       style: const TextStyle(
                                         fontSize: 27,

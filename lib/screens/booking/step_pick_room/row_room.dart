@@ -1,0 +1,118 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/format/format.dart';
+
+import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
+import 'package:mobile_home_travel/screens/room/room_detail.dart';
+import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class RowRoom extends StatefulWidget {
+  RoomModel room;
+  RowRoom({
+    Key? key,
+    required this.room,
+  }) : super(key: key);
+
+  @override
+  State<RowRoom> createState() => _RowRoomState();
+}
+
+class _RowRoomState extends State<RowRoom> {
+  late RoomModel roomEmpty;
+  bool isChecked = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    roomEmpty = widget.room;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("idRoom", roomEmpty.id!);
+        Navigator.push(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (context) => const roomDetail()),
+        );
+      },
+      child: Container(
+        height: 50,
+        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        decoration: BoxDecoration(
+            border: Border.all(color: AppColors.primaryColor3, width: 2),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                width: 100,
+                child: Text(
+                  roomEmpty.name!,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.black.withOpacity(0.65)),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${roomEmpty.capacity}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: GoogleFonts.nunito().fontFamily,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.person,
+                    color: AppColors.primaryColor3,
+                    size: 20,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${FormatProvider().formatPrice((roomEmpty.price != null) ? roomEmpty.price.toString() : '0')} ',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: GoogleFonts.nunito().fontFamily,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.payments_outlined,
+                    color: AppColors.primaryColor3,
+                    size: 20,
+                  ),
+                ],
+              ),
+              Checkbox(
+                activeColor: AppColors.primaryColor3,
+                shape: const CircleBorder(),
+                value: isChecked,
+                onChanged: (newValue) {
+                  setState(() {
+                    isChecked = newValue!;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

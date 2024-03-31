@@ -5,7 +5,7 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 
 class BookingHomestayModel {
   String? id;
-  double? totalPrice;
+  num? totalPrice;
   String? checkInDate;
   String? checkOutDate;
   String? status;
@@ -25,7 +25,7 @@ class BookingHomestayModel {
 
   BookingHomestayModel copyWith({
     String? id,
-    double? totalPrice,
+    num? totalPrice,
     String? checkInDate,
     String? checkOutDate,
     String? status,
@@ -61,19 +61,25 @@ class BookingHomestayModel {
   factory BookingHomestayModel.fromMap(Map<String, dynamic> map) {
     return BookingHomestayModel(
       id: map['id'] != null ? map['id'] as String : null,
-      totalPrice: map['totalPrice'] != null ? map['totalPrice'] as double : null,
-      checkInDate: map['checkInDate'] != null ? map['checkInDate'] as String : null,
-      checkOutDate: map['checkOutDate'] != null ? map['checkOutDate'] as String : null,
+      totalPrice: map['totalPrice'] != null ? map['totalPrice'] as num : null,
+      checkInDate:
+          map['checkInDate'] != null ? map['checkInDate'] as String : null,
+      checkOutDate:
+          map['checkOutDate'] != null ? map['checkOutDate'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
-      createdDate: map['createdDate'] != null ? map['createdDate'] as String : null,
+      createdDate:
+          map['createdDate'] != null ? map['createdDate'] as String : null,
       touristId: map['touristId'] != null ? map['touristId'] as String : null,
-      tourist: map['tourist'] != null ? UserProfileModel.fromMap(map['tourist'] as Map<String,dynamic>) : null,
+      tourist: map['tourist'] != null
+          ? UserProfileModel.fromMap(map['tourist'] as Map<String, dynamic>)
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory BookingHomestayModel.fromJson(String source) => BookingHomestayModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory BookingHomestayModel.fromJson(String source) =>
+      BookingHomestayModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -83,27 +89,26 @@ class BookingHomestayModel {
   @override
   bool operator ==(covariant BookingHomestayModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.totalPrice == totalPrice &&
-      other.checkInDate == checkInDate &&
-      other.checkOutDate == checkOutDate &&
-      other.status == status &&
-      other.createdDate == createdDate &&
-      other.touristId == touristId &&
-      other.tourist == tourist;
+
+    return other.id == id &&
+        other.totalPrice == totalPrice &&
+        other.checkInDate == checkInDate &&
+        other.checkOutDate == checkOutDate &&
+        other.status == status &&
+        other.createdDate == createdDate &&
+        other.touristId == touristId &&
+        other.tourist == tourist;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      totalPrice.hashCode ^
-      checkInDate.hashCode ^
-      checkOutDate.hashCode ^
-      status.hashCode ^
-      createdDate.hashCode ^
-      touristId.hashCode ^
-      tourist.hashCode;
+        totalPrice.hashCode ^
+        checkInDate.hashCode ^
+        checkOutDate.hashCode ^
+        status.hashCode ^
+        createdDate.hashCode ^
+        touristId.hashCode ^
+        tourist.hashCode;
   }
 }

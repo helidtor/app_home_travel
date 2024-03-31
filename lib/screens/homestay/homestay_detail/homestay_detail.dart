@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_selecteds_model.dart';
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_general_amenitie_titles_model.dart';
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_date/pick_date.dart';

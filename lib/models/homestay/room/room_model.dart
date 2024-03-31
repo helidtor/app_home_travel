@@ -12,11 +12,11 @@ class RoomModel {
   String? id;
   String? name;
   int? numberOfBeds;
-  double? acreage;
+  num? acreage;
   int? capacity;
-  int? price;
+  num? price;
   String? status;
-  int? weekendPrice;
+  num? weekendPrice;
   String? homeStayId;
   List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles;
   List<RoomModel>? rooms;
@@ -40,11 +40,11 @@ class RoomModel {
     String? id,
     String? name,
     int? numberOfBeds,
-    double? acreage,
+    num? acreage,
     int? capacity,
-    int? price,
+    num? price,
     String? status,
-    int? weekendPrice,
+    num? weekendPrice,
     String? homeStayId,
     List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles,
     List<RoomModel>? rooms,
@@ -91,12 +91,12 @@ class RoomModel {
       name: map['name'] != null ? map['name'] as String : null,
       numberOfBeds:
           map['numberOfBeds'] != null ? map['numberOfBeds'] as int : null,
-      acreage: map['acreage'] != null ? map['acreage'] as double : null,
+      acreage: map['acreage'] != null ? map['acreage'] as num : null,
       capacity: map['capacity'] != null ? map['capacity'] as int : null,
-      price: map['price'] != null ? map['price'] as int : null,
+      price: map['price'] != null ? map['price'] as num : null,
       status: map['status'] != null ? map['status'] as String : null,
       weekendPrice:
-          map['weekendPrice'] != null ? map['weekendPrice'] as int : null,
+          map['weekendPrice'] != null ? map['weekendPrice'] as num : null,
       homeStayId:
           map['homeStayId'] != null ? map['homeStayId'] as String : null,
       homeStayGeneralAmenitieTitles:

@@ -9,7 +9,7 @@ class HomestayModel {
   List<ImageHomeModel>? images;
   String? id;
   String? name;
-  double? acreage;
+  num? acreage;
   String? description;
   String? city;
   String? district;
@@ -47,7 +47,7 @@ class HomestayModel {
     List<ImageHomeModel>? images,
     String? id,
     String? name,
-    double? acreage,
+    num? acreage,
     String? description,
     String? city,
     String? district,
@@ -116,7 +116,7 @@ class HomestayModel {
   //         : null,
   //     id: map['id'] != null ? map['id'] as String : null,
   //     name: map['name'] != null ? map['name'] as String : null,
-  //     acreage: map['acreage'] != null ? map['acreage'] as double : null,
+  //     acreage: map['acreage'] != null ? map['acreage'] as num : null,
   //     description:
   //         map['description'] != null ? map['description'] as String : null,
   //     city: map['city'] != null ? map['city'] as String : null,
@@ -147,7 +147,7 @@ class HomestayModel {
           : null,
       id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
-      acreage: map['acreage'] != null ? map['acreage'] as double : null,
+      acreage: map['acreage'] != null ? map['acreage'] as num : null,
       description:
           map['description'] != null ? map['description'] as String : null,
       city: map['city'] != null ? map['city'] as String : null,

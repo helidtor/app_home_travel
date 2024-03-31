@@ -10,7 +10,7 @@ import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 class HomestayDetailModel {
   String? id;
   String? name;
-  double? acreage;
+  num? acreage;
   String? city;
   String? district;
   String? commune;
@@ -52,7 +52,7 @@ class HomestayDetailModel {
   HomestayDetailModel copyWith({
     String? id,
     String? name,
-    double? acreage,
+    num? acreage,
     String? city,
     String? district,
     String? commune,
@@ -123,7 +123,7 @@ class HomestayDetailModel {
     return HomestayDetailModel(
       id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
-      acreage: map['acreage'] != null ? map['acreage'] as double : null,
+      acreage: map['acreage'] != null ? map['acreage'] as num : null,
       city: map['city'] != null ? map['city'] as String : null,
       district: map['district'] != null ? map['district'] as String : null,
       commune: map['commune'] != null ? map['commune'] as String : null,
@@ -171,7 +171,7 @@ class HomestayDetailModel {
 //     return HomestayDetailModel(
 //       id: map['id'] != null ? map['id'] as String : null,
 //       name: map['name'] != null ? map['name'] as String : null,
-//       acreage: map['acreage'] != null ? map['acreage'] as double : null,
+//       acreage: map['acreage'] != null ? map['acreage'] as num : null,
 //       city: map['city'] != null ? map['city'] as String : null,
 //       district: map['district'] != null ? map['district'] as String : null,
 //       commune: map['commune'] != null ? map['commune'] as String : null,

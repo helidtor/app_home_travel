@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class BookingHomestayDetail {
-  double? price;
+  num? price;
   String? roomId;
   String? bookingId;
   BookingHomestayDetail({
@@ -12,7 +12,7 @@ class BookingHomestayDetail {
   });
 
   BookingHomestayDetail copyWith({
-    double? price,
+    num? price,
     String? roomId,
     String? bookingId,
   }) {
@@ -33,7 +33,7 @@ class BookingHomestayDetail {
 
   factory BookingHomestayDetail.fromMap(Map<String, dynamic> map) {
     return BookingHomestayDetail(
-      price: map['price'] != null ? map['price'] as double : null,
+      price: map['price'] != null ? map['price'] as num : null,
       roomId: map['roomId'] != null ? map['roomId'] as String : null,
       bookingId: map['bookingId'] != null ? map['bookingId'] as String : null,
     );

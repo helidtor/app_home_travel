@@ -9,7 +9,7 @@ class HomestayModel {
   List<ImageHomeModel>? images;
   String? id;
   String? name;
-  int? acreage;
+  double? acreage;
   String? description;
   String? city;
   String? district;
@@ -47,7 +47,7 @@ class HomestayModel {
     List<ImageHomeModel>? images,
     String? id,
     String? name,
-    int? acreage,
+    double? acreage,
     String? description,
     String? city,
     String? district,
@@ -105,6 +105,37 @@ class HomestayModel {
     };
   }
 
+  // factory HomestayModel.fromMap(Map<String, dynamic> map) {
+  //   return HomestayModel(
+  //     images: map['images'] != null
+  //         ? List<ImageHomeModel>.from(
+  //             (map['images']).map<ImageHomeModel?>(
+  //               (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
+  //             ),
+  //           )
+  //         : null,
+  //     id: map['id'] != null ? map['id'] as String : null,
+  //     name: map['name'] != null ? map['name'] as String : null,
+  //     acreage: map['acreage'] != null ? map['acreage'] as double : null,
+  //     description:
+  //         map['description'] != null ? map['description'] as String : null,
+  //     city: map['city'] != null ? map['city'] as String : null,
+  //     district: map['district'] != null ? map['district'] as String : null,
+  //     commune: map['commune'] != null ? map['commune'] as String : null,
+  //     house: map['house'] != null ? map['house'] as String : null,
+  //     hamlet: map['hamlet'] != null ? map['hamlet'] as String : null,
+  //     street: map['street'] != null ? map['street'] as String : null,
+  //     address: map['address'] != null ? map['address'] as String : null,
+  //     checkInTime:
+  //         map['checkInTime'] != null ? map['checkInTime'] as String : null,
+  //     checkOutTime:
+  //         map['checkOutTime'] != null ? map['checkOutTime'] as String : null,
+  //     totalCapacity:
+  //         map['totalCapacity'] != null ? map['totalCapacity'] as int : null,
+  //     status: map['status'] != null ? map['status'] as String : null,
+  //     ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
+  //   );
+  // }
   factory HomestayModel.fromMap(Map<String, dynamic> map) {
     return HomestayModel(
       images: map['images'] != null
@@ -116,7 +147,7 @@ class HomestayModel {
           : null,
       id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
-      acreage: map['acreage'] != null ? map['acreage'] as int : null,
+      acreage: map['acreage'] != null ? map['acreage'] as double : null,
       description:
           map['description'] != null ? map['description'] as String : null,
       city: map['city'] != null ? map['city'] as String : null,

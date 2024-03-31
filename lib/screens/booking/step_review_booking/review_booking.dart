@@ -120,7 +120,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Đây là homestay đẹp lắm đó nha',
+                                    'Yoko Homestay 2',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -169,7 +169,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       ),
                                       Flexible(
                                         child: Text(
-                                          'Quận 12, Thành Phố Hồ Chí Minh',
+                                          'Đà Lạt',
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontFamily:
@@ -245,7 +245,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       fontWeight: FontWeight.w400),
                                   children: [
                                     const TextSpan(
-                                        text: "350.000.000đ\n",
+                                        text: "515.000 VNĐ\n",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold)),

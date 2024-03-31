@@ -11,6 +11,7 @@ class UserProfileModel {
   bool? gender;
   String? dateOfBirth;
   String? avatar;
+  String? status;
   UserProfileModel({
     this.id,
     this.firstName,
@@ -21,6 +22,7 @@ class UserProfileModel {
     this.gender,
     this.dateOfBirth,
     this.avatar,
+    this.status,
   });
 
   UserProfileModel copyWith({
@@ -33,6 +35,7 @@ class UserProfileModel {
     bool? gender,
     String? dateOfBirth,
     String? avatar,
+    String? status,
   }) {
     return UserProfileModel(
       id: id ?? this.id,
@@ -44,6 +47,7 @@ class UserProfileModel {
       gender: gender ?? this.gender,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       avatar: avatar ?? this.avatar,
+      status: status ?? this.status,
     );
   }
 
@@ -58,6 +62,7 @@ class UserProfileModel {
       'gender': gender,
       'dateOfBirth': dateOfBirth,
       'avatar': avatar,
+      'status': status,
     };
   }
 
@@ -74,6 +79,7 @@ class UserProfileModel {
       dateOfBirth:
           map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
     );
   }
 
@@ -84,7 +90,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth, avatar: $avatar)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth, avatar: $avatar, status: $status)';
   }
 
   @override
@@ -99,7 +105,8 @@ class UserProfileModel {
         other.phoneNumber == phoneNumber &&
         other.gender == gender &&
         other.dateOfBirth == dateOfBirth &&
-        other.avatar == avatar;
+        other.avatar == avatar &&
+        other.status == status;
   }
 
   @override
@@ -112,6 +119,7 @@ class UserProfileModel {
         phoneNumber.hashCode ^
         gender.hashCode ^
         dateOfBirth.hashCode ^
-        avatar.hashCode;
+        avatar.hashCode ^
+        status.hashCode;
   }
 }

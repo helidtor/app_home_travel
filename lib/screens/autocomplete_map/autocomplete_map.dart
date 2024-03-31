@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+
 import 'package:mobile_home_travel/constants/keyMap.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/result_search_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -11,7 +13,11 @@ import 'package:mobile_home_travel/widgets/buttons/gradient_button.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class AutocompleteMap extends StatefulWidget {
-  const AutocompleteMap({super.key});
+  bool? isHaveBtnClose;
+  AutocompleteMap({
+    Key? key,
+    this.isHaveBtnClose,
+  }) : super(key: key);
 
   @override
   State createState() => FullMapState();
@@ -211,14 +217,17 @@ class FullMapState extends State<AutocompleteMap> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: kToolbarHeight + 10,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.close,
-                color: AppColors.primaryColor3.withOpacity(0.7),
-              )),
+          leading: (widget.isHaveBtnClose != null && widget.isHaveBtnClose!)
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.close,
+                    color: AppColors.primaryColor3.withOpacity(0.7),
+                  ),
+                )
+              : const SizedBox(),
           actions: [
             Container(
               height: 50,

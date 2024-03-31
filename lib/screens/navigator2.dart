@@ -25,7 +25,9 @@ class _NavigatorState extends State<Navigator> {
 
   final List<Widget> bottomBarPages = [
     const HomePage(),
-    const AutocompleteMap(),
+    AutocompleteMap(
+      isHaveBtnClose: false,
+    ),
     const SettingsScreen(),
     const HomePage(),
     const SettingsScreen(),

@@ -12,7 +12,7 @@ class RoomModel {
   String? id;
   String? name;
   int? numberOfBeds;
-  int? acreage;
+  double? acreage;
   int? capacity;
   int? price;
   String? status;
@@ -40,7 +40,7 @@ class RoomModel {
     String? id,
     String? name,
     int? numberOfBeds,
-    int? acreage,
+    double? acreage,
     int? capacity,
     int? price,
     String? status,
@@ -91,7 +91,7 @@ class RoomModel {
       name: map['name'] != null ? map['name'] as String : null,
       numberOfBeds:
           map['numberOfBeds'] != null ? map['numberOfBeds'] as int : null,
-      acreage: map['acreage'] != null ? map['acreage'] as int : null,
+      acreage: map['acreage'] != null ? map['acreage'] as double : null,
       capacity: map['capacity'] != null ? map['capacity'] as int : null,
       price: map['price'] != null ? map['price'] as int : null,
       status: map['status'] != null ? map['status'] as String : null,

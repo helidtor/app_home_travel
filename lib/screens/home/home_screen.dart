@@ -172,8 +172,9 @@ class _HomePageState extends State<HomePage> {
                                     onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AutocompleteMap()),
+                                          builder: (context) => AutocompleteMap(
+                                                isHaveBtnClose: true,
+                                              )),
                                     ),
                                     decoration: InputDecoration(
                                       filled: true,

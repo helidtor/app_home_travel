@@ -44,7 +44,9 @@ class _NavigatorBarState extends State<NavigatorBar> {
             if (sttPage == 0) {
               body = const HomePage();
             } else if (value == 1) {
-              body = const AutocompleteMap();
+              body = AutocompleteMap(
+                isHaveBtnClose: false,
+              );
             } else if (value == 2) {
               body = const SettingsScreen();
             } else if (value == 3) {

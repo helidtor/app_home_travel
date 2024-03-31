@@ -10,7 +10,7 @@ import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 class HomestayDetailModel {
   String? id;
   String? name;
-  int? acreage;
+  double? acreage;
   String? city;
   String? district;
   String? commune;
@@ -52,7 +52,7 @@ class HomestayDetailModel {
   HomestayDetailModel copyWith({
     String? id,
     String? name,
-    int? acreage,
+    double? acreage,
     String? city,
     String? district,
     String? commune,
@@ -123,7 +123,7 @@ class HomestayDetailModel {
     return HomestayDetailModel(
       id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
-      acreage: map['acreage'] != null ? map['acreage'] as int : null,
+      acreage: map['acreage'] != null ? map['acreage'] as double : null,
       city: map['city'] != null ? map['city'] as String : null,
       district: map['district'] != null ? map['district'] as String : null,
       commune: map['commune'] != null ? map['commune'] as String : null,
@@ -167,7 +167,54 @@ class HomestayDetailModel {
           : null,
     );
   }
-
+// factory HomestayDetailModel.fromMap(Map<String, dynamic> map) {
+//     return HomestayDetailModel(
+//       id: map['id'] != null ? map['id'] as String : null,
+//       name: map['name'] != null ? map['name'] as String : null,
+//       acreage: map['acreage'] != null ? map['acreage'] as double : null,
+//       city: map['city'] != null ? map['city'] as String : null,
+//       district: map['district'] != null ? map['district'] as String : null,
+//       commune: map['commune'] != null ? map['commune'] as String : null,
+//       street: map['street'] != null ? map['street'] as String : null,
+//       house: map['house'] != null ? map['house'] as String : null,
+//       hamlet: map['hamlet'] != null ? map['hamlet'] as String : null,
+//       address: map['address'] != null ? map['address'] as String : null,
+//       checkInTime:
+//           map['checkInTime'] != null ? map['checkInTime'] as String : null,
+//       checkOutTime:
+//           map['checkOutTime'] != null ? map['checkOutTime'] as String : null,
+//       description:
+//           map['description'] != null ? map['description'] as String : null,
+//       totalCapacity:
+//           map['totalCapacity'] != null ? map['totalCapacity'] as int : null,
+//       status: map['status'] != null ? map['status'] as String : null,
+//       ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
+//       homeStayGeneralAmenitieTitles:
+//           map['homeStayGeneralAmenitieTitles'] != null
+//               ? List<HomeStayGeneralAmenitieTitlesModel>.from(
+//                   (map['homeStayGeneralAmenitieTitles'])
+//                       .map<HomeStayGeneralAmenitieTitlesModel?>(
+//                     (x) => HomeStayGeneralAmenitieTitlesModel.fromMap(
+//                         x as Map<String, dynamic>),
+//                   ),
+//                 )
+//               : null,
+//       rooms: map['rooms'] != null
+//           ? List<RoomModel>.from(
+//               (map['rooms']).map<RoomModel?>(
+//                 (x) => RoomModel.fromMap(x as Map<String, dynamic>),
+//               ),
+//             )
+//           : null,
+//       images: map['images'] != null
+//           ? List<ImageHomeModel>.from(
+//               (map['images']).map<ImageHomeModel?>(
+//                 (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
+//               ),
+//             )
+//           : null,
+//     );
+//   }
   String toJson() => json.encode(toMap());
 
   factory HomestayDetailModel.fromJson(String source) =>

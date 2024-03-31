@@ -27,7 +27,7 @@ class ApiRoom {
         // print("Thông tin get room: $roomDetail");
       }
     } catch (e) {
-      print("Loi get detail homestay: $e");
+      print("Loi get detail room: $e");
     }
     return roomDetail;
   }

@@ -1,6 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
+import 'package:mobile_home_travel/models/user/wallet_model.dart';
+
 class UserProfileModel {
   String? id;
   String? firstName;
@@ -12,6 +16,7 @@ class UserProfileModel {
   String? dateOfBirth;
   String? avatar;
   String? status;
+  List<WalletModel>? wallets;
   UserProfileModel({
     this.id,
     this.firstName,
@@ -23,6 +28,7 @@ class UserProfileModel {
     this.dateOfBirth,
     this.avatar,
     this.status,
+    this.wallets,
   });
 
   UserProfileModel copyWith({
@@ -36,6 +42,7 @@ class UserProfileModel {
     String? dateOfBirth,
     String? avatar,
     String? status,
+    List<WalletModel>? wallets,
   }) {
     return UserProfileModel(
       id: id ?? this.id,
@@ -48,6 +55,7 @@ class UserProfileModel {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       avatar: avatar ?? this.avatar,
       status: status ?? this.status,
+      wallets: wallets ?? this.wallets,
     );
   }
 
@@ -63,6 +71,7 @@ class UserProfileModel {
       'dateOfBirth': dateOfBirth,
       'avatar': avatar,
       'status': status,
+      'wallets': wallets?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -80,6 +89,13 @@ class UserProfileModel {
           map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
+      wallets: map['wallets'] != null
+          ? List<WalletModel>.from(
+              (map['wallets']).map<WalletModel?>(
+                (x) => WalletModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
@@ -90,7 +106,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth, avatar: $avatar, status: $status)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth, avatar: $avatar, status: $status, wallets: $wallets)';
   }
 
   @override
@@ -106,7 +122,8 @@ class UserProfileModel {
         other.gender == gender &&
         other.dateOfBirth == dateOfBirth &&
         other.avatar == avatar &&
-        other.status == status;
+        other.status == status &&
+        listEquals(other.wallets, wallets);
   }
 
   @override
@@ -120,6 +137,7 @@ class UserProfileModel {
         gender.hashCode ^
         dateOfBirth.hashCode ^
         avatar.hashCode ^
-        status.hashCode;
+        status.hashCode ^
+        wallets.hashCode;
   }
 }

@@ -65,10 +65,26 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
               }
             }
           }
+        } else {
+          emit(const CreateBookingFailure(error: 'Bạn chưa chọn phòng!'));
         }
         if (isSuccessAll) {
           emit(CreateBookingSuccess(
               bookingHomestayModel: bookingHomestayModel!));
+        }
+      } else if (event is CheckListRoom) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String idHomestay = prefs.getString("idHomestay")!;
+        String idUser = prefs.getString("idUserCurrent")!;
+        var listRoomEmpty = await ApiRoom.getAllRoomEmptyByDate(
+                homeStayId: idHomestay,
+                dateCheckIn: event.checkInDate,
+                dateCheckOut: event.checkOutDate) ??
+            [];
+        if (listRoomEmpty.isNotEmpty) {
+          emit(CheckListRoomSuccess(listRoom: listRoomEmpty, idUser: idUser));
+        } else {
+          emit(const CheckListRoomFailure(isDisplay: false));
         }
       } else {
         emit(const CreateBookingFailure(error: "Lỗi tạo đơn đặt phòng"));

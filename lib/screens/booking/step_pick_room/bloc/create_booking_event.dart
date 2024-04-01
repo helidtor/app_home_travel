@@ -16,3 +16,12 @@ class CreateBooking extends CreateBookingEvent {
     required this.bookingHomestayModel,
   });
 }
+
+class CheckListRoom extends CreateBookingEvent {
+  String checkInDate;
+  String checkOutDate;
+  CheckListRoom({
+    required this.checkInDate,
+    required this.checkOutDate,
+  });
+}

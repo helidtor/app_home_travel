@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/api/api_booking.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -37,32 +38,37 @@ class _ReviewBookingState extends State<ReviewBooking> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.keyboard_arrow_left,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        //   icon: const Icon(
+        //     Icons.keyboard_arrow_left,
+        //   ),
+        // ),
         // centerTitle: true,
-        title: Text(
-          "Hoàn tất đặt phòng",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black.withOpacity(0.65),
-              fontSize: 20,
-              fontFamily: GoogleFonts.nunito().fontFamily),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Text(
+            "Hoàn tất đặt phòng",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black.withOpacity(0.65),
+                fontSize: 20,
+                fontFamily: GoogleFonts.nunito().fontFamily),
+          ),
         ),
         backgroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              // Navigator.pop(context);
+              // Navigator.pop(context);
+              _showAlertDialog(context);
             },
             icon: Icon(
               Icons.close_rounded,
@@ -395,23 +401,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   ),
                 ),
               ),
-              // Container(
-              //   margin: const EdgeInsets.only(top: 10),
-              //   width: screenWidth * 0.85,
-              //   decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: AppColors.primaryColor1.withOpacity(0.2),
-              //           spreadRadius: 0.1,
-              //           blurRadius: 9,
-              //           offset: const Offset(0, 5),
-              //         ),
-              //       ],
-              //       borderRadius: BorderRadius.circular(10),
-              //       border: Border.all(
-              //           color: Colors.black.withOpacity(0.2), width: 1)),
-              // ),
               const SizedBox(
                 height: 25,
               ),
@@ -450,11 +439,80 @@ class _ReviewBookingState extends State<ReviewBooking> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: RoundGradientButton(
         circular: 10,
-        width: screenWidth * 0.9,
+        width: screenWidth * 0.85,
         title: 'Đặt và Thanh Toán',
         onPressed: () {},
         textSize: 18,
       ),
     );
+  }
+
+  void _showAlertDialog(BuildContext context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'Lưu ý',
+              style: TextStyle(
+                color: AppColors.primaryColor3,
+                fontSize: 20,
+                fontFamily: GoogleFonts.nunito().fontFamily,
+              ),
+            ),
+            content: Text(
+              'Bạn có muốn lưu lại đơn đặt phòng\nđể thanh toán sau không?',
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: GoogleFonts.nunito().fontFamily,
+              ),
+            ),
+            actions: [
+              CupertinoDialogAction(
+                  child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Có',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColor3,
+                    fontSize: 17,
+                    fontFamily: GoogleFonts.nunito().fontFamily,
+                  ),
+                ),
+              )),
+              //hủy đơn booking
+              CupertinoDialogAction(
+                  child: TextButton(
+                onPressed: () async {
+                  booking.status = 'CANCELED';
+                  var checkUpdateBooking =
+                      await ApiBooking.updateBooking(bookingInput: booking);
+                  print(checkUpdateBooking);
+                  if (checkUpdateBooking) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text(
+                  'Không',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColor3,
+                    fontSize: 17,
+                    fontFamily: GoogleFonts.nunito().fontFamily,
+                  ),
+                ),
+              )),
+            ],
+          );
+        });
   }
 }

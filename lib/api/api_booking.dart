@@ -48,7 +48,7 @@ class ApiBooking {
     return bookingHomestayModel;
   }
 
-  //Tạo booking
+  //Tạo booking detail
   static Future<bool> createBookingDetail(
       {required BookingHomestayDetail bookingHomestayDetail}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -74,6 +74,38 @@ class ApiBooking {
       }
     } catch (e) {
       print("Error create booking detail: $e");
+    }
+    return false;
+  }
+
+  //Cập nhật booking
+  static Future<bool> updateBooking(
+      {required BookingHomestayModel bookingInput}) async {
+    print('Thông tin booking nhập vào để update booking là: $bookingInput');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    try {
+      var url = "$baseUrl/api/v1/Bookings/${bookingInput.id}";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var body = json.encode(bookingInput.toMap());
+      print('Body nè: $body');
+      var response = await http.put(Uri.parse(url.toString()),
+          headers: header, body: body);
+      print(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        if (bodyConvert['success'] == true) {
+          print("Cập nhật booking thành công");
+          return true;
+        } else {
+          print("Lỗi cập nhật booking: ${response.body}");
+          return false;
+        }
+      }
+    } catch (e) {
+      print("Error update booking: $e");
+      return false;
     }
     return false;
   }

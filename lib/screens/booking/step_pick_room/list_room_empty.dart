@@ -31,6 +31,7 @@ class ListRoomEmpty extends StatefulWidget {
 }
 
 class _ListRoomEmptyState extends State<ListRoomEmpty> {
+  bool isDisplay = true;
   final _bloc = CreateBookingBloc();
   BookingHomestayModel? outputBooking;
   BookingHomestayModel inputBooking = BookingHomestayModel();
@@ -43,34 +44,8 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         FormatProvider().convertDateFormat(widget.dateCheckIn);
     inputBooking.checkOutDate =
         FormatProvider().convertDateFormat(widget.dateCheckOut);
-    _loadListRoomEmpty();
-  }
-
-  Future<List<RoomModel>?> getListRoomEmpty() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String idHomestay = prefs.getString("idHomestay")!;
-    String idUser = prefs.getString("idUserCurrent")!;
-    inputBooking.touristId = idUser;
-    var listRoomEmpty = await ApiRoom.getAllRoomEmptyByDate(
-        homeStayId: idHomestay,
-        dateCheckIn: widget.dateCheckIn,
-        dateCheckOut: widget.dateCheckOut);
-    print('list room trống: $listRoomEmpty');
-    return listRoomEmpty;
-  }
-
-  Future<void> _loadListRoomEmpty() async {
-    final list = await getListRoomEmpty();
-    if (mounted) {
-      setState(
-        () {
-          //get list images homestay
-          if (list!.isNotEmpty) {
-            listRoom = list;
-          }
-        },
-      );
-    }
+    _bloc.add(CheckListRoom(
+        checkInDate: widget.dateCheckIn, checkOutDate: widget.dateCheckOut));
   }
 
   @override
@@ -134,10 +109,17 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
           } else if (state is CreateBookingFailure) {
             Navigator.pop(context);
             showError(context, state.error);
+          } else if (state is CheckListRoomSuccess) {
+            Navigator.pop(context);
+            listRoom = state.listRoom;
+            inputBooking.touristId = state.idUser;
+          } else if (state is CheckListRoomFailure) {
+            Navigator.pop(context);
+            isDisplay = state.isDisplay;
           }
         },
         builder: (context, state) {
-          return listRoom.isNotEmpty
+          return isDisplay
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -155,7 +137,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: RoundGradientButton(
-                        title: 'Tiếp tục',
+                        title: 'Tạo đơn',
                         height: 25,
                         width: 110,
                         onPressed: () {

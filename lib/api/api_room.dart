@@ -25,11 +25,14 @@ class ApiRoom {
         var postsJson = bodyConvert['data'];
         roomDetail = RoomModel.fromMap(postsJson);
         // print("Thông tin get room: $roomDetail");
+        return roomDetail;
+      } else {
+        return null;
       }
     } catch (e) {
       print("Loi get detail room: $e");
     }
-    return roomDetail;
+    return null;
   }
 
   // <<<< Get all room empty by date >>>>

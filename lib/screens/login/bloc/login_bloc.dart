@@ -17,7 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       if (event is CheckLoginEvent) {
-        String? id = prefs.getString("id");
+        String? id = prefs.getString("idUserCurrent");
         if (id != "") {
           var userModel = await ApiUser.getProfile(id: id!);
           if (userModel != null) {
@@ -37,7 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               phoneNumber: event.username, password: event.password);
           if (user != null) {
             prefs.setString(myToken, user.token ?? "");
-            prefs.setString("id", user.id!);
+            prefs.setString("idUserCurrent", user.id!);
             var userLogin = await ApiUser.getProfile(id: user.id!);
             emit(LoginSuccessState(userProfileModel: userLogin!));
           } else {

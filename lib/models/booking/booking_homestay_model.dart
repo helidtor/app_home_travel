@@ -11,6 +11,7 @@ class BookingHomestayModel {
   String? status;
   String? createdDate;
   String? touristId;
+  num? totalCapacity;
   UserProfileModel? tourist;
   BookingHomestayModel({
     this.id,
@@ -20,6 +21,7 @@ class BookingHomestayModel {
     this.status,
     this.createdDate,
     this.touristId,
+    this.totalCapacity,
     this.tourist,
   });
 
@@ -31,6 +33,7 @@ class BookingHomestayModel {
     String? status,
     String? createdDate,
     String? touristId,
+    num? totalCapacity,
     UserProfileModel? tourist,
   }) {
     return BookingHomestayModel(
@@ -41,6 +44,7 @@ class BookingHomestayModel {
       status: status ?? this.status,
       createdDate: createdDate ?? this.createdDate,
       touristId: touristId ?? this.touristId,
+      totalCapacity: totalCapacity ?? this.totalCapacity,
       tourist: tourist ?? this.tourist,
     );
   }
@@ -54,6 +58,7 @@ class BookingHomestayModel {
       'status': status,
       'createdDate': createdDate,
       'touristId': touristId,
+      'totalCapacity': totalCapacity,
       'tourist': tourist?.toMap(),
     };
   }
@@ -70,6 +75,8 @@ class BookingHomestayModel {
       createdDate:
           map['createdDate'] != null ? map['createdDate'] as String : null,
       touristId: map['touristId'] != null ? map['touristId'] as String : null,
+      totalCapacity:
+          map['totalCapacity'] != null ? map['totalCapacity'] as num : null,
       tourist: map['tourist'] != null
           ? UserProfileModel.fromMap(map['tourist'] as Map<String, dynamic>)
           : null,
@@ -83,7 +90,7 @@ class BookingHomestayModel {
 
   @override
   String toString() {
-    return 'BookingHomestayModel(id: $id, totalPrice: $totalPrice, checkInDate: $checkInDate, checkOutDate: $checkOutDate, status: $status, createdDate: $createdDate, touristId: $touristId, tourist: $tourist)';
+    return 'BookingHomestayModel(id: $id, totalPrice: $totalPrice, checkInDate: $checkInDate, checkOutDate: $checkOutDate, status: $status, createdDate: $createdDate, touristId: $touristId, totalCapacity: $totalCapacity, tourist: $tourist)';
   }
 
   @override
@@ -97,6 +104,7 @@ class BookingHomestayModel {
         other.status == status &&
         other.createdDate == createdDate &&
         other.touristId == touristId &&
+        other.totalCapacity == totalCapacity &&
         other.tourist == tourist;
   }
 
@@ -109,6 +117,7 @@ class BookingHomestayModel {
         status.hashCode ^
         createdDate.hashCode ^
         touristId.hashCode ^
+        totalCapacity.hashCode ^
         tourist.hashCode;
   }
 }

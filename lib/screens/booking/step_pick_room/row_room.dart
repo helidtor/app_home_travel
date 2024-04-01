@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/format/format.dart';
@@ -20,6 +19,7 @@ class RowRoom extends StatefulWidget {
 }
 
 class _RowRoomState extends State<RowRoom> {
+  List<String> listIdPicked = [];
   late RoomModel roomEmpty;
   bool isChecked = false;
 
@@ -108,10 +108,21 @@ class _RowRoomState extends State<RowRoom> {
                 activeColor: AppColors.primaryColor3,
                 shape: const CircleBorder(),
                 value: isChecked,
-                onChanged: (newValue) {
+                onChanged: (newValue) async {
                   setState(() {
                     isChecked = newValue!;
                   });
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  //save list id room picked in prefs
+                  listIdPicked = prefs.getStringList("listIdPicked") ?? [];
+                  if (isChecked) {
+                    listIdPicked.add(roomEmpty.id!);
+                  } else {
+                    listIdPicked.remove(roomEmpty.id!);
+                  }
+                  print('List id picked current: $listIdPicked');
+                  prefs.setStringList("listIdPicked", listIdPicked);
                 },
               ),
             ],

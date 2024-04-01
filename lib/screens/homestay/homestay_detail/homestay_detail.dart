@@ -18,6 +18,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 Future<HomestayDetailModel?> getHomestayDetail() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? idHomestay = prefs.getString("idHomestay");
+  prefs.setStringList('listIdPicked', []); // xóa list id phòng được chọn
   var homestayDetail =
       await ApiHomestay.getDetailHomestay(idHomestay: idHomestay!);
   print('Id homestay từ prefs là: $idHomestay');

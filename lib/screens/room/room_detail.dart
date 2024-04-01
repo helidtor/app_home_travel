@@ -41,14 +41,16 @@ class _roomDetailState extends State<roomDetail> {
   }
 
   Future<void> _loadroomDetail() async {
-    final homestay = await getroomDetail();
+    var homestay = await getroomDetail();
     if (mounted) {
       setState(() {
-        roomDetail = homestay!;
-        if (roomDetail!.images!.isNotEmpty) {
-          listImagesHomestay =
-              roomDetail!.images!.map((e) => e.url as String).toList();
-          // print('List sau khi trích xuất: $listImagesHomestay');
+        if (homestay != null) {
+          roomDetail = homestay;
+          if (roomDetail!.images!.isNotEmpty) {
+            listImagesHomestay =
+                roomDetail!.images!.map((e) => e.url as String).toList();
+            // print('List sau khi trích xuất: $listImagesHomestay');
+          }
         }
       });
     }

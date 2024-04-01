@@ -124,7 +124,7 @@ class _PickDateState extends State<PickDate> {
                   numberOfWeeksInView: 6),
               cancelText: "",
               confirmText: "Tiếp",
-              onSubmit: (p0) {
+              onSubmit: (e) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

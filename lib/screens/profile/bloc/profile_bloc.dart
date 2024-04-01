@@ -14,7 +14,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   profileBloc(Emitter<ProfileState> emit, ProfileEvent event) async {
     emit(ProfileStateLoading());
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = prefs.getString("id");
+    String? id = prefs.getString("idUserCurrent");
 
     try {
       if (id != null) {

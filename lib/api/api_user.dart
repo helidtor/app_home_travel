@@ -72,7 +72,7 @@ class ApiUser {
     UserProfileModel? userProfileModel;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
-    String? id = prefs.getString("id");
+    String? id = prefs.getString("idUserCurrent");
     try {
       var url = "$baseUrl/api/v1/Tourists/$id";
       Map<String, String> header = await ApiHeader.getHeader();

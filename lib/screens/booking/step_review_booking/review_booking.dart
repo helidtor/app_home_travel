@@ -1,19 +1,35 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class ReviewBooking extends StatefulWidget {
-  const ReviewBooking({super.key});
+  BookingHomestayModel bookingHomestayModel;
+  ReviewBooking({
+    Key? key,
+    required this.bookingHomestayModel,
+  }) : super(key: key);
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
 }
 
 class _ReviewBookingState extends State<ReviewBooking> {
+  late BookingHomestayModel booking;
   bool isCheck = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    booking = widget.bookingHomestayModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

@@ -11,12 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> clearToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(myToken, "");
-  prefs.setString("id", "");
+  prefs.setString("idUserCurrent", "");
 }
 
 Future<UserProfileModel?> getUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? id = prefs.getString("id");
+  String? id = prefs.getString("idUserCurrent");
   var userLogined = await ApiUser.getProfile(id: id!);
   return userLogined;
 }

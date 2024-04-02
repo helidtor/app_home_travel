@@ -58,7 +58,6 @@ class _roomDetailState extends State<roomDetail> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,

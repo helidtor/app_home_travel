@@ -41,19 +41,20 @@ class WalletModel {
 
   String toJson() => json.encode(toMap());
 
-  factory WalletModel.fromJson(String source) => WalletModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory WalletModel.fromJson(String source) =>
+      WalletModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'WalletModel(id: $id, balance: $balance, touristId: $touristId)';
+  String toString() =>
+      'WalletModel(id: $id, balance: $balance, touristId: $touristId)';
 
   @override
   bool operator ==(covariant WalletModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.balance == balance &&
-      other.touristId == touristId;
+
+    return other.id == id &&
+        other.balance == balance &&
+        other.touristId == touristId;
   }
 
   @override

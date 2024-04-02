@@ -63,6 +63,9 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                       error: 'Lỗi tạo đơn đặt phòng (7.7)'));
                 }
               }
+            } else {
+              emit(const CreateBookingFailure(
+                  error: 'Lỗi tạo đơn đặt phòng (7.7)'));
             }
           }
         } else {

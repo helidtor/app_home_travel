@@ -41,6 +41,8 @@ class ApiBooking {
         } else {
           print("Lỗi tạo booking: ${response.body}");
         }
+      } else {
+        print("Lỗi tạo booking: ${response.body}");
       }
     } catch (e) {
       print("Error create booking: $e");

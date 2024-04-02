@@ -6,6 +6,7 @@ import 'package:mobile_home_travel/screens/profile/profile_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
 import 'package:mobile_home_travel/screens/signup/signup_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
+import 'package:mobile_home_travel/screens/wallet/wallet_screen.dart';
 
 class RouteName {
   // static const String home = '/home';
@@ -15,6 +16,7 @@ class RouteName {
   static const String navigator = '/navigator';
   static const String setting = '/setting';
   static const String profile = '/profile';
+  static const String wallet = '/wallet';
 
   static const publicRoutes = [
     login,
@@ -23,6 +25,7 @@ class RouteName {
     navigator,
     profile,
     setting,
+    wallet,
   ];
 }
 
@@ -39,6 +42,10 @@ final router = GoRouter(
     //   path: RouteName.home,
     //   builder: (context, state) => const HomePage(),
     // ),
+    GoRoute(
+      path: RouteName.wallet,
+      builder: (context, state) => const WalletScreen(),
+    ),
     GoRoute(
       path: RouteName.navigator,
       builder: (context, state) => const NavigatorBar(),

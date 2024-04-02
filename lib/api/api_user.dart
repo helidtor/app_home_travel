@@ -9,6 +9,7 @@ import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/models/user/login_user_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
+import 'package:mobile_home_travel/models/user/wallet_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -154,5 +155,35 @@ class ApiUser {
       print('Upload lỗi: $e');
       return null;
     }
+  }
+
+  // <<<< Get wallet >>>>
+  static Future<WalletModel?> getWallet() async {
+    List<WalletModel>? listWallet;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString("idUserCurrent");
+    try {
+      var url = "$baseUrl/api/v1/Wallets?pageSize=50&touristId=$idTourist";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST get wallet: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        var postsJson = bodyConvert['data'];
+        listWallet = (postsJson as List)
+            .map<WalletModel>((postJson) => WalletModel.fromMap(postJson))
+            .toList();
+        print("Thông tin model từ get wallet: $listWallet");
+        return listWallet[0];
+      } else {
+        print('Lỗi wallet');
+        return null;
+      }
+    } catch (e) {
+      print("Loi get wallet: $e");
+    }
+    return null;
   }
 }

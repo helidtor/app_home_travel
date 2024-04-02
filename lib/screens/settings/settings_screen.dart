@@ -4,6 +4,7 @@ import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/profile/profile_screen.dart';
+import 'package:mobile_home_travel/screens/wallet/wallet_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/others/row_setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -185,14 +186,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     RowSetting(
                       weightLine: 0,
-                      textHeader: "Cài đặt",
-                      textDescribe: "Tùy chỉnh ứng dụng",
-                      icon: Icons.settings,
+                      textHeader: "Số dư",
+                      textDescribe: "Quản lý ví của bạn",
+                      icon: Icons.local_atm_rounded,
                       onPressed: () {
-                        router.go(RouteName.profile);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WalletScreen()),
+                        );
                       },
                       iconLast: Icons.keyboard_arrow_right,
                     ),
+                    // RowSetting(
+                    //   weightLine: 1,
+                    //   textHeader: "Cài đặt",
+                    //   textDescribe: "Tùy chỉnh ứng dụng",
+                    //   icon: Icons.settings,
+                    //   onPressed: () {
+                    //     router.go(RouteName.profile);
+                    //   },
+                    //   iconLast: Icons.keyboard_arrow_right,
+                    // ),
                     const RowSetting(
                       weightLine: 1,
                       textDescribe: "Cho chúng tôi biết cảm nghĩ của bạn",

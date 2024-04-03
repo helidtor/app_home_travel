@@ -111,4 +111,36 @@ class ApiBooking {
     }
     return false;
   }
+
+  // <<<< Get booking đang dở >>>>
+  static Future<BookingHomestayModel?> getBookingPending() async {
+    List<BookingHomestayModel>? listBookingPending;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString("idUserCurrent");
+    try {
+      var url =
+          "$baseUrl/api/v1/Bookings?pageSize=50&status=PENDING&touristId=$idTourist";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST get booking pending: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        var postsJson = bodyConvert['data'];
+        listBookingPending = (postsJson as List)
+            .map<BookingHomestayModel>(
+                (postJson) => BookingHomestayModel.fromMap(postJson))
+            .toList();
+        print("Thông tin model từ get booking pending: $listBookingPending");
+        return listBookingPending[0];
+      } else {
+        print('Lỗi get booking pending');
+        return null;
+      }
+    } catch (e) {
+      print("Loi get booking dở: $e");
+    }
+    return null;
+  }
 }

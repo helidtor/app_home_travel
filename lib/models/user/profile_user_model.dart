@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:mobile_home_travel/models/user/wallet_model.dart';
+import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 
 class UserProfileModel {
   String? id;

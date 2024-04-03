@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-import 'package:mobile_home_travel/api/api_user.dart';
+import 'package:mobile_home_travel/api/api_wallet.dart';
+import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';
 
@@ -15,14 +15,23 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
     try {
       if (event is GetWallet) {
-        var wallet = await ApiUser.getWallet();
+        var wallet = await ApiWallet.getWallet();
+        List<TransactionModel>? listTransaction;
         if (wallet != null) {
-          emit(WalletSuccess(walletModel: wallet));
+          listTransaction =
+              await ApiWallet.getAllTransaction(idWallet: wallet.id!);
+          if (listTransaction!.isNotEmpty) {
+            emit(WalletSuccess(
+                walletModel: wallet, listTransaction: listTransaction));
+          } else {
+            emit(WalletSuccess(
+                walletModel: wallet, listTransaction: const []));
+          }
         } else {
           const WalletFailure(error: "Lỗi ví");
         }
       } else if (event is AddFundWallet) {
-        String? link = await ApiUser.addFund(amountFund: event.amount);
+        String? link = await ApiWallet.addFund(amountFund: event.amount);
         if (link != null) {
           emit(AddFundWalletSuccess(link: link));
         } else {

@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
-import 'package:mobile_home_travel/models/user/wallet_model.dart';
+import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
+import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 
 abstract class WalletState extends Equatable {
   const WalletState();
@@ -18,8 +19,10 @@ class WalletLoading extends WalletState {}
 
 class WalletSuccess extends WalletState {
   WalletModel walletModel;
+  List<TransactionModel> listTransaction;
   WalletSuccess({
     required this.walletModel,
+    required this.listTransaction,
   });
 }
 

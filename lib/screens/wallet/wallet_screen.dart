@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
+import 'package:mobile_home_travel/screens/wallet/transaction_row.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
-import 'package:mobile_home_travel/models/user/wallet_model.dart';
+import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 import 'package:mobile_home_travel/screens/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_bloc.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
@@ -30,6 +32,7 @@ class _WalletScreenState extends State<WalletScreen> {
   bool isDisplay = true;
   TextEditingController priceController = TextEditingController();
   late WalletModel wallet;
+  List<TransactionModel> listTransaction = [];
 
   @override
   void initState() {
@@ -75,13 +78,22 @@ class _WalletScreenState extends State<WalletScreen> {
           } else if (state is WalletSuccess) {
             Navigator.pop(context);
             wallet = state.walletModel;
+            listTransaction = state.listTransaction;
             isDisplay = true;
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             showError(context, state.error);
           } else if (state is AddFundWalletSuccess) {
             Navigator.pop(context);
-            _launchAsInAppWebViewWithCustomHeaders(state.link);
+            try {
+              // if (await canLaunchUrlString(state.link)) {
+              //   await launchUrlString(state.link,
+              //       mode: LaunchMode.inAppBrowserView);
+              // }
+              _launchAsInAppWebViewWithCustomHeaders(state.link);
+            } catch (e) {
+              print(e);
+            }
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             showError(context, state.error);
@@ -113,7 +125,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 35),
+                                horizontal: 25, vertical: 45),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -264,6 +276,64 @@ class _WalletScreenState extends State<WalletScreen> {
                         ],
                       ),
                     ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Giao dịch gần nhất',
+                            style: TextStyle(
+                                fontFamily: GoogleFonts.nunito().fontFamily,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Xem tất cả',
+                                style: TextStyle(
+                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor3,
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: screenHeight * 0.47,
+                      width: screenWidth,
+                      child: (listTransaction.isNotEmpty)
+                          ? Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: List.generate(
+                                    // 5,
+                                    listTransaction.length,
+                                    (index) => TransactionRow(
+                                        transactionModel:
+                                            listTransaction[index]),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Center(
+                              child: SizedBox(
+                                width: 350,
+                                height: 350,
+                                child: Image.asset(
+                                  'assets/images/error_loading.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                    ),
+                    const Spacer(),
                   ],
                 )
               : Center(

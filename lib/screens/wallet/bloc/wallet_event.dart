@@ -9,3 +9,10 @@ abstract class WalletEvent extends Equatable {
 }
 
 class GetWallet extends WalletEvent {}
+
+class AddFundWallet extends WalletEvent {
+  double amount;
+  AddFundWallet({
+    required this.amount,
+  });
+}

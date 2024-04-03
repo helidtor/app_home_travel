@@ -12,6 +12,8 @@ class AppColors {
 
   static const backgroundApp = Color.fromARGB(255, 245, 242, 242);
 
+  static Color palleteColor = Colors.black.withOpacity(0.1);
+
   static const successColor = Color.fromARGB(255, 76, 203, 48);
   static const failColor = Color.fromARGB(255, 219, 54, 54);
   static const whiteColor = Color(0xFFFFFFFF);

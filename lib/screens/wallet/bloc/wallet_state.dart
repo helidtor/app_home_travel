@@ -28,3 +28,15 @@ class WalletFailure extends WalletState {
 
   const WalletFailure({required this.error});
 }
+
+class AddFundWalletFailure extends WalletState {
+  final String error;
+
+  const AddFundWalletFailure({required this.error});
+}
+
+class AddFundWalletSuccess extends WalletState {
+  final String link;
+
+  const AddFundWalletSuccess({required this.link});
+}

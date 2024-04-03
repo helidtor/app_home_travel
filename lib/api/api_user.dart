@@ -186,4 +186,35 @@ class ApiUser {
     }
     return null;
   }
+
+  // <<<< Add funds to wallet >>>>
+  static Future<String?> addFund({required double amountFund}) async {
+    String? link;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString("idUserCurrent");
+    var url = "$baseUrl/api/v1/VnPays/Topup";
+    Map<String, String> header = await ApiHeader.getHeader();
+    try {
+      final body = {
+        'amount': amountFund,
+        'touristId': idTourist,
+      };
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print("TEST nạp tiền: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        link = bodyConvert['data']['url'];
+        print('Link là: $link');
+        return link;
+      } else {
+        print('Error add fund');
+        return null;
+      }
+    } catch (e) {
+      print("Loi nạp tiền: $e");
+    }
+    return null;
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/user/wallet_model.dart';
 import 'package:mobile_home_travel/screens/navigator_bar.dart';
@@ -8,8 +10,12 @@ import 'package:mobile_home_travel/screens/wallet/bloc/wallet_bloc.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
+import 'package:mobile_home_travel/widgets/input/input_field.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
+import 'package:mobile_home_travel/widgets/others/preset_price_wallet.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -22,6 +28,7 @@ class _WalletScreenState extends State<WalletScreen> {
   final _bloc = WalletBloc();
   bool isHidden = true;
   bool isDisplay = true;
+  TextEditingController priceController = TextEditingController();
   late WalletModel wallet;
 
   @override
@@ -69,6 +76,12 @@ class _WalletScreenState extends State<WalletScreen> {
             Navigator.pop(context);
             wallet = state.walletModel;
             isDisplay = true;
+          } else if (state is WalletFailure) {
+            Navigator.pop(context);
+            showError(context, state.error);
+          } else if (state is AddFundWalletSuccess) {
+            Navigator.pop(context);
+            _launchAsInAppWebViewWithCustomHeaders(state.link);
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             showError(context, state.error);
@@ -171,7 +184,72 @@ class _WalletScreenState extends State<WalletScreen> {
                                   ),
                                   child: IconButton(
                                       onPressed: () {
-                                        _openInputAmount();
+                                        //hiện khung nhập giá
+                                        showModalBottomSheet<void>(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              height: screenHeight * 0.64,
+                                              width: screenWidth,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Divider(
+                                                    indent: 160,
+                                                    endIndent: 160,
+                                                    thickness: 3,
+                                                    color: Colors.grey
+                                                        .withOpacity(0.3),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20),
+                                                    child: InputField(
+                                                      controller:
+                                                          priceController,
+                                                      heightInput:
+                                                          screenHeight * 0.03,
+                                                      widthInput:
+                                                          screenWidth * 0.9,
+                                                      hintText:
+                                                          'Nhập số tiền cần nạp',
+                                                    ),
+                                                  ),
+                                                  //bảng chọn giá sẵn để nạp
+                                                  PresetPriceWallet(
+                                                    priceController:
+                                                        priceController,
+                                                  ),
+                                                  const Divider(
+                                                    thickness: 10,
+                                                    color:
+                                                        AppColors.backgroundApp,
+                                                  ),
+                                                  RoundGradientButton(
+                                                      textSize: 18,
+                                                      width: screenWidth * 0.85,
+                                                      height:
+                                                          screenHeight * 0.05,
+                                                      title: 'Thanh toán',
+                                                      onPressed: () {
+                                                        _bloc.add(AddFundWallet(
+                                                            amount: double.parse(
+                                                                priceController
+                                                                    .text)));
+                                                      })
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                       icon: Icon(
                                         Icons.add_card_outlined,
@@ -202,56 +280,15 @@ class _WalletScreenState extends State<WalletScreen> {
       ),
     ));
   }
+}
 
-  void _openInputAmount() {
-    TextEditingController controller = TextEditingController();
-    AlertDialog(
-      title: Text('Nhập số tiền'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: 'Nhập số tiền',
-            ),
-          ),
-          SizedBox(height: 8),
-          Autocomplete<String>(
-            optionsBuilder: (TextEditingValue textEditingValue) {
-              return [
-                '100.000',
-                '200.000',
-                '300.000',
-                '500.000',
-                '1.000.000',
-                // Thêm các số tiền khác vào đây
-              ].where((option) {
-                return option.contains(textEditingValue.text.toLowerCase());
-              });
-            },
-            onSelected: (String selection) {
-              controller.text = selection;
-            },
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Hủy'),
-        ),
-        TextButton(
-          onPressed: () {
-            // Xử lý khi nhấn nút xác nhận
-            Navigator.of(context).pop(controller.text);
-          },
-          child: Text('Xác nhận'),
-        ),
-      ],
-    );
+Future<void> _launchAsInAppWebViewWithCustomHeaders(String url) async {
+  if (!await launchUrlString(
+    url,
+    mode: LaunchMode.inAppWebView,
+    webViewConfiguration: const WebViewConfiguration(
+        headers: <String, String>{'my_header_key': 'my_header_value'}),
+  )) {
+    throw Exception('Could not launch $url');
   }
 }

@@ -21,6 +21,13 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         } else {
           const WalletFailure(error: "Lỗi ví");
         }
+      } else if (event is AddFundWallet) {
+        String? link = await ApiUser.addFund(amountFund: event.amount);
+        if (link != null) {
+          emit(AddFundWalletSuccess(link: link));
+        } else {
+          emit(const AddFundWalletFailure(error: 'Lỗi nạp tiền'));
+        }
       }
     } catch (e) {
       emit(const WalletFailure(error: "Lỗi ví"));

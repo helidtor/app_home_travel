@@ -58,6 +58,7 @@ dependencies:
   syncfusion_flutter_calendar: ^25.1.37
   url_launcher: ^6.2.5
   font_awesome_flutter: ^10.7.0
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   flutter_test:

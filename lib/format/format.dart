@@ -13,6 +13,12 @@ class FormatProvider {
     return formatter.format(number);
   }
 
+  String formatWalletToTopUp(String input) {
+    final formatter = NumberFormat("#,###");
+    final number = num.parse(input);
+    return formatter.format(number);
+  }
+
   String convertDateFormat(String inputDate) {
     List<String> parts = inputDate.split('/');
     if (parts.length != 3) {
@@ -35,5 +41,10 @@ class FormatProvider {
 
   String convertDateBooking(String inputDate) {
     return DateFormat("dd/MM/yy").format(DateTime.parse(inputDate));
+  }
+
+  String formatString(String input) {
+    String cleanedInput = input.replaceAll(',', '');
+    return cleanedInput;
   }
 }

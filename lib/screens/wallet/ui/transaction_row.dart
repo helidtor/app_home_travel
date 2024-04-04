@@ -37,8 +37,10 @@ class _TransactionRowState extends State<TransactionRow> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: (transactionModel.status == 'SUCCESS')
-              ? Colors.green.withOpacity(0.3)
-              : Colors.red.withOpacity(0.3),
+              ? (_convertPlusOrMinus(transactionModel.type!))
+                  ? Colors.green.withOpacity(0.3)
+                  : Colors.red.withOpacity(0.2)
+              : Colors.black.withOpacity(0.2),
         ),
         child: Padding(
           padding: const EdgeInsets.only(right: 15, left: 15),
@@ -53,13 +55,28 @@ class _TransactionRowState extends State<TransactionRow> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(200),
-                      // border:
-                      //     Border.all(color: AppColors.primaryColor3, width: 1),
                     ),
-                    child: Image.asset(
-                      _convertTypeImage(transactionModel.type!),
-                      fit: BoxFit.cover,
-                    ),
+                    child: (transactionModel.status == 'SUCCESS')
+                        ? Image.asset(
+                            _convertTypeImage(transactionModel.type!),
+                            fit: BoxFit.cover,
+                          )
+                        : ClipOval(
+                            child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: ColorFiltered(
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.grey,
+                                  BlendMode.saturation,
+                                ),
+                                child: Image.asset(
+                                  _convertTypeImage(transactionModel.type!),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(
                     width: 10,
@@ -93,11 +110,15 @@ class _TransactionRowState extends State<TransactionRow> {
               ),
               Text(
                 (_convertPlusOrMinus(transactionModel.type!))
-                    ? '+${FormatProvider().formatPrice(transactionModel.price.toString())}đ'
+                    ? (transactionModel.status == 'SUCCESS')
+                        ? '+${FormatProvider().formatPrice(transactionModel.price.toString())}đ'
+                        : '${FormatProvider().formatPrice(transactionModel.price.toString())}đ'
                     : '-${FormatProvider().formatPrice(transactionModel.price.toString())}đ',
                 style: TextStyle(
                   color: (_convertPlusOrMinus(transactionModel.type!))
-                      ? const Color.fromARGB(255, 21, 149, 25)
+                      ? (transactionModel.status == 'SUCCESS')
+                          ? const Color.fromARGB(255, 21, 149, 25)
+                          : Colors.black38
                       : Colors.red,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

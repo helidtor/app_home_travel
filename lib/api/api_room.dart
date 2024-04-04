@@ -53,7 +53,7 @@ class ApiRoom {
       print("TEST get all room empty: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
-        print("Xem body sau khi convert: $bodyConvert");
+        // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         listRoom = (postsJson as List)
             .map<RoomModel>((postJson) => RoomModel.fromMap(postJson))

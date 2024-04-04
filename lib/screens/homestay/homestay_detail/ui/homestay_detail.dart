@@ -523,8 +523,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
             .map((e) => e)
             .toList();
         listGeneralAmenitieSelecteds = list;
-        print(
-            "Kết quả listGeneralAmenitieSelecteds: $listGeneralAmenitieSelecteds");
+        // print(
+        //     "Kết quả listGeneralAmenitieSelecteds: $listGeneralAmenitieSelecteds");
         return listGeneralAmenitieSelecteds;
       } else {
         return null;

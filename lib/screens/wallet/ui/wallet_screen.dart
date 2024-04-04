@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/transaction_row.dart';
+import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
@@ -85,15 +86,21 @@ class _WalletScreenState extends State<WalletScreen> {
             showError(context, state.error);
           } else if (state is AddFundWalletSuccess) {
             Navigator.pop(context);
-            try {
-              if (await canLaunchUrlString(state.link)) {
-                await launchUrlString(state.link,
-                    mode: LaunchMode.inAppBrowserView);
-              }
-              // _launchAsInAppWebViewWithCustomHeaders(state.link);
-            } catch (e) {
-              print(e);
-            }
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => WebView(
+                        url: state.link,
+                      )),
+            );
+            // try {
+            //   if (await canLaunchUrlString(state.link)) {
+            //     await launchUrlString(state.link,
+            //         mode: LaunchMode.inAppBrowserView);
+            //   }
+            //   // _launchAsInAppWebViewWithCustomHeaders(state.link);
+            // } catch (e) {
+            //   print(e);
+            // }
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             showError(context, state.error);
@@ -254,8 +261,10 @@ class _WalletScreenState extends State<WalletScreen> {
                                                       onPressed: () {
                                                         _bloc.add(AddFundWallet(
                                                             amount: double.parse(
-                                                                priceController
-                                                                    .text)));
+                                                                FormatProvider()
+                                                                    .formatString(
+                                                                        priceController
+                                                                            .text))));
                                                       })
                                                 ],
                                               ),

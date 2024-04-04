@@ -13,6 +13,7 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_bloc.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/checkout_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
@@ -516,7 +517,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
       floatingActionButton: RoundGradientButton(
         circular: 10,
         width: screenWidth * 0.85,
-        title: 'Đặt và Thanh Toán',
+        title: 'Xác nhận',
         onPressed: () {
           // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
           //hiện khung nhập giá
@@ -524,137 +525,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return Container(
-                height: screenHeight * 0.8,
-                width: screenWidth,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Divider(
-                      indent: 160,
-                      endIndent: 160,
-                      thickness: 3,
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-
-                    //bảng chọn thanh toán cọc hoặc trả full
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: screenWidth * 0.85,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor1.withOpacity(0.2),
-                            spreadRadius: 0.1,
-                            blurRadius: 9,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: screenWidth * 0.85,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor1.withOpacity(0.2),
-                            spreadRadius: 0.1,
-                            blurRadius: 9,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Divider(
-                      thickness: 10,
-                      color: AppColors.backgroundApp,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: screenWidth * 0.85,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor1.withOpacity(0.2),
-                            spreadRadius: 0.1,
-                            blurRadius: 9,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: screenWidth * 0.85,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor1.withOpacity(0.2),
-                            spreadRadius: 0.1,
-                            blurRadius: 9,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Divider(
-                      thickness: 10,
-                      color: AppColors.backgroundApp,
-                    ),
-                    RoundGradientButton(
-                        textSize: 18,
-                        width: screenWidth * 0.85,
-                        height: screenHeight * 0.05,
-                        title: 'Thanh toán',
-                        onPressed: () {
-                          // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
-                        })
-                  ],
-                ),
-              );
+              return CheckoutBooking();
             },
           );
         },

@@ -86,7 +86,7 @@ class ApiWallet {
       print("TEST get all transaction: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
-        print("Xem body sau khi convert: $bodyConvert");
+        // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         transaction = (postsJson as List)
             .map<TransactionModel>(

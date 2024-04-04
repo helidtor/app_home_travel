@@ -20,10 +20,10 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get all homestay: ${response.body}");
+      // print("TEST get all homestay: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
-        print("Xem body sau khi convert: $bodyConvert");
+        // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         homestay = (postsJson as List)
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
@@ -55,9 +55,9 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         detailHomestay = HomestayDetailModel.fromMap(postsJson);
-        print("Thông tin get detail homestay: $detailHomestay");
-        print(
-            "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
+        // print("Thông tin get detail homestay: $detailHomestay");
+        // print(
+        //     "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
       }
     } catch (e) {
       print("Loi get detail homestay: $e");
@@ -82,7 +82,7 @@ class ApiHomestay {
       print("TEST search homestay: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
-        print("Xem body sau khi convert: $bodyConvert");
+        // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         homestay = (postsJson as List)
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
@@ -98,7 +98,7 @@ class ApiHomestay {
 
   // <<<< Wishlist homestay >>>>
   static Future<bool?> wishlistHomestay() async {
-    String? result;
+    WishlistModel? wishlistModel;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     String? idTourist = prefs.getString("idUserCurrent");
@@ -115,6 +115,11 @@ class ApiHomestay {
           headers: header, body: jsonEncode(body));
       print("TEST wishlist: ${response.body}");
       if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        wishlistModel = WishlistModel.fromMap(postsJson);
+        prefs.setString('idWishlist', wishlistModel.id!);
         return true;
       } else {
         print('Error wishlist');

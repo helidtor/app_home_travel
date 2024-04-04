@@ -47,6 +47,7 @@ class ApiWallet {
     String? idTourist = prefs.getString("idUserCurrent");
     var url = "$baseUrl/api/v1/VnPays/Topup";
     Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
     try {
       final body = {
         'amount': amountFund,

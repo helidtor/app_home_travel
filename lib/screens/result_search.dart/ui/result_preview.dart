@@ -3,23 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/format/format.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay_detail/homestay_detail.dart';
+import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomestayPreview extends StatefulWidget {
+class ResultPreview extends StatefulWidget {
   HomestayModel homestayModel;
-  HomestayPreview({
+  ResultPreview({
     Key? key,
     required this.homestayModel,
   }) : super(key: key);
 
   @override
-  State<HomestayPreview> createState() => _HomestayState();
+  State<ResultPreview> createState() => _ResultState();
 }
 
-class _HomestayState extends State<HomestayPreview> {
-  HomestayModel homestayModel = HomestayModel();
+class _ResultState extends State<ResultPreview> {
+  late HomestayModel homestayModel;
 
   @override
   void initState() {
@@ -42,8 +43,8 @@ class _HomestayState extends State<HomestayPreview> {
         );
       },
       child: Container(
-        height: 280,
-        width: 260,
+        height: 310,
+        width: screenSize.width * 0.9,
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(253, 255, 255, 255),
@@ -62,8 +63,8 @@ class _HomestayState extends State<HomestayPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 260,
-              height: 180,
+              width: screenSize.width * 0.9,
+              height: 200,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(253, 255, 255, 255),
                 borderRadius: const BorderRadius.only(
@@ -78,7 +79,7 @@ class _HomestayState extends State<HomestayPreview> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, top: 8, right: 10),
+              padding: const EdgeInsets.only(left: 12, top: 8, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -89,12 +90,9 @@ class _HomestayState extends State<HomestayPreview> {
                         '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: Colors.black,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
                       ),
                       Text(
                         // '${homestayModel.services?.first.serviceName}',
@@ -104,7 +102,7 @@ class _HomestayState extends State<HomestayPreview> {
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 11,
+                          fontSize: 14,
                           color: Colors.black,
                         ),
                       ),
@@ -113,19 +111,13 @@ class _HomestayState extends State<HomestayPreview> {
                   const SizedBox(
                     width: 5,
                   ),
-                  SizedBox(
-                    height: 25,
-                    child: Text(
-                      (homestayModel.name != null)
-                          ? '${homestayModel.name}'
-                          : 'Đợi cập nhật nha bé ơi bé à bé ăn trứng gà',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Text(
+                    '${homestayModel.name}',
+                    style: TextStyle(
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                        fontSize: 22,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 5,
@@ -134,16 +126,14 @@ class _HomestayState extends State<HomestayPreview> {
                     children: [
                       const Icon(
                         Icons.location_on,
-                        size: 18,
+                        size: 22,
                         color: AppColors.primaryColor3,
                       ),
                       Text(
-                        (homestayModel.city != null)
-                            ? '${homestayModel.city}'
-                            : 'Đang đợi cập nhật',
+                        '${homestayModel.city}',
                         style: TextStyle(
                             fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 13,
+                            fontSize: 15,
                             color: Colors.black),
                       ),
                     ],

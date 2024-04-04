@@ -8,7 +8,7 @@ import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_preview/ui/homestay_preview.dart';
 import 'package:mobile_home_travel/screens/room/room_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';

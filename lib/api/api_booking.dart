@@ -143,4 +143,54 @@ class ApiBooking {
     }
     return null;
   }
+
+  // <<<< Checkout by card >>>>
+  static Future<String?> checkoutByCard({required String idBooking}) async {
+    String? link;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    var url = "$baseUrl/api/v1/Bookings/$idBooking/PayByVNPay";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      var response =
+          await http.post(Uri.parse(url.toString()), headers: header);
+      print("TEST thanh toán bằng thẻ: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        link = bodyConvert['data']['url'];
+        print('Link thanh toán bằng thẻ là: $link');
+        return link;
+      } else {
+        print('Error pay by card');
+        return null;
+      }
+    } catch (e) {
+      print("Loi thanh toán thẻ: $e");
+    }
+    return null;
+  }
+
+  // <<<< Checkout by wallet >>>>
+  static Future<bool?> checkoutByWallet({required String idBooking}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    var url = "$baseUrl/api/v1/Bookings/$idBooking/PayByWallet";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      var response =
+          await http.post(Uri.parse(url.toString()), headers: header);
+      print("TEST thanh toán bằng ví: ${response.body}");
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Error pay by wallet');
+        return false;
+      }
+    } catch (e) {
+      print("Loi thanh toán ví: $e");
+    }
+    return false;
+  }
 }

@@ -32,4 +32,8 @@ class FormatProvider {
     return DateFormat("dd/MM/yyyy - hh:mm:ss")
         .format(DateTime.parse(inputDate));
   }
+
+  String convertDateBooking(String inputDate) {
+    return DateFormat("dd/MM/yy").format(DateTime.parse(inputDate));
+  }
 }

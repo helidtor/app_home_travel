@@ -3,7 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
-import 'package:mobile_home_travel/screens/history/history_screen.dart';
+import 'package:mobile_home_travel/screens/history/ui/history_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';

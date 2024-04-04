@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
 import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,5 +94,89 @@ class ApiHomestay {
     }
 
     return homestay;
+  }
+
+  // <<<< Wishlist homestay >>>>
+  static Future<bool?> wishlistHomestay() async {
+    String? result;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString("idUserCurrent");
+    String? idHomestay = prefs.getString("idHomestay");
+    var url = "$baseUrl/api/v1/TouristFavoriteHomestays";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      final body = {
+        'touristId': idTourist,
+        'homeStayId': idHomestay,
+      };
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print("TEST wishlist: ${response.body}");
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Error wishlist');
+        return false;
+      }
+    } catch (e) {
+      print("Loi wishlist: $e");
+    }
+    return false;
+  }
+
+// <<<< Get wishlist by id tourist & homestay >>>>
+  static Future<WishlistModel?> getWishlistByIdTouristAndHomeStay(
+      {required String idTourist, required String idHomestay}) async {
+    List<WishlistModel>? wishlist;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    try {
+      var url =
+          "$baseUrl/api/v1/TouristFavoriteHomestays?pageSize=50&touristId=$idTourist&homeStayId=$idHomestay";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get wishlist: ${response.body}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        var postsJson = bodyConvert['data'];
+        wishlist = (postsJson as List)
+            .map<WishlistModel>((postJson) => WishlistModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get wishlist: $wishlist");
+        return wishlist[0];
+      }
+    } catch (e) {
+      print("Loi get wishlist: $e");
+    }
+
+    return null;
+  }
+
+  // <<<< Delete Wishlist homestay >>>>
+  static Future<bool?> deleteWishlistHomestay() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idWishlist = prefs.getString('idWishlist');
+    var url = "$baseUrl/api/v1/TouristFavoriteHomestays/$idWishlist";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      var response =
+          await http.delete(Uri.parse(url.toString()), headers: header);
+      print(
+          "TEST xóa wishlist: ${response.statusCode} idWishlist là: $idWishlist");
+      if (response.statusCode == 204) {
+        return true;
+      } else {
+        print('Error delete wishlist');
+        return false;
+      }
+    } catch (e) {
+      print("Loi xóa wishlist: $e");
+    }
+    return false;
   }
 }

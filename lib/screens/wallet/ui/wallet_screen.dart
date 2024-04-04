@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
-import 'package:mobile_home_travel/screens/wallet/transaction_row.dart';
+import 'package:mobile_home_travel/screens/wallet/ui/transaction_row.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
@@ -86,11 +86,11 @@ class _WalletScreenState extends State<WalletScreen> {
           } else if (state is AddFundWalletSuccess) {
             Navigator.pop(context);
             try {
-              // if (await canLaunchUrlString(state.link)) {
-              //   await launchUrlString(state.link,
-              //       mode: LaunchMode.inAppBrowserView);
-              // }
-              _launchAsInAppWebViewWithCustomHeaders(state.link);
+              if (await canLaunchUrlString(state.link)) {
+                await launchUrlString(state.link,
+                    mode: LaunchMode.inAppBrowserView);
+              }
+              // _launchAsInAppWebViewWithCustomHeaders(state.link);
             } catch (e) {
               print(e);
             }
@@ -305,29 +305,29 @@ class _WalletScreenState extends State<WalletScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Container(
                       height: screenHeight * 0.47,
                       width: screenWidth,
                       child: (listTransaction.isNotEmpty)
-                          ? Center(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: List.generate(
-                                    // 5,
-                                    listTransaction.length,
-                                    (index) => TransactionRow(
-                                        transactionModel:
-                                            listTransaction[index]),
-                                  ),
+                          ? SingleChildScrollView(
+                              child: Column(
+                                children: List.generate(
+                                  // 5,
+                                  listTransaction.length,
+                                  (index) => TransactionRow(
+                                      transactionModel: listTransaction[index]),
                                 ),
                               ),
                             )
                           : Center(
                               child: SizedBox(
-                                width: 350,
-                                height: 350,
+                                width: 250,
+                                height: 250,
                                 child: Image.asset(
-                                  'assets/images/error_loading.png',
+                                  'assets/images/empty_transaction.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),

@@ -5,12 +5,12 @@ import 'package:toastification/toastification.dart';
 
 import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay/homestay_preview.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_preview/ui/homestay_preview.dart';
 import 'package:mobile_home_travel/screens/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_bloc.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_event.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_state.dart';
-import 'package:mobile_home_travel/screens/result_search.dart/result_preview.dart';
+import 'package:mobile_home_travel/screens/result_search.dart/ui/result_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';

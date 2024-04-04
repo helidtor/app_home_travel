@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_event.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay/bloc/homestay_state.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_event.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_state.dart';
 
 class HomestayBloc extends Bloc<HomestayEvent, HomestayState> {
   HomestayBloc() : super(HomestayInitial()) {

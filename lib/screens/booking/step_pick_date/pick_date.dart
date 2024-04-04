@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_home_travel/screens/booking/step_pick_room/list_room_empty.dart';
+import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/list_room_empty.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 

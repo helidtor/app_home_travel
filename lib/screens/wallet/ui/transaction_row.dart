@@ -130,7 +130,7 @@ String _convertTypeImage(String inputType) {
     case 'TOPUP':
       return 'assets/images/TOPUP.png';
     case 'PAID':
-      return 'assets/images/TOPAIDPUP.png';
+      return 'assets/images/PAID.png';
     case 'PAID_WITH_CASH':
       return 'assets/images/PAID_WITH_CASH.png';
     default:

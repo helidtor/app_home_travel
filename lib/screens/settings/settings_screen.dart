@@ -3,8 +3,8 @@ import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
-import 'package:mobile_home_travel/screens/profile/profile_screen.dart';
-import 'package:mobile_home_travel/screens/wallet/wallet_screen.dart';
+import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
+import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/others/row_setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -210,9 +210,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // ),
                     const RowSetting(
                       weightLine: 1,
-                      textDescribe: "Cho chúng tôi biết cảm nghĩ của bạn",
-                      textHeader: "Gửi phản hồi",
-                      icon: Icons.mail,
+                      textDescribe: "Xem những homestay bạn đã thích",
+                      textHeader: "Homestay yêu thích",
+                      icon: Icons.save,
                       iconLast: Icons.keyboard_arrow_right,
                     ),
                     const RowSetting(

@@ -4,7 +4,7 @@ import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/history/bloc/history_bloc.dart';
 import 'package:mobile_home_travel/screens/history/bloc/history_event.dart';
 import 'package:mobile_home_travel/screens/history/bloc/history_state.dart';
-import 'package:mobile_home_travel/screens/history/history_row.dart';
+import 'package:mobile_home_travel/screens/history/ui/history_row.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 

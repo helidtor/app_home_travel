@@ -63,8 +63,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
             decoration: BoxDecoration(
               //màu nền của giao dịch
               color: (transactionModel.status == 'SUCCESS')
-                  ? const Color.fromARGB(255, 15, 209, 22)
-                  : Colors.red,
+                  ? const Color.fromARGB(255, 40, 170, 44)
+                  : const Color.fromARGB(255, 205, 65, 55),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(

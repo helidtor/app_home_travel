@@ -60,9 +60,9 @@ class FormatProvider {
     switch (inputType) {
       case 'TOPUP':
         return 'Nạp tiền vào ví';
-      case 'PAID':
+      case 'PAID_WITH_WALLET':
         return 'Thanh toán bằng ví';
-      case 'PAID_WITH_CASH':
+      case 'PAID_WITH_VNPAY':
         return 'Thanh toán bằng thẻ';
       default:
         return '';
@@ -73,10 +73,10 @@ class FormatProvider {
     switch (inputType) {
       case 'TOPUP':
         return 'assets/images/TOPUP.png';
-      case 'PAID':
-        return 'assets/images/PAID.png';
-      case 'PAID_WITH_CASH':
-        return 'assets/images/PAID_WITH_CASH.png';
+      case 'PAID_WITH_WALLET':
+        return 'assets/images/PAID_WITH_WALLET.png';
+      case 'PAID_WITH_VNPAY':
+        return 'assets/images/PAID_WITH_VNPAY.png';
       default:
         return '';
     }
@@ -86,9 +86,9 @@ class FormatProvider {
     switch (inputType) {
       case 'TOPUP':
         return true;
-      case 'PAID':
+      case 'PAID_WITH_WALLET':
         return false;
-      case 'PAID_WITH_CASH':
+      case 'PAID_WITH_VNPAY':
         return false;
       default:
         return false;

@@ -77,9 +77,12 @@ class ApiWallet {
     List<TransactionModel>? transaction;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString('idUserCurrent');
 
     try {
-      var url = "$baseUrl/api/v1/Transactions?pageSize=50&walletId=$idWallet";
+      // var url = "$baseUrl/api/v1/Transactions?pageSize=50&walletId=$idWallet";
+      var url =
+          "$baseUrl/api/v1/Transactions?pageSize=50&paidUserId=$idTourist";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);

@@ -153,8 +153,7 @@ class ApiBooking {
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
     try {
-      var response =
-          await http.post(Uri.parse(url.toString()), headers: header);
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
       print("TEST thanh toán bằng thẻ: ${response.body}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
@@ -179,8 +178,7 @@ class ApiBooking {
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
     try {
-      var response =
-          await http.post(Uri.parse(url.toString()), headers: header);
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
       print("TEST thanh toán bằng ví: ${response.body}");
       if (response.statusCode == 200) {
         return true;

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
-import 'package:mobile_home_travel/screens/wallet/ui/transaction_row.dart';
+import 'package:mobile_home_travel/screens/transaction/transaction_row.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
@@ -17,7 +17,7 @@ import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/input_field.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
-import 'package:mobile_home_travel/widgets/others/preset_price_wallet.dart';
+import 'package:mobile_home_travel/screens/wallet/ui/preset_price_wallet.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -146,6 +146,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20,
+                                            fontWeight: FontWeight.bold,
                                             fontFamily:
                                                 GoogleFonts.nunito().fontFamily,
                                           ),

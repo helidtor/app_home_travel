@@ -33,10 +33,16 @@ class ReviewBookingFailure extends ReviewBookingState {
   });
 }
 
-class CheckoutSuccess extends ReviewBookingState {
+class CheckoutSuccessByCard extends ReviewBookingState {
   String urlCheckout;
-  CheckoutSuccess({
+  CheckoutSuccessByCard({
     required this.urlCheckout,
   });
 }
 
+class CheckoutSuccessByWallet extends ReviewBookingState {
+  String noti;
+  CheckoutSuccessByWallet({
+    required this.noti,
+  });
+}

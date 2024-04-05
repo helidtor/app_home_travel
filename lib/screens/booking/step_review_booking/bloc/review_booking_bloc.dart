@@ -36,15 +36,15 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         String? urlCheckout =
             await ApiBooking.checkoutByCard(idBooking: event.idBooking);
         if (urlCheckout != null) {
-          emit(CheckoutSuccess(urlCheckout: urlCheckout));
+          emit(CheckoutSuccessByCard(urlCheckout: urlCheckout));
         } else {
           emit(ReviewBookingFailure(error: 'Lỗi thanh toán bằng thẻ'));
         }
       } else if (event is CheckoutBookingByWallet) {
-        String? urlCheckout =
-            await ApiBooking.checkoutByCard(idBooking: event.idBooking);
-        if (urlCheckout != null) {
-          emit(CheckoutSuccess(urlCheckout: urlCheckout));
+        bool? isSuccess =
+            await ApiBooking.checkoutByWallet(idBooking: event.idBooking);
+        if (isSuccess != null) {
+          emit(CheckoutSuccessByWallet(noti: 'Thanh toán thành công'));
         } else {
           emit(ReviewBookingFailure(error: 'Lỗi thanh toán bằng ví'));
         }

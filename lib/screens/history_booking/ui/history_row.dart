@@ -72,7 +72,7 @@ class _HistoryRowState extends State<HistoryRow> {
                       ),
                     ),
                     Text(
-                      FormatProvider().convertDate(
+                      FormatProvider().convertDateTime(
                           bookingHomestayModel.createdDate.toString()),
                       style: TextStyle(
                         fontStyle: FontStyle.italic,

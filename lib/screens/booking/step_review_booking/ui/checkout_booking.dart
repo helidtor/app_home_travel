@@ -1,16 +1,42 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/screens/home/home_screen.dart';
+import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/web_view/web_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mobile_home_travel/api/api_booking.dart';
+import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class CheckoutBooking extends StatefulWidget {
-  const CheckoutBooking({super.key});
+  BookingHomestayModel bookingHomestayModel;
+  CheckoutBooking({
+    super.key,
+    required this.bookingHomestayModel,
+  });
 
   @override
   State<CheckoutBooking> createState() => _CheckoutBookingState();
 }
 
 class _CheckoutBookingState extends State<CheckoutBooking> {
+  bool isCheckedPayWallet = false;
+  bool isCheckedPayCard = false;
+  bool isCheckedDeposit = false;
+  bool isCheckedPayFull = false;
+  late BookingHomestayModel booking;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    booking = widget.bookingHomestayModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -52,7 +78,8 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                   width: screenWidth * 0.85,
                   height: 70,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.black26),
+                    border: Border.all(
+                        width: 0.5, color: Colors.black.withOpacity(0.7)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -64,9 +91,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                     ],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Row(
-                    children: [],
-                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -75,7 +99,10 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                   width: screenWidth * 0.85,
                   height: 70,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.black26),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -121,7 +148,10 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                   width: screenWidth * 0.85,
                   height: 70,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.black26),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -133,9 +163,59 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                     ],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Row(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Icon(
+                              FontAwesomeIcons.wallet,
+                              color: AppColors.primaryColor1,
+                              size: 25,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Ví của tôi',
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                                ),
+                              ),
+                              Text(
+                                'Số dư: 50,000,000đ',
+                                style: TextStyle(
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Checkbox(
+                        activeColor: AppColors.primaryColor3,
+                        shape: const CircleBorder(),
+                        value: isCheckedPayWallet,
+                        onChanged: (newValue) async {
+                          setState(() {
+                            isCheckedPayWallet = newValue!;
+                            isCheckedPayCard = false;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -146,7 +226,8 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                   width: screenWidth * 0.85,
                   height: 70,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.black26),
+                    border: Border.all(
+                        width: 0.5, color: Colors.black.withOpacity(0.7)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -158,8 +239,60 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                     ],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Row(
-                    children: [],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 30),
+                            child: Icon(
+                              Icons.account_balance_sharp,
+                              color: AppColors.primaryColor1,
+                              size: 27,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Thẻ ngân hàng',
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                                ),
+                              ),
+                              Text(
+                                'Thanh toán qua banking, mastercard...',
+                                style: TextStyle(
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Checkbox(
+                        activeColor: AppColors.primaryColor3,
+                        shape: const CircleBorder(),
+                        value: isCheckedPayCard,
+                        onChanged: (newValue) async {
+                          setState(() {
+                            isCheckedPayCard = newValue!;
+                            isCheckedPayWallet = false;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -179,8 +312,42 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 width: screenWidth * 0.85,
                 height: screenHeight * 0.05,
                 title: 'Thanh toán',
-                onPressed: () {
-                  // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  if (isCheckedPayWallet) {
+                    var isPaid = await ApiBooking.checkoutByWallet(
+                        idBooking: booking.id!);
+                    if (isPaid == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NavigatorBar(
+                                  stt: 0,
+                                )),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NavigatorBar(
+                                  stt: 4,
+                                )),
+                      );
+                    }
+                  } else if (isCheckedPayCard) {
+                    var urlPayment =
+                        await ApiBooking.checkoutByCard(idBooking: booking.id!);
+                    if (urlPayment != null) {
+                      print('Link thanh toán là $urlPayment');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => WebView(url: urlPayment),
+                        ),
+                      );
+                    }
+                  } else if (isCheckedPayCard == false &&
+                      isCheckedPayWallet == false) {}
                 }),
           ),
           const Spacer(),

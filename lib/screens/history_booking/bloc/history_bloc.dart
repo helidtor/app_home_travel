@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_booking.dart';
-import 'package:mobile_home_travel/screens/history/bloc/history_event.dart';
-import 'package:mobile_home_travel/screens/history/bloc/history_state.dart';
+import 'package:mobile_home_travel/screens/history_booking/bloc/history_event.dart';
+import 'package:mobile_home_travel/screens/history_booking/bloc/history_state.dart';
 
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   HistoryBloc() : super(HistoryInitial()) {

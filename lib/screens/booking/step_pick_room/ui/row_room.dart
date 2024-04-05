@@ -32,7 +32,7 @@ class _RowRoomState extends State<RowRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("idRoom", roomEmpty.id!);

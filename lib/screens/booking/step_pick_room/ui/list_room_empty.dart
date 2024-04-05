@@ -41,9 +41,9 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
   void initState() {
     super.initState();
     inputBooking.checkInDate =
-        FormatProvider().convertDateFormat(widget.dateCheckIn);
+        FormatProvider().convertDateTimeFormat(widget.dateCheckIn);
     inputBooking.checkOutDate =
-        FormatProvider().convertDateFormat(widget.dateCheckOut);
+        FormatProvider().convertDateTimeFormat(widget.dateCheckOut);
     _bloc.add(CheckListRoom(
         checkInDate: widget.dateCheckIn, checkOutDate: widget.dateCheckOut));
   }

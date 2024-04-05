@@ -43,7 +43,7 @@ class ApiRoom {
     List<RoomModel>? listRoom;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
-
+    print('Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
     try {
       var url =
           "$baseUrl/api/v1/Rooms/emptyRooms?pageSize=50&homeStayId=$homeStayId&startDate=$dateCheckIn&endDate=$dateCheckOut";

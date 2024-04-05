@@ -214,7 +214,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  '${FormatProvider().convertDateBooking(booking.checkInDate.toString())} - ${FormatProvider().convertDateBooking(booking.checkOutDate.toString())}',
+                                                  '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(booking.checkOutDate.toString())}',
                                                   style: TextStyle(
                                                     color: Colors.black
                                                         .withOpacity(0.7),
@@ -525,7 +525,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return CheckoutBooking();
+              return CheckoutBooking(
+                bookingHomestayModel: booking,
+              );
             },
           );
         },

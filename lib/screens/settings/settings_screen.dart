@@ -53,6 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "Tài khoản",
           style: TextStyle(

@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<HomestayModel> listHomestay = [];
   final _bloc = HomestayBloc();
   String? token;
-  String displayScreen = 'assets/images/error_loading.png';
+  String? displayScreen;
   double widthDisplay = 270;
   double heightDisplay = 270;
 
@@ -293,14 +293,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )
                 : Center(
-                    child: SizedBox(
-                      width: widthDisplay,
-                      height: heightDisplay,
-                      child: Image.asset(
-                        displayScreen,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    child: (displayScreen != null)
+                        ? SizedBox(
+                            width: widthDisplay,
+                            height: heightDisplay,
+                            child: Image.asset(
+                              displayScreen!,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const SizedBox(),
                   );
           }),
     );

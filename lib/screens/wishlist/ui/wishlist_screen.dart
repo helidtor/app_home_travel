@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
+import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wishlist/bloc/wishlist_bloc.dart';
 import 'package:mobile_home_travel/screens/wishlist/bloc/wishlist_event.dart';
 import 'package:mobile_home_travel/screens/wishlist/bloc/wishlist_state.dart';
@@ -42,7 +43,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
           shadowColor: Colors.grey,
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NavigatorBar(
+                          stt: 4,
+                        )),
+              );
             },
             icon: const Icon(Icons.keyboard_arrow_left),
           ),

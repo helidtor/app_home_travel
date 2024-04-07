@@ -21,16 +21,17 @@ class ListRoomEmpty extends StatefulWidget {
   String dateCheckIn;
   String dateCheckOut;
   ListRoomEmpty({
-    Key? key,
+    super.key,
     required this.dateCheckIn,
     required this.dateCheckOut,
-  }) : super(key: key);
+  });
 
   @override
   State<ListRoomEmpty> createState() => _ListRoomEmptyState();
 }
 
 class _ListRoomEmptyState extends State<ListRoomEmpty> {
+  String? imageDisplay;
   bool isDisplay = false;
   final _bloc = CreateBookingBloc();
   BookingHomestayModel? outputBooking;
@@ -120,6 +121,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             Navigator.pop(context);
             setState(() {
               isDisplay = false;
+              imageDisplay = 'assets/images/empty_search.png';
             });
           }
         },
@@ -137,14 +139,16 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                   ),
                 )
               : Center(
-                  child: SizedBox(
-                    width: 350,
-                    height: 350,
-                    child: Image.asset(
-                      'assets/images/empty_search.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: (imageDisplay != null)
+                      ? SizedBox(
+                          width: 330,
+                          height: 330,
+                          child: Image.asset(
+                            imageDisplay!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const SizedBox(),
                 );
         },
       ),

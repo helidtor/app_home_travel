@@ -31,6 +31,7 @@ class ReviewBooking extends StatefulWidget {
 }
 
 class _ReviewBookingState extends State<ReviewBooking> {
+  String? imageDisplay;
   late BookingHomestayModel booking;
   bool isCheck = false;
   final _bloc = ReviewBookingBloc();
@@ -108,6 +109,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
             Navigator.pop(context);
             showError(context, state.error);
             isDisplay = false;
+            imageDisplay = 'assets/images/error_loading.png';
           }
         },
         builder: (context, state) {
@@ -502,14 +504,16 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   ),
                 )
               : Center(
-                  child: SizedBox(
-                    width: 350,
-                    height: 350,
-                    child: Image.asset(
-                      'assets/images/empty_search.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: (imageDisplay != null)
+                      ? SizedBox(
+                          width: 350,
+                          height: 350,
+                          child: Image.asset(
+                            imageDisplay!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const SizedBox(),
                 );
         },
       ),

@@ -8,7 +8,7 @@ import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
-import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_bloc.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';

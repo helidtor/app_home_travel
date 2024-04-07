@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 
-import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/ui/homestay_preview.dart';
-import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_bloc.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_event.dart';
 import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_state.dart';

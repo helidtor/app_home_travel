@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 
 abstract class SearchState extends Equatable {
   const SearchState();

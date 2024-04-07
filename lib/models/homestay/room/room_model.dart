@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_general_amenitie_titles_model.dart';
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/image_home_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_general_amenitie_titles_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/image_home_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/image_room_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_amenitie_titles_model.dart';
 

@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/format/format.dart';
-
-import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
-import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ResultPreview extends StatefulWidget {
-  HomestayModel homestayModel;
-  ResultPreview({
-    Key? key,
-    required this.homestayModel,
-  }) : super(key: key);
+class RowWishlist extends StatefulWidget {
+  WishlistModel wishlistModel;
+  RowWishlist({
+    super.key,
+    required this.wishlistModel,
+  });
 
   @override
-  State<ResultPreview> createState() => _ResultState();
+  State<RowWishlist> createState() => _ResultState();
 }
 
-class _ResultState extends State<ResultPreview> {
-  late HomestayModel homestayModel;
+class _ResultState extends State<RowWishlist> {
+  late WishlistModel wishlistModel;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    homestayModel = widget.homestayModel;
+    wishlistModel = widget.wishlistModel;
   }
 
   @override
@@ -35,16 +33,19 @@ class _ResultState extends State<ResultPreview> {
     return GestureDetector(
       onTap: () async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("idHomestay", homestayModel.id!);
+        prefs.setString("idHomestay", wishlistModel.homeStayId!);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeStayDetail(isFromHome: true,)),
+          MaterialPageRoute(
+              builder: (context) => HomeStayDetail(
+                    isFromHome: false,
+                  )),
         );
       },
       child: Container(
-        height: 260,
-        width: screenSize.width * 0.85,
+        height: 130,
+        width: screenSize.width * 0.9,
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(253, 255, 255, 255),
@@ -59,22 +60,25 @@ class _ResultState extends State<ResultPreview> {
                 offset: const Offset(0, 3),
               )
             ]),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Container(
-              width: screenSize.width * 0.85,
-              height: 160,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(253, 255, 255, 255),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: (homestayModel.images!.isEmpty)
-                      ? const AssetImage("assets/images/homestay_default.jpg")
-                      : Image.network(homestayModel.images!.first.url!).image,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 120,
+                height: 110,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(253, 255, 255, 255),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: (wishlistModel.homeStay!.images!.isEmpty)
+                        ? const AssetImage("assets/images/homestay_default.jpg")
+                        : Image.network(
+                                wishlistModel.homeStay!.images!.first.url!)
+                            .image,
+                    // image: AssetImage("assets/images/homestay_default.jpg"),
+                  ),
                 ),
               ),
             ),
@@ -83,41 +87,43 @@ class _ResultState extends State<ResultPreview> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    '${wishlistModel.homeStay!.name}',
+                    style: TextStyle(
+                        fontFamily: GoogleFonts.nunito().fontFamily,
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
+                        '${FormatProvider().formatNumber((wishlistModel.homeStay!.acreage != null) ? wishlistModel.homeStay!.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.black,
                         ),
                       ),
+                      // SizedBox(
+                      //   width: screenSize.width * 0.2,
+                      // ),
                       Text(
-                        // '${homestayModel.services?.first.serviceName}',
-                        (homestayModel.totalCapacity != null)
-                            ? '${homestayModel.totalCapacity} người'
+                        // '${wishlistModel.services?.first.serviceName}',
+                        (wishlistModel.homeStay!.totalCapacity != null)
+                            ? ' - ${wishlistModel.homeStay!.totalCapacity} người'
                             : '',
                         style: TextStyle(
-                          fontStyle: FontStyle.italic,
                           fontFamily: GoogleFonts.nunito().fontFamily,
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.black,
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '${homestayModel.name}',
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.nunito().fontFamily,
-                        fontSize: 22,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 5,
@@ -126,17 +132,20 @@ class _ResultState extends State<ResultPreview> {
                     children: [
                       const Icon(
                         Icons.location_on,
-                        size: 22,
+                        size: 15,
                         color: AppColors.primaryColor3,
                       ),
                       Text(
-                        '${homestayModel.city}',
+                        '${wishlistModel.homeStay!.city}',
                         style: TextStyle(
                             fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 15,
+                            fontSize: 13,
                             color: Colors.black),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                 ],
               ),

@@ -52,7 +52,7 @@ class WishlistModel {
       createdDate:
           map['createdDate'] != null ? map['createdDate'] as String : null,
       homeStay: map['homeStay'] != null
-          ? HomestayModel.fromMap(map['homeStay'] as Map<String, dynamic>)
+          ? HomestayModel.fromMap(map['homeStay'])
           : null,
     );
   }

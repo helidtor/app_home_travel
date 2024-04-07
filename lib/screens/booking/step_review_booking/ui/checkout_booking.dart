@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
-import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';

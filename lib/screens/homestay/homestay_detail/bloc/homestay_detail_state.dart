@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 
 abstract class HomestayDetailState extends Equatable {
   const HomestayDetailState();

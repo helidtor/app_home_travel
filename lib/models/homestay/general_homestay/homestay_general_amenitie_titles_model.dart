@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_selecteds_model.dart';
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_title_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/general_amenitie_selecteds_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/general_amenitie_title_model.dart';
 
 class HomeStayGeneralAmenitieTitlesModel {
   String? id;

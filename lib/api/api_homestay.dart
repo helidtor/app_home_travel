@@ -4,8 +4,8 @@ import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiHomestay {
@@ -79,7 +79,8 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST search homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      print(
+          "TEST search homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -183,5 +184,36 @@ class ApiHomestay {
       print("Loi xóa wishlist: $e");
     }
     return false;
+  }
+
+  // <<<< Get wishlist >>>>
+  static Future<List<WishlistModel>?> getListWishlist() async {
+    List<WishlistModel>? listWishlist;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString('idUserCurrent');
+
+    try {
+      var url =
+          "$baseUrl/api/v1/TouristFavoriteHomestays?pageSize=50&touristId=$idTourist";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print(
+          "TEST get wishlist: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listWishlist = (postsJson as List)
+            .map<WishlistModel>((postJson) => WishlistModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get wishlist: $listWishlist");
+      }
+    } catch (e) {
+      print("Loi get wishlist: $e");
+    }
+
+    return listWishlist;
   }
 }

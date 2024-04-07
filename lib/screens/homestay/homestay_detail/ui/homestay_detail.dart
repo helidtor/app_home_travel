@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/api/api_homestay.dart';
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_selecteds_model.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/homestay_general_amenitie_titles_model.dart';
+import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'package:mobile_home_travel/models/homestay/general_homestay/general_amenitie_selecteds_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_general_amenitie_titles_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_date/pick_date.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/bloc/homestay_detail_bloc.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/bloc/homestay_detail_event.dart';
@@ -16,17 +18,20 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeStayDetail extends StatefulWidget {
-  const HomeStayDetail({super.key});
+  bool isFromHome;
+  HomeStayDetail({
+    super.key,
+    required this.isFromHome,
+  });
 
   @override
   State<HomeStayDetail> createState() => _HomeStayDetailState();
 }
 
 class _HomeStayDetailState extends State<HomeStayDetail> {
+  late bool isFromHome;
   final _bloc = HomestayDetailBloc();
   bool? isWishlist;
   final controller = PageController(viewportFraction: 1); //carouse
@@ -41,6 +46,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
   @override
   void initState() {
     super.initState();
+    isFromHome = widget.isFromHome;
     _bloc.add(GetInforDisplay());
   }
 
@@ -53,7 +59,13 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
           shadowColor: Colors.grey,
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              isFromHome
+                  ? Navigator.pop(context)
+                  : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WishlistScreen()),
+                    );
             },
             icon: const Icon(Icons.keyboard_arrow_left),
           ),

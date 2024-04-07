@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
-import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_bloc.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_event.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_state.dart';

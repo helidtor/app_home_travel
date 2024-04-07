@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/general_amenitie_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/general_amenitie_model.dart';
 
 class GeneralAmenitieSelectedsModel {
   String? id;

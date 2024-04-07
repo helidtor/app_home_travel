@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:mobile_home_travel/models/homestay/general_amenitie_homestay/image_home_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/image_home_model.dart';
 
 class HomestayModel {
   List<ImageHomeModel>? images;

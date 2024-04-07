@@ -8,7 +8,7 @@ import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/format/format.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/models/homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_bloc.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';

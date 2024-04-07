@@ -2,22 +2,28 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/screens/home/home_screen.dart';
-import 'package:mobile_home_travel/screens/navigator_bar.dart';
-import 'package:mobile_home_travel/screens/web_view/web_view.dart';
+import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
+import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/screens/home/home_screen.dart';
+import 'package:mobile_home_travel/screens/navigator_bar.dart';
+import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class CheckoutBooking extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
+  num balance;
   CheckoutBooking({
-    super.key,
+    Key? key,
     required this.bookingHomestayModel,
-  });
+    required this.balance,
+  }) : super(key: key);
 
   @override
   State<CheckoutBooking> createState() => _CheckoutBookingState();
@@ -29,12 +35,14 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
   bool isCheckedDeposit = false;
   bool isCheckedPayFull = false;
   late BookingHomestayModel booking;
+  late num balance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     booking = widget.bookingHomestayModel;
+    balance = widget.balance;
   }
 
   @override
@@ -193,7 +201,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                 ),
                               ),
                               Text(
-                                'Số dư: 50,000,000đ',
+                                'Số dư: ${FormatProvider().formatPrice(balance.toString())}₫',
                                 style: TextStyle(
                                   color: Colors.black38,
                                   fontWeight: FontWeight.bold,
@@ -260,7 +268,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Thẻ ngân hàng',
+                                'Ngân hàng',
                                 style: TextStyle(
                                   color: Colors.black.withOpacity(0.7),
                                   fontWeight: FontWeight.bold,
@@ -269,7 +277,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                 ),
                               ),
                               Text(
-                                'Thanh toán qua banking, mastercard...',
+                                'Thanh toán qua VN Pay',
                                 style: TextStyle(
                                   color: Colors.black38,
                                   fontWeight: FontWeight.bold,
@@ -313,27 +321,27 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 height: screenHeight * 0.05,
                 title: 'Thanh toán',
                 onPressed: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
                   if (isCheckedPayWallet) {
-                    var isPaid = await ApiBooking.checkoutByWallet(
-                        idBooking: booking.id!);
-                    if (isPaid == true) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NavigatorBar(
-                                  stt: 0,
-                                )),
-                      );
+                    if (balance >= (booking.totalPrice! / 2)) {
+                      var isPaid = await ApiBooking.checkoutByWallet(
+                          idBooking: booking.id!);
+                      if (isPaid == true) {
+                        //thanh toán thành công
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WalletScreen()),
+                        );
+                        showSuccess(context, 'Thanh toán thành công');
+                      } else {
+                        //thanh toán thất bại
+                        Navigator.pop(context);
+                        showError(context, 'Thanh toán lỗi');
+                      }
                     } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NavigatorBar(
-                                  stt: 4,
-                                )),
-                      );
+                      Navigator.pop(context);
+                      showError(context,
+                          'Số dư không đủ! Vui lòng nạp thêm tiền vào ví!');
                     }
                   } else if (isCheckedPayCard) {
                     var urlPayment =

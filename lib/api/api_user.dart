@@ -18,6 +18,7 @@ class ApiUser {
 
     final url = Uri.parse('$baseUrl/api/v1/Tourists/login');
     Map<String, String> header = await ApiHeader.getHeader();
+    print('Data login: $phoneNumber, $password');
     try {
       final body = {
         'phoneNumber': phoneNumber,
@@ -25,7 +26,8 @@ class ApiUser {
       };
       var response = await http.post(Uri.parse(url.toString()),
           headers: header, body: jsonEncode(body));
-      print("TEST login: ${response.body}");
+      print("TEST login: ${jsonEncode(body)}");
+      print("Status: ${jsonDecode(response.body)}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         userLoginModel = UserLoginModel.fromMap(bodyConvert['data']);
@@ -76,7 +78,7 @@ class ApiUser {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get profile: ${response.body}");
+      print("TEST get profile: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         userProfileModel = UserProfileModel.fromMap(bodyConvert['data']);

@@ -527,6 +527,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
             builder: (BuildContext context) {
               return CheckoutBooking(
                 bookingHomestayModel: booking,
+                balance: userInfor!.wallets!.first.balance!,
               );
             },
           );

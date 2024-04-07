@@ -18,7 +18,7 @@ class ApiRoom {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      // print("TEST get detail homestay: ${response.body}");
+      // print("TEST get detail homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -50,7 +50,7 @@ class ApiRoom {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get all room empty: ${response.body}");
+      print("TEST get all room empty: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");

@@ -43,8 +43,8 @@ class _ResultState extends State<ResultPreview> {
         );
       },
       child: Container(
-        height: 310,
-        width: screenSize.width * 0.9,
+        height: 260,
+        width: screenSize.width * 0.85,
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(253, 255, 255, 255),
@@ -63,15 +63,15 @@ class _ResultState extends State<ResultPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: screenSize.width * 0.9,
-              height: 200,
+              width: screenSize.width * 0.85,
+              height: 160,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(253, 255, 255, 255),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
                 image: DecorationImage(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   image: (homestayModel.images!.isEmpty)
                       ? const AssetImage("assets/images/homestay_default.jpg")
                       : Image.network(homestayModel.images!.first.url!).image,

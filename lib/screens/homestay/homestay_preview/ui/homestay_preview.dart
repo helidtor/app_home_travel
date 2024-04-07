@@ -42,7 +42,7 @@ class _HomestayState extends State<HomestayPreview> {
         );
       },
       child: Container(
-        height: 280,
+        height: 275,
         width: 260,
         decoration: BoxDecoration(
             border: Border.all(

@@ -179,7 +179,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Tổng số tiền',
+                        'Số tiền giao dịch',
                         style: TextStyle(
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
@@ -194,7 +194,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             ? '+${FormatProvider().formatPrice(transactionModel.price.toString())}đ'
                             : '-${FormatProvider().formatPrice(transactionModel.price.toString())}đ',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: (FormatProvider()
+                                  .convertPlusOrMinus(transactionModel.type!))
+                              ? const Color.fromARGB(255, 21, 149, 25)
+                              : Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                           fontFamily: GoogleFonts.nunito().fontFamily,

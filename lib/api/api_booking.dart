@@ -31,7 +31,7 @@ class ApiBooking {
       print('Body nè: $body');
       var response = await http.post(Uri.parse(url.toString()),
           headers: header, body: jsonEncode(body));
-      print(jsonDecode(response.body));
+      // print(jsonDecode(utf8.decode(response.bodyBytes)));
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         if (bodyConvert['success'] == true) {
@@ -39,10 +39,12 @@ class ApiBooking {
           bookingHomestayModel = BookingHomestayModel.fromMap(postsJson);
           print("Tạo booking thành công");
         } else {
-          print("Lỗi tạo booking: ${response.body}");
+          print(
+              "Lỗi tạo booking: ${jsonDecode(utf8.decode(response.bodyBytes))}");
         }
       } else {
-        print("Lỗi tạo booking: ${response.body}");
+        print(
+            "Lỗi tạo booking: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       }
     } catch (e) {
       print("Error create booking: $e");
@@ -70,7 +72,8 @@ class ApiBooking {
           print("Tạo booking detail thành công");
           return true;
         } else {
-          print("Lỗi tạo booking detail: ${response.body}");
+          print(
+              "Lỗi tạo booking detail: ${jsonDecode(utf8.decode(response.bodyBytes))}");
           return false;
         }
       }
@@ -101,7 +104,8 @@ class ApiBooking {
           print("Cập nhật booking thành công");
           return true;
         } else {
-          print("Lỗi cập nhật booking: ${response.body}");
+          print(
+              "Lỗi cập nhật booking: ${jsonDecode(utf8.decode(response.bodyBytes))}");
           return false;
         }
       }
@@ -124,7 +128,8 @@ class ApiBooking {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get booking pending: ${response.body}");
+      print(
+          "TEST get booking pending: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         var postsJson = bodyConvert['data'];
@@ -154,7 +159,8 @@ class ApiBooking {
     header.addAll({'Authorization': 'Bearer $token'});
     try {
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST thanh toán bằng thẻ: ${response.body}");
+      print(
+          "TEST thanh toán bằng thẻ: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         link = bodyConvert['data']['url'];
@@ -179,7 +185,7 @@ class ApiBooking {
     header.addAll({'Authorization': 'Bearer $token'});
     try {
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST thanh toán bằng ví: ${response.body}");
+      print("TEST thanh toán bằng ví: ${jsonEncode(response.body)}");
       if (response.statusCode == 200) {
         return true;
       } else {

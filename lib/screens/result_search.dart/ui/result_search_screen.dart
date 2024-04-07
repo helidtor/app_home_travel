@@ -57,9 +57,12 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
           toolbarHeight: kToolbarHeight + 5,
           leading: IconButton(
             onPressed: () {
-              Navigator.popUntil(
+              Navigator.push(
                 context,
-                ModalRoute.withName('/navigator'),
+                MaterialPageRoute(
+                    builder: (context) => const NavigatorBar(
+                          stt: 0,
+                        )),
               );
             },
             icon: Icon(
@@ -189,6 +192,9 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
                               ),
                             ),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),

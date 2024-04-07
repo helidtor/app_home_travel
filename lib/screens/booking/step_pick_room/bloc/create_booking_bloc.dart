@@ -87,7 +87,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
         if (listRoomEmpty.isNotEmpty) {
           emit(CheckListRoomSuccess(listRoom: listRoomEmpty, idUser: idUser));
         } else {
-          emit(const CheckListRoomFailure(isDisplay: false));
+          emit(CheckListRoomFailure());
         }
       } else {
         emit(const CreateBookingFailure(error: "Lỗi tạo đơn đặt phòng"));

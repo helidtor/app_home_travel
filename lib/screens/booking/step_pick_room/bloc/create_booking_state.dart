@@ -32,11 +32,10 @@ class CheckListRoomSuccess extends CreateBookingState {
   final List<RoomModel> listRoom;
   final String idUser;
 
-  const CheckListRoomSuccess({required this.listRoom, required this.idUser});
+  const CheckListRoomSuccess({
+    required this.listRoom,
+    required this.idUser,
+  });
 }
 
-class CheckListRoomFailure extends CreateBookingState {
-  final bool isDisplay;
-
-  const CheckListRoomFailure({required this.isDisplay});
-}
+class CheckListRoomFailure extends CreateBookingState {}

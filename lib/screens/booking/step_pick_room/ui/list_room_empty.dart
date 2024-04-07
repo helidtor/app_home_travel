@@ -31,7 +31,7 @@ class ListRoomEmpty extends StatefulWidget {
 }
 
 class _ListRoomEmptyState extends State<ListRoomEmpty> {
-  bool isDisplay = true;
+  bool isDisplay = false;
   final _bloc = CreateBookingBloc();
   BookingHomestayModel? outputBooking;
   BookingHomestayModel inputBooking = BookingHomestayModel();
@@ -111,42 +111,30 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             showError(context, state.error);
           } else if (state is CheckListRoomSuccess) {
             Navigator.pop(context);
+            setState(() {
+              isDisplay = true;
+            });
             listRoom = state.listRoom;
             inputBooking.touristId = state.idUser;
           } else if (state is CheckListRoomFailure) {
             Navigator.pop(context);
-            isDisplay = state.isDisplay;
+            setState(() {
+              isDisplay = false;
+            });
           }
         },
         builder: (context, state) {
           return isDisplay
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      alignment: Alignment.topCenter,
-                      height: screenHeight * 0.77,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: List.generate(listRoom.length,
-                              (index) => RowRoom(room: listRoom[index])),
-                        ),
-                      ),
+              ? Container(
+                  alignment: Alignment.topCenter,
+                  height: screenHeight * 0.77,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: List.generate(listRoom.length,
+                          (index) => RowRoom(room: listRoom[index])),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: RoundGradientButton(
-                        title: 'Tạo đơn',
-                        height: 25,
-                        width: 110,
-                        onPressed: () {
-                          _bloc.add(CreateBooking(
-                              bookingHomestayModel: inputBooking));
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 )
               : Center(
                   child: SizedBox(
@@ -160,6 +148,20 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                 );
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: isDisplay
+          ? Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: RoundGradientButton(
+                title: 'Tạo đơn',
+                height: 25,
+                width: 110,
+                onPressed: () {
+                  _bloc.add(CreateBooking(bookingHomestayModel: inputBooking));
+                },
+              ),
+            )
+          : const SizedBox(),
     );
   }
 }

@@ -20,7 +20,7 @@ class ApiWallet {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get wallet: ${response.body}");
+      print("TEST get wallet: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         var postsJson = bodyConvert['data'];
@@ -55,7 +55,7 @@ class ApiWallet {
       };
       var response = await http.post(Uri.parse(url.toString()),
           headers: header, body: jsonEncode(body));
-      print("TEST nạp tiền: ${response.body}");
+      print("TEST nạp tiền: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         link = bodyConvert['data']['url'];
@@ -86,7 +86,8 @@ class ApiWallet {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get all transaction: ${response.body}");
+      print(
+          "TEST get all transaction: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");

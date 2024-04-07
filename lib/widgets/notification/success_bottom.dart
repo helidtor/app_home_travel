@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
-void showError(BuildContext context, String errorMessage) {
+void showSuccess(BuildContext context, String errorMessage) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: const Color.fromARGB(255, 164, 29, 19),
+      backgroundColor: const Color.fromARGB(255, 38, 150, 41),
       content: Text(
         errorMessage,
         style: TextStyle(

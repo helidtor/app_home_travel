@@ -48,7 +48,7 @@ class _HistoryRowState extends State<HistoryRow> {
                   //     Border.all(color: AppColors.primaryColor3, width: 1),
                 ),
                 child: Image.asset(
-                  'assets/images/PAID_WITH_CASH.png',
+                  'assets/images/waiting_booking.png',
                   fit: BoxFit.cover,
                 ),
               ),

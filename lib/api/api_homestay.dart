@@ -20,7 +20,7 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      // print("TEST get all homestay: ${response.body}");
+      // print("TEST get all homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -49,7 +49,7 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      // print("TEST get detail homestay: ${response.body}");
+      // print("TEST get detail homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -79,7 +79,7 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST search homestay: ${response.body}");
+      print("TEST search homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -113,7 +113,7 @@ class ApiHomestay {
       };
       var response = await http.post(Uri.parse(url.toString()),
           headers: header, body: jsonEncode(body));
-      print("TEST wishlist: ${response.body}");
+      print("TEST wishlist: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -143,7 +143,7 @@ class ApiHomestay {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      // print("TEST get wishlist: ${response.body}");
+      // print("TEST get wishlist: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         var postsJson = bodyConvert['data'];

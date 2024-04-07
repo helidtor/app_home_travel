@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_home_travel/screens/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
+import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebView extends StatefulWidget {
@@ -37,11 +39,13 @@ class _WebViewState extends State<WebView> {
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );
+              showSuccess(context, 'Thanh toán thành công');
             } else if (request.url.endsWith('=FAILED')) {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );
+              showError(context, 'Thanh toán thất bại');
             }
             return NavigationDecision.navigate;
           },

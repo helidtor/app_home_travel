@@ -28,6 +28,7 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  String? imageDisplay;
   final _bloc = WalletBloc();
   bool isHidden = true;
   bool isDisplay = true;
@@ -80,9 +81,13 @@ class _WalletScreenState extends State<WalletScreen> {
             Navigator.pop(context);
             wallet = state.walletModel;
             listTransaction = state.listTransaction;
+            if (listTransaction.isEmpty) {
+              imageDisplay = 'assets/images/empty_transaction.png';
+            }
             isDisplay = true;
           } else if (state is WalletFailure) {
             Navigator.pop(context);
+            imageDisplay = 'assets/images/error_loading.png';
             showError(context, state.error);
           } else if (state is AddFundWalletSuccess) {
             Navigator.pop(context);
@@ -333,14 +338,16 @@ class _WalletScreenState extends State<WalletScreen> {
                               ),
                             )
                           : Center(
-                              child: SizedBox(
-                                width: 250,
-                                height: 250,
-                                child: Image.asset(
-                                  'assets/images/empty_transaction.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              child: (imageDisplay != null)
+                                  ? SizedBox(
+                                      width: 250,
+                                      height: 250,
+                                      child: Image.asset(
+                                        imageDisplay!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ),
                     ),
                     const Spacer(),

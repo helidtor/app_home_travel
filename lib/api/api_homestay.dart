@@ -12,13 +12,10 @@ class ApiHomestay {
   // <<<< Get all homestay >>>>
   static Future<List<HomestayModel>?> getAllHomestay() async {
     List<HomestayModel>? homestay;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
 
     try {
-      var url = "$baseUrl/api/v1/Homestays";
+      var url = "$baseUrl/api/v1/HomeStays?pageSize=50&status=ACTIVE";
       Map<String, String> header = await ApiHeader.getHeader();
-      header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
       // print("TEST get all homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {

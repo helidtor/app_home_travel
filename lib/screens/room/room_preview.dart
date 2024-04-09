@@ -151,7 +151,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                           width: 5,
                         ),
                         Text(
-                          '${FormatProvider().formatPrice((roomModel.price != null) ? roomModel.price.toString() : '0')}đ',
+                          '${FormatProvider().formatPrice((roomModel.price != null) ? roomModel.price.toString() : '0')}₫',
                           style: TextStyle(
                               fontFamily: GoogleFonts.nunito().fontFamily,
                               fontSize: 12,

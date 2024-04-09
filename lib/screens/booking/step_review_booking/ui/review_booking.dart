@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/format/format.dart';
-
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
@@ -20,17 +20,20 @@ import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
+  bool isAllowBack;
   BookingHomestayModel bookingHomestayModel;
   ReviewBooking({
-    Key? key,
+    super.key,
+    required this.isAllowBack,
     required this.bookingHomestayModel,
-  }) : super(key: key);
+  });
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
 }
 
 class _ReviewBookingState extends State<ReviewBooking> {
+  bool isAllowBack = false;
   String? imageDisplay;
   late BookingHomestayModel booking;
   bool isCheck = false;
@@ -44,6 +47,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
     // TODO: implement initState
     super.initState();
     booking = widget.bookingHomestayModel;
+    isAllowBack = widget.isAllowBack;
     _bloc.add(const GetHomestayOfBooking());
   }
 
@@ -54,7 +58,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: isAllowBack,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         // leading: IconButton(
@@ -78,7 +82,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
           ),
         ),
         backgroundColor: Colors.white,
-        actions: [
+        actions: [(isAllowBack == false) ?
           IconButton(
             onPressed: () {
               // Navigator.pop(context);
@@ -91,7 +95,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
               color: AppColors.primaryColor3.withOpacity(0.7),
               size: 27,
             ),
-          ),
+          ) : const SizedBox(),
         ],
       ),
       body: BlocConsumer<ReviewBookingBloc, ReviewBookingState>(
@@ -584,7 +588,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
               CupertinoDialogAction(
                   child: TextButton(
                 onPressed: () async {
-                  booking.status = 'CANCELED';
+                  booking.status = 'CANCELLED';
                   var checkUpdateBooking =
                       await ApiBooking.updateBooking(bookingInput: booking);
                   print(checkUpdateBooking);

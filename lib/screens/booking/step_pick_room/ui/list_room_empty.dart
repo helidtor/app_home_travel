@@ -104,6 +104,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
               context,
               MaterialPageRoute(
                   builder: (context) => ReviewBooking(
+                        isAllowBack: false,
                         bookingHomestayModel: outputBooking!,
                       )),
             );
@@ -121,7 +122,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             Navigator.pop(context);
             setState(() {
               isDisplay = false;
-              imageDisplay = 'assets/images/empty_search.png';
+              imageDisplay = 'assets/images/empty_list.png';
             });
           }
         },

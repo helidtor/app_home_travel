@@ -13,12 +13,13 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   post(Emitter<HistoryState> emit, HistoryEvent event) async {
     emit(HistoryLoading());
     try {
-      if (event is GetHistoryPending) {
-        var bookingPending = await ApiBooking.getBookingPending();
-        if (bookingPending != null) {
-          emit(HistorySuccess(bookingPending: bookingPending));
+      if (event is GetListBooking) {
+        var listBooking = await ApiBooking.getListBooking(status: event.status);
+        // print('Lấy list booking trong bloc: $listBooking');
+        if (listBooking != null) {
+          emit(GetHistorySuccess(listBooking: listBooking));
         } else {
-          const HistoryFailure(error: "Lỗi lấy đơn đặt đang chờ thanh toán");
+          emit(ListBookingEmpty());
         }
       }
     } catch (e) {

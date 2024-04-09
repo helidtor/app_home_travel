@@ -123,8 +123,8 @@ class _TransactionRowState extends State<TransactionRow> {
                 Text(
                   //hiện dấu cộng hoặc trừ hoặc không hiện dấu
                   (FormatProvider().convertPlusOrMinus(transactionModel.type!))
-                      ? '+${FormatProvider().formatPrice(transactionModel.price.toString())}đ'
-                      : '-${FormatProvider().formatPrice(transactionModel.price.toString())}đ',
+                      ? '+${FormatProvider().formatPrice(transactionModel.price.toString())}₫'
+                      : '-${FormatProvider().formatPrice(transactionModel.price.toString())}₫',
                   style: TextStyle(
                     color: (FormatProvider()
                             .convertPlusOrMinus(transactionModel.type!))

@@ -17,10 +17,10 @@ class HistoryInitial extends HistoryState {}
 
 class HistoryLoading extends HistoryState {}
 
-class HistorySuccess extends HistoryState {
-  BookingHomestayModel bookingPending;
-  HistorySuccess({
-    required this.bookingPending,
+class GetHistorySuccess extends HistoryState {
+  List<BookingHomestayModel> listBooking;
+  GetHistorySuccess({
+    required this.listBooking,
   });
 }
 
@@ -29,3 +29,5 @@ class HistoryFailure extends HistoryState {
 
   const HistoryFailure({required this.error});
 }
+
+class ListBookingEmpty extends HistoryState {}

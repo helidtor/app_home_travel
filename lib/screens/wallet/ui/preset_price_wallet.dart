@@ -57,7 +57,7 @@ class _PresetPriceWalletState extends State<PresetPriceWallet> {
                                 width: 2,
                                 color: Colors.black.withOpacity(0.1))),
                         child: Text(
-                          '${FormatProvider().formatPrice(listPrice[index])}đ',
+                          '${FormatProvider().formatPrice(listPrice[index])}₫',
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.3),
                             fontSize: 18,
@@ -75,7 +75,7 @@ class _PresetPriceWalletState extends State<PresetPriceWallet> {
                             border: Border.all(
                                 width: 2, color: AppColors.primaryColor3)),
                         child: Text(
-                          '${FormatProvider().formatPrice(listPrice[index])}đ',
+                          '${FormatProvider().formatPrice(listPrice[index])}₫',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,

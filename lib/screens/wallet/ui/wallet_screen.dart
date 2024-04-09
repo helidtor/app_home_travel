@@ -340,8 +340,8 @@ class _WalletScreenState extends State<WalletScreen> {
                           : Center(
                               child: (imageDisplay != null)
                                   ? SizedBox(
-                                      width: 250,
-                                      height: 250,
+                                      width: 300,
+                                      height: 300,
                                       child: Image.asset(
                                         imageDisplay!,
                                         fit: BoxFit.cover,

@@ -8,5 +8,10 @@ abstract class HistoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetHistoryPending extends HistoryEvent {}
-
+class GetListBooking extends HistoryEvent {
+  String status;
+  GetListBooking({
+    required this.status,
+  });
+  
+}

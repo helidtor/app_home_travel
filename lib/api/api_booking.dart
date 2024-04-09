@@ -116,35 +116,42 @@ class ApiBooking {
     return false;
   }
 
-  // <<<< Get booking đang dở >>>>
-  static Future<BookingHomestayModel?> getBookingPending() async {
-    List<BookingHomestayModel>? listBookingPending;
+  // <<<< Get list booking theo status >>>>
+  static Future<List<BookingHomestayModel>?> getListBooking(
+      {required String status}) async {
+    List<BookingHomestayModel>? listBooking;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     String? idTourist = prefs.getString("idUserCurrent");
     try {
       var url =
-          "$baseUrl/api/v1/Bookings?pageSize=50&status=PENDING&touristId=$idTourist";
+          "$baseUrl/api/v1/Bookings?pageSize=50&status=$status&touristId=$idTourist";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print(
-          "TEST get booking pending: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      // print(
+      //     "TEST get booking $status: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         var postsJson = bodyConvert['data'];
-        listBookingPending = (postsJson as List)
+        listBooking = (postsJson as List)
             .map<BookingHomestayModel>(
                 (postJson) => BookingHomestayModel.fromMap(postJson))
             .toList();
-        print("Thông tin model từ get booking pending: $listBookingPending");
-        return listBookingPending[0];
+        print("Số Lượng: ${listBooking.length}");
+        // print(
+        //     "Thông tin model $status từ get list booking: $listBooking");
+        if (listBooking.isNotEmpty) {
+          return listBooking;
+        } else {
+          return null;
+        }
       } else {
-        print('Lỗi get booking pending');
+        print('Lỗi get list booking');
         return null;
       }
     } catch (e) {
-      print("Loi get booking dở: $e");
+      print("Loi get list booking: $e");
     }
     return null;
   }

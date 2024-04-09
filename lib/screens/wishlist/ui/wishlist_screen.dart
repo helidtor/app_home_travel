@@ -22,7 +22,7 @@ class WishlistScreen extends StatefulWidget {
 
 class _WishlistScreenState extends State<WishlistScreen> {
   List<WishlistModel> listWishlist = [];
-  String displayScreen = 'assets/images/empty_search.png';
+  String displayScreen = 'assets/images/empty_list.png';
   double widthDisplay = 350;
   double heightDisplay = 350;
   final _bloc = WishlistBloc();
@@ -79,7 +79,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
               setState(() {
                 widthDisplay = 350;
                 heightDisplay = 350;
-                displayScreen = 'assets/images/empty_search.png';
+                displayScreen = 'assets/images/empty_list.png';
               });
             } else if (state is WishlistError) {
               setState(() {

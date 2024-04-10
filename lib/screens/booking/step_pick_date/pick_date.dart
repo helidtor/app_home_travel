@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/list_room_empty.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PickDate extends StatefulWidget {
@@ -18,6 +19,7 @@ class _PickDateState extends State<PickDate> {
   final DateRangePickerController _controller = DateRangePickerController();
   String _checkInDate = '';
   String _checkOutDate = '';
+  int totalDate = 0;
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
@@ -26,6 +28,12 @@ class _PickDateState extends State<PickDate> {
         // ignore: lines_longer_than_80_chars
         _checkOutDate = DateFormat('yyyy/MM/dd')
             .format(args.value.endDate ?? args.value.startDate);
+        if (args.value.endDate != null && args.value.startDate != null) {
+          totalDate =
+              (args.value.endDate).difference(args.value.startDate).inDays + 1;
+        } else if (args.value.startDate != null) {
+          totalDate = 1;
+        }
       }
     });
   }
@@ -125,13 +133,18 @@ class _PickDateState extends State<PickDate> {
               cancelText: "",
               confirmText: "Tiếp",
               onSubmit: (e) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ListRoomEmpty(
-                          dateCheckIn: _checkInDate,
-                          dateCheckOut: _checkOutDate)),
-                );
+                if (totalDate != 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ListRoomEmpty(
+                            totalDate: totalDate,
+                            dateCheckIn: _checkInDate,
+                            dateCheckOut: _checkOutDate)),
+                  );
+                } else {
+                  showError(context, 'Vui lòng chọn ngày! $totalDate');
+                }
               },
               showActionButtons: true,
             ),

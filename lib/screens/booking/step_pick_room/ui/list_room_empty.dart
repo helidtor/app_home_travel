@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:mobile_home_travel/api/api_room.dart';
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
@@ -15,15 +18,16 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ListRoomEmpty extends StatefulWidget {
   String dateCheckIn;
   String dateCheckOut;
+  int totalDate;
   ListRoomEmpty({
     super.key,
     required this.dateCheckIn,
     required this.dateCheckOut,
+    required this.totalDate,
   });
 
   @override

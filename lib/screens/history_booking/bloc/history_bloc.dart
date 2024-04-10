@@ -17,9 +17,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         var listBooking = await ApiBooking.getListBooking(status: event.status);
         // print('Lấy list booking trong bloc: $listBooking');
         if (listBooking != null) {
-          emit(GetHistorySuccess(listBooking: listBooking));
+          emit(GetHistorySuccess(listBooking: listBooking, type: event.status));
         } else {
-          emit(ListBookingEmpty());
+          emit(ListBookingEmpty(type: event.status));
         }
       }
     } catch (e) {

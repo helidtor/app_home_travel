@@ -31,6 +31,7 @@ class HomeStayDetail extends StatefulWidget {
 }
 
 class _HomeStayDetailState extends State<HomeStayDetail> {
+  String? imageDisplay;
   late bool isFromHome;
   final _bloc = HomestayDetailBloc();
   bool? isWishlist;
@@ -107,6 +108,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
             } else if (state is GetDisplayFailure) {
               Navigator.pop(context);
               showError(context, state.error);
+              imageDisplay = 'assets/images/error_loading.png';
             }
           },
           builder: (context, state) {
@@ -509,14 +511,16 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                     ),
                   )
                 : Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: Image.asset(
-                        "assets/gifs/loading.gif",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    child: (imageDisplay != null)
+                        ? SizedBox(
+                            width: 350,
+                            height: 350,
+                            child: Image.asset(
+                              imageDisplay!,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const SizedBox(),
                   );
           },
         ));

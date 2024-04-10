@@ -19,8 +19,10 @@ class HistoryLoading extends HistoryState {}
 
 class GetHistorySuccess extends HistoryState {
   List<BookingHomestayModel> listBooking;
+  String type;
   GetHistorySuccess({
     required this.listBooking,
+    required this.type,
   });
 }
 
@@ -30,4 +32,9 @@ class HistoryFailure extends HistoryState {
   const HistoryFailure({required this.error});
 }
 
-class ListBookingEmpty extends HistoryState {}
+class ListBookingEmpty extends HistoryState {
+  String type;
+  ListBookingEmpty({
+    required this.type,
+  });
+}

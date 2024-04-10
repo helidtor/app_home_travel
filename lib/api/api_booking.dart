@@ -138,7 +138,7 @@ class ApiBooking {
             .map<BookingHomestayModel>(
                 (postJson) => BookingHomestayModel.fromMap(postJson))
             .toList();
-        print("Số Lượng: ${listBooking.length}");
+        // print("Số Lượng: ${listBooking.length}");
         // print(
         //     "Thông tin model $status từ get list booking: $listBooking");
         if (listBooking.isNotEmpty) {

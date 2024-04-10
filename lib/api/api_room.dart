@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class ApiRoom {
   // <<<< Get room by id >>>>
-  static Future<RoomModel?> getroomDetail({required String idRoom}) async {
+  static Future<RoomModel?> getRoomDetail({required String idRoom}) async {
     RoomModel? roomDetail;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
@@ -43,14 +43,16 @@ class ApiRoom {
     List<RoomModel>? listRoom;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
-    print('Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
+    print(
+        'Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
     try {
       var url =
           "$baseUrl/api/v1/Rooms/emptyRooms?pageSize=50&homeStayId=$homeStayId&startDate=$dateCheckIn&endDate=$dateCheckOut";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get all room empty: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      print(
+          "TEST get all room empty: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");

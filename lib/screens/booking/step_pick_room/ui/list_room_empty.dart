@@ -13,7 +13,7 @@ import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_bo
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_state.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/row_room.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
@@ -22,12 +22,14 @@ import 'package:mobile_home_travel/widgets/others/loading.dart';
 class ListRoomEmpty extends StatefulWidget {
   String dateCheckIn;
   String dateCheckOut;
-  int totalDate;
+  int quantityNormalDays;
+  int quantityWeekendDays;
   ListRoomEmpty({
     super.key,
     required this.dateCheckIn,
     required this.dateCheckOut,
-    required this.totalDate,
+    required this.quantityNormalDays,
+    required this.quantityWeekendDays,
   });
 
   @override
@@ -42,9 +44,14 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
   BookingHomestayModel inputBooking = BookingHomestayModel();
   List<RoomModel> listRoom = [];
   bool isChecked = false;
+  late int quantityNormalDays;
+  late int quantityWeekendDays;
+
   @override
   void initState() {
     super.initState();
+    quantityNormalDays = widget.quantityNormalDays;
+    quantityWeekendDays = widget.quantityWeekendDays;
     inputBooking.checkInDate =
         FormatProvider().convertDateTimeFormat(widget.dateCheckIn);
     inputBooking.checkOutDate =
@@ -138,8 +145,13 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
-                      children: List.generate(listRoom.length,
-                          (index) => RowRoom(room: listRoom[index])),
+                      children: List.generate(
+                          listRoom.length,
+                          (index) => RowRoom(
+                                room: listRoom[index],
+                                quantityNormalDays: quantityNormalDays,
+                                quantityWeekendDays: quantityWeekendDays,
+                              )),
                     ),
                   ),
                 )
@@ -166,7 +178,11 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                 height: 25,
                 width: 110,
                 onPressed: () {
-                  _bloc.add(CreateBooking(bookingHomestayModel: inputBooking));
+                  _bloc.add(CreateBooking(
+                    bookingHomestayModel: inputBooking,
+                    quantityNormalDays: quantityNormalDays,
+                    quantityWeekendDays: quantityWeekendDays,
+                  ));
                 },
               ),
             )

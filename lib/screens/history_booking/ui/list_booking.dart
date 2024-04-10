@@ -32,12 +32,15 @@ class _ListBookingState extends State<ListBooking> {
       height: 200,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Column(
-          children: List.generate(
-            listBooking!.length,
-            (index) => Padding(
-              padding: const EdgeInsets.all(10),
-              child: HistoryRow(bookingHomestayModel: listBooking![index]),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 60),
+          child: Column(
+            children: List.generate(
+              listBooking!.length,
+              (index) => Padding(
+                padding: const EdgeInsets.all(10),
+                child: HistoryRow(bookingHomestayModel: listBooking![index]),
+              ),
             ),
           ),
         ),

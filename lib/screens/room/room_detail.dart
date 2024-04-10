@@ -15,10 +15,10 @@ import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-Future<RoomModel?> getroomDetail() async {
+Future<RoomModel?> getRoomDetail() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? idRoom = prefs.getString("idRoom");
-  var roomDetail = await ApiRoom.getroomDetail(idRoom: idRoom!);
+  var roomDetail = await ApiRoom.getRoomDetail(idRoom: idRoom!);
   print('Id room từ prefs là: $idRoom');
   return roomDetail;
 }
@@ -41,7 +41,7 @@ class _roomDetailState extends State<roomDetail> {
   }
 
   Future<void> _loadroomDetail() async {
-    var homestay = await getroomDetail();
+    var homestay = await getRoomDetail();
     if (mounted) {
       setState(() {
         if (homestay != null) {

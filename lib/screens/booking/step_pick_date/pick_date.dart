@@ -19,23 +19,64 @@ class _PickDateState extends State<PickDate> {
   final DateRangePickerController _controller = DateRangePickerController();
   String _checkInDate = '';
   String _checkOutDate = '';
-  int totalDate = 0;
+  int quantityNormalDays = 0;
+  int quantityWeekendDays = 0;
+
+  int _countWeekendDays(DateTime startDate, DateTime endDate) {
+    int count = 0;
+    for (DateTime date = startDate;
+        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+        date = date.add(const Duration(days: 1))) {
+      if (date.weekday == DateTime.saturday ||
+          date.weekday == DateTime.sunday) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  int _countNormalDays(DateTime startDate, DateTime endDate) {
+    int count = 0;
+    for (DateTime date = startDate;
+        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+        date = date.add(const Duration(days: 1))) {
+      if (date.weekday != DateTime.saturday &&
+          date.weekday != DateTime.sunday) {
+        count++;
+      }
+    }
+    return count;
+  }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _checkInDate = DateFormat('yyyy/MM/dd').format(args.value.startDate);
-        // ignore: lines_longer_than_80_chars
-        _checkOutDate = DateFormat('yyyy/MM/dd')
-            .format(args.value.endDate ?? args.value.startDate);
-        if (args.value.endDate != null && args.value.startDate != null) {
-          totalDate =
-              (args.value.endDate).difference(args.value.startDate).inDays + 1;
-        } else if (args.value.startDate != null) {
-          totalDate = 1;
+    setState(
+      () {
+        if (args.value is PickerDateRange) {
+          _checkInDate = DateFormat('yyyy/MM/dd').format(args.value.startDate);
+          // ignore: lines_longer_than_80_chars
+          _checkOutDate = DateFormat('yyyy/MM/dd')
+              .format(args.value.endDate ?? args.value.startDate);
+          //Đếm số ngày
+          if (args.value.endDate != null && args.value.startDate != null) {
+            quantityWeekendDays = _countWeekendDays(
+                args.value.startDate, args.value.endDate); //số ngày cuối tuần
+            quantityNormalDays = _countNormalDays(
+                args.value.startDate, args.value.endDate); //số ngày thường
+          } else if (args.value.startDate != null &&
+              args.value.endDate == null) {
+            //nếu chỉ chọn 1 ngày
+            if (args.value.startDate.weekday == DateTime.saturday ||
+                args.value.startDate.weekday == DateTime.sunday) {
+              quantityNormalDays = 0;
+              quantityWeekendDays = 1;
+            } else {
+              quantityNormalDays = 1;
+              quantityWeekendDays = 0;
+            }
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   @override
@@ -133,17 +174,18 @@ class _PickDateState extends State<PickDate> {
               cancelText: "",
               confirmText: "Tiếp",
               onSubmit: (e) {
-                if (totalDate != 0) {
+                if (quantityNormalDays != 0 || quantityWeekendDays != 0) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => ListRoomEmpty(
-                            totalDate: totalDate,
+                            quantityNormalDays: quantityNormalDays,
+                            quantityWeekendDays: quantityWeekendDays,
                             dateCheckIn: _checkInDate,
                             dateCheckOut: _checkOutDate)),
                   );
                 } else {
-                  showError(context, 'Vui lòng chọn ngày! $totalDate');
+                  showError(context, 'Bạn chưa chọn ngày!');
                 }
               },
               showActionButtons: true,

@@ -52,7 +52,7 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         detailHomestay = HomestayDetailModel.fromMap(postsJson);
-        // print("Thông tin get detail homestay: $detailHomestay");
+        print("Thông tin get detail homestay: $detailHomestay");
         // print(
         //     "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
       }

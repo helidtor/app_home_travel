@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mobile_home_travel/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/checkout_booking.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 
 class HistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;

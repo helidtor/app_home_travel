@@ -12,8 +12,12 @@ abstract class CreateBookingEvent extends Equatable {
 
 class CreateBooking extends CreateBookingEvent {
   BookingHomestayModel bookingHomestayModel;
+  int quantityNormalDays;
+  int quantityWeekendDays;
   CreateBooking({
     required this.bookingHomestayModel,
+    required this.quantityNormalDays,
+    required this.quantityWeekendDays,
   });
 }
 

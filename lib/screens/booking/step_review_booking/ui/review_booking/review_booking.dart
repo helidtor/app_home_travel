@@ -13,7 +13,8 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_bloc.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/detail_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
@@ -82,20 +83,22 @@ class _ReviewBookingState extends State<ReviewBooking> {
           ),
         ),
         backgroundColor: Colors.white,
-        actions: [(isAllowBack == false) ?
-          IconButton(
-            onPressed: () {
-              // Navigator.pop(context);
-              // Navigator.pop(context);
-              // Navigator.pop(context);
-              _showAlertDialog(context);
-            },
-            icon: Icon(
-              Icons.close_rounded,
-              color: AppColors.primaryColor3.withOpacity(0.7),
-              size: 27,
-            ),
-          ) : const SizedBox(),
+        actions: [
+          (isAllowBack == false)
+              ? IconButton(
+                  onPressed: () {
+                    // Navigator.pop(context);
+                    // Navigator.pop(context);
+                    // Navigator.pop(context);
+                    _showAlertDialog(context);
+                  },
+                  icon: Icon(
+                    Icons.close_rounded,
+                    color: AppColors.primaryColor3.withOpacity(0.7),
+                    size: 27,
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
       body: BlocConsumer<ReviewBookingBloc, ReviewBookingState>(
@@ -351,7 +354,14 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                   height: 25,
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const DetailBooking()),
+                                    );
+                                  },
                                   child: Container(
                                     alignment: Alignment.center,
                                     height: 25,

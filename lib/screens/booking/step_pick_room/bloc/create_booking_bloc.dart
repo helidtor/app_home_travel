@@ -19,7 +19,8 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
     emit(CreateBookingLoading());
     try {
       if (event is CreateBooking) {
-        double totalPrice = 0;
+        double totalNormalPrice = 0;
+        double totalWeekendPrice = 0;
         int totalCapacity = 0;
         bool isSuccessAll = false;
         BookingHomestayModel?
@@ -30,15 +31,22 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
             prefs.getStringList('listIdPicked') ?? [];
         if (listIdRoomPicked.isNotEmpty) {
           for (var e in listIdRoomPicked) {
-            var roomPicked = await ApiRoom.getroomDetail(idRoom: e);
+            //cộng dồn giá dựa trên list id phòng được chọn
+            var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
             if (roomPicked != null) {
-              totalPrice += roomPicked.price!;
+              totalNormalPrice += roomPicked.price!;
               totalCapacity += roomPicked.capacity!;
+              if (roomPicked.weekendPrice != null) {
+                totalWeekendPrice += roomPicked.weekendPrice!;
+              }
             }
           }
-          if (totalPrice != 0 && totalCapacity != 0) {
+          if (totalNormalPrice != 0 && totalCapacity != 0) {
             var inputBooking = event.bookingHomestayModel;
-            inputBooking.totalPrice = totalPrice;
+            inputBooking.totalPrice =
+                totalNormalPrice * event.quantityNormalDays +
+                    (totalWeekendPrice *
+                        event.quantityWeekendDays); //giá tổng nhân với số ngày
             //create booking
             var bookingInfor = await ApiBooking.createBooking(
                 bookingInput: inputBooking, totalCapacity: totalCapacity);
@@ -47,7 +55,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
               for (var e in listIdRoomPicked) {
                 bookingHomestayDetail.bookingId = bookingInfor.id;
                 bookingHomestayDetail.roomId = e;
-                var roomPicked = await ApiRoom.getroomDetail(idRoom: e);
+                var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
                 if (roomPicked != null) {
                   bookingHomestayDetail.price = roomPicked.price!;
                 }

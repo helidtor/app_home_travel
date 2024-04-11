@@ -47,10 +47,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
         title: Text(
           "Chi Tiết Giao Dịch",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(182, 0, 0, 0),
-              fontSize: 20,
-              fontFamily: GoogleFonts.nunito().fontFamily),
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(182, 0, 0, 0),
+            fontSize: 20,
+          ),
         ),
         backgroundColor: Colors.white,
       ),
@@ -92,7 +92,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                   ),
                 ),
                 const Spacer(),
@@ -115,7 +114,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       const SizedBox(
@@ -130,7 +128,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             color: Colors.black.withOpacity(0.8),
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
                           ),
                         ),
                       ),
@@ -148,7 +145,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       (transactionModel.status == 'SUCCESS')
@@ -158,7 +154,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                fontFamily: GoogleFonts.nunito().fontFamily,
                               ),
                             )
                           : Text(
@@ -167,7 +162,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                fontFamily: GoogleFonts.nunito().fontFamily,
                               ),
                             ),
                     ],
@@ -184,7 +178,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       Text(
@@ -200,7 +193,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               : Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                     ],
@@ -217,7 +209,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       Text(
@@ -226,7 +217,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                     ],
@@ -243,7 +233,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       Text(
@@ -253,7 +242,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                     ],
@@ -270,7 +258,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black54,
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                       Text(
@@ -280,7 +267,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                         ),
                       ),
                     ],

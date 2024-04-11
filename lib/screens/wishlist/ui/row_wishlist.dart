@@ -90,7 +90,6 @@ class _ResultState extends State<RowWishlist> {
                   Text(
                     '${wishlistModel.homeStay!.name}',
                     style: TextStyle(
-                        fontFamily: GoogleFonts.nunito().fontFamily,
                         fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
@@ -104,7 +103,6 @@ class _ResultState extends State<RowWishlist> {
                       Text(
                         '${FormatProvider().formatNumber((wishlistModel.homeStay!.acreage != null) ? wishlistModel.homeStay!.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -118,7 +116,6 @@ class _ResultState extends State<RowWishlist> {
                             ? ' - ${wishlistModel.homeStay!.totalCapacity} người'
                             : '',
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -137,10 +134,7 @@ class _ResultState extends State<RowWishlist> {
                       ),
                       Text(
                         '${wishlistModel.homeStay!.city}',
-                        style: TextStyle(
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 13,
-                            color: Colors.black),
+                        style: TextStyle(fontSize: 13, color: Colors.black),
                       ),
                     ],
                   ),

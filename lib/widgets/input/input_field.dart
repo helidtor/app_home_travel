@@ -66,7 +66,6 @@ class _InputFieldState extends State<InputField> {
               ),
               labelText: widget.hintText,
               labelStyle: TextStyle(
-                fontFamily: GoogleFonts.nunito().fontFamily,
                 color: Colors.black.withOpacity(0.5),
               ),
               contentPadding: EdgeInsets.all((height != null) ? height : 15),
@@ -88,7 +87,6 @@ class _InputFieldState extends State<InputField> {
               hintStyle: TextStyle(
                 color: Colors.grey[350],
                 fontSize: 12,
-                fontFamily: GoogleFonts.nunito().fontFamily,
               ),
             ),
             onChanged: (text) {

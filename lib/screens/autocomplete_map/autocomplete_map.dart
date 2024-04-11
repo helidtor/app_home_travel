@@ -118,7 +118,6 @@ class FullMapState extends State<AutocompleteMap> {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,
-                              fontFamily: GoogleFonts.nunito().fontFamily,
                               color: AppColors.primaryColor3.withOpacity(0.9),
                             ),
                           ),

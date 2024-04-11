@@ -94,13 +94,13 @@ class _PickDateState extends State<PickDate> {
           icon: const Icon(Icons.keyboard_arrow_left),
         ),
         // centerTitle: true,
-        title: Text(
+        title: const Text(
           "Chọn ngày",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(182, 0, 0, 0),
-              fontSize: 20,
-              fontFamily: GoogleFonts.nunito().fontFamily),
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(182, 0, 0, 0),
+            fontSize: 20,
+          ),
         ),
         backgroundColor: Colors.white,
       ),
@@ -119,8 +119,7 @@ class _PickDateState extends State<PickDate> {
                 color: AppColors.primaryColor3.withOpacity(0.7),
                 child: Text(
                   _days[index],
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.nunito().fontFamily,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 13,
@@ -156,12 +155,11 @@ class _PickDateState extends State<PickDate> {
               navigationDirection: DateRangePickerNavigationDirection.vertical,
               backgroundColor: Colors.white,
               // headerHeight: 0,
-              headerStyle: DateRangePickerHeaderStyle(
+              headerStyle: const DateRangePickerHeaderStyle(
                 backgroundColor: Colors.white,
                 textStyle: TextStyle(
                     color: AppColors.primaryColor0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                     fontSize: 17),
                 textAlign: TextAlign.center,
               ),

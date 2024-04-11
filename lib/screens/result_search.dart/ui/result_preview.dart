@@ -39,7 +39,10 @@ class _ResultState extends State<ResultPreview> {
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeStayDetail(isFromHome: true,)),
+          MaterialPageRoute(
+              builder: (context) => HomeStayDetail(
+                    isFromHome: true,
+                  )),
         );
       },
       child: Container(
@@ -89,7 +92,6 @@ class _ResultState extends State<ResultPreview> {
                       Text(
                         '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 14,
                           color: Colors.black,
                         ),
@@ -101,7 +103,6 @@ class _ResultState extends State<ResultPreview> {
                             : '',
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 14,
                           color: Colors.black,
                         ),
@@ -114,7 +115,6 @@ class _ResultState extends State<ResultPreview> {
                   Text(
                     '${homestayModel.name}',
                     style: TextStyle(
-                        fontFamily: GoogleFonts.nunito().fontFamily,
                         fontSize: 22,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
@@ -131,10 +131,7 @@ class _ResultState extends State<ResultPreview> {
                       ),
                       Text(
                         '${homestayModel.city}',
-                        style: TextStyle(
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 15,
-                            color: Colors.black),
+                        style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     ],
                   ),

@@ -74,10 +74,10 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
           title: Text(
             "Chi Tiết Homestay",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(182, 0, 0, 0),
-                fontSize: 20,
-                fontFamily: GoogleFonts.nunito().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(182, 0, 0, 0),
+              fontSize: 20,
+            ),
           ),
           backgroundColor: Colors.white,
         ),
@@ -188,7 +188,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                               // Text(
                               //   '${homestayDetail.acreage}m\u00b2',
                               //   style: TextStyle(
-                              //       fontFamily: GoogleFonts.nunito().fontFamily,
+                              //
                               //       fontSize: 14,
                               //       color: const Color.fromARGB(208, 0, 0, 0)),
                               // ),
@@ -201,8 +201,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                         ? '${homestayDetail!.name}'
                                         : 'Đang đợi cập nhật',
                                     style: TextStyle(
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                         color:
@@ -272,8 +270,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                           ? 'Số phòng: ${homestayDetail!.rooms!.length} - '
                                           : 'Số phòng: 0 - ',
                                       style: TextStyle(
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 13,
                                         color: Colors.black.withOpacity(0.35),
                                         fontWeight: FontWeight.bold,
@@ -285,8 +281,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                           ? 'Sức chứa: ${homestayDetail!.totalCapacity}'
                                           : 'Sức chứa: 0',
                                       style: TextStyle(
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 13,
                                         color: Colors.black.withOpacity(0.35),
                                         fontWeight: FontWeight.bold,
@@ -346,7 +340,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                               // Text(
                               //   'Tiện ích chung',
                               //   style: TextStyle(
-                              //       fontFamily: GoogleFonts.nunito().fontFamily,
+                              //
                               //       fontSize: 16,
                               //       fontWeight: FontWeight.bold,
                               //       color: Colors.black),
@@ -472,8 +466,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                     TextSpan(
                                       text: 'nhận ',
                                       style: TextStyle(
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 18,
                                         color: Colors.black,
                                       ),
@@ -482,8 +474,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                       text: 'Ưu Đãi Hot',
                                       style: TextStyle(
                                         fontStyle: FontStyle.italic,
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -574,7 +564,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.black,
-                  fontFamily: GoogleFonts.nunito().fontFamily,
                 ),
               ),
             ),

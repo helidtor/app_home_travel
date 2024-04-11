@@ -152,12 +152,10 @@ class _HistoryScreenState extends State<HistoryScreen>
                 ],
                 unselectedLabelStyle: TextStyle(
                     fontSize: 14,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                     color: Colors.black54,
                     fontWeight: FontWeight.bold),
                 labelStyle: TextStyle(
                     fontSize: 17,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                     color: AppColors.primaryColor1,
                     fontWeight: FontWeight.bold),
               ),

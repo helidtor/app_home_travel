@@ -91,7 +91,6 @@ class _HomestayState extends State<HomestayPreview> {
                       Text(
                         '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 13,
                           color: Colors.black,
                         ),
@@ -106,7 +105,6 @@ class _HomestayState extends State<HomestayPreview> {
                             : '',
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 11,
                           color: Colors.black,
                         ),
@@ -124,7 +122,6 @@ class _HomestayState extends State<HomestayPreview> {
                           : 'Đợi cập nhật nha bé ơi bé à bé ăn trứng gà',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -144,10 +141,7 @@ class _HomestayState extends State<HomestayPreview> {
                         (homestayModel.city != null)
                             ? '${homestayModel.city}'
                             : 'Đang đợi cập nhật',
-                        style: TextStyle(
-                            fontFamily: GoogleFonts.nunito().fontFamily,
-                            fontSize: 13,
-                            color: Colors.black),
+                        style: TextStyle(fontSize: 13, color: Colors.black),
                       ),
                     ],
                   ),

@@ -17,8 +17,10 @@ class CreateBookingLoading extends CreateBookingState {}
 
 class CreateBookingSuccess extends CreateBookingState {
   BookingHomestayModel bookingHomestayModel;
+  int totalRoom;
   CreateBookingSuccess({
     required this.bookingHomestayModel,
+    required this.totalRoom,
   });
 }
 

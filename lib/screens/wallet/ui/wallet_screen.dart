@@ -195,8 +195,6 @@ class _WalletScreenState extends State<WalletScreen> {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: isHidden ? 20 : 20,
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -300,7 +298,6 @@ class _WalletScreenState extends State<WalletScreen> {
                           Text(
                             'Giao dịch gần nhất',
                             style: TextStyle(
-                                fontFamily: GoogleFonts.nunito().fontFamily,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
@@ -310,7 +307,6 @@ class _WalletScreenState extends State<WalletScreen> {
                               child: Text(
                                 'Xem tất cả',
                                 style: TextStyle(
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                   fontSize: 14,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold,

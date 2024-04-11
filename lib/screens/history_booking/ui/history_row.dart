@@ -38,74 +38,69 @@ class _HistoryRowState extends State<HistoryRow> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  ReviewBooking(bookingHomestayModel: bookingHomestayModel, isAllowBack: true,)),
+              builder: (context) => ReviewBooking(
+                    totalRoom: 0,
+                    bookingHomestayModel: bookingHomestayModel,
+                    isAllowBack: true,
+                  )),
         );
       },
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(200),
-                    // border:
-                    //     Border.all(color: AppColors.primaryColor3, width: 1),
-                  ),
-                  child: Image.asset(
-                    'assets/images/waiting_booking.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: screenWidth * 0.6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        bookingHomestayModel.id.toString(),
-                        style: TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.black.withOpacity(0.8),
-                          fontFamily: GoogleFonts.nunito().fontFamily,
-                        ),
-                      ),
-                      Text(
-                        FormatProvider().convertDateTime(
-                            bookingHomestayModel.createdDate.toString()),
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black.withOpacity(0.5),
-                          fontSize: 12,
-                          fontFamily: GoogleFonts.nunito().fontFamily,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                  style: TextStyle(
-                    color: const Color.fromARGB(255, 21, 149, 25),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
-                  ),
-                )
-              ],
+            Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(200),
+                // border:
+                //     Border.all(color: AppColors.primaryColor3, width: 1),
+              ),
+              child: Image.asset(
+                'assets/images/waiting_booking.png',
+                fit: BoxFit.cover,
+              ),
             ),
+            const SizedBox(
+              width: 10,
+            ),
+            SizedBox(
+              width: screenWidth * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    bookingHomestayModel.id.toString(),
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black.withOpacity(0.8),
+                    ),
+                  ),
+                  Text(
+                    FormatProvider().convertDateTime(
+                        bookingHomestayModel.createdDate.toString()),
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
+              style: const TextStyle(
+                color: Color.fromARGB(255, 21, 149, 25),
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            )
           ],
         ),
       ),

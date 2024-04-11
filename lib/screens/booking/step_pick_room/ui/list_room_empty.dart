@@ -80,10 +80,10 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         title: Text(
           "Chọn phòng",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black.withOpacity(0.65),
-              fontSize: 20,
-              fontFamily: GoogleFonts.nunito().fontFamily),
+            fontWeight: FontWeight.bold,
+            color: Colors.black.withOpacity(0.65),
+            fontSize: 20,
+          ),
         ),
         backgroundColor: Colors.white,
         actions: [
@@ -115,6 +115,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
               context,
               MaterialPageRoute(
                   builder: (context) => ReviewBooking(
+                        totalRoom: state.totalRoom,
                         isAllowBack: false,
                         bookingHomestayModel: outputBooking!,
                       )),

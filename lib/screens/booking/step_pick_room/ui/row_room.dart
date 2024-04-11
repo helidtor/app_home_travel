@@ -88,9 +88,8 @@ class _RowRoomState extends State<RowRoom> {
                     ),
                     Text(
                       '${roomEmpty.capacity}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
-                        fontFamily: GoogleFonts.nunito().fontFamily,
                       ),
                     ),
                   ],
@@ -107,9 +106,8 @@ class _RowRoomState extends State<RowRoom> {
                     ),
                     Text(
                       ' ${FormatProvider().formatPrice((roomEmpty.price != null) ? (roomEmpty.price! * quantityNormalDays + ((roomEmpty.weekendPrice != null) ? (roomEmpty.weekendPrice! * quantityWeekendDays) : 0)).toString() : '0')}₫',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
-                        fontFamily: GoogleFonts.nunito().fontFamily,
                       ),
                     ),
                   ],

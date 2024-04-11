@@ -72,10 +72,10 @@ class _roomDetailState extends State<roomDetail> {
         title: Text(
           "Chi Tiết Phòng",
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(182, 0, 0, 0),
-              fontSize: 20,
-              fontFamily: GoogleFonts.nunito().fontFamily),
+            fontWeight: FontWeight.bold,
+            color: const Color.fromARGB(182, 0, 0, 0),
+            fontSize: 20,
+          ),
         ),
         backgroundColor: Colors.white,
       ),
@@ -153,14 +153,13 @@ class _roomDetailState extends State<roomDetail> {
                         // Text(
                         //   '${roomDetail.acreage}m\u00b2',
                         //   style: TextStyle(
-                        //       fontFamily: GoogleFonts.nunito().fontFamily,
+                        //
                         //       fontSize: 14,
                         //       color: const Color.fromARGB(208, 0, 0, 0)),
                         // ),
                         Text(
                           '${roomDetail!.name}',
                           style: TextStyle(
-                              fontFamily: GoogleFonts.nunito().fontFamily,
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: const Color.fromARGB(255, 0, 0, 0)),
@@ -176,7 +175,6 @@ class _roomDetailState extends State<roomDetail> {
                                     ? 'Số giường: ${roomDetail!.numberOfBeds!} - '
                                     : 'Không có giường',
                                 style: TextStyle(
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                   fontSize: 15,
                                   color: Colors.black.withOpacity(0.35),
                                   fontWeight: FontWeight.bold,
@@ -187,7 +185,6 @@ class _roomDetailState extends State<roomDetail> {
                                     ? 'Diện tích: ${roomDetail!.acreage}m\u00b2'
                                     : '',
                                 style: TextStyle(
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black.withOpacity(0.35),
@@ -212,7 +209,6 @@ class _roomDetailState extends State<roomDetail> {
                         Text(
                           'Tiện ích phòng',
                           style: TextStyle(
-                              fontFamily: GoogleFonts.nunito().fontFamily,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),

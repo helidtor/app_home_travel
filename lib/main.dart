@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/firebase/firebase_options.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 

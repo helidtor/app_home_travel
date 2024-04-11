@@ -73,7 +73,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
               'Gói thanh toán',
               style: TextStyle(
                 color: Colors.black,
-                fontFamily: GoogleFonts.nunito().fontFamily,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -142,7 +141,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
               'Phương thức thanh toán',
               style: TextStyle(
                 color: Colors.black,
-                fontFamily: GoogleFonts.nunito().fontFamily,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -197,7 +195,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                   color: Colors.black87,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                 ),
                               ),
                               Text(
@@ -206,7 +203,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                   color: Colors.black38,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                 ),
                               ),
                             ],
@@ -273,7 +269,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                   color: Colors.black.withOpacity(0.7),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                 ),
                               ),
                               Text(
@@ -282,7 +277,6 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                   color: Colors.black38,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
                                 ),
                               ),
                             ],

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/api/api_room.dart';
-import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
+import 'package:mobile_home_travel/models/booking/create_booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_state.dart';
@@ -22,14 +22,17 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
         double totalNormalPrice = 0;
         double totalWeekendPrice = 0;
         int totalCapacity = 0;
+        int totalRoom = 0;
         bool isSuccessAll = false;
         BookingHomestayModel?
             bookingHomestayModel; // return result when success
-        BookingHomestayDetail bookingHomestayDetail = BookingHomestayDetail();
+        CreateBookingDetailModel bookingHomestayDetail =
+            CreateBookingDetailModel();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         List<String>? listIdRoomPicked =
             prefs.getStringList('listIdPicked') ?? [];
         if (listIdRoomPicked.isNotEmpty) {
+          totalRoom = listIdRoomPicked.length;
           for (var e in listIdRoomPicked) {
             //cộng dồn giá dựa trên list id phòng được chọn
             var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
@@ -81,6 +84,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
         }
         if (isSuccessAll) {
           emit(CreateBookingSuccess(
+              totalRoom: totalRoom,
               bookingHomestayModel: bookingHomestayModel!));
         }
       } else if (event is CheckListRoom) {

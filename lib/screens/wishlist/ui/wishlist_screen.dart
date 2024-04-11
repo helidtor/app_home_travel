@@ -57,10 +57,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
           title: Text(
             "Danh sách homestay yêu thích",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(182, 0, 0, 0),
-                fontSize: 20,
-                fontFamily: GoogleFonts.nunito().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(182, 0, 0, 0),
+              fontSize: 20,
+            ),
           ),
           backgroundColor: Colors.white,
         ),

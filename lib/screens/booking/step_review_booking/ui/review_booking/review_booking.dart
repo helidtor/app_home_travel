@@ -13,21 +13,23 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_bloc.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/detail_booking_screen.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/detail_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
+  int totalRoom;
   bool isAllowBack;
   BookingHomestayModel bookingHomestayModel;
   ReviewBooking({
-    super.key,
+    Key? key,
+    required this.totalRoom,
     required this.isAllowBack,
     required this.bookingHomestayModel,
-  });
+  }) : super(key: key);
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
@@ -76,10 +78,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
           child: Text(
             "Hoàn tất đặt phòng",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black.withOpacity(0.65),
-                fontSize: 20,
-                fontFamily: GoogleFonts.nunito().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: Colors.black.withOpacity(0.65),
+              fontSize: 20,
+            ),
           ),
         ),
         backgroundColor: Colors.white,
@@ -110,6 +112,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
           } else if (state is GetHomestayOfBookingSuccess) {
             Navigator.pop(context);
             homestayDetail = state.homestayModel;
+            homestayDetail?.checkInTime = booking.checkInDate;
+            homestayDetail?.checkOutTime = booking.checkOutDate;
             isDisplay = true;
             userInfor = state.touristInfor;
           } else if (state is ReviewBookingFailure) {
@@ -276,7 +280,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  '${homestayDetail!.rooms!.length} phòng',
+                                                  '${widget.totalRoom} phòng',
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     color: Colors.black
@@ -358,8 +362,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const DetailBooking()),
+                                          builder: (context) => DetailBooking(
+                                                homestayDetailModel:
+                                                    homestayDetail!,
+                                              )),
                                     );
                                   },
                                   child: Container(
@@ -376,8 +382,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       'Xem chi tiết',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         color: Colors.black.withOpacity(0.5),
                                       ),
                                     ),
@@ -419,7 +423,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                     fontSize: 20,
                                     color: Colors.black.withOpacity(0.8),
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: GoogleFonts.nunito().fontFamily,
                                   ),
                                 ),
                                 const SizedBox(
@@ -443,8 +446,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       '${userInfor!.lastName} ${userInfor!.firstName}',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         color: Colors.black.withOpacity(0.7),
                                       ),
                                     ),
@@ -470,8 +471,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                     Text(
                                       userInfor!.phoneNumber!,
                                       style: TextStyle(
-                                        fontFamily:
-                                            GoogleFonts.nunito().fontFamily,
                                         fontSize: 13,
                                         color: Colors.black.withOpacity(0.7),
                                       ),
@@ -560,19 +559,17 @@ class _ReviewBookingState extends State<ReviewBooking> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(
+            title: const Text(
               'Lưu ý',
               style: TextStyle(
                 color: AppColors.primaryColor3,
                 fontSize: 20,
-                fontFamily: GoogleFonts.nunito().fontFamily,
               ),
             ),
-            content: Text(
+            content: const Text(
               'Bạn có muốn lưu lại đơn đặt phòng\nđể thanh toán sau không?',
               style: TextStyle(
                 fontSize: 15,
-                fontFamily: GoogleFonts.nunito().fontFamily,
               ),
             ),
             actions: [
@@ -584,13 +581,12 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
-                child: Text(
+                child: const Text(
                   'Có',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColor3,
                     fontSize: 17,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                   ),
                 ),
               )),
@@ -609,13 +605,12 @@ class _ReviewBookingState extends State<ReviewBooking> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Không',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColor3,
                     fontSize: 17,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                   ),
                 ),
               )),

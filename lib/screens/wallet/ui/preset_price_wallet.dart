@@ -61,7 +61,6 @@ class _PresetPriceWalletState extends State<PresetPriceWallet> {
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.3),
                             fontSize: 18,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
                           ),
                         ),
                       )
@@ -79,7 +78,6 @@ class _PresetPriceWalletState extends State<PresetPriceWallet> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
                           ),
                         ),
                       ),

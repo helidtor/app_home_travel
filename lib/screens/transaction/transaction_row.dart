@@ -103,7 +103,6 @@ class _TransactionRowState extends State<TransactionRow> {
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                             color: Colors.black.withOpacity(0.8),
-                            fontFamily: GoogleFonts.nunito().fontFamily,
                           ),
                         ),
                         Text(
@@ -113,7 +112,6 @@ class _TransactionRowState extends State<TransactionRow> {
                             fontStyle: FontStyle.italic,
                             color: Colors.black.withOpacity(0.5),
                             fontSize: 12,
-                            fontFamily: GoogleFonts.nunito().fontFamily,
                           ),
                         ),
                       ],
@@ -134,7 +132,6 @@ class _TransactionRowState extends State<TransactionRow> {
                         : Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
-                    fontFamily: GoogleFonts.nunito().fontFamily,
                   ),
                 )
               ],

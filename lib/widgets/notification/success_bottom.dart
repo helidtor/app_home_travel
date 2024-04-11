@@ -9,10 +9,7 @@ void showSuccess(BuildContext context, String errorMessage) {
       content: Text(
         errorMessage,
         style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: GoogleFonts.nunito().fontFamily,
-            color: Colors.white,
-            fontSize: 15),
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15),
       ),
       duration: const Duration(seconds: 2),
     ),

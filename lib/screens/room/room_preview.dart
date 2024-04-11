@@ -88,7 +88,6 @@ class _RoomPreviewState extends State<RoomPreview> {
                       Text(
                         '${FormatProvider().formatNumber((roomModel.acreage != null) ? roomModel.acreage.toString() : '0')}m\u00b2',
                         style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 13,
                           color: Colors.black,
                         ),
@@ -104,7 +103,6 @@ class _RoomPreviewState extends State<RoomPreview> {
                                 : '',
                             style: TextStyle(
                               fontStyle: FontStyle.italic,
-                              fontFamily: GoogleFonts.nunito().fontFamily,
                               fontSize: 11,
                               color: Colors.black,
                             ),
@@ -129,7 +127,6 @@ class _RoomPreviewState extends State<RoomPreview> {
                     child: Text(
                       '${roomModel.name}',
                       style: TextStyle(
-                          fontFamily: GoogleFonts.nunito().fontFamily,
                           fontSize: 15,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -152,10 +149,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                         ),
                         Text(
                           '${FormatProvider().formatPrice((roomModel.price != null) ? roomModel.price.toString() : '0')}₫',
-                          style: TextStyle(
-                              fontFamily: GoogleFonts.nunito().fontFamily,
-                              fontSize: 12,
-                              color: Colors.black),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
                         ),
                       ],
                     ),

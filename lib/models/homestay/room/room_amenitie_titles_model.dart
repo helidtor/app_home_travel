@@ -61,8 +61,7 @@ class RoomAmenitieTitlesModel {
           : null,
       roomAmenitieSelecteds: map['roomAmenitieSelecteds'] != null
           ? List<RoomAmenitieSelectedsModel>.from(
-              (map['roomAmenitieSelecteds'] as List<int>)
-                  .map<RoomAmenitieSelectedsModel?>(
+              (map['roomAmenitieSelecteds']).map<RoomAmenitieSelectedsModel?>(
                 (x) => RoomAmenitieSelectedsModel.fromMap(
                     x as Map<String, dynamic>),
               ),

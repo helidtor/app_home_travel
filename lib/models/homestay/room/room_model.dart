@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_general_amenitie_titles_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/image_home_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/image_room_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_amenitie_titles_model.dart';
@@ -18,9 +19,9 @@ class RoomModel {
   String? status;
   num? weekendPrice;
   String? homeStayId;
-  List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles;
-  List<RoomModel>? rooms;
+  List<RoomAmenitieTitlesModel>? roomAmenitieTitles;
   List<ImageHomeModel>? images;
+  HomestayModel? homeStay;
   RoomModel({
     this.id,
     this.name,
@@ -31,9 +32,9 @@ class RoomModel {
     this.status,
     this.weekendPrice,
     this.homeStayId,
-    this.homeStayGeneralAmenitieTitles,
-    this.rooms,
+    this.roomAmenitieTitles,
     this.images,
+    this.homeStay,
   });
 
   RoomModel copyWith({
@@ -46,9 +47,9 @@ class RoomModel {
     String? status,
     num? weekendPrice,
     String? homeStayId,
-    List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles,
-    List<RoomModel>? rooms,
+    List<RoomAmenitieTitlesModel>? roomAmenitieTitles,
     List<ImageHomeModel>? images,
+    HomestayModel? homeStay,
   }) {
     return RoomModel(
       id: id ?? this.id,
@@ -60,10 +61,9 @@ class RoomModel {
       status: status ?? this.status,
       weekendPrice: weekendPrice ?? this.weekendPrice,
       homeStayId: homeStayId ?? this.homeStayId,
-      homeStayGeneralAmenitieTitles:
-          homeStayGeneralAmenitieTitles ?? this.homeStayGeneralAmenitieTitles,
-      rooms: rooms ?? this.rooms,
+      roomAmenitieTitles: roomAmenitieTitles ?? this.roomAmenitieTitles,
       images: images ?? this.images,
+      homeStay: homeStay ?? this.homeStay,
     );
   }
 
@@ -78,10 +78,9 @@ class RoomModel {
       'status': status,
       'weekendPrice': weekendPrice,
       'homeStayId': homeStayId,
-      'homeStayGeneralAmenitieTitles':
-          homeStayGeneralAmenitieTitles?.map((x) => x.toMap()).toList(),
-      'rooms': rooms?.map((x) => x.toMap()).toList(),
+      'roomAmenitieTitles': roomAmenitieTitles?.map((x) => x.toMap()).toList(),
       'images': images?.map((x) => x.toMap()).toList(),
+      'homeStay': homeStay?.toMap(),
     };
   }
 
@@ -99,20 +98,11 @@ class RoomModel {
           map['weekendPrice'] != null ? map['weekendPrice'] as num : null,
       homeStayId:
           map['homeStayId'] != null ? map['homeStayId'] as String : null,
-      homeStayGeneralAmenitieTitles:
-          map['homeStayGeneralAmenitieTitles'] != null
-              ? List<HomeStayGeneralAmenitieTitlesModel>.from(
-                  (map['homeStayGeneralAmenitieTitles'])
-                      .map<HomeStayGeneralAmenitieTitlesModel?>(
-                    (x) => HomeStayGeneralAmenitieTitlesModel.fromMap(
-                        x as Map<String, dynamic>),
-                  ),
-                )
-              : null,
-      rooms: map['rooms'] != null
-          ? List<RoomModel>.from(
-              (map['rooms']).map<RoomModel?>(
-                (x) => RoomModel.fromMap(x as Map<String, dynamic>),
+      roomAmenitieTitles: map['roomAmenitieTitles'] != null
+          ? List<RoomAmenitieTitlesModel>.from(
+              (map['roomAmenitieTitles']).map<RoomAmenitieTitlesModel?>(
+                (x) =>
+                    RoomAmenitieTitlesModel.fromMap(x as Map<String, dynamic>),
               ),
             )
           : null,
@@ -122,6 +112,9 @@ class RoomModel {
                 (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
               ),
             )
+          : null,
+      homeStay: map['homeStay'] != null
+          ? HomestayModel.fromMap(map['homeStay'] as Map<String, dynamic>)
           : null,
     );
   }
@@ -133,7 +126,7 @@ class RoomModel {
 
   @override
   String toString() {
-    return 'RoomModel(id: $id, name: $name, numberOfBeds: $numberOfBeds, acreage: $acreage, capacity: $capacity, price: $price, status: $status, weekendPrice: $weekendPrice, homeStayId: $homeStayId, homeStayGeneralAmenitieTitles: $homeStayGeneralAmenitieTitles, rooms: $rooms, images: $images)';
+    return 'RoomModel(id: $id, name: $name, numberOfBeds: $numberOfBeds, acreage: $acreage, capacity: $capacity, price: $price, status: $status, weekendPrice: $weekendPrice, homeStayId: $homeStayId, roomAmenitieTitles: $roomAmenitieTitles, images: $images, homeStay: $homeStay)';
   }
 
   @override
@@ -149,10 +142,9 @@ class RoomModel {
         other.status == status &&
         other.weekendPrice == weekendPrice &&
         other.homeStayId == homeStayId &&
-        listEquals(other.homeStayGeneralAmenitieTitles,
-            homeStayGeneralAmenitieTitles) &&
-        listEquals(other.rooms, rooms) &&
-        listEquals(other.images, images);
+        listEquals(other.roomAmenitieTitles, roomAmenitieTitles) &&
+        listEquals(other.images, images) &&
+        other.homeStay == homeStay;
   }
 
   @override
@@ -166,8 +158,8 @@ class RoomModel {
         status.hashCode ^
         weekendPrice.hashCode ^
         homeStayId.hashCode ^
-        homeStayGeneralAmenitieTitles.hashCode ^
-        rooms.hashCode ^
-        images.hashCode;
+        roomAmenitieTitles.hashCode ^
+        images.hashCode ^
+        homeStay.hashCode;
   }
 }

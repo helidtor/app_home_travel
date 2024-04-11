@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
-import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
+import 'package:mobile_home_travel/models/booking/create_booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,7 +54,7 @@ class ApiBooking {
 
   //Tạo booking detail
   static Future<bool> createBookingDetail(
-      {required BookingHomestayDetail bookingHomestayDetail}) async {
+      {required CreateBookingDetailModel bookingHomestayDetail}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     try {

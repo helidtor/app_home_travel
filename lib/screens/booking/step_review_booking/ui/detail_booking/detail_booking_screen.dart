@@ -1,20 +1,33 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:mobile_home_travel/format/format.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/room_detail_booking.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/widget_detail_booking.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/room_detail_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class DetailBooking extends StatefulWidget {
-  const DetailBooking({super.key});
+  HomestayDetailModel homestayDetailModel;
+  DetailBooking({
+    super.key,
+    required this.homestayDetailModel,
+  });
 
   @override
   State<DetailBooking> createState() => _DetailBookingState();
 }
 
 class _DetailBookingState extends State<DetailBooking> {
-  bool isAllowBack = false;
+  late HomestayDetailModel homestayDetailModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    homestayDetailModel = widget.homestayDetailModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,46 +35,28 @@ class _DetailBookingState extends State<DetailBooking> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: isAllowBack,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        //   icon: const Icon(
-        //     Icons.keyboard_arrow_left,
-        //   ),
-        // ),
-        // centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+          ),
+        ),
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
             "Chi tiết đơn đặt",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black.withOpacity(0.65),
-                fontSize: 20,
-                fontFamily: GoogleFonts.nunito().fontFamily),
+              fontWeight: FontWeight.bold,
+              color: Colors.black.withOpacity(0.8),
+              fontSize: 22,
+            ),
           ),
         ),
         backgroundColor: Colors.white,
-        actions: [
-          (isAllowBack == false)
-              ? IconButton(
-                  onPressed: () {
-                    // Navigator.pop(context);
-                    // Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.close_rounded,
-                    color: AppColors.primaryColor3.withOpacity(0.7),
-                    size: 27,
-                  ),
-                )
-              : const SizedBox(),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -88,16 +83,15 @@ class _DetailBookingState extends State<DetailBooking> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      WidgetDetailBooking().richText('Mã đơn',
+                      RowText().richText('Mã đơn',
                           'f7cf26d0-8beb-4021-a053-6b80aef63c15', null),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Row(
                           children: [
                             Text(
-                              'Homestay Latana',
-                              style: TextStyle(
-                                  fontFamily: GoogleFonts.nunito().fontFamily,
+                              homestayDetailModel.name!,
+                              style: const TextStyle(
                                   fontSize: 25,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -116,14 +110,14 @@ class _DetailBookingState extends State<DetailBooking> {
                           ],
                         ),
                       ),
-                      WidgetDetailBooking().richText(
+                      RowText().richText(
                           'Thời gian',
-                          '22/4/2024 - 28/4/2024',
+                          '${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkInTime.toString())} - ${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkOutTime.toString())}',
                           Icons.calendar_month_outlined),
                       const SizedBox(
                         height: 2,
                       ),
-                      WidgetDetailBooking().richText(
+                      RowText().richText(
                         'Tổng số ngày',
                         '6 ngày',
                         Icons.numbers,
@@ -131,7 +125,7 @@ class _DetailBookingState extends State<DetailBooking> {
                       const SizedBox(
                         height: 2,
                       ),
-                      WidgetDetailBooking().richText(
+                      RowText().richText(
                         'Tổng số phòng',
                         '2 phòng',
                         Icons.door_sliding_outlined,
@@ -139,9 +133,9 @@ class _DetailBookingState extends State<DetailBooking> {
                       const SizedBox(
                         height: 2,
                       ),
-                      WidgetDetailBooking().richText(
+                      RowText().richText(
                         'Địa chỉ',
-                        'Ngô Quyền, Phường 6, Lâm Đồng, Đà Lạt',
+                        '${homestayDetailModel.address}, ${homestayDetailModel.street}, ${homestayDetailModel.commune}, ${homestayDetailModel.district}, ${homestayDetailModel.city}',
                         Icons.pin_drop_outlined,
                       ),
                       const SizedBox(

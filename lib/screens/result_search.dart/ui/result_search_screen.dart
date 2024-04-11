@@ -134,8 +134,8 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
               });
             } else if (state is SearchError) {
               setState(() {
-                widthDisplay = 350;
-                heightDisplay = 350;
+                widthDisplay = 300;
+                heightDisplay = 300;
                 displayScreen = 'assets/images/error_loading.png';
               });
               toastification.show(

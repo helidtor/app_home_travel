@@ -114,7 +114,7 @@ class FullMapState extends State<AutocompleteMap> {
                       child: Row(
                         children: [
                           Text(
-                            'Nhập số người đi',
+                            'Số người dự kiến',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,

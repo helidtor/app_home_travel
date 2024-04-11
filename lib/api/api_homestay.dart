@@ -12,7 +12,6 @@ class ApiHomestay {
   // <<<< Get all homestay >>>>
   static Future<List<HomestayModel>?> getAllHomestay() async {
     List<HomestayModel>? homestay;
-
     try {
       var url = "$baseUrl/api/v1/HomeStays?pageSize=50&status=ACTIVE";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -72,7 +71,7 @@ class ApiHomestay {
     print("Location là: $location");
     try {
       var url =
-          "$baseUrl/api/v1/HomeStays?totalCapacity=${(capacity != null) ? capacity : 0}&location=$location";
+          "$baseUrl/api/v1/HomeStays??pageSize=50&totalCapacity=${capacity ?? 0}&location=$location&status=ACTIVE";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
@@ -86,15 +85,16 @@ class ApiHomestay {
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
             .toList();
         print("Thông tin search homestay: $homestay");
+        return homestay;
       }
     } catch (e) {
       print("Loi search homestay: $e");
+      return null;
     }
-
-    return homestay;
+    return null;
   }
 
-  // <<<< Wishlist homestay >>>>
+  // <<<< Add Wishlist homestay >>>>
   static Future<bool?> wishlistHomestay() async {
     WishlistModel? wishlistModel;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -192,7 +192,7 @@ class ApiHomestay {
 
     try {
       var url =
-          "$baseUrl/api/v1/TouristFavoriteHomestays?pageSize=50&touristId=$idTourist";
+          "$baseUrl/api/v1/TouristFavoriteHomestays?pageSize=50&touristId=$idTourist&pageSize=50&sortKey=CreatedDate&sortOrder=DESC";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);

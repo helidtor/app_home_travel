@@ -54,11 +54,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
             icon: const Icon(Icons.keyboard_arrow_left),
           ),
           // centerTitle: true,
-          title: Text(
+          title: const Text(
             "Danh sách homestay yêu thích",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(182, 0, 0, 0),
+              color: Color.fromARGB(182, 0, 0, 0),
               fontSize: 20,
             ),
           ),
@@ -83,8 +83,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
               });
             } else if (state is WishlistError) {
               setState(() {
-                widthDisplay = 350;
-                heightDisplay = 350;
+                widthDisplay = 300;
+                heightDisplay = 300;
                 displayScreen = 'assets/images/error_loading.png';
               });
               toastification.show(

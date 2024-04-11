@@ -180,11 +180,9 @@ class _HomePageState extends State<HomePage> {
                                       filled: true,
                                       fillColor: Colors.white,
                                       hintText: 'Bạn muốn đi đâu?',
-                                      hintStyle: TextStyle(
-                                          fontFamily:
-                                              GoogleFonts.nunito().fontFamily,
+                                      hintStyle: const TextStyle(
                                           fontSize: 17,
-                                          color: const Color.fromARGB(
+                                          color: Color.fromARGB(
                                               194, 158, 158, 158)),
                                       prefixIcon: const Padding(
                                         padding: EdgeInsets.only(

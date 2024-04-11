@@ -89,7 +89,7 @@ class _ResultState extends State<RowWishlist> {
                 children: [
                   Text(
                     '${wishlistModel.homeStay!.name}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
@@ -102,7 +102,7 @@ class _ResultState extends State<RowWishlist> {
                     children: [
                       Text(
                         '${FormatProvider().formatNumber((wishlistModel.homeStay!.acreage != null) ? wishlistModel.homeStay!.acreage.toString() : '0')}m\u00b2',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -115,7 +115,7 @@ class _ResultState extends State<RowWishlist> {
                         (wishlistModel.homeStay!.totalCapacity != null)
                             ? ' - ${wishlistModel.homeStay!.totalCapacity} người'
                             : '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.black,
                         ),
@@ -134,12 +134,30 @@ class _ResultState extends State<RowWishlist> {
                       ),
                       Text(
                         '${wishlistModel.homeStay!.city}',
-                        style: TextStyle(fontSize: 13, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 13, color: Colors.black),
                       ),
                     ],
                   ),
                   const SizedBox(
                     height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_month_outlined,
+                        size: 15,
+                        color: AppColors.primaryColor3,
+                      ),
+                      const Text('Ngày thêm: ',
+                          style: TextStyle(fontSize: 13, color: Colors.black)),
+                      Text(
+                        FormatProvider()
+                            .convertDate(wishlistModel.createdDate.toString()),
+                        style:
+                            const TextStyle(fontSize: 13, color: Colors.black),
+                      ),
+                    ],
                   ),
                 ],
               ),

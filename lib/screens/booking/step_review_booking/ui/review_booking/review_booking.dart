@@ -208,8 +208,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                 color: Colors.black
                                                     .withOpacity(0.8),
                                                 fontSize: 17,
-                                                fontFamily: GoogleFonts.nunito()
-                                                    .fontFamily,
                                               ),
                                             ),
                                             const SizedBox(
@@ -255,9 +253,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
-                                                      fontFamily:
-                                                          GoogleFonts.nunito()
-                                                              .fontFamily,
                                                       color: Colors.black
                                                           .withOpacity(0.7),
                                                     ),

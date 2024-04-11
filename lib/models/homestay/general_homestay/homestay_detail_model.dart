@@ -27,6 +27,7 @@ class HomestayDetailModel {
   List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles;
   List<RoomModel>? rooms;
   List<ImageHomeModel>? images;
+  num? rating;
   HomestayDetailModel({
     this.id,
     this.name,
@@ -47,6 +48,7 @@ class HomestayDetailModel {
     this.homeStayGeneralAmenitieTitles,
     this.rooms,
     this.images,
+    this.rating,
   });
 
   HomestayDetailModel copyWith({
@@ -69,6 +71,7 @@ class HomestayDetailModel {
     List<HomeStayGeneralAmenitieTitlesModel>? homeStayGeneralAmenitieTitles,
     List<RoomModel>? rooms,
     List<ImageHomeModel>? images,
+    num? rating,
   }) {
     return HomestayDetailModel(
       id: id ?? this.id,
@@ -91,6 +94,7 @@ class HomestayDetailModel {
           homeStayGeneralAmenitieTitles ?? this.homeStayGeneralAmenitieTitles,
       rooms: rooms ?? this.rooms,
       images: images ?? this.images,
+      rating: rating ?? this.rating,
     );
   }
 
@@ -116,6 +120,7 @@ class HomestayDetailModel {
           homeStayGeneralAmenitieTitles?.map((x) => x.toMap()).toList(),
       'rooms': rooms?.map((x) => x.toMap()).toList(),
       'images': images?.map((x) => x.toMap()).toList(),
+      'rating': rating,
     };
   }
 
@@ -165,56 +170,10 @@ class HomestayDetailModel {
               ),
             )
           : null,
+      rating: map['rating'] != null ? map['rating'] as num : null,
     );
   }
-// factory HomestayDetailModel.fromMap(Map<String, dynamic> map) {
-//     return HomestayDetailModel(
-//       id: map['id'] != null ? map['id'] as String : null,
-//       name: map['name'] != null ? map['name'] as String : null,
-//       acreage: map['acreage'] != null ? map['acreage'] as num : null,
-//       city: map['city'] != null ? map['city'] as String : null,
-//       district: map['district'] != null ? map['district'] as String : null,
-//       commune: map['commune'] != null ? map['commune'] as String : null,
-//       street: map['street'] != null ? map['street'] as String : null,
-//       house: map['house'] != null ? map['house'] as String : null,
-//       hamlet: map['hamlet'] != null ? map['hamlet'] as String : null,
-//       address: map['address'] != null ? map['address'] as String : null,
-//       checkInTime:
-//           map['checkInTime'] != null ? map['checkInTime'] as String : null,
-//       checkOutTime:
-//           map['checkOutTime'] != null ? map['checkOutTime'] as String : null,
-//       description:
-//           map['description'] != null ? map['description'] as String : null,
-//       totalCapacity:
-//           map['totalCapacity'] != null ? map['totalCapacity'] as int : null,
-//       status: map['status'] != null ? map['status'] as String : null,
-//       ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
-//       homeStayGeneralAmenitieTitles:
-//           map['homeStayGeneralAmenitieTitles'] != null
-//               ? List<HomeStayGeneralAmenitieTitlesModel>.from(
-//                   (map['homeStayGeneralAmenitieTitles'])
-//                       .map<HomeStayGeneralAmenitieTitlesModel?>(
-//                     (x) => HomeStayGeneralAmenitieTitlesModel.fromMap(
-//                         x as Map<String, dynamic>),
-//                   ),
-//                 )
-//               : null,
-//       rooms: map['rooms'] != null
-//           ? List<RoomModel>.from(
-//               (map['rooms']).map<RoomModel?>(
-//                 (x) => RoomModel.fromMap(x as Map<String, dynamic>),
-//               ),
-//             )
-//           : null,
-//       images: map['images'] != null
-//           ? List<ImageHomeModel>.from(
-//               (map['images']).map<ImageHomeModel?>(
-//                 (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
-//               ),
-//             )
-//           : null,
-//     );
-//   }
+
   String toJson() => json.encode(toMap());
 
   factory HomestayDetailModel.fromJson(String source) =>
@@ -222,7 +181,7 @@ class HomestayDetailModel {
 
   @override
   String toString() {
-    return 'HomestayDetailModel(id: $id, name: $name, acreage: $acreage, city: $city, district: $district, commune: $commune, street: $street, house: $house, hamlet: $hamlet, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, description: $description, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId, homeStayGeneralAmenitieTitles: $homeStayGeneralAmenitieTitles, rooms: $rooms, images: $images)';
+    return 'HomestayDetailModel(id: $id, name: $name, acreage: $acreage, city: $city, district: $district, commune: $commune, street: $street, house: $house, hamlet: $hamlet, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, description: $description, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId, homeStayGeneralAmenitieTitles: $homeStayGeneralAmenitieTitles, rooms: $rooms, images: $images, rating: $rating)';
   }
 
   @override
@@ -248,7 +207,8 @@ class HomestayDetailModel {
         listEquals(other.homeStayGeneralAmenitieTitles,
             homeStayGeneralAmenitieTitles) &&
         listEquals(other.rooms, rooms) &&
-        listEquals(other.images, images);
+        listEquals(other.images, images) &&
+        other.rating == rating;
   }
 
   @override
@@ -271,6 +231,7 @@ class HomestayDetailModel {
         ownerId.hashCode ^
         homeStayGeneralAmenitieTitles.hashCode ^
         rooms.hashCode ^
-        images.hashCode;
+        images.hashCode ^
+        rating.hashCode;
   }
 }

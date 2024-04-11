@@ -45,7 +45,6 @@ class _HomestayState extends State<HomestayPreview> {
         );
       },
       child: Container(
-        height: 275,
         width: 260,
         decoration: BoxDecoration(
             border: Border.all(
@@ -66,7 +65,7 @@ class _HomestayState extends State<HomestayPreview> {
           children: [
             Container(
               width: 260,
-              height: 180,
+              height: 160,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(253, 255, 255, 255),
                 borderRadius: const BorderRadius.only(
@@ -90,20 +89,17 @@ class _HomestayState extends State<HomestayPreview> {
                     children: [
                       Text(
                         '${FormatProvider().formatNumber((homestayModel.acreage != null) ? homestayModel.acreage.toString() : '0')}m\u00b2',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
                           color: Colors.black,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
                       ),
                       Text(
                         // '${homestayModel.services?.first.serviceName}',
                         (homestayModel.totalCapacity != null)
                             ? '${homestayModel.totalCapacity} người'
                             : '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 11,
                           color: Colors.black,
@@ -123,6 +119,7 @@ class _HomestayState extends State<HomestayPreview> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 18,
+                          fontFamily: GoogleFonts.tiltNeon().fontFamily,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
@@ -141,9 +138,43 @@ class _HomestayState extends State<HomestayPreview> {
                         (homestayModel.city != null)
                             ? '${homestayModel.city}'
                             : 'Đang đợi cập nhật',
-                        style: TextStyle(fontSize: 13, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.black),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      (homestayModel.rating != null &&
+                              homestayModel.rating != 0)
+                          ? const Icon(
+                              Icons.star,
+                              size: 18,
+                              color: AppColors.primaryColor3,
+                            )
+                          : const SizedBox(),
+                      (homestayModel.rating != null &&
+                              homestayModel.rating != 0)
+                          ? Text(
+                              '${homestayModel.rating!.toStringAsFixed(2)}/5',
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.black),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Text(
+                                'Chưa có đánh giá',
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black45),
+                              ),
+                            ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),

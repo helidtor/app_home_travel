@@ -69,11 +69,11 @@ class _roomDetailState extends State<roomDetail> {
           icon: const Icon(Icons.keyboard_arrow_left),
         ),
         // centerTitle: true,
-        title: Text(
+        title: const Text(
           "Chi Tiết Phòng",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(182, 0, 0, 0),
+            color: Color.fromARGB(182, 0, 0, 0),
             fontSize: 20,
           ),
         ),
@@ -159,10 +159,10 @@ class _roomDetailState extends State<roomDetail> {
                         // ),
                         Text(
                           '${roomDetail!.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 0, 0, 0)),
+                              color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                         const SizedBox(
                           height: 15,
@@ -200,8 +200,8 @@ class _roomDetailState extends State<roomDetail> {
                     thickness: 25,
                     color: AppColors.backgroundApp,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  const Padding(
+                    padding: EdgeInsets.only(
                         left: 20, right: 20, top: 25, bottom: 25),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +215,7 @@ class _roomDetailState extends State<roomDetail> {
                         ),
                         ///////////////////////////////////////////// cắt từ đoạn này
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          padding: EdgeInsets.symmetric(vertical: 20),
                           child: Row(
                             children: [
                               Column(
@@ -223,7 +223,7 @@ class _roomDetailState extends State<roomDetail> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.wind_power,
                                           size: 25,
                                           color: AppColors.primaryColor3,
@@ -231,19 +231,17 @@ class _roomDetailState extends State<roomDetail> {
                                         Text(
                                           'Máy lạnh',
                                           style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 15,
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.wifi,
                                           size: 25,
                                           color: AppColors.primaryColor3,
@@ -251,19 +249,17 @@ class _roomDetailState extends State<roomDetail> {
                                         Text(
                                           'Wifi',
                                           style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 15,
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.local_parking_sharp,
                                           size: 25,
                                           color: AppColors.primaryColor3,
@@ -271,21 +267,19 @@ class _roomDetailState extends State<roomDetail> {
                                         Text(
                                           'Bãi đỗ xe',
                                           style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
                                       ],
                                     ),
                                   ]),
-                              const SizedBox(
+                              SizedBox(
                                 width: 100,
                               ),
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Row(
+                                    Row(
                                       children: [
                                         Icon(
                                           Icons.chalet_sharp,
@@ -295,19 +289,17 @@ class _roomDetailState extends State<roomDetail> {
                                         // Text(
                                         //   '${roomDetail.acreage}m\u00b2',
                                         //   style: TextStyle(
-                                        //       fontFamily:
-                                        //           GoogleFonts.nunito().fontFamily,
                                         //       fontSize: 16,
                                         //       color: Colors.black),
                                         // ),
                                       ],
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 15,
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.shower,
                                           size: 25,
                                           color: AppColors.primaryColor3,
@@ -315,19 +307,17 @@ class _roomDetailState extends State<roomDetail> {
                                         Text(
                                           'Bồn tắm',
                                           style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 15,
                                     ),
                                     Row(
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.electrical_services_rounded,
                                           size: 25,
                                           color: AppColors.primaryColor3,
@@ -335,8 +325,6 @@ class _roomDetailState extends State<roomDetail> {
                                         Text(
                                           'Dịch vụ khác',
                                           style: TextStyle(
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontSize: 16,
                                               color: Colors.black),
                                         ),

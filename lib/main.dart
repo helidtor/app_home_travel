@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Home Travel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: GoogleFonts.lexend().fontFamily,
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,

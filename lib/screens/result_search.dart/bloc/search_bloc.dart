@@ -17,7 +17,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event is SearchHomestay) {
         var listHomestay =
             await ApiHomestay.searchHomestay(event.capacity, event.location);
-        if (listHomestay!.isNotEmpty) {
+        if (listHomestay != null) {
           emit(SearchSuccess(list: listHomestay));
         } else {
           emit(const SearchEmpty(noti: "Không tìm thấy homestay!"));

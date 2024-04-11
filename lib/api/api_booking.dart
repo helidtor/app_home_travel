@@ -125,7 +125,7 @@ class ApiBooking {
     String? idTourist = prefs.getString("idUserCurrent");
     try {
       var url =
-          "$baseUrl/api/v1/Bookings?pageSize=50&status=$status&touristId=$idTourist";
+          "$baseUrl/api/v1/Bookings?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&status=$status&touristId=$idTourist";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);

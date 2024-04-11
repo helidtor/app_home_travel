@@ -71,11 +71,11 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
             icon: const Icon(Icons.keyboard_arrow_left),
           ),
           // centerTitle: true,
-          title: Text(
+          title: const Text(
             "Chi Tiết Homestay",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(182, 0, 0, 0),
+              color: Color.fromARGB(182, 0, 0, 0),
               fontSize: 20,
             ),
           ),
@@ -202,6 +202,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                         : 'Đang đợi cập nhật',
                                     style: TextStyle(
                                         fontSize: 22,
+                                        fontFamily:
+                                            GoogleFonts.tiltNeon().fontFamily,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             const Color.fromARGB(255, 0, 0, 0)),
@@ -252,11 +254,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                             : 'Đang cập nhật',
                                         maxLines: null,
                                         overflow: TextOverflow.visible,
-                                        style: TextStyle(
-                                            fontFamily:
-                                                GoogleFonts.nunito().fontFamily,
-                                            fontSize: 16,
-                                            color: Colors.black),
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -302,11 +301,9 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Mô Tả',
                                   style: TextStyle(
-                                      fontFamily:
-                                          GoogleFonts.nunito().fontFamily,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
@@ -320,7 +317,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                       : 'Đợi cập nhật',
                                   style: TextStyle(
                                       fontFamily:
-                                          GoogleFonts.nunito().fontFamily,
+                                          GoogleFonts.inter().fontFamily,
                                       fontSize: 14,
                                       color: Colors.black),
                                 ),
@@ -379,11 +376,9 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                                     .generalAmenitieTitle!
                                                     .name!
                                                 : 'Tiêu đề trống',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
-                                              fontFamily: GoogleFonts.nunito()
-                                                  .fontFamily,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -421,11 +416,9 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Danh Sách Phòng',
                                   style: TextStyle(
-                                      fontFamily:
-                                          GoogleFonts.nunito().fontFamily,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
@@ -461,7 +454,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           child: Row(
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   children: [
                                     TextSpan(
                                       text: 'nhận ',
@@ -561,7 +554,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
               child: Text(
                 (listGeneralAmenitieSelecteds[i].generalAmenitie!.name!),
                 overflow: TextOverflow.clip,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.black,
                 ),

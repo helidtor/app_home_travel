@@ -23,6 +23,7 @@ class HomestayModel {
   int? totalCapacity;
   String? status;
   String? ownerId;
+  num? rating;
   HomestayModel({
     this.images,
     this.id,
@@ -41,6 +42,7 @@ class HomestayModel {
     this.totalCapacity,
     this.status,
     this.ownerId,
+    this.rating,
   });
 
   HomestayModel copyWith({
@@ -61,6 +63,7 @@ class HomestayModel {
     int? totalCapacity,
     String? status,
     String? ownerId,
+    num? rating,
   }) {
     return HomestayModel(
       images: images ?? this.images,
@@ -80,6 +83,7 @@ class HomestayModel {
       totalCapacity: totalCapacity ?? this.totalCapacity,
       status: status ?? this.status,
       ownerId: ownerId ?? this.ownerId,
+      rating: rating ?? this.rating,
     );
   }
 
@@ -102,40 +106,10 @@ class HomestayModel {
       'totalCapacity': totalCapacity,
       'status': status,
       'ownerId': ownerId,
+      'rating': rating,
     };
   }
 
-  // factory HomestayModel.fromMap(Map<String, dynamic> map) {
-  //   return HomestayModel(
-  //     images: map['images'] != null
-  //         ? List<ImageHomeModel>.from(
-  //             (map['images']).map<ImageHomeModel?>(
-  //               (x) => ImageHomeModel.fromMap(x as Map<String, dynamic>),
-  //             ),
-  //           )
-  //         : null,
-  //     id: map['id'] != null ? map['id'] as String : null,
-  //     name: map['name'] != null ? map['name'] as String : null,
-  //     acreage: map['acreage'] != null ? map['acreage'] as num : null,
-  //     description:
-  //         map['description'] != null ? map['description'] as String : null,
-  //     city: map['city'] != null ? map['city'] as String : null,
-  //     district: map['district'] != null ? map['district'] as String : null,
-  //     commune: map['commune'] != null ? map['commune'] as String : null,
-  //     house: map['house'] != null ? map['house'] as String : null,
-  //     hamlet: map['hamlet'] != null ? map['hamlet'] as String : null,
-  //     street: map['street'] != null ? map['street'] as String : null,
-  //     address: map['address'] != null ? map['address'] as String : null,
-  //     checkInTime:
-  //         map['checkInTime'] != null ? map['checkInTime'] as String : null,
-  //     checkOutTime:
-  //         map['checkOutTime'] != null ? map['checkOutTime'] as String : null,
-  //     totalCapacity:
-  //         map['totalCapacity'] != null ? map['totalCapacity'] as int : null,
-  //     status: map['status'] != null ? map['status'] as String : null,
-  //     ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
-  //   );
-  // }
   factory HomestayModel.fromMap(Map<String, dynamic> map) {
     return HomestayModel(
       images: map['images'] != null
@@ -165,6 +139,7 @@ class HomestayModel {
           map['totalCapacity'] != null ? map['totalCapacity'] as int : null,
       status: map['status'] != null ? map['status'] as String : null,
       ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
+      rating: map['rating'] != null ? map['rating'] as num : null,
     );
   }
 
@@ -175,7 +150,7 @@ class HomestayModel {
 
   @override
   String toString() {
-    return 'HomestayModel(images: $images, id: $id, name: $name, acreage: $acreage, description: $description, city: $city, district: $district, commune: $commune, house: $house, hamlet: $hamlet, street: $street, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId)';
+    return 'HomestayModel(images: $images, id: $id, name: $name, acreage: $acreage, description: $description, city: $city, district: $district, commune: $commune, house: $house, hamlet: $hamlet, street: $street, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId, rating: $rating)';
   }
 
   @override
@@ -198,7 +173,8 @@ class HomestayModel {
         other.checkOutTime == checkOutTime &&
         other.totalCapacity == totalCapacity &&
         other.status == status &&
-        other.ownerId == ownerId;
+        other.ownerId == ownerId &&
+        other.rating == rating;
   }
 
   @override
@@ -219,6 +195,7 @@ class HomestayModel {
         checkOutTime.hashCode ^
         totalCapacity.hashCode ^
         status.hashCode ^
-        ownerId.hashCode;
+        ownerId.hashCode ^
+        rating.hashCode;
   }
 }

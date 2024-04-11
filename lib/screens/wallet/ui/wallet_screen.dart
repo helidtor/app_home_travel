@@ -149,11 +149,11 @@ class _WalletScreenState extends State<WalletScreen> {
                                         Text(
                                           'Số Dư Ví',
                                           style: TextStyle(
+                                            fontFamily: GoogleFonts.tiltNeon()
+                                                .fontFamily,
                                             color: Colors.white,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
-                                            fontFamily:
-                                                GoogleFonts.nunito().fontFamily,
                                           ),
                                         ),
                                         isHidden
@@ -190,9 +190,11 @@ class _WalletScreenState extends State<WalletScreen> {
                                     ),
                                     Text(
                                       isHidden
-                                          ? ' ************'
+                                          ? ' **********'
                                           : '${FormatProvider().formatPrice(wallet.balance.toString())} VNĐ',
                                       style: TextStyle(
+                                        fontFamily:
+                                            GoogleFonts.tiltNeon().fontFamily,
                                         color: Colors.white,
                                         fontSize: isHidden ? 20 : 20,
                                         fontWeight: FontWeight.bold,
@@ -295,7 +297,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Giao dịch gần nhất',
                             style: TextStyle(
                                 color: Colors.black,
@@ -304,7 +306,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                           TextButton(
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 'Xem tất cả',
                                 style: TextStyle(
                                   fontSize: 14,

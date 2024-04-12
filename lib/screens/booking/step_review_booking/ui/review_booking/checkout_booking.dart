@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
-import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
@@ -50,7 +50,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      height: screenHeight * 0.9,
+      height: screenHeight * 0.55,
       width: screenWidth,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -67,76 +67,76 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
           ),
 
           //bảng chọn thanh toán cọc hoặc trả full
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            child: Text(
-              'Gói thanh toán',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-          ),
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  width: screenWidth * 0.85,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 0.5, color: Colors.black.withOpacity(0.7)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor1.withOpacity(0.2),
-                        spreadRadius: 0.1,
-                        blurRadius: 9,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: screenWidth * 0.85,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 0.5,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor1.withOpacity(0.2),
-                        spreadRadius: 0.1,
-                        blurRadius: 9,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Row(
-                    children: [],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Divider(
-            thickness: 10,
-            color: AppColors.primaryColor1.withOpacity(0.1),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          //   child: Text(
+          //     'Gói thanh toán',
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 18,
+          //     ),
+          //   ),
+          // ),
+          // Center(
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //         width: screenWidth * 0.85,
+          //         height: 70,
+          //         decoration: BoxDecoration(
+          //           border: Border.all(
+          //               width: 0.5, color: Colors.black.withOpacity(0.7)),
+          //           color: Colors.white,
+          //           boxShadow: [
+          //             BoxShadow(
+          //               color: AppColors.primaryColor1.withOpacity(0.2),
+          //               spreadRadius: 0.1,
+          //               blurRadius: 9,
+          //               offset: const Offset(0, 2),
+          //             ),
+          //           ],
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         height: 10,
+          //       ),
+          //       Container(
+          //         width: screenWidth * 0.85,
+          //         height: 70,
+          //         decoration: BoxDecoration(
+          //           border: Border.all(
+          //             width: 0.5,
+          //             color: Colors.black.withOpacity(0.7),
+          //           ),
+          //           color: Colors.white,
+          //           boxShadow: [
+          //             BoxShadow(
+          //               color: AppColors.primaryColor1.withOpacity(0.2),
+          //               spreadRadius: 0.1,
+          //               blurRadius: 9,
+          //               offset: const Offset(0, 2),
+          //             ),
+          //           ],
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //         child: const Row(
+          //           children: [],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // Divider(
+          //   thickness: 10,
+          //   color: AppColors.primaryColor1.withOpacity(0.1),
+          // ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Text(
               'Phương thức thanh toán',
               style: TextStyle(
@@ -189,7 +189,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 'Ví của tôi',
                                 style: TextStyle(
                                   color: Colors.black87,
@@ -199,7 +199,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                               ),
                               Text(
                                 'Số dư: ${FormatProvider().formatPrice(balance.toString())}₫',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black38,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -271,7 +271,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                                   fontSize: 18,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Thanh toán qua VN Pay',
                                 style: TextStyle(
                                   color: Colors.black38,

@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
-import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 
 class TransactionDetail extends StatefulWidget {
   TransactionModel transactionModel;

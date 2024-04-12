@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
-import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
@@ -76,7 +76,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Hoàn tất đặt phòng",
+            isAllowBack ? "Hoàn tất thanh toán" : "Thanh toán cọc",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),
@@ -225,8 +225,12 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(booking.checkOutDate.toString())}',
+                                                  (booking.checkInDate !=
+                                                          booking.checkOutDate)
+                                                      ? '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(booking.checkOutDate.toString())}'
+                                                      : '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} (1 ngày)',
                                                   style: TextStyle(
+                                                    fontSize: 13,
                                                     color: Colors.black
                                                         .withOpacity(0.7),
                                                   ),
@@ -327,8 +331,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                 fontWeight: FontWeight.w400),
                                             children: [
                                               TextSpan(
-                                                  text:
-                                                      "${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ\n",
+                                                  text: isAllowBack
+                                                      ? "${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ\n"
+                                                      : "${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ\n",
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:

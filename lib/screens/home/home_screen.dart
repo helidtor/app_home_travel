@@ -23,7 +23,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<HomestayModel> listHomestay = [];
+  List<HomestayModel>? listHomestayRating;
+  List<HomestayModel>? listHomestayNew;
   final _bloc = HomestayBloc();
   String? token;
   String? displayScreen;
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
               });
             } else if (state is HomestaySuccess) {
               // Navigator.pop(context);
-              listHomestay = state.list;
+              listHomestayNew = state.listNew;
+              listHomestayRating = state.listRating;
             } else if (state is HomestayError) {
               // Navigator.pop(context);
               widthDisplay = 270;
@@ -97,7 +99,7 @@ class _HomePageState extends State<HomePage> {
             }
           },
           builder: (context, state) {
-            return listHomestay.isNotEmpty
+            return (listHomestayNew != null && listHomestayRating != null)
                 ? SingleChildScrollView(
                     child: Stack(
                       children: [
@@ -213,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                       MainAxisAlignment.start, // Căn chỉnh
                                   children: [
                                     Text(
-                                      (listHomestay.length > 1)
+                                      (listHomestayRating!.isNotEmpty)
                                           ? "Homestay xu hướng"
                                           : "",
                                       style: TextStyle(
@@ -231,11 +233,12 @@ class _HomePageState extends State<HomePage> {
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: List.generate(
-                                      listHomestay.length,
+                                      listHomestayRating!.length,
                                       (index) => Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: HomestayPreview(
-                                            homestayModel: listHomestay[index]),
+                                            homestayModel:
+                                                listHomestayRating![index]),
                                       ),
                                     ),
                                   ),
@@ -250,8 +253,8 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      (listHomestay.length > 1)
-                                          ? "Homestay yêu thích"
+                                      (listHomestayNew!.isNotEmpty)
+                                          ? "Homestay mới"
                                           : "",
                                       style: TextStyle(
                                         fontSize: 25,
@@ -267,11 +270,12 @@ class _HomePageState extends State<HomePage> {
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: List.generate(
-                                      listHomestay.length,
+                                      listHomestayNew!.length,
                                       (index) => Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: HomestayPreview(
-                                            homestayModel: listHomestay[index]),
+                                            homestayModel:
+                                                listHomestayNew![index]),
                                       ),
                                     ),
                                   ),

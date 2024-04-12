@@ -182,7 +182,7 @@ class _roomDetailState extends State<roomDetail> {
                               ),
                               TextSpan(
                                 text: (roomDetail!.acreage != null)
-                                    ? 'Diện tích: ${roomDetail!.acreage}m\u00b2'
+                                    ? 'Diện tích: ${(roomDetail!.acreage)!.truncate()}m\u00b2'
                                     : '',
                                 style: TextStyle(
                                   fontSize: 15,

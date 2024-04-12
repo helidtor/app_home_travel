@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
@@ -10,9 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomestayPreview extends StatefulWidget {
   HomestayModel homestayModel;
   HomestayPreview({
-    Key? key,
+    super.key,
     required this.homestayModel,
-  }) : super(key: key);
+  });
 
   @override
   State<HomestayPreview> createState() => _HomestayState();

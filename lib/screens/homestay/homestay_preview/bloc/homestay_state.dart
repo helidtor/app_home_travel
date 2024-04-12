@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 
 abstract class HomestayState extends Equatable {
@@ -13,10 +15,12 @@ class HomestayInitial extends HomestayState {}
 class HomestayLoading extends HomestayState {}
 
 class HomestaySuccess extends HomestayState {
-  final List<HomestayModel> list;
-  const HomestaySuccess({required this.list});
-  @override
-  List<Object> get props => [list];
+  final List<HomestayModel> listRating;
+  final List<HomestayModel> listNew;
+  const HomestaySuccess({
+    required this.listRating,
+    required this.listNew,
+  });
 }
 
 class HomestayError extends HomestayState {

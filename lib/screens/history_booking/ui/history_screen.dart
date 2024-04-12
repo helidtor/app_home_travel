@@ -43,12 +43,13 @@ class _HistoryScreenState extends State<HistoryScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      backgroundColor: AppColors.primaryColor3.withOpacity(0.05),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Padding(
           padding: EdgeInsets.only(left: 10),
           child: Text(
-            "Các Đơn Đặt Homestay",
+            "Lịch sử đơn đặt homestay",
             style: TextStyle(
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -114,50 +115,53 @@ class _HistoryScreenState extends State<HistoryScreen>
           // double screenHeight = MediaQuery.of(context).size.height;
           return Column(
             children: [
-              TabBar(
-                dividerColor: AppColors.primaryColor1,
-                indicatorColor: AppColors.primaryColor1,
-                isScrollable: true,
-                controller: tabController,
-                tabAlignment: TabAlignment.start,
-                onTap: (value) {
-                  switch (value) {
-                    case 0:
-                      _bloc.add(GetListBooking(status: 'PENDING'));
-                      break;
-                    case 1:
-                      _bloc.add(GetListBooking(status: 'DEPOSIT'));
-                      break;
-                    case 2:
-                      _bloc.add(GetListBooking(status: 'PAID'));
-                      break;
-                    case 3:
-                      _bloc.add(GetListBooking(status: 'CANCELLED'));
-                      break;
-                  }
-                },
-                tabs: const [
-                  Tab(
-                    text: 'Chờ xác nhận',
-                  ),
-                  Tab(
-                    text: 'Đã đặt cọc',
-                  ),
-                  Tab(
-                    text: 'Đã hoàn tất',
-                  ),
-                  Tab(
-                    text: 'Đã hủy',
-                  ),
-                ],
-                unselectedLabelStyle: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold),
-                labelStyle: TextStyle(
-                    fontSize: 17,
-                    color: AppColors.primaryColor1,
-                    fontWeight: FontWeight.bold),
+              Container(
+                color: Colors.white,
+                child: TabBar(
+                  dividerColor: AppColors.primaryColor1,
+                  indicatorColor: AppColors.primaryColor1,
+                  isScrollable: true,
+                  controller: tabController,
+                  tabAlignment: TabAlignment.start,
+                  onTap: (value) {
+                    switch (value) {
+                      case 0:
+                        _bloc.add(GetListBooking(status: 'PENDING'));
+                        break;
+                      case 1:
+                        _bloc.add(GetListBooking(status: 'DEPOSIT'));
+                        break;
+                      case 2:
+                        _bloc.add(GetListBooking(status: 'PAID'));
+                        break;
+                      case 3:
+                        _bloc.add(GetListBooking(status: 'CANCELLED'));
+                        break;
+                    }
+                  },
+                  tabs: const [
+                    Tab(
+                      text: 'Chờ xác nhận',
+                    ),
+                    Tab(
+                      text: 'Đã đặt cọc',
+                    ),
+                    Tab(
+                      text: 'Đã thanh toán',
+                    ),
+                    Tab(
+                      text: 'Đã hủy',
+                    ),
+                  ],
+                  unselectedLabelStyle: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                  labelStyle: const TextStyle(
+                      fontSize: 17,
+                      color: AppColors.primaryColor1,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               Expanded(
                 child: TabBarView(
@@ -165,21 +169,25 @@ class _HistoryScreenState extends State<HistoryScreen>
                   controller: tabController,
                   children: [
                     listBookingFunction(
+                        //pending
                         imageDisplay: imageDisplay,
                         listBooking: listPendingBooking,
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay),
                     listBookingFunction(
+                        //deposit
                         imageDisplay: imageDisplay,
                         listBooking: listDepositBooking,
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay),
                     listBookingFunction(
+                        //paid
                         imageDisplay: imageDisplay,
                         listBooking: listPaidBooking,
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay),
                     listBookingFunction(
+                        //cancelled
                         imageDisplay: imageDisplay,
                         listBooking: listCancelledBooking,
                         heightDisplay: heightDisplay,

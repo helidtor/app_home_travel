@@ -25,12 +25,49 @@ class ApiHomestay {
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
             .toList();
         print("Thông tin get all homestay: $homestay");
+      } else {
+        print("Loi get all homestay");
+        return null;
       }
     } catch (e) {
       print("Loi get all homestay: $e");
+      return null;
     }
+    return null;
+  }
 
-    return homestay;
+// <<<< Get all homestay by sortKey >>>>
+  static Future<List<HomestayModel>?> getAllHomestayBySort(
+      {required String sortKey}) async {
+    List<HomestayModel>? listHomestay;
+    try {
+      var url =
+          "$baseUrl/api/v1/HomeStays?pageSize=50&status=ACTIVE&sortKey=$sortKey&sortOrder=DESC";
+      Map<String, String> header = await ApiHeader.getHeader();
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get all homestay: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listHomestay = (postsJson as List)
+            .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get all homestay by sort: $listHomestay");
+        if (listHomestay.isNotEmpty) {
+          return listHomestay;
+        } else {
+          print("Loi get all homestay bằng sort key rỗng");
+        return null;
+        }
+      } else {
+        print("Loi get all homestay bằng sort key");
+        return null;
+      }
+    } catch (e) {
+      print("Loi get all homestay bang sort key: $e");
+      return null;
+    }
   }
 
   // <<<< Get detail homestay by id >>>>

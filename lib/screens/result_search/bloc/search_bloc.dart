@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
-import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_event.dart';
-import 'package:mobile_home_travel/screens/result_search.dart/bloc/search_state.dart';
+import 'package:mobile_home_travel/screens/result_search/bloc/search_event.dart';
+import 'package:mobile_home_travel/screens/result_search/bloc/search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(SearchInitial()) {
@@ -17,9 +17,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (event is SearchHomestay) {
         var listHomestay =
             await ApiHomestay.searchHomestay(event.capacity, event.location);
-        if (listHomestay != null) {
+        if (listHomestay != null && listHomestay.isNotEmpty) {
           emit(SearchSuccess(list: listHomestay));
-        } else {
+        } else if (listHomestay!.isEmpty) {
           emit(const SearchEmpty(noti: "Không tìm thấy homestay!"));
         }
       } else {

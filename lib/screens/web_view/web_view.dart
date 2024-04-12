@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:mobile_home_travel/screens/navigator/navigator_bar.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';

@@ -156,6 +156,46 @@ class ApiBooking {
     return null;
   }
 
+// <<<< Get list booking theo status >>>>
+  static Future<List<BookingHomestayModel>?> getBookingDetailById(
+      {required String id}) async {
+    List<BookingHomestayModel>? listBooking;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString("idUserCurrent");
+    try {
+      var url =
+          "$baseUrl/api/v1/Bookings?pageSize=50&bookingId=$id&touristId=$idTourist";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print(
+      //     "TEST get booking $status: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        var postsJson = bodyConvert['data'];
+        listBooking = (postsJson as List)
+            .map<BookingHomestayModel>(
+                (postJson) => BookingHomestayModel.fromMap(postJson))
+            .toList();
+        // print("Số Lượng: ${listBooking.length}");
+        // print(
+        //     "Thông tin model $status từ get list booking: $listBooking");
+        if (listBooking.isNotEmpty) {
+          return listBooking;
+        } else {
+          return null;
+        }
+      } else {
+        print('Lỗi get list booking');
+        return null;
+      }
+    } catch (e) {
+      print("Loi get list booking: $e");
+    }
+    return null;
+  }
+
   // <<<< Checkout by card >>>>
   static Future<String?> checkoutByCard({required String idBooking}) async {
     String? link;

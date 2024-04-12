@@ -15,8 +15,16 @@ class HomestayBloc extends Bloc<HomestayEvent, HomestayState> {
     emit(HomestayLoading());
     try {
       if (event is GetAllListHomestay) {
-        var listHomestay = await ApiHomestay.getAllHomestay();
-        emit(HomestaySuccess(list: listHomestay!));
+        var listHomestayRating =
+            await ApiHomestay.getAllHomestayBySort(sortKey: 'Rating');
+        var listHomestayNew =
+            await ApiHomestay.getAllHomestayBySort(sortKey: 'CreatedDate');
+        if (listHomestayNew != null && listHomestayRating != null) {
+          emit(HomestaySuccess(
+              listNew: listHomestayNew, listRating: listHomestayRating));
+        } else {
+          emit(const HomestayError(error: "Lỗi bài homestay"));
+        }
       } else {
         emit(const HomestayError(error: "Lỗi bài homestay"));
       }

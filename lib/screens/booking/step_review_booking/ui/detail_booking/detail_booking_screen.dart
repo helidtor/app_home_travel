@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:mobile_home_travel/format/format.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/room_detail_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
@@ -112,14 +112,18 @@ class _DetailBookingState extends State<DetailBooking> {
                       ),
                       RowText().richText(
                           'Thời gian',
-                          '${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkInTime.toString())} - ${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkOutTime.toString())}',
+                          (homestayDetailModel.checkInTime !=
+                                  homestayDetailModel.checkOutTime)
+                              ? '${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkInTime.toString())} - ${FormatProvider().convertDateTimeBooking(homestayDetailModel.checkOutTime.toString())}'
+                              : FormatProvider().convertDateTimeBooking(
+                                  homestayDetailModel.checkInTime.toString()),
                           Icons.calendar_month_outlined),
                       const SizedBox(
                         height: 2,
                       ),
                       RowText().richText(
                         'Tổng số ngày',
-                        '6 ngày',
+                        '1 ngày',
                         Icons.numbers,
                       ),
                       const SizedBox(
@@ -127,7 +131,7 @@ class _DetailBookingState extends State<DetailBooking> {
                       ),
                       RowText().richText(
                         'Tổng số phòng',
-                        '2 phòng',
+                        '1 phòng',
                         Icons.door_sliding_outlined,
                       ),
                       const SizedBox(

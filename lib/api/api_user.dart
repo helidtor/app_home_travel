@@ -111,11 +111,11 @@ class ApiUser {
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST get profile: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      // print("TEST get profile: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         userProfileModel = UserProfileModel.fromMap(bodyConvert['data']);
-        print("Thông tin model từ get profile: $userProfileModel");
+        // print("Thông tin model từ get profile: $userProfileModel");
         return userProfileModel;
       }
     } catch (e) {

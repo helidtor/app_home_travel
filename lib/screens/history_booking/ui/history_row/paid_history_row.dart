@@ -8,18 +8,18 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
-class HistoryRow extends StatefulWidget {
+class PaidHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
-  HistoryRow({
+  PaidHistoryRow({
     super.key,
     required this.bookingHomestayModel,
   });
 
   @override
-  State<HistoryRow> createState() => _HistoryRowState();
+  State<PaidHistoryRow> createState() => _PaidHistoryRowState();
 }
 
-class _HistoryRowState extends State<HistoryRow> {
+class _PaidHistoryRowState extends State<PaidHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
 
   @override
@@ -90,7 +90,7 @@ class _HistoryRowState extends State<HistoryRow> {
                                   bookingHomestayModel.createdDate.toString()),
                               Icons.date_range_outlined),
                           RowText().richText(
-                              'Số tiền',
+                              'Tổng tiền',
                               '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
                               Icons.attach_money_sharp),
                           // Text(
@@ -151,7 +151,7 @@ class _HistoryRowState extends State<HistoryRow> {
                     //     Border.all(color: AppColors.primaryColor3, width: 1),
                   ),
                   child: Image.asset(
-                    'assets/images/waiting_booking.png',
+                    'assets/images/success_pay.jpg',
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 
@@ -19,9 +20,11 @@ class HistoryLoading extends HistoryState {}
 
 class GetHistorySuccess extends HistoryState {
   List<BookingHomestayModel> listBooking;
+  UserProfileModel touristInfor;
   String type;
   GetHistorySuccess({
     required this.listBooking,
+    required this.touristInfor,
     required this.type,
   });
 }

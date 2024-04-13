@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/history_booking/bloc/history_bloc.dart';
 import 'package:mobile_home_travel/screens/history_booking/bloc/history_event.dart';
 import 'package:mobile_home_travel/screens/history_booking/bloc/history_state.dart';
@@ -29,6 +30,7 @@ class _HistoryScreenState extends State<HistoryScreen>
   List<BookingHomestayModel>? listDepositBooking;
   List<BookingHomestayModel>? listPaidBooking;
   List<BookingHomestayModel>? listCancelledBooking;
+  UserProfileModel? userInfor;
 
   @override
   void initState() {
@@ -41,6 +43,8 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   @override
   Widget build(BuildContext context) {
+    UserProfileModel userInfor = UserProfileModel();
+
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.primaryColor3.withOpacity(0.05),
@@ -66,6 +70,7 @@ class _HistoryScreenState extends State<HistoryScreen>
               imageDisplay = 'assets/gifs/loading.gif';
             });
           } else if (state is GetHistorySuccess) {
+            userInfor = state.touristInfor;
             // Navigator.pop(context);
             switch (state.type) {
               case 'PENDING':
@@ -170,28 +175,36 @@ class _HistoryScreenState extends State<HistoryScreen>
                   children: [
                     listBookingFunction(
                         //pending
+                        userInfor: userInfor,
                         imageDisplay: imageDisplay,
                         listBooking: listPendingBooking,
                         heightDisplay: heightDisplay,
-                        widthDisplay: widthDisplay),
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'PENDING'),
                     listBookingFunction(
                         //deposit
+                        userInfor: userInfor,
                         imageDisplay: imageDisplay,
                         listBooking: listDepositBooking,
                         heightDisplay: heightDisplay,
-                        widthDisplay: widthDisplay),
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'DEPOSIT'),
                     listBookingFunction(
                         //paid
+                        userInfor: userInfor,
                         imageDisplay: imageDisplay,
                         listBooking: listPaidBooking,
                         heightDisplay: heightDisplay,
-                        widthDisplay: widthDisplay),
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'PAID'),
                     listBookingFunction(
                         //cancelled
+                        userInfor: userInfor,
                         imageDisplay: imageDisplay,
                         listBooking: listCancelledBooking,
                         heightDisplay: heightDisplay,
-                        widthDisplay: widthDisplay),
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'CANCELLED'),
                   ],
                 ),
               ),
@@ -205,12 +218,18 @@ class _HistoryScreenState extends State<HistoryScreen>
 
 Widget listBookingFunction({
   List<BookingHomestayModel>? listBooking,
+  UserProfileModel? userInfor,
   String? imageDisplay,
   double? widthDisplay,
   double? heightDisplay,
+  String? typeHistory,
 }) {
-  if (listBooking != null) {
-    return ListBooking(listBooking: listBooking);
+  if (listBooking != null && typeHistory != null) {
+    return ListBooking(
+      userInfor: userInfor!,
+      listBooking: listBooking,
+      typeHistory: typeHistory,
+    );
   } else {
     return Center(
       child: (imageDisplay != null)

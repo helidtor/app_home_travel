@@ -71,12 +71,12 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                 } else {
                   isSuccessAll = false;
                   emit(const CreateBookingFailure(
-                      error: 'Lỗi tạo đơn đặt phòng (7.7)'));
+                      error: 'Bạn đang có một đơn đợi xác nhận!'));
                 }
               }
             } else {
               emit(const CreateBookingFailure(
-                  error: 'Lỗi tạo đơn đặt phòng (7.7)'));
+                  error: 'Bạn đang có một đơn chờ xác nhận!'));
             }
           }
         } else {

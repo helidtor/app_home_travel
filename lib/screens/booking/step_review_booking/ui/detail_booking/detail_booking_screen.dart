@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
 
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
@@ -11,8 +12,10 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class DetailBooking extends StatefulWidget {
   HomestayDetailModel homestayDetailModel;
+  BookingDetailModel? bookingDetailModel;
   DetailBooking({
     super.key,
+    this.bookingDetailModel,
     required this.homestayDetailModel,
   });
 
@@ -22,11 +25,16 @@ class DetailBooking extends StatefulWidget {
 
 class _DetailBookingState extends State<DetailBooking> {
   late HomestayDetailModel homestayDetailModel;
+  BookingDetailModel? bookingDetailModel;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     homestayDetailModel = widget.homestayDetailModel;
+    if (widget.bookingDetailModel != null) {
+      bookingDetailModel = widget.bookingDetailModel;
+    }
   }
 
   @override
@@ -83,8 +91,11 @@ class _DetailBookingState extends State<DetailBooking> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      RowText().richText('Mã đơn',
-                          'f7cf26d0-8beb-4021-a053-6b80aef63c15', null),
+                      (bookingDetailModel != null)
+                          ? RowText().richText('Mã đơn',
+                              bookingDetailModel!.booking!.id!, null)
+                          : RowText().richText('Mã đơn',
+                              'f7cf26d0-8beb-4021-a053-6b80aef63c15', null),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Row(

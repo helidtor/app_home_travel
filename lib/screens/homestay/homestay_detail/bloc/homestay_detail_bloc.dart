@@ -24,6 +24,7 @@ class HomestayDetailBloc
         var homestayDetail =
             await ApiHomestay.getDetailHomestay(idHomestay: idHomestay!);
         if (homestayDetail != null) {
+          print('Rating là: ${homestayDetail.rating}');
           var isWishlist = await ApiHomestay.getWishlistByIdTouristAndHomeStay(
               idHomestay: idHomestay, idTourist: idTourist!);
           if (isWishlist != null) {

@@ -11,14 +11,13 @@ class RoundGradientButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const RoundGradientButton(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.onPressed,
       this.width,
       this.height,
       this.textSize,
-      this.circular})
-      : super(key: key);
+      this.circular});
 
   @override
   Widget build(BuildContext context) {

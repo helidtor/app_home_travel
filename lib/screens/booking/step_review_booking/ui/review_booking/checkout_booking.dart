@@ -19,11 +19,13 @@ import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 class CheckoutBooking extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
   num balance;
+  bool? isCheckOutDeposit;
   CheckoutBooking({
-    Key? key,
+    super.key,
+    this.isCheckOutDeposit,
     required this.bookingHomestayModel,
     required this.balance,
-  }) : super(key: key);
+  });
 
   @override
   State<CheckoutBooking> createState() => _CheckoutBookingState();
@@ -36,6 +38,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
   bool isCheckedPayFull = false;
   late BookingHomestayModel booking;
   late num balance;
+  bool isCheckOutDeposit = false;
 
   @override
   void initState() {
@@ -43,6 +46,9 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
     super.initState();
     booking = widget.bookingHomestayModel;
     balance = widget.balance;
+    if (widget.isCheckOutDeposit != null) {
+      isCheckOutDeposit = widget.isCheckOutDeposit!;
+    }
   }
 
   @override
@@ -50,7 +56,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      height: screenHeight * 0.9,
+      height: !isCheckOutDeposit ? screenHeight * 0.9 : screenHeight * 0.77,
       width: screenWidth,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -67,11 +73,11 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
           ),
 
           //bảng chọn thanh toán cọc hoặc trả full
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Text(
-              'Gói thanh toán',
-              style: TextStyle(
+              isCheckOutDeposit ? 'Số tiền còn lại' : 'Gói thanh toán',
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -79,49 +85,57 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
             ),
           ),
           Center(
-            child: Column(
-              children: [
-                _rowSelection(
-                  title: 'Thanh toán cọc',
-                  description:
-                      'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
-                  icon: FontAwesomeIcons.scaleBalanced,
-                  width: screenWidth * 0.85,
-                  checkbox: Checkbox(
-                    activeColor: AppColors.primaryColor3,
-                    shape: const CircleBorder(),
-                    value: isCheckedDeposit,
-                    onChanged: (newValue) async {
-                      setState(() {
-                        isCheckedDeposit = newValue!;
-                        isCheckedPayFull = false;
-                      });
-                    },
+            child: !isCheckOutDeposit
+                ? Column(
+                    children: [
+                      _rowSelection(
+                        title: 'Thanh toán cọc',
+                        description:
+                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
+                        icon: FontAwesomeIcons.scaleBalanced,
+                        width: screenWidth * 0.85,
+                        checkbox: Checkbox(
+                          activeColor: AppColors.primaryColor3,
+                          shape: const CircleBorder(),
+                          value: isCheckedDeposit,
+                          onChanged: (newValue) async {
+                            setState(() {
+                              isCheckedDeposit = newValue!;
+                              isCheckedPayFull = false;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _rowSelection(
+                        title: 'Thanh toán toàn bộ',
+                        description:
+                            'Trả hết ${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ',
+                        icon: FontAwesomeIcons.moneyBill,
+                        width: screenWidth * 0.85,
+                        checkbox: Checkbox(
+                          activeColor: AppColors.primaryColor3,
+                          shape: const CircleBorder(),
+                          value: isCheckedPayFull,
+                          onChanged: (newValue) async {
+                            setState(() {
+                              isCheckedPayFull = newValue!;
+                              isCheckedDeposit = false;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : _rowSelection(
+                    title: 'Thanh toán nốt đơn',
+                    description:
+                        'Số tiền còn thiếu ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
+                    icon: FontAwesomeIcons.scaleBalanced,
+                    width: screenWidth * 0.85,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _rowSelection(
-                  title: 'Thanh toán toàn bộ',
-                  description:
-                      'Trả hết ${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ',
-                  icon: FontAwesomeIcons.moneyBill,
-                  width: screenWidth * 0.85,
-                  checkbox: Checkbox(
-                    activeColor: AppColors.primaryColor3,
-                    shape: const CircleBorder(),
-                    value: isCheckedPayFull,
-                    onChanged: (newValue) async {
-                      setState(() {
-                        isCheckedPayFull = newValue!;
-                        isCheckedDeposit = false;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
           ),
           const SizedBox(
             height: 20,
@@ -250,7 +264,7 @@ Widget _rowSelection({
   required String description,
   required IconData icon,
   required double width,
-  required Widget checkbox,
+  Widget? checkbox,
 }) {
   return Container(
     width: width,
@@ -311,7 +325,7 @@ Widget _rowSelection({
             ),
           ],
         ),
-        checkbox,
+        checkbox ?? const SizedBox(),
       ],
     ),
   );

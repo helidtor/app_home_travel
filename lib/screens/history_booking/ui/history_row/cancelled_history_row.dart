@@ -7,18 +7,18 @@ import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 
-class HistoryRow extends StatefulWidget {
+class CancelledHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
-  HistoryRow({
+  CancelledHistoryRow({
     super.key,
     required this.bookingHomestayModel,
   });
 
   @override
-  State<HistoryRow> createState() => _HistoryRowState();
+  State<CancelledHistoryRow> createState() => _CancelledHistoryRowState();
 }
 
-class _HistoryRowState extends State<HistoryRow> {
+class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
 
   @override
@@ -59,7 +59,7 @@ class _HistoryRowState extends State<HistoryRow> {
                 //     Border.all(color: AppColors.primaryColor3, width: 1),
               ),
               child: Image.asset(
-                'assets/images/waiting_booking.png',
+                'assets/images/failed_pay.jpg',
                 fit: BoxFit.cover,
               ),
             ),

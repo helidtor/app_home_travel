@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       (listHomestayRating!.isNotEmpty)
-                                          ? "Homestay xu hướng"
+                                          ? "Homestay hàng đầu"
                                           : "",
                                       style: TextStyle(
                                         fontSize: 20,

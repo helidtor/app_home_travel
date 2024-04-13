@@ -4,6 +4,7 @@ import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
+import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -249,5 +250,35 @@ class ApiHomestay {
     }
 
     return listWishlist;
+  }
+
+  // <<<< Get all feedback homestay by idHomestay >>>>
+  static Future<List<FeedbackModel>?> getFeedbackByIdHomeStay(
+      {required String idHomestay}) async {
+    List<FeedbackModel>? feedback;
+    try {
+      var url =
+          "$baseUrl/api/v1/Feedbacks?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&homeStayId=$idHomestay";
+      Map<String, String> header = await ApiHeader.getHeader();
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get all feedback: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        feedback = (postsJson as List)
+            .map<FeedbackModel>((postJson) => FeedbackModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get all feedback: $feedback");
+        return feedback;
+      } else {
+        print("Loi get all feedback");
+        return null;
+      }
+    } catch (e) {
+      print("Loi get all feedback: $e");
+      return null;
+    }
+    return null;
   }
 }

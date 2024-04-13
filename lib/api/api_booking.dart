@@ -34,13 +34,14 @@ class ApiBooking {
       // print(jsonDecode(utf8.decode(response.bodyBytes)));
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
+        print(bodyConvert);
         if (bodyConvert['success'] == true) {
           var postsJson = bodyConvert['data'];
           bookingHomestayModel = BookingHomestayModel.fromMap(postsJson);
           print("Tạo booking thành công");
         } else {
           print(
-              "Lỗi tạo booking: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+              "Lỗi tạo bookings: ${jsonDecode(utf8.decode(response.bodyBytes))}");
         }
       } else {
         print(

@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:animated_rating_bar/widgets/animated_rating_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -410,6 +413,110 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           thickness: 25,
                           color: AppColors.backgroundApp,
                         ),
+                        (homestayDetail?.rating != 0)
+                            ? Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                        top: 25,
+                                        bottom: 25),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Đánh giá',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                homestayDetail!.rating
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 35,
+                                                    color: AppColors
+                                                        .primaryColor3),
+                                              ),
+                                              AnimatedRatingBar(
+                                                activeFillColor:
+                                                    AppColors.primaryColor3,
+                                                strokeColor:
+                                                    AppColors.primaryColor3,
+                                                initialRating: double.parse(
+                                                    homestayDetail!.rating
+                                                        .toString()),
+                                                height: 45,
+                                                width: 200,
+                                                animationColor: Colors.red,
+                                                onRatingUpdate: (rating) {
+                                                  debugPrint(rating.toString());
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      FeedbackHomestayScreen(
+                                                    homestayDetailModel:
+                                                        homestayDetail!,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                height: 25,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                    color:
+                                                        AppColors.primaryColor3,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: const Text(
+                                                  'Xem chi tiết',
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color:
+                                                        AppColors.primaryColor3,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
+                                  ),
+                                  const Divider(
+                                    thickness: 25,
+                                    color: AppColors.backgroundApp,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 20, right: 20, top: 25, bottom: 25),

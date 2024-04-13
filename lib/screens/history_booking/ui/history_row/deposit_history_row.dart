@@ -149,16 +149,16 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ReviewBooking(
-                          //       totalRoom: 1,
-                          //       bookingHomestayModel: bookingHomestayModel,
-                          //       isAllowBack: true,
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReviewBooking(
+                                totalRoom: 1,
+                                bookingHomestayModel: bookingHomestayModel,
+                                isAllowBack: true,
+                              ),
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),

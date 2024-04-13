@@ -159,7 +159,7 @@ class _HomestayState extends State<HomestayPreview> {
                       (homestayModel.rating != null &&
                               homestayModel.rating != 0)
                           ? Text(
-                              '${homestayModel.rating!.toStringAsFixed(2)}/5',
+                              '${homestayModel.rating!.toStringAsFixed(1)}/5',
                               style: const TextStyle(
                                   fontSize: 15, color: Colors.black),
                             )

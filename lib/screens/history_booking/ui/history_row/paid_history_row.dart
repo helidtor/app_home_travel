@@ -34,130 +34,159 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ReviewBooking(
-                totalRoom: 1,
-                bookingHomestayModel: bookingHomestayModel,
-                isAllowBack: true,
-              ),
-            ),
-          );
-        },
-        child: SizedBox(
-          height: 170,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                height: 150,
-                width: screenWidth * 0.85,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(253, 255, 255, 255),
-                    ),
-                    color: const Color.fromARGB(253, 255, 255, 255),
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 0.5,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      )
-                    ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: screenWidth * 0.5,
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RowText().richText('Mã đơn', bookingHomestayModel.id!,
-                              Icons.qr_code),
-                          RowText().richText(
-                              'Ngày đặt',
-                              FormatProvider().convertDateTime(
-                                  bookingHomestayModel.createdDate.toString()),
-                              Icons.date_range_outlined),
-                          RowText().richText(
-                              'Tổng tiền',
-                              '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                              Icons.attach_money_sharp),
-                          // Text(
-                          //   bookingHomestayModel.id.toString(),
-                          //   style: TextStyle(
-                          //     overflow: TextOverflow.clip,
-                          //     // fontWeight: FontWeight.bold,
-                          //     fontSize: 13,
-                          //     color: Colors.black.withOpacity(0.8),
-                          //   ),
-                          // ),
-                          // Text(
-                          //   FormatProvider().convertDateTime(
-                          //       bookingHomestayModel.createdDate.toString()),
-                          //   style: TextStyle(
-                          //     fontStyle: FontStyle.italic,
-                          //     color: Colors.black.withOpacity(0.5),
-                          //     fontSize: 14,
-                          //   ),
-                          // ),
-                        ],
+    return SizedBox(
+      height: 170,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Container(
+            height: 150,
+            width: screenWidth * 0.85,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color.fromARGB(253, 255, 255, 255),
+                ),
+                color: const Color.fromARGB(253, 255, 255, 255),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 0.5,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  )
+                ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: screenWidth * 0.5,
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RowText().richText(
+                          'Mã đơn', bookingHomestayModel.id!, Icons.qr_code),
+                      RowText().richText(
+                          'Ngày đặt',
+                          FormatProvider().convertDateTime(
+                              bookingHomestayModel.createdDate.toString()),
+                          Icons.date_range_outlined),
+                      RowText().richText(
+                          'Tổng tiền',
+                          '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
+                          Icons.attach_money_sharp),
+                      // Text(
+                      //   bookingHomestayModel.id.toString(),
+                      //   style: TextStyle(
+                      //     overflow: TextOverflow.clip,
+                      //     // fontWeight: FontWeight.bold,
+                      //     fontSize: 13,
+                      //     color: Colors.black.withOpacity(0.8),
+                      //   ),
+                      // ),
+                      // Text(
+                      //   FormatProvider().convertDateTime(
+                      //       bookingHomestayModel.createdDate.toString()),
+                      //   style: TextStyle(
+                      //     fontStyle: FontStyle.italic,
+                      //     color: Colors.black.withOpacity(0.5),
+                      //     fontSize: 14,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                // Text(
+                //   '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
+                //   style: const TextStyle(
+                //     color: Color.fromARGB(255, 21, 149, 25),
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 14,
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  indent: 30,
+                  endIndent: 30,
+                  color: AppColors.primaryColor3.withOpacity(0.2),
+                  height: 1,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewBooking(
+                          totalRoom: 1,
+                          bookingHomestayModel: bookingHomestayModel,
+                          isAllowBack: true,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 25,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.4),
+                          width: 0.8,
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        'Xem chi tiết',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black.withOpacity(0.7),
+                        ),
                       ),
                     ),
-                    // Text(
-                    //   '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                    //   style: const TextStyle(
-                    //     color: Color.fromARGB(255, 21, 149, 25),
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 14,
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Divider(
-                      indent: 30,
-                      endIndent: 30,
-                      color: AppColors.primaryColor3.withOpacity(0.2),
-                      height: 1,
-                    ),
-                    // Row(
-                    //   children: [
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+                // Row(
+                //   children: [
 
-                    //   ],
-                    // ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: 0,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(200),
-                    // border:
-                    //     Border.all(color: AppColors.primaryColor3, width: 1),
-                  ),
-                  child: Image.asset(
-                    'assets/images/success_pay.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
+                //   ],
+                // ),
+              ],
+            ),
           ),
-        ));
+          Positioned(
+            top: 0,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(200),
+                // border:
+                //     Border.all(color: AppColors.primaryColor3, width: 1),
+              ),
+              child: Image.asset(
+                'assets/images/success_pay.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

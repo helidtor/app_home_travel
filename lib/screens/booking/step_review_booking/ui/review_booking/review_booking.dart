@@ -25,11 +25,11 @@ class ReviewBooking extends StatefulWidget {
   bool isAllowBack;
   BookingHomestayModel bookingHomestayModel;
   ReviewBooking({
-    Key? key,
+    super.key,
     required this.totalRoom,
     required this.isAllowBack,
     required this.bookingHomestayModel,
-  }) : super(key: key);
+  });
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
@@ -76,7 +76,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            isAllowBack ? "Hoàn tất thanh toán" : "Hoàn tất đơn",
+            isAllowBack ? "Tổng quan đơn" : "Hoàn tất đơn",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),
@@ -331,9 +331,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                 fontWeight: FontWeight.w400),
                                             children: [
                                               TextSpan(
-                                                  text: isAllowBack
-                                                      ? "${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ\n"
-                                                      : "${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ\n",
+                                                  text:
+                                                      "${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ\n",
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -484,31 +483,33 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         const SizedBox(
                           height: 25,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25),
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                activeColor: AppColors.primaryColor3,
-                                shape: const RoundedRectangleBorder(),
-                                value: isCheck,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    isCheck = newValue!;
-                                  });
-                                },
-                              ),
-                              const Expanded(
-                                child: Text(
-                                    "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
-                                    style: TextStyle(
-                                      color: AppColors.grayColor,
-                                      fontSize: 12,
-                                    )),
+                        !isAllowBack
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      activeColor: AppColors.primaryColor3,
+                                      shape: const RoundedRectangleBorder(),
+                                      value: isCheck,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          isCheck = newValue!;
+                                        });
+                                      },
+                                    ),
+                                    const Expanded(
+                                      child: Text(
+                                          "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
+                                          style: TextStyle(
+                                            color: AppColors.grayColor,
+                                            fontSize: 12,
+                                          )),
+                                    )
+                                  ],
+                                ),
                               )
-                            ],
-                          ),
-                        ),
+                            : const SizedBox(),
                         // const SizedBox(
                         //   height: 100,
                         // ),
@@ -531,26 +532,28 @@ class _ReviewBookingState extends State<ReviewBooking> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: RoundGradientButton(
-        circular: 10,
-        width: screenWidth * 0.85,
-        title: 'Xác nhận',
-        onPressed: () {
-          // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
-          //hiện khung nhập giá
-          showModalBottomSheet<void>(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return CheckoutBooking(
-                bookingHomestayModel: booking,
-                balance: userInfor!.wallets!.first.balance!,
-              );
-            },
-          );
-        },
-        textSize: 18,
-      ),
+      floatingActionButton: !isAllowBack
+          ? RoundGradientButton(
+              circular: 10,
+              width: screenWidth * 0.85,
+              title: 'Xác nhận',
+              onPressed: () {
+                // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
+                //hiện khung nhập giá
+                showModalBottomSheet<void>(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CheckoutBooking(
+                      bookingHomestayModel: booking,
+                      balance: userInfor!.wallets!.first.balance!,
+                    );
+                  },
+                );
+              },
+              textSize: 18,
+            )
+          : const SizedBox(),
     );
   }
 

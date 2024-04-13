@@ -7,6 +7,12 @@ class FormatProvider {
     return formatter.format(number);
   }
 
+  String formatRating(String input) {
+    final formatter = NumberFormat("#");
+    final number = num.parse(input);
+    return formatter.format(number);
+  }
+
   String formatPrice(String input) {
     final formatter = NumberFormat("#,###");
     final number = num.parse(input);

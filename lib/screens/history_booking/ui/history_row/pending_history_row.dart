@@ -129,7 +129,7 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                         builder: (context) => ReviewBooking(
                           totalRoom: 1,
                           bookingHomestayModel: bookingHomestayModel,
-                          isAllowBack: true,
+                          isAllowBack: false,
                         ),
                       ),
                     );

@@ -441,8 +441,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                homestayDetail!.rating
-                                                    .toString(),
+                                                '${homestayDetail!.rating.toString()}/5',
                                                 style: const TextStyle(
                                                     fontSize: 35,
                                                     color: AppColors
@@ -454,7 +453,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                                 strokeColor:
                                                     AppColors.primaryColor3,
                                                 initialRating: double.parse(
-                                                    homestayDetail!.rating
+                                                    homestayDetail!.rating!
+                                                        .floor()
                                                         .toString()),
                                                 height: 45,
                                                 width: 200,

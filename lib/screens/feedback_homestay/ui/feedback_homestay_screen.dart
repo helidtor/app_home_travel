@@ -40,6 +40,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     List<FeedbackModel> listFeedback = [];
 
     return Scaffold(
@@ -85,7 +86,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Container(
-                          height: 100,
+                          height: screenHeight * 0.15,
                           width: screenWidth * 0.95,
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -109,7 +110,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    homestayDetailModel.rating.toString(),
+                                    '${homestayDetailModel.rating.toString()}/5',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),
@@ -117,8 +118,12 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                   AnimatedRatingBar(
                                     activeFillColor: AppColors.primaryColor3,
                                     strokeColor: AppColors.primaryColor3,
+                                    // initialRating: double.parse(
+                                    //     homestayDetailModel.rating.toString()),
                                     initialRating: double.parse(
-                                        homestayDetailModel.rating.toString()),
+                                        homestayDetailModel.rating!
+                                            .floor()
+                                            .toString()),
                                     height: 45,
                                     width: 200,
                                     animationColor: Colors.red,
@@ -128,31 +133,40 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                   ),
                                 ],
                               ),
+                              Text(
+                                '(${listFeedback.length} đánh giá)',
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor3),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Center(
-                              child: Column(
-                                children: List.generate(
-                                  listFeedback.length,
-                                  (index) => Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: FeedbackRow(
-                                        feedbackModel: listFeedback[index]),
+                      SizedBox(
+                        height: screenHeight * 0.65,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Center(
+                                child: Column(
+                                  children: List.generate(
+                                    listFeedback.length,
+                                    (index) => Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: FeedbackRow(
+                                          feedbackModel: listFeedback[index]),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],

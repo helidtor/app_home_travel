@@ -8,7 +8,7 @@ void showError(BuildContext context, String errorMessage) {
       backgroundColor: const Color.fromARGB(255, 164, 29, 19),
       content: Text(
         errorMessage,
-        style: TextStyle(
+        style: const TextStyle(
             fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15),
       ),
       duration: const Duration(seconds: 2),

@@ -5,6 +5,8 @@ import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
+import 'package:mobile_home_travel/screens/home/utils/destination_list.dart';
+import 'package:mobile_home_travel/screens/home/utils/destination_preview.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_bloc.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_state.dart';
@@ -141,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               const SizedBox(
                                 // width: 80,
-                                height: 50,
+                                height: 40,
                                 // child: Image.asset(
                                 //   'assets/images/logo-notext.png',
                                 //   fit: BoxFit.cover,
@@ -205,8 +207,35 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
+                              // const SizedBox(
+                              //   height: 50,
+                              // ),
                               const SizedBox(
-                                height: 50,
+                                height: 15,
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 10),
+                              //   child: Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.start, // Căn chỉnh
+                              //     children: [
+                              //       Text(
+                              //         (listHomestayRating!.isNotEmpty)
+                              //             ? "Điểm đến nổi bật"
+                              //             : "",
+                              //         style: TextStyle(
+                              //           fontSize: 20,
+                              //           color: Colors.black.withOpacity(0.75),
+                              //           fontWeight: FontWeight.bold,
+                              //           //
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              DestinationList(),
+                              const SizedBox(
+                                height: 15,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -219,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                                           ? "Homestay xu hướng"
                                           : "",
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 20,
                                         color: Colors.black.withOpacity(0.75),
                                         fontWeight: FontWeight.bold,
                                         //
@@ -257,7 +286,7 @@ class _HomePageState extends State<HomePage> {
                                           ? "Homestay mới"
                                           : "",
                                       style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 20,
                                         color: Colors.black.withOpacity(0.75),
                                         fontWeight: FontWeight.bold,
                                       ),

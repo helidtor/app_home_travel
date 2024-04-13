@@ -76,7 +76,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            isAllowBack ? "Hoàn tất thanh toán" : "Thanh toán cọc",
+            isAllowBack ? "Hoàn tất thanh toán" : "Hoàn tất đơn",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),

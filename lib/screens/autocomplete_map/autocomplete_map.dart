@@ -15,9 +15,9 @@ import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 class AutocompleteMap extends StatefulWidget {
   bool? isHaveBtnClose;
   AutocompleteMap({
-    Key? key,
+    super.key,
     this.isHaveBtnClose,
-  }) : super(key: key);
+  });
 
   @override
   State createState() => FullMapState();

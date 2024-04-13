@@ -41,30 +41,63 @@ class ApiUser {
   }
 
 //Signup
-  static Future<String?> signup(
+  // static Future<bool?> signup(
+  //     {required UserSignUpModel userSignUpModel}) async {
+  //   // print('Thông tin tạo tài khoản: $userSignUpModel');
+  //   try {
+  //     final url = Uri.parse('$baseUrl/api/v1/Tourists');
+  //     Map<String, String> header = await ApiHeader.getHeader();
+  //     var body = json.encode(userSignUpModel.toMap());
+  //     var response = await http.post(Uri.parse(url.toString()),
+  //         headers: header, body: body);
+  //     print('Body là: $body');
+  //     if (response.statusCode == 200) {
+  //       print(
+  //           "Đăng ký thành công! ${response.statusCode} ${jsonDecode(response.body)}");
+  //       return true;
+  //     }
+  //   } catch (e) {
+  //     print("Lỗi đăng ký: $e");
+  //     return false;
+  //   }
+  //   return false;
+  // }
+  static Future<bool?> signup(
       {required UserSignUpModel userSignUpModel}) async {
-    final url = Uri.parse('$baseUrl/api/v1/Tourists');
-    Map<String, String> header = await ApiHeader.getHeader();
     try {
-      final body = {
-        'phoneNumber': userSignUpModel.phoneNumber,
-        'firstName': userSignUpModel.firstName,
-        'lastName': userSignUpModel.lastName,
-        'email': userSignUpModel.email,
-        'gender': userSignUpModel.gender,
-        'password': userSignUpModel.password,
-        'status': userSignUpModel.status
-      };
-      var response = await http.post(Uri.parse(url.toString()),
-          headers: header, body: jsonEncode(body));
+      final url = Uri.parse('$baseUrl/api/v1/Tourists');
+      Map<String, String> header = await ApiHeader.getHeader();
+
+      var request = http.MultipartRequest('POST', url);
+
+      // Add headers
+      header.forEach((key, value) {
+        request.headers[key] = value;
+      });
+
+      // Add fields
+      request.fields['dateOfBirth'] = userSignUpModel.dateOfBirth!;
+      request.fields['password'] = userSignUpModel.password!;
+      request.fields['gender'] = userSignUpModel.gender!.toString();
+      request.fields['phoneNumber'] = userSignUpModel.phoneNumber!;
+      request.fields['email'] = userSignUpModel.email!;
+      request.fields['firstName'] = userSignUpModel.firstName!;
+      request.fields['lastName'] = userSignUpModel.lastName!;
+      var response = await http.Response.fromStream(await request.send());
+
       if (response.statusCode == 200) {
-        print("Đăng ký thành công!");
-        return "success";
+        print(
+            "Đăng ký thành công! ${response.statusCode} ${jsonDecode(response.body)}");
+        return true;
+      } else {
+        print(
+            "Đăng ký không thành công! ${response.statusCode} ${response.body}");
+        return false;
       }
     } catch (e) {
       print("Lỗi đăng ký: $e");
+      return false;
     }
-    return "Đăng ký thất bại";
   }
 
   // <<<< Get profile >>>>
@@ -93,7 +126,7 @@ class ApiUser {
 
   //Update profile
   static Future<bool> updateProfile(
-      UserProfileModel userProfileModel, String id) async {
+      {required UserProfileModel userProfileModel, required String id}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     try {

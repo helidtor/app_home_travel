@@ -50,7 +50,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      height: screenHeight * 0.55,
+      height: screenHeight * 0.9,
       width: screenWidth,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -67,74 +67,69 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
           ),
 
           //bảng chọn thanh toán cọc hoặc trả full
-          // const Padding(
-          //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          //   child: Text(
-          //     'Gói thanh toán',
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 18,
-          //     ),
-          //   ),
-          // ),
-          // Center(
-          //   child: Column(
-          //     children: [
-          //       Container(
-          //         width: screenWidth * 0.85,
-          //         height: 70,
-          //         decoration: BoxDecoration(
-          //           border: Border.all(
-          //               width: 0.5, color: Colors.black.withOpacity(0.7)),
-          //           color: Colors.white,
-          //           boxShadow: [
-          //             BoxShadow(
-          //               color: AppColors.primaryColor1.withOpacity(0.2),
-          //               spreadRadius: 0.1,
-          //               blurRadius: 9,
-          //               offset: const Offset(0, 2),
-          //             ),
-          //           ],
-          //           borderRadius: BorderRadius.circular(10),
-          //         ),
-          //       ),
-          //       const SizedBox(
-          //         height: 10,
-          //       ),
-          //       Container(
-          //         width: screenWidth * 0.85,
-          //         height: 70,
-          //         decoration: BoxDecoration(
-          //           border: Border.all(
-          //             width: 0.5,
-          //             color: Colors.black.withOpacity(0.7),
-          //           ),
-          //           color: Colors.white,
-          //           boxShadow: [
-          //             BoxShadow(
-          //               color: AppColors.primaryColor1.withOpacity(0.2),
-          //               spreadRadius: 0.1,
-          //               blurRadius: 9,
-          //               offset: const Offset(0, 2),
-          //             ),
-          //           ],
-          //           borderRadius: BorderRadius.circular(10),
-          //         ),
-          //         child: const Row(
-          //           children: [],
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          // Divider(
-          //   thickness: 10,
-          //   color: AppColors.primaryColor1.withOpacity(0.1),
-          // ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: Text(
+              'Gói thanh toán',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          Center(
+            child: Column(
+              children: [
+                _rowSelection(
+                  title: 'Thanh toán cọc',
+                  description:
+                      'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
+                  icon: FontAwesomeIcons.scaleBalanced,
+                  width: screenWidth * 0.85,
+                  checkbox: Checkbox(
+                    activeColor: AppColors.primaryColor3,
+                    shape: const CircleBorder(),
+                    value: isCheckedDeposit,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        isCheckedDeposit = newValue!;
+                        isCheckedPayFull = false;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                _rowSelection(
+                  title: 'Thanh toán toàn bộ',
+                  description:
+                      'Trả hết ${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ',
+                  icon: FontAwesomeIcons.moneyBill,
+                  width: screenWidth * 0.85,
+                  checkbox: Checkbox(
+                    activeColor: AppColors.primaryColor3,
+                    shape: const CircleBorder(),
+                    value: isCheckedPayFull,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        isCheckedPayFull = newValue!;
+                        isCheckedDeposit = false;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Divider(
+            thickness: 10,
+            color: AppColors.primaryColor1.withOpacity(0.1),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Text(
@@ -150,151 +145,42 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                _rowSelection(
+                  title: 'Ví của tôi',
+                  description:
+                      'Số dư: ${FormatProvider().formatPrice(balance.toString())}₫',
+                  icon: FontAwesomeIcons.wallet,
                   width: screenWidth * 0.85,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 0.5,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor1.withOpacity(0.2),
-                        spreadRadius: 0.1,
-                        blurRadius: 9,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(left: 30),
-                            child: Icon(
-                              FontAwesomeIcons.wallet,
-                              color: AppColors.primaryColor1,
-                              size: 25,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Ví của tôi',
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                'Số dư: ${FormatProvider().formatPrice(balance.toString())}₫',
-                                style: const TextStyle(
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Checkbox(
-                        activeColor: AppColors.primaryColor3,
-                        shape: const CircleBorder(),
-                        value: isCheckedPayWallet,
-                        onChanged: (newValue) async {
-                          setState(() {
-                            isCheckedPayWallet = newValue!;
-                            isCheckedPayCard = false;
-                          });
-                        },
-                      ),
-                    ],
+                  checkbox: Checkbox(
+                    activeColor: AppColors.primaryColor3,
+                    shape: const CircleBorder(),
+                    value: isCheckedPayWallet,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        isCheckedPayWallet = newValue!;
+                        isCheckedPayCard = false;
+                      });
+                    },
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
+                _rowSelection(
+                  title: 'Ngân hàng',
+                  description: 'Thanh toán qua VN Pay',
+                  icon: Icons.account_balance_sharp,
                   width: screenWidth * 0.85,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 0.5, color: Colors.black.withOpacity(0.7)),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor1.withOpacity(0.2),
-                        spreadRadius: 0.1,
-                        blurRadius: 9,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(left: 30),
-                            child: Icon(
-                              Icons.account_balance_sharp,
-                              color: AppColors.primaryColor1,
-                              size: 27,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Ngân hàng',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              const Text(
-                                'Thanh toán qua VN Pay',
-                                style: TextStyle(
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Checkbox(
-                        activeColor: AppColors.primaryColor3,
-                        shape: const CircleBorder(),
-                        value: isCheckedPayCard,
-                        onChanged: (newValue) async {
-                          setState(() {
-                            isCheckedPayCard = newValue!;
-                            isCheckedPayWallet = false;
-                          });
-                        },
-                      ),
-                    ],
+                  checkbox: Checkbox(
+                    activeColor: AppColors.primaryColor3,
+                    shape: const CircleBorder(),
+                    value: isCheckedPayCard,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        isCheckedPayCard = newValue!;
+                        isCheckedPayWallet = false;
+                      });
+                    },
                   ),
                 ),
               ],
@@ -357,4 +243,76 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
       ),
     );
   }
+}
+
+Widget _rowSelection({
+  required String title,
+  required String description,
+  required IconData icon,
+  required double width,
+  required Widget checkbox,
+}) {
+  return Container(
+    width: width,
+    height: 70,
+    decoration: BoxDecoration(
+      border: Border.all(
+        width: 0.5,
+        color: Colors.black.withOpacity(0.7),
+      ),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.primaryColor1.withOpacity(0.2),
+          spreadRadius: 0.1,
+          blurRadius: 9,
+          offset: const Offset(0, 2),
+        ),
+      ],
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Icon(
+                icon,
+                color: AppColors.primaryColor1,
+                size: 25,
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    color: Colors.black38,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        checkbox,
+      ],
+    ),
+  );
 }

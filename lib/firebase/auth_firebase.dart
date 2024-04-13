@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+
+//instance of firestore
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 Future signInWithGoogle() async {
   // Trigger the authentication flow

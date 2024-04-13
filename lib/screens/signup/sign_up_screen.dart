@@ -4,8 +4,11 @@ import 'package:mobile_home_travel/firebase/auth_firebase.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
+import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -16,7 +19,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isCheck = false;
-
+  String? dropdownValue;
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -25,11 +28,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final genderController = TextEditingController();
   final userNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
+  final dateOfBirthController = TextEditingController();
   bool _validateFirstName = false;
   bool _validateLastName = false;
   bool _validateEmail = false;
   bool _validatePassword = false;
   bool _validateRePassword = false;
+  bool _validateGender = false;
+  bool _validateDateOfBirth = false;
   UserSignUpModel userSignUpModel = UserSignUpModel();
 
   @override
@@ -59,19 +65,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 15,
                 ),
                 const Text(
-                  "Chào mừng,",
-                  style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                const Text(
                   "Tạo tài khoản",
                   style: TextStyle(
                     color: AppColors.blackColor,
                     fontSize: 20,
-                    fontFamily: "Poppins",
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -93,9 +90,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             userSignUpModel.firstName = value;
                           });
                         },
-                        errorText: _validateFirstName
-                            ? 'Please input first name!'
-                            : null,
+                        errorText:
+                            _validateFirstName ? 'Vui lòng nhập họ!' : null,
                       ),
                     ),
                     const SizedBox(
@@ -113,9 +109,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             userSignUpModel.lastName = value;
                           });
                         },
-                        errorText: _validateLastName
-                            ? 'Please input last name!'
-                            : null,
+                        errorText:
+                            _validateLastName ? 'Vui lòng nhập tên!' : null,
                       ),
                     ),
                   ],
@@ -134,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       userSignUpModel.email = value;
                     });
                   },
-                  errorText: _validateEmail ? 'Please input email!' : null,
+                  errorText: _validateEmail ? 'Vui lòng nhập email!' : null,
                 ),
                 const SizedBox(
                   height: 5,
@@ -142,14 +137,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundTextField(
                   hintText: "Số điện thoại",
                   icon: "assets/icons/message_icon.png",
-                  textEditingController: userNameController,
-                  textInputType: TextInputType.name,
+                  textEditingController: phoneNumberController,
+                  textInputType: TextInputType.phone,
                   onChangeText: (value) {
                     setState(() {
                       userSignUpModel.phoneNumber = value;
                     });
                   },
-                  errorText: _validateEmail ? 'Please input email!' : null,
+                  errorText:
+                      _validateEmail ? 'Vui lòng nhập số điện thoại!' : null,
                 ),
                 const SizedBox(
                   height: 5,
@@ -158,17 +154,97 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                RoundTextField(
-                  hintText: "Giới tính",
-                  icon: "assets/icons/message_icon.png",
-                  textEditingController: genderController,
-                  textInputType: TextInputType.name,
-                  onChangeText: (value) {
-                    setState(() {
-                      userSignUpModel.gender = value;
-                    });
-                  },
-                  errorText: _validateEmail ? 'Please input email!' : null,
+                Row(
+                  children: [
+                    // SizedBox(
+                    //   width: screenSize.width * 0.44,
+                    //   child: RoundTextField(
+                    //     hintText: "Giới tính",
+                    //     icon: "assets/icons/message_icon.png",
+                    //     textEditingController: genderController,
+                    //     textInputType: TextInputType.name,
+                    //     onChangeText: (value) {
+                    //       setState(() {
+                    //         userSignUpModel.gender = value;
+                    //       });
+                    //     },
+                    //     errorText:
+                    //         _validateGender ? 'Vui lòng chọn giới tính!' : null,
+                    //   ),
+                    // ),
+                    SizedBox(
+                      width: screenSize.width * 0.44,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.lightGrayColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 15),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintText: 'Giới tính',
+                            hintStyle: const TextStyle(
+                                fontSize: 12, color: AppColors.grayColor),
+                            prefixIcon: Container(
+                              alignment: Alignment.center,
+                              width: 20,
+                              height: 20,
+                              child: Image.asset(
+                                'assets/icons/profile_icon.png',
+                                width: 20,
+                                height: 20,
+                                fit: BoxFit.contain,
+                                color: AppColors.grayColor,
+                              ),
+                            ),
+                          ),
+                          items: <String>['Nam', 'Nữ']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          value: dropdownValue,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                              if (dropdownValue == 'Nam') {
+                                userSignUpModel.gender = true;
+                              } else if (dropdownValue == 'Nữ') {
+                                userSignUpModel.gender = false;
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SizedBox(
+                      width: screenSize.width * 0.44,
+                      child: RoundTextField(
+                        hintText: "Ngày sinh",
+                        icon: "assets/icons/message_icon.png",
+                        textEditingController: dateOfBirthController,
+                        textInputType: TextInputType.datetime,
+                        onChangeText: (value) {
+                          setState(() {
+                            userSignUpModel.dateOfBirth =
+                                FormatProvider().convertDateOfBirth(value);
+                          });
+                        },
+                        errorText: _validateDateOfBirth
+                            ? 'Vui lòng chọn ngày sinh!'
+                            : null,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 5,
@@ -266,16 +342,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundGradientButton(
                   title: "Đăng ký",
                   onPressed: () async {
+                    userSignUpModel.email = emailController.text;
+                    userSignUpModel.phoneNumber = phoneNumberController.text;
+                    userSignUpModel.password = passwordController.text;
+                    userSignUpModel.lastName = lastNameController.text;
+                    userSignUpModel.firstName = firstNameController.text;
+                    print(userSignUpModel);
                     try {
                       var checkSignUp = await ApiUser.signup(
                           userSignUpModel: userSignUpModel);
-                      if (checkSignUp == "success") {
+                      if (checkSignUp == true) {
+                        showSuccess(context, 'Đăng ký thành công');
                         router.go(RouteName.login);
                       } else {
                         print("Đăng ký không thành công: $checkSignUp");
+                        showError(context, 'Đăng ký thất bại');
                       }
                     } catch (e) {
                       print("Đăng ký không thành công: $e");
+                      showError(context, 'Đăng ký thất bại');
                     }
                     // SignOutGoogle(); test signout google (không liên quan)
                   },
@@ -307,34 +392,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: AppColors.primaryColor1.withOpacity(0.5),
-                            width: 1,
-                          ),
-                        ),
-                        child: Image.asset(
-                          "assets/icons/google_icon.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () {},
+                //       child: Container(
+                //         width: 50,
+                //         height: 50,
+                //         alignment: Alignment.center,
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(14),
+                //           border: Border.all(
+                //             color: AppColors.primaryColor1.withOpacity(0.5),
+                //             width: 1,
+                //           ),
+                //         ),
+                //         child: Image.asset(
+                //           "assets/icons/google_icon.png",
+                //           width: 20,
+                //           height: 20,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 // * Chuyển sang màn hình đăng nhập
                 TextButton(
                     onPressed: () {
@@ -352,7 +437,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               text: "Đã có tài khoản? ",
                             ),
                             TextSpan(
-                              text: "Đăng nhập",
+                              text: "Đăng nhập ngay",
                               style: TextStyle(
                                   color: AppColors.primaryColor1,
                                   fontSize: 14,

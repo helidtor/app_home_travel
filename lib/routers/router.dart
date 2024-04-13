@@ -4,7 +4,7 @@ import 'package:mobile_home_travel/utils/navigator/navigator2.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
-import 'package:mobile_home_travel/screens/signup/signup_screen.dart';
+import 'package:mobile_home_travel/screens/signup/sign_up_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 

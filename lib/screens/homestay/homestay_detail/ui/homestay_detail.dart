@@ -457,14 +457,14 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                 text: const TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'nhận ',
+                                      text: 'bạn ',
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
                                       ),
                                     ),
                                     TextSpan(
-                                      text: 'Ưu Đãi Hot',
+                                      text: 'Thích Chứ',
                                       style: TextStyle(
                                         fontStyle: FontStyle.italic,
                                         fontSize: 20,

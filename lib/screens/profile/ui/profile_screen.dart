@@ -30,8 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController phoneController = TextEditingController();
   final _bloc = ProfileBloc();
   bool isShow = false;
-  UserProfileModel user = UserProfileModel();
-  UserProfileModel? inforUpdate;
+  UserProfileModel inforUpdate = UserProfileModel();
 
   @override
   void initState() {
@@ -74,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return;
               } else if (state is ProfileStateSuccess) {
                 Navigator.pop(context);
-                user = state.userProfileModel;
+                inforUpdate = state.userProfileModel;
                 isShow = true;
               } else if (state is UpdateProfileSuccess) {
                 Navigator.pop(context);
@@ -151,8 +150,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         width: 4),
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: (user.avatar != null)
-                                          ? Image.network(user.avatar!).image
+                                      image: (inforUpdate.avatar != null)
+                                          ? Image.network(inforUpdate.avatar!)
+                                              .image
                                           : const AssetImage(
                                               "assets/gifs/loading_ava.gif"),
                                     ),
@@ -163,11 +163,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 30,
                               ),
                               FieldProfile(
-                                icon: Icons.person,
-                                label: 'Tài khoản',
+                                icon: Icons.phone,
+                                label: 'SĐT',
+                                controller: phoneController,
                                 widthInput: 0.8,
-                                readOnly: true,
-                                content: user.userName ?? "...",
+                                readOnly: false,
+                                content: inforUpdate.phoneNumber ?? "...",
+                                onChangeText: (value) {
+                                  setState(() {
+                                    inforUpdate.phoneNumber = value;
+                                  });
+                                },
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -178,10 +184,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: firstNameController,
                                     widthInput: 0.38,
                                     readOnly: false,
-                                    content: user.firstName ?? "...",
+                                    content: inforUpdate.firstName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate?.firstName = value;
+                                        inforUpdate.firstName = value;
                                       });
                                     },
                                   ),
@@ -191,35 +197,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: lastNameController,
                                     widthInput: 0.38,
                                     readOnly: false,
-                                    content: user.lastName ?? "...",
+                                    content: inforUpdate.lastName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate?.lastName = value;
+                                        inforUpdate.lastName = value;
                                       });
                                     },
                                   ),
                                 ],
                               ),
                               FieldProfile(
-                                icon: Icons.phone,
-                                label: 'SĐT',
-                                controller: phoneController,
+                                icon: Icons.email,
+                                label: 'Email',
                                 widthInput: 0.8,
-                                readOnly: false,
-                                content: user.phoneNumber ?? "...",
-                                onChangeText: (value) {
-                                  setState(() {
-                                    inforUpdate?.phoneNumber = value;
-                                  });
-                                },
+                                readOnly: true,
+                                content: inforUpdate.email ?? "...",
                               ),
                               RoundGradientButton(
                                 width: screenWidth * 0.8,
                                 title: "Lưu",
                                 onPressed: () {
                                   _bloc.add(UpdateProfileEvent(
-                                      id: user.id!,
-                                      userProfileModel: inforUpdate!));
+                                      id: inforUpdate.id!,
+                                      userProfileModel: inforUpdate));
                                 },
                               ),
                             ],
@@ -257,8 +257,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         selectedImage!.path,
       );
       if (result != null) {
-        user.avatar = result;
-        _bloc.add(UpdateProfileEvent(id: user.id!, userProfileModel: user));
+        inforUpdate.avatar = result;
+        _bloc.add(UpdateProfileEvent(
+            id: inforUpdate.id!, userProfileModel: inforUpdate));
       }
     }
   }

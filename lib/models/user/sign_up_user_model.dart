@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 class UserSignUpModel {
+  String? avatar;
   String? dateOfBirth;
   String? password;
   bool? gender;
@@ -11,6 +12,7 @@ class UserSignUpModel {
   String? lastName;
   String? status;
   UserSignUpModel({
+    this.avatar,
     this.dateOfBirth,
     this.password,
     this.gender,
@@ -23,6 +25,7 @@ class UserSignUpModel {
   
 
   UserSignUpModel copyWith({
+    String? avatar,
     String? dateOfBirth,
     String? password,
     bool? gender,
@@ -33,6 +36,7 @@ class UserSignUpModel {
     String? status,
   }) {
     return UserSignUpModel(
+      avatar: avatar ?? this.avatar,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       password: password ?? this.password,
       gender: gender ?? this.gender,
@@ -46,6 +50,7 @@ class UserSignUpModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'avatar': avatar,
       'dateOfBirth': dateOfBirth,
       'password': password,
       'gender': gender,
@@ -59,6 +64,7 @@ class UserSignUpModel {
 
   factory UserSignUpModel.fromMap(Map<String, dynamic> map) {
     return UserSignUpModel(
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
       dateOfBirth: map['dateOfBirth'] != null ? map['dateOfBirth'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
       gender: map['gender'] != null ? map['gender'] as bool : null,
@@ -76,7 +82,7 @@ class UserSignUpModel {
 
   @override
   String toString() {
-    return 'UserSignUpModel(dateOfBirth: $dateOfBirth, password: $password, gender: $gender, phoneNumber: $phoneNumber, email: $email, firstName: $firstName, lastName: $lastName, status: $status)';
+    return 'UserSignUpModel(avatar: $avatar, dateOfBirth: $dateOfBirth, password: $password, gender: $gender, phoneNumber: $phoneNumber, email: $email, firstName: $firstName, lastName: $lastName, status: $status)';
   }
 
   @override
@@ -84,6 +90,7 @@ class UserSignUpModel {
     if (identical(this, other)) return true;
   
     return 
+      other.avatar == avatar &&
       other.dateOfBirth == dateOfBirth &&
       other.password == password &&
       other.gender == gender &&
@@ -96,7 +103,8 @@ class UserSignUpModel {
 
   @override
   int get hashCode {
-    return dateOfBirth.hashCode ^
+    return avatar.hashCode ^
+      dateOfBirth.hashCode ^
       password.hashCode ^
       gender.hashCode ^
       phoneNumber.hashCode ^

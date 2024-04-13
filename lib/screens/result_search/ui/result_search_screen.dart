@@ -20,10 +20,10 @@ class ResultSearchScreen extends StatefulWidget {
   String capacity;
 
   ResultSearchScreen({
-    Key? key,
+    super.key,
     required this.stringLocation,
     required this.capacity,
-  }) : super(key: key);
+  });
 
   @override
   State<ResultSearchScreen> createState() => _ResultSearchScreenState();
@@ -60,9 +60,10 @@ class _ResultSearchScreenState extends State<ResultSearchScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NavigatorBar(
-                          stt: 0,
-                        )),
+                  builder: (context) => const NavigatorBar(
+                    stt: 0,
+                  ),
+                ),
               );
             },
             icon: Icon(

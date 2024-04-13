@@ -60,7 +60,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         height: 52,
         gradient: AppColors.myGradient,
         // backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-        buttonBackgroundColor: Color.fromARGB(255, 136, 78, 207),
+        buttonBackgroundColor: const Color.fromARGB(255, 136, 78, 207),
         items: const [
           Icon(Icons.home, color: Colors.white),
           Icon(Icons.search, color: Colors.white),

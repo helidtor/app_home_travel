@@ -27,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           }
         } else if (event is UpdateProfileEvent) {
           var check =
-              await ApiUser.updateProfile(event.userProfileModel, event.id);
+              await ApiUser.updateProfile(userProfileModel: event.userProfileModel, id: event.id);
           if (check == true) {
             emit(UpdateProfileSuccess());
           } else {

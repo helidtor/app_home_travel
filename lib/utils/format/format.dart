@@ -94,4 +94,12 @@ class FormatProvider {
         return false;
     }
   }
+
+  String convertDateOfBirth(String inputDate) {
+    DateFormat inputFormat = DateFormat('dd/MM/yyyy');
+    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+    DateTime parsedDate = inputFormat.parse(inputDate);
+    String formattedDate = outputFormat.format(parsedDate);
+    return formattedDate;
+  }
 }

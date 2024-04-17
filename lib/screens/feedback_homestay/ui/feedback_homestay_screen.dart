@@ -14,8 +14,10 @@ import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class FeedbackHomestayScreen extends StatefulWidget {
   HomestayDetailModel homestayDetailModel;
+  bool? isCreateFeedback;
   FeedbackHomestayScreen({
     super.key,
+    this.isCreateFeedback,
     required this.homestayDetailModel,
   });
 
@@ -26,6 +28,7 @@ class FeedbackHomestayScreen extends StatefulWidget {
 class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
   late HomestayDetailModel homestayDetailModel;
   final _bloc = FeedbackBloc();
+  bool isCreateFeedback = false;
 
   @override
   void initState() {
@@ -34,6 +37,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
     homestayDetailModel = widget.homestayDetailModel;
     if (homestayDetailModel.id != null) {
       _bloc.add(GetFeedBackHomestay(idHomestay: homestayDetailModel.id!));
+    }
+    if (widget.isCreateFeedback != null) {
+      isCreateFeedback = widget.isCreateFeedback!;
     }
   }
 
@@ -86,7 +92,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Container(
-                          height: screenHeight * 0.15,
+                          height: !isCreateFeedback
+                              ? screenHeight * 0.15 //nếu không cho feedback
+                              : screenHeight * 0.25,
                           width: screenWidth * 0.95,
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -139,12 +147,41 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                     fontSize: 15,
                                     color: AppColors.primaryColor3),
                               ),
+                              isCreateFeedback
+                                  ? GestureDetector(
+                                      onTap: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: AppColors.primaryColor3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text(
+                                            'Tạo đánh giá',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: AppColors.primaryColor3,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: screenHeight * 0.65,
+                        height: !isCreateFeedback
+                            ? screenHeight * 0.65 //nếu không cho feedback
+                            : screenHeight * 0.58,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Column(

@@ -27,6 +27,7 @@ class _TransactionRowState extends State<TransactionRow> {
     // TODO: implement initState
     super.initState();
     transactionModel = widget.transactionModel;
+    print(transactionModel);
   }
 
   @override
@@ -105,15 +106,17 @@ class _TransactionRowState extends State<TransactionRow> {
                             color: Colors.black.withOpacity(0.8),
                           ),
                         ),
-                        Text(
-                          FormatProvider().convertDateTime(
-                              transactionModel.createdDate.toString()),
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black.withOpacity(0.5),
-                            fontSize: 12,
-                          ),
-                        ),
+                        (transactionModel.createdDate != null)
+                            ? Text(
+                                FormatProvider().convertDateTime(
+                                    transactionModel.createdDate.toString()),
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 12,
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ],

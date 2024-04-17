@@ -122,7 +122,7 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 5),
                           child: Container(
                             alignment: Alignment.center,
                             height: 25,
@@ -161,7 +161,7 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.only(left: 5, right: 10),
                           child: Container(
                             alignment: Alignment.center,
                             height: 25,

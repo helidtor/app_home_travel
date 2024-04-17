@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
+import 'package:mobile_home_travel/screens/chat/ui/chat_screen.dart';
 import 'package:mobile_home_travel/screens/history_booking/ui/history_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
@@ -49,7 +50,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
                 isHaveBtnClose: false,
               );
             } else if (value == 2) {
-              body = const SettingsScreen();
+              body = const ChatScreen();
             } else if (value == 3) {
               body = const HistoryScreen();
             } else if (value == 4) {

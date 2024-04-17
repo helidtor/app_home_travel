@@ -182,12 +182,22 @@ class _roomDetailState extends State<roomDetail> {
                               ),
                               TextSpan(
                                 text: (roomDetail!.acreage != null)
-                                    ? 'Diện tích: ${(roomDetail!.acreage)!.truncate()}m\u00b2'
+                                    ? 'Diện tích: ${(roomDetail!.acreage)!.truncate()}m\u00b2 '
                                     : '',
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black.withOpacity(0.35),
+                                ),
+                              ),
+                              TextSpan(
+                                text: (roomDetail!.numberOfBeds != null)
+                                    ? '- Sức chứa: ${(roomDetail!.numberOfBeds!) * 2} người'
+                                    : '',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black.withOpacity(0.35),
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],

@@ -91,7 +91,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                       _rowSelection(
                         title: 'Thanh toán cọc',
                         description:
-                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
+                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! * booking.bookingDetails![0].room!.homeStay!.depositRate! / 100).toString())} VNĐ',
                         icon: FontAwesomeIcons.scaleBalanced,
                         width: screenWidth * 0.85,
                         checkbox: Checkbox(

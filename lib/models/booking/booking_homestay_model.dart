@@ -15,6 +15,7 @@ class BookingHomestayModel {
   String? createdDate;
   String? touristId;
   num? totalCapacity;
+  
   UserProfileModel? tourist;
   List<BookingDetailModel>? bookingDetails;
   BookingHomestayModel({

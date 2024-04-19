@@ -164,8 +164,8 @@ Widget _detailPriceOfRoom({
                           Expanded(
                             flex: 2,
                             child: Text(
-                              FormatProvider()
-                                  .formatPrice(normalPrice.toString()),
+                              '${FormatProvider().formatPrice(normalPrice.toString())} đ',
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ), //giá trong tuần
                           const Expanded(flex: 1, child: Text('x')),
@@ -178,6 +178,7 @@ Widget _detailPriceOfRoom({
                                     text: quantityNormalDay
                                         .toString(), //số ngày trong tuần
                                     style: const TextStyle(
+                                      fontSize: 13,
                                       color: Colors.black87,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -197,7 +198,7 @@ Widget _detailPriceOfRoom({
                             child: Text(
                               '${FormatProvider().formatPrice((quantityNormalDay * normalPrice).toString())} đ', //tổng giá trong tuần
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
+                                  fontWeight: FontWeight.bold, fontSize: 12),
                             ),
                           ),
                         ],
@@ -212,8 +213,8 @@ Widget _detailPriceOfRoom({
                           Expanded(
                             flex: 2,
                             child: Text(
-                              FormatProvider()
-                                  .formatPrice(weekendPrice.toString()),
+                              '${FormatProvider().formatPrice(weekendPrice.toString())} đ',
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ), //giá cuối tuần
                           const Expanded(flex: 1, child: Text('x')),
@@ -226,9 +227,9 @@ Widget _detailPriceOfRoom({
                                     text: quantityWeekendDay
                                         .toString(), //số ngày cuối tuần
                                     style: const TextStyle(
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13),
                                   ),
                                   const TextSpan(
                                     text: ' ngày cuối tuần',
@@ -245,7 +246,7 @@ Widget _detailPriceOfRoom({
                             child: Text(
                               '${FormatProvider().formatPrice((quantityWeekendDay * weekendPrice).toString())} đ', //tổng giá cuối tuần
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
+                                  fontWeight: FontWeight.bold, fontSize: 12),
                             ),
                           ),
                         ],

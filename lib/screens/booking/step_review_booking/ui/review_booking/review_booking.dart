@@ -117,15 +117,19 @@ class _ReviewBookingState extends State<ReviewBooking> {
         bloc: _bloc,
         listener: (context, state) async {
           if (state is ReviewBookingLoading) {
-            setState(() {
-              widthDisplay = 50;
-              heightDisplay = 50;
-              imageDisplay = 'assets/gifs/loading.gif';
-            });
+            // setState(() {
+            //   widthDisplay = 50;
+            //   heightDisplay = 50;
+            //   imageDisplay = 'assets/gifs/loading.gif';
+            // });
+            onLoading(context);
+            return;
           } else if (state is GetBookingPendingCreatedSuccess) {
+            Navigator.pop(context);
             bookingInfor = state.bookingCreated;
             touristInfor = state.userProfile;
           } else if (state is ReviewBookingFailure) {
+            Navigator.pop(context);
             showError(context, state.error);
             setState(() {
               widthDisplay = 270;

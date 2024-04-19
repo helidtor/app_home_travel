@@ -24,6 +24,9 @@ class HomestayModel {
   String? status;
   String? ownerId;
   num? rating;
+  num? depositRate;
+  num? penaltyDate;
+  num? penaltyRate;
   HomestayModel({
     this.images,
     this.id,
@@ -43,6 +46,9 @@ class HomestayModel {
     this.status,
     this.ownerId,
     this.rating,
+    this.depositRate,
+    this.penaltyDate,
+    this.penaltyRate,
   });
 
   HomestayModel copyWith({
@@ -64,6 +70,9 @@ class HomestayModel {
     String? status,
     String? ownerId,
     num? rating,
+    num? depositRate,
+    num? penaltyDate,
+    num? penaltyRate,
   }) {
     return HomestayModel(
       images: images ?? this.images,
@@ -84,6 +93,9 @@ class HomestayModel {
       status: status ?? this.status,
       ownerId: ownerId ?? this.ownerId,
       rating: rating ?? this.rating,
+      depositRate: depositRate ?? this.depositRate,
+      penaltyDate: penaltyDate ?? this.penaltyDate,
+      penaltyRate: penaltyRate ?? this.penaltyRate,
     );
   }
 
@@ -107,6 +119,9 @@ class HomestayModel {
       'status': status,
       'ownerId': ownerId,
       'rating': rating,
+      'depositRate': depositRate,
+      'penaltyDate': penaltyDate,
+      'penaltyRate': penaltyRate,
     };
   }
 
@@ -140,6 +155,12 @@ class HomestayModel {
       status: map['status'] != null ? map['status'] as String : null,
       ownerId: map['ownerId'] != null ? map['ownerId'] as String : null,
       rating: map['rating'] != null ? map['rating'] as num : null,
+      depositRate:
+          map['depositRate'] != null ? map['depositRate'] as num : null,
+      penaltyDate:
+          map['penaltyDate'] != null ? map['penaltyDate'] as num : null,
+      penaltyRate:
+          map['penaltyRate'] != null ? map['penaltyRate'] as num : null,
     );
   }
 
@@ -150,7 +171,7 @@ class HomestayModel {
 
   @override
   String toString() {
-    return 'HomestayModel(images: $images, id: $id, name: $name, acreage: $acreage, description: $description, city: $city, district: $district, commune: $commune, house: $house, hamlet: $hamlet, street: $street, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId, rating: $rating)';
+    return 'HomestayModel(images: $images, id: $id, name: $name, acreage: $acreage, description: $description, city: $city, district: $district, commune: $commune, house: $house, hamlet: $hamlet, street: $street, address: $address, checkInTime: $checkInTime, checkOutTime: $checkOutTime, totalCapacity: $totalCapacity, status: $status, ownerId: $ownerId, rating: $rating, depositRate: $depositRate, penaltyDate: $penaltyDate, penaltyRate: $penaltyRate)';
   }
 
   @override
@@ -174,7 +195,10 @@ class HomestayModel {
         other.totalCapacity == totalCapacity &&
         other.status == status &&
         other.ownerId == ownerId &&
-        other.rating == rating;
+        other.rating == rating &&
+        other.depositRate == depositRate &&
+        other.penaltyDate == penaltyDate &&
+        other.penaltyRate == penaltyRate;
   }
 
   @override
@@ -196,6 +220,9 @@ class HomestayModel {
         totalCapacity.hashCode ^
         status.hashCode ^
         ownerId.hashCode ^
-        rating.hashCode;
+        rating.hashCode ^
+        depositRate.hashCode ^
+        penaltyDate.hashCode ^
+        penaltyRate.hashCode;
   }
 }

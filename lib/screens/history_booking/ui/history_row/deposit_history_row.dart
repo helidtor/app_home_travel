@@ -43,12 +43,12 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return SizedBox(
-      height: 170,
+      height: 190,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            height: 140,
+            height: 170, //để viền container cắt giữa ảnh
             width: screenWidth * 0.85,
             decoration: BoxDecoration(
                 border: Border.all(
@@ -66,28 +66,32 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                 ]),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   width: 10,
                 ),
                 SizedBox(
-                  width: screenWidth * 0.5,
+                  width: screenWidth * 0.6,
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RowText().richText(
-                          'Mã đơn', bookingHomestayModel.id!, Icons.qr_code),
+                          title: 'Mã đơn',
+                          content: bookingHomestayModel.id!,
+                          icon: Icons.qr_code),
                       RowText().richText(
-                          'Ngày đặt',
-                          FormatProvider().convertDateTime(
+                          title: 'Ngày đặt',
+                          content: FormatProvider().convertDateTime(
                               bookingHomestayModel.createdDate.toString()),
-                          Icons.date_range_outlined),
+                          icon: Icons.date_range_outlined),
                       RowText().richText(
-                          'Số tiền còn thiếu',
-                          '${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice)! / 2).toString())}vnđ',
-                          Icons.attach_money_sharp),
+                          title: 'Số tiền còn thiếu',
+                          content:
+                              '${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice)! / 2).toString())}vnđ',
+                          icon: Icons.attach_money_sharp),
                     ],
                   ),
                 ),

@@ -40,12 +40,12 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return SizedBox(
-      height: 170,
+      height: 190,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            height: 150,
+            height: 170,
             width: screenWidth * 0.85,
             decoration: BoxDecoration(
                 border: Border.all(
@@ -69,40 +69,25 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                   width: 10,
                 ),
                 SizedBox(
-                  width: screenWidth * 0.5,
+                  width: screenWidth * 0.6,
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RowText().richText(
-                          'Mã đơn', bookingHomestayModel.id!, Icons.qr_code),
+                          title: 'Mã đơn',
+                          content: bookingHomestayModel.id!,
+                          icon: Icons.qr_code),
                       RowText().richText(
-                          'Ngày đặt',
-                          FormatProvider().convertDateTime(
+                          title: 'Ngày đặt',
+                          content: FormatProvider().convertDateTime(
                               bookingHomestayModel.createdDate.toString()),
-                          Icons.date_range_outlined),
+                          icon: Icons.date_range_outlined),
                       RowText().richText(
-                          'Tổng tiền',
-                          '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                          Icons.attach_money_sharp),
-                      // Text(
-                      //   bookingHomestayModel.id.toString(),
-                      //   style: TextStyle(
-                      //     overflow: TextOverflow.clip,
-                      //     // fontWeight: FontWeight.bold,
-                      //     fontSize: 13,
-                      //     color: Colors.black.withOpacity(0.8),
-                      //   ),
-                      // ),
-                      // Text(
-                      //   FormatProvider().convertDateTime(
-                      //       bookingHomestayModel.createdDate.toString()),
-                      //   style: TextStyle(
-                      //     fontStyle: FontStyle.italic,
-                      //     color: Colors.black.withOpacity(0.5),
-                      //     fontSize: 14,
-                      //   ),
-                      // ),
+                          title: 'Tổng tiền',
+                          content:
+                              '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
+                          icon: Icons.attach_money_sharp),
                     ],
                   ),
                 ),
@@ -166,11 +151,6 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                 const SizedBox(
                   height: 10,
                 )
-                // Row(
-                //   children: [
-
-                //   ],
-                // ),
               ],
             ),
           ),

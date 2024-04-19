@@ -1,23 +1,46 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomDetailBooking extends StatefulWidget {
-  const RoomDetailBooking({super.key});
+  int countDayInWeek;
+  int countDayWeekend;
+  BookingDetailModel bookingDetailModel;
+  RoomDetailBooking({
+    super.key,
+    required this.countDayInWeek,
+    required this.countDayWeekend,
+    required this.bookingDetailModel,
+  });
 
   @override
   State<RoomDetailBooking> createState() => _RoomDetailBookingState();
 }
 
 class _RoomDetailBookingState extends State<RoomDetailBooking> {
+  late BookingDetailModel bookingDetailModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bookingDetailModel = widget.bookingDetailModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
       child: Container(
         width: screenWidth,
         decoration: BoxDecoration(
@@ -39,22 +62,35 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
             ),
             child: Row(
               children: [
-                const Text(
-                  'Phòng Vui Vẻ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString("idRoom", bookingDetailModel.roomId!);
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const roomDetail()),
+                    );
+                  },
+                  child: Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: AppColors.primaryColor3.withOpacity(0.7),
+                    size: 18,
+                  ),
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: AppColors.primaryColor3.withOpacity(0.7),
-                    size: 15,
+                Expanded(
+                  child: Text(
+                    bookingDetailModel.room!.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -62,19 +98,31 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
           ),
           subtitle: Column(
             children: [
-              RowText().richText('Số giường', '2', Icons.bed_outlined),
+              RowText().richText(
+                  title: 'Số giường',
+                  content: bookingDetailModel.room!.numberOfBeds!.toString(),
+                  icon: Icons.bed_outlined),
               const SizedBox(
                 height: 3,
               ),
-              RowText().richText('Tổng tiền phòng', '1,000,000₫',
-                  Icons.monetization_on_outlined),
+              RowText().richText(
+                title: 'Tổng tiền phòng',
+                content:
+                    '${(FormatProvider().formatPrice((bookingDetailModel.room!.price! * widget.countDayInWeek + bookingDetailModel.room!.weekendPrice! * widget.countDayWeekend).toString()))} đ',
+                icon: Icons.monetization_on_outlined,
+              ),
               const SizedBox(
                 height: 3,
               ),
             ],
           ),
           children: [
-            _detailPriceOfRoom(),
+            _detailPriceOfRoom(
+              normalPrice: bookingDetailModel.room!.price!,
+              weekendPrice: bookingDetailModel.room!.weekendPrice!,
+              quantityNormalDay: widget.countDayInWeek,
+              quantityWeekendDay: widget.countDayWeekend,
+            ),
           ],
         ),
       ),
@@ -82,7 +130,12 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
   }
 }
 
-Widget _detailPriceOfRoom() {
+Widget _detailPriceOfRoom({
+  required int quantityNormalDay,
+  required int quantityWeekendDay,
+  required num normalPrice,
+  required num weekendPrice,
+}) {
   return Container(
     decoration: BoxDecoration(
       border: Border.all(color: AppColors.primaryColor3, width: 0.2),
@@ -96,86 +149,108 @@ Widget _detailPriceOfRoom() {
           Text(
             'Chi tiết giá phòng',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
+                // fontWeight: FontWeight.bold,
+                fontSize: 14,
                 color: Colors.black.withOpacity(0.65)),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Expanded(flex: 2, child: Text('140,000')),
-                    const Expanded(flex: 1, child: Text('x')),
-                    Expanded(
-                      flex: 4,
-                      child: RichText(
-                        text: const TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '2',
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
+                (quantityNormalDay != 0)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              FormatProvider()
+                                  .formatPrice(normalPrice.toString()),
+                            ),
+                          ), //giá trong tuần
+                          const Expanded(flex: 1, child: Text('x')),
+                          Expanded(
+                            flex: 4,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: quantityNormalDay
+                                        .toString(), //số ngày trong tuần
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' ngày trong tuần',
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            TextSpan(
-                              text: ' ngày trong tuần',
-                              style: TextStyle(
-                                color: Colors.black87,
-                              ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '${FormatProvider().formatPrice((quantityNormalDay * normalPrice).toString())} đ', //tổng giá trong tuần
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                        flex: 2,
-                        child: Text('280,000',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14))),
-                  ],
-                ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  children: [
-                    const Expanded(flex: 2, child: Text('140,000')),
-                    const Expanded(flex: 1, child: Text('x')),
-                    Expanded(
-                      flex: 4,
-                      child: RichText(
-                        text: const TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '2',
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
+                (quantityWeekendDay != 0)
+                    ? Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              FormatProvider()
+                                  .formatPrice(weekendPrice.toString()),
+                            ),
+                          ), //giá cuối tuần
+                          const Expanded(flex: 1, child: Text('x')),
+                          Expanded(
+                            flex: 4,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: quantityWeekendDay
+                                        .toString(), //số ngày cuối tuần
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' ngày cuối tuần',
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            TextSpan(
-                              text: ' ngày trong tuần',
-                              style: TextStyle(
-                                color: Colors.black87,
-                              ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '${FormatProvider().formatPrice((quantityWeekendDay * weekendPrice).toString())} đ', //tổng giá cuối tuần
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                        flex: 2,
-                        child: Text(
-                          '280,000',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        )),
-                  ],
-                ),
+                          ),
+                        ],
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

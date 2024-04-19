@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/list_room_empty.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -22,32 +23,6 @@ class _PickDateState extends State<PickDate> {
   int quantityNormalDays = 0;
   int quantityWeekendDays = 0;
 
-  int _countWeekendDays(DateTime startDate, DateTime endDate) {
-    int count = 0;
-    for (DateTime date = startDate;
-        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
-        date = date.add(const Duration(days: 1))) {
-      if (date.weekday == DateTime.saturday ||
-          date.weekday == DateTime.sunday) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  int _countNormalDays(DateTime startDate, DateTime endDate) {
-    int count = 0;
-    for (DateTime date = startDate;
-        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
-        date = date.add(const Duration(days: 1))) {
-      if (date.weekday != DateTime.saturday &&
-          date.weekday != DateTime.sunday) {
-        count++;
-      }
-    }
-    return count;
-  }
-
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(
       () {
@@ -58,9 +33,9 @@ class _PickDateState extends State<PickDate> {
               .format(args.value.endDate ?? args.value.startDate);
           //Đếm số ngày
           if (args.value.endDate != null && args.value.startDate != null) {
-            quantityWeekendDays = _countWeekendDays(
+            quantityWeekendDays = FormatProvider().countWeekendDays(
                 args.value.startDate, args.value.endDate); //số ngày cuối tuần
-            quantityNormalDays = _countNormalDays(
+            quantityNormalDays = FormatProvider().countNormalDays(
                 args.value.startDate, args.value.endDate); //số ngày thường
           } else if (args.value.startDate != null &&
               args.value.endDate == null) {

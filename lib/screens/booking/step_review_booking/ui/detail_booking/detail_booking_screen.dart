@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,14 +10,16 @@ import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_det
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/room_detail_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailBooking extends StatefulWidget {
-  BookingHomestayModel bookingHomestayModel;
+  BookingHomestayModel bookingInfor;
   DetailBooking({
     super.key,
-    required this.bookingHomestayModel,
+    required this.bookingInfor,
   });
 
   @override
@@ -24,13 +27,13 @@ class DetailBooking extends StatefulWidget {
 }
 
 class _DetailBookingState extends State<DetailBooking> {
-  late BookingHomestayModel bookingHomestayModel;
+  late BookingHomestayModel bookingInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    bookingHomestayModel = widget.bookingHomestayModel;
+    bookingInfor = widget.bookingInfor;
   }
 
   @override
@@ -52,7 +55,7 @@ class _DetailBookingState extends State<DetailBooking> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Chi tiết đơn đặt",
+            "Chi tiết đơn",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.8),
@@ -68,7 +71,6 @@ class _DetailBookingState extends State<DetailBooking> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Container(
-                height: screenHeight / 4,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -87,14 +89,17 @@ class _DetailBookingState extends State<DetailBooking> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
                       RowText().richText(
-                          'Mã đơn', '${bookingHomestayModel.id}', null),
+                          title: 'Mã đơn', content: '${bookingInfor.id}'),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Row(
                           children: [
                             Text(
-                              bookingHomestayModel
+                              bookingInfor
                                   .bookingDetails![0].room!.homeStay!.name!,
                               style: const TextStyle(
                                   fontSize: 25,
@@ -105,7 +110,24 @@ class _DetailBookingState extends State<DetailBooking> {
                               width: 5,
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              // xem lại thông tin homestay
+                              onTap: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString(
+                                    "idHomestay",
+                                    bookingInfor
+                                        .bookingDetails![0].room!.homeStayId!);
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeStayDetail(
+                                      isFromHome: true,
+                                    ),
+                                  ),
+                                );
+                              },
                               child: Icon(
                                 Icons.remove_red_eye_outlined,
                                 color: AppColors.primaryColor3.withOpacity(0.7),
@@ -116,49 +138,93 @@ class _DetailBookingState extends State<DetailBooking> {
                         ),
                       ),
                       RowText().richText(
-                          'Thời gian',
-                          (bookingHomestayModel.checkInDate !=
-                                  bookingHomestayModel.checkOutDate)
-                              ? '${FormatProvider().convertDateTimeBooking(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(bookingHomestayModel.checkOutDate.toString())}'
+                          title: 'Thời gian',
+                          content: (bookingInfor.checkInDate !=
+                                  bookingInfor.checkOutDate)
+                              ? '${FormatProvider().convertDateTimeBooking(bookingInfor.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(bookingInfor.checkOutDate.toString())}'
                               : FormatProvider().convertDateTimeBooking(
-                                  bookingHomestayModel.checkInDate.toString()),
-                          Icons.calendar_month_outlined),
+                                  bookingInfor.checkInDate.toString()),
+                          icon: Icons.calendar_month_outlined),
                       const SizedBox(
                         height: 2,
                       ),
                       RowText().richText(
-                        'Tổng số ngày',
-                        (bookingHomestayModel.checkInDate !=
-                                bookingHomestayModel.checkOutDate)
-                            ? '${FormatProvider().countDays(DateTime.parse(bookingHomestayModel.checkInDate!), DateTime.parse(bookingHomestayModel.checkOutDate!))} ngày'
+                        title: 'Tổng số ngày',
+                        content: (bookingInfor.checkInDate !=
+                                bookingInfor.checkOutDate)
+                            ? '${FormatProvider().countDays(DateTime.parse(bookingInfor.checkInDate!), DateTime.parse(bookingInfor.checkOutDate!))} ngày'
                             : '1 ngày',
-                        Icons.numbers,
+                        icon: Icons.numbers,
                       ),
                       const SizedBox(
                         height: 2,
                       ),
                       RowText().richText(
-                        'Tổng số phòng',
-                        '${bookingHomestayModel.bookingDetails?.length} phòng',
-                        Icons.door_sliding_outlined,
+                        title: 'Tổng số phòng',
+                        content: '${bookingInfor.bookingDetails?.length} phòng',
+                        icon: Icons.door_sliding_outlined,
                       ),
                       const SizedBox(
                         height: 2,
                       ),
                       RowText().richText(
-                        'Địa chỉ',
-                        '${bookingHomestayModel.bookingDetails![0].room!.homeStay!.address}, ${bookingHomestayModel.bookingDetails![0].room!.homeStay!.street}, ${bookingHomestayModel.bookingDetails![0].room!.homeStay!.commune}, ${bookingHomestayModel.bookingDetails![0].room!.homeStay!.district}, ${bookingHomestayModel.bookingDetails![0].room!.homeStay!.city}',
-                        Icons.pin_drop_outlined,
+                        title: 'Địa chỉ',
+                        content:
+                            '${bookingInfor.bookingDetails![0].room!.homeStay!.address}, ${bookingInfor.bookingDetails![0].room!.homeStay!.street}, ${bookingInfor.bookingDetails![0].room!.homeStay!.commune}, ${bookingInfor.bookingDetails![0].room!.homeStay!.district}, ${bookingInfor.bookingDetails![0].room!.homeStay!.city}',
+                        icon: Icons.pin_drop_outlined,
                       ),
                       const SizedBox(
                         height: 2,
+                      ),
+                      RowText().richText(
+                        title: 'Tổng tiền đơn',
+                        content:
+                            '${FormatProvider().formatPrice(bookingInfor.totalPrice.toString())} đ',
+                        icon: Icons.monetization_on_outlined,
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            const RoomDetailBooking(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 10),
+                child: Text(
+                  'Phòng được đặt',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black.withOpacity(0.7),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topCenter,
+              height: screenHeight * 0.5,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: List.generate(
+                      bookingInfor.bookingDetails!.length,
+                      (index) => RoomDetailBooking(
+                            bookingDetailModel:
+                                bookingInfor.bookingDetails![index],
+                            countDayInWeek: FormatProvider().countNormalDays(
+                                DateTime.parse(bookingInfor.checkInDate!),
+                                DateTime.parse(bookingInfor.checkOutDate!)),
+                            countDayWeekend: FormatProvider().countWeekendDays(
+                                DateTime.parse(bookingInfor.checkInDate!),
+                                DateTime.parse(bookingInfor.checkOutDate!)),
+                          )),
+                ),
+              ),
+            )
           ],
         ),
       ),

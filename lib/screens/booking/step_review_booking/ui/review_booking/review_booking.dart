@@ -388,8 +388,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => DetailBooking(
-                                                bookingHomestayModel:
-                                                    bookingInfor!,
+                                                bookingInfor: bookingInfor!,
                                               )),
                                     );
                                   },
@@ -411,7 +410,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
                               ],
                             ),
                           ),

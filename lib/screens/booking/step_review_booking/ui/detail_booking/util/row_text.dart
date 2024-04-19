@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class RowText {
-  Widget richText(String title, String content, IconData? icon) {
+  Widget richText(
+      {required String title, required String content, IconData? icon}) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         (icon != null)
             ? Icon(
@@ -19,7 +20,7 @@ class RowText {
         ),
         Expanded(
           child: RichText(
-            overflow: TextOverflow.ellipsis,
+            overflow: TextOverflow.clip,
             text: TextSpan(
               children: [
                 TextSpan(
@@ -33,6 +34,7 @@ class RowText {
                 TextSpan(
                   text: content,
                   style: const TextStyle(
+                    height: 1.5,
                     color: Colors.black87,
                     fontSize: 12,
                   ),

@@ -42,12 +42,12 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return SizedBox(
-      height: 170,
+      height: 190,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            height: 150,
+            height: 170, //để viền container cắt giữa ảnh
             width: screenWidth * 0.85,
             decoration: BoxDecoration(
                 border: Border.all(
@@ -71,22 +71,25 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
                   width: 10,
                 ),
                 SizedBox(
-                  width: screenWidth * 0.5,
+                  width: screenWidth * 0.6,
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RowText().richText(
-                          'Mã đơn', bookingHomestayModel.id!, Icons.qr_code),
+                          title: 'Mã đơn',
+                          content: bookingHomestayModel.id!,
+                          icon: Icons.qr_code),
                       RowText().richText(
-                          'Ngày đặt',
-                          FormatProvider().convertDateTime(
+                          title: 'Ngày đặt',
+                          content: FormatProvider().convertDateTime(
                               bookingHomestayModel.createdDate.toString()),
-                          Icons.date_range_outlined),
+                          icon: Icons.date_range_outlined),
                       RowText().richText(
-                          'Tổng tiền',
-                          '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                          Icons.attach_money_sharp),
+                          title: 'Tổng tiền',
+                          content:
+                              '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
+                          icon: Icons.attach_money_sharp),
                     ],
                   ),
                 ),

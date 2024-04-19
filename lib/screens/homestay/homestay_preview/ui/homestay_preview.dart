@@ -39,9 +39,10 @@ class _HomestayState extends State<HomestayPreview> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HomeStayDetail(
-                    isFromHome: true,
-                  )),
+            builder: (context) => HomeStayDetail(
+              isFromHome: true,
+            ),
+          ),
         );
       },
       child: Container(

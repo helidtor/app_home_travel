@@ -89,7 +89,7 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         detailHomestay = HomestayDetailModel.fromMap(postsJson);
-        // print("Thông tin get detail homestay: $detailHomestay");
+        print("Thông tin get detail homestay: $detailHomestay");
         // print(
         //     "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
       }
@@ -269,7 +269,7 @@ class ApiHomestay {
         listFeedback = (postsJson as List)
             .map<FeedbackModel>((postJson) => FeedbackModel.fromMap(postJson))
             .toList();
-        print("Thông tin get all listFeedback: $listFeedback");
+        // print("Thông tin get all listFeedback: $listFeedback");
         return listFeedback;
       } else {
         print("Loi get all listFeedback");

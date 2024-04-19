@@ -121,4 +121,44 @@ class FormatProvider {
     }
     return count;
   }
+
+  int countWeekendDays(DateTime startDate, DateTime endDate) {
+    int count = 0;
+    if (!startDate.isAtSameMomentAs(endDate)) {
+      for (DateTime date = startDate;
+          (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+          date = date.add(const Duration(days: 1))) {
+        if (date.weekday == DateTime.saturday ||
+            date.weekday == DateTime.sunday) {
+          count++;
+        }
+      }
+      return count;
+    } else if (startDate.weekday == DateTime.saturday &&
+        startDate.weekday == DateTime.sunday) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  int countNormalDays(DateTime startDate, DateTime endDate) {
+    int count = 0;
+    if (!startDate.isAtSameMomentAs(endDate)) {
+      for (DateTime date = startDate;
+          (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+          date = date.add(const Duration(days: 1))) {
+        if (date.weekday != DateTime.saturday &&
+            date.weekday != DateTime.sunday) {
+          count++;
+        }
+      }
+      return count;
+    } else if (startDate.weekday != DateTime.saturday &&
+        startDate.weekday != DateTime.sunday) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }

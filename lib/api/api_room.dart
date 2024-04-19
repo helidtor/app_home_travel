@@ -43,16 +43,16 @@ class ApiRoom {
     List<RoomModel>? listRoom;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
-    print(
-        'Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
+    // print(
+    //     'Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
     try {
       var url =
           "$baseUrl/api/v1/Rooms/emptyRooms?pageSize=50&homeStayId=$homeStayId&startDate=$dateCheckIn&endDate=$dateCheckOut";
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print(
-          "TEST get all room empty: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      // print(
+      //     "TEST get all room empty: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
@@ -60,7 +60,7 @@ class ApiRoom {
         listRoom = (postsJson as List)
             .map<RoomModel>((postJson) => RoomModel.fromMap(postJson))
             .toList();
-        print("Thông tin get all room empty: $listRoom");
+        // print("Thông tin get all room empty: $listRoom");
       }
     } catch (e) {
       print("Loi get all room empty: $e");

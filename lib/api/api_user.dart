@@ -128,6 +128,7 @@ class ApiUser {
   static Future<bool> updateProfile(
       {required UserProfileModel userProfileModel, required String id}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('Thông tin cập nhật gồm: $userProfileModel');
     String? token = prefs.getString(myToken);
     try {
       var url = "$baseUrl/api/v1/Tourists/$id";

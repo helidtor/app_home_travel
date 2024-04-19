@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_bloc.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_event.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_state.dart';
@@ -13,12 +14,14 @@ import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class FeedbackHomestayScreen extends StatefulWidget {
-  HomestayDetailModel homestayDetailModel;
+  HomestayModel? homestayModel;
+  HomestayDetailModel? homestayDetailModel;
   bool? isCreateFeedback;
   FeedbackHomestayScreen({
     super.key,
     this.isCreateFeedback,
-    required this.homestayDetailModel,
+    this.homestayModel,
+    this.homestayDetailModel,
   });
 
   @override
@@ -26,17 +29,17 @@ class FeedbackHomestayScreen extends StatefulWidget {
 }
 
 class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
-  late HomestayDetailModel homestayDetailModel;
+  var homestayModel;
   final _bloc = FeedbackBloc();
-  bool isCreateFeedback = false;
+  bool isCreateFeedback = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    homestayDetailModel = widget.homestayDetailModel;
-    if (homestayDetailModel.id != null) {
-      _bloc.add(GetFeedBackHomestay(idHomestay: homestayDetailModel.id!));
+    homestayModel = widget.homestayModel ?? widget.homestayDetailModel;
+    if (homestayModel.id != null) {
+      _bloc.add(GetFeedBackHomestay(idHomestay: homestayModel.id!));
     }
     if (widget.isCreateFeedback != null) {
       isCreateFeedback = widget.isCreateFeedback!;
@@ -118,7 +121,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '${homestayDetailModel.rating.toString()}/5',
+                                    '${homestayModel.rating.toString()}/5',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),
@@ -127,11 +130,11 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                     activeFillColor: AppColors.primaryColor3,
                                     strokeColor: AppColors.primaryColor3,
                                     // initialRating: double.parse(
-                                    //     homestayDetailModel.rating.toString()),
-                                    initialRating: double.parse(
-                                        homestayDetailModel.rating!
-                                            .floor()
-                                            .toString()),
+                                    //     homestayModel.rating.toString()),
+                                    initialRating: double.parse(homestayModel
+                                        .rating!
+                                        .floor()
+                                        .toString()),
                                     height: 45,
                                     width: 200,
                                     animationColor: Colors.red,

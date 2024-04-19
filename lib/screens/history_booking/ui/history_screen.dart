@@ -43,8 +43,6 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   @override
   Widget build(BuildContext context) {
-    UserProfileModel userInfor = UserProfileModel();
-
     return Scaffold(
       extendBody: true,
       backgroundColor: AppColors.primaryColor3.withOpacity(0.05),

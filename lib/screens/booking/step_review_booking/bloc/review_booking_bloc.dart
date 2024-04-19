@@ -17,20 +17,18 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
   post(Emitter<ReviewBookingState> emit, ReviewBookingEvent event) async {
     emit(ReviewBookingLoading());
     try {
-      if (event is GetHomestayOfBooking) {
+      if (event is GetBookingPendingCreated) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String idHomestay = prefs.getString("idHomestay")!;
         String idTourist = prefs.getString("idUserCurrent")!;
 
-        var homestayModel =
-            await ApiHomestay.getDetailHomestay(idHomestay: idHomestay);
-        var touristInfor = await ApiUser.getProfile(id: idTourist);
-        if (homestayModel != null && touristInfor != null) {
-          emit(GetHomestayOfBookingSuccess(
-              homestayModel: homestayModel, touristInfor: touristInfor));
+        var bookingCreated = await ApiBooking.getListBooking(status: 'PENDINg');
+        var userProfile = await ApiUser.getProfile(id: idTourist);
+        if (bookingCreated != null && userProfile != null) {
+          emit(GetBookingPendingCreatedSuccess(
+              bookingCreated: bookingCreated[0], userProfile: userProfile));
         } else {
           emit(ReviewBookingFailure(
-              error: 'Lỗi lấy chi tiết homestay và thông tin khách'));
+              error: 'Lỗi lấy thông tin đơn booking vừa tạo'));
         }
       } else if (event is CheckoutBookingByCard) {
         String? urlCheckout =

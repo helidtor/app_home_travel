@@ -115,9 +115,8 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
               context,
               MaterialPageRoute(
                   builder: (context) => ReviewBooking(
-                        totalRoom: state.totalRoom,
+                        isFromPending: false,
                         isAllowBack: false,
-                        bookingHomestayModel: outputBooking!,
                       )),
             );
           } else if (state is CreateBookingFailure) {

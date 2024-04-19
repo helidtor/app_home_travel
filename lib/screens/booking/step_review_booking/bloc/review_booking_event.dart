@@ -10,8 +10,8 @@ abstract class ReviewBookingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetHomestayOfBooking extends ReviewBookingEvent {
-  const GetHomestayOfBooking();
+class GetBookingPendingCreated extends ReviewBookingEvent {
+  const GetBookingPendingCreated();
 }
 
 class CheckoutBookingByCard extends ReviewBookingEvent {

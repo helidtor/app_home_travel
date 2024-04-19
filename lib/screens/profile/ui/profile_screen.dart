@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController phoneController = TextEditingController();
   final _bloc = ProfileBloc();
   bool isShow = false;
-  UserProfileModel inforUpdate = UserProfileModel();
+  UserProfileModel? inforUpdate;
 
   @override
   void initState() {
@@ -150,8 +150,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         width: 4),
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: (inforUpdate.avatar != null)
-                                          ? Image.network(inforUpdate.avatar!)
+                                      image: (inforUpdate?.avatar != null)
+                                          ? Image.network(inforUpdate!.avatar!)
                                               .image
                                           : const AssetImage(
                                               "assets/gifs/loading_ava.gif"),
@@ -168,10 +168,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 controller: phoneController,
                                 widthInput: 0.8,
                                 readOnly: false,
-                                content: inforUpdate.phoneNumber ?? "...",
+                                content: inforUpdate?.phoneNumber ?? "...",
                                 onChangeText: (value) {
                                   setState(() {
-                                    inforUpdate.phoneNumber = value;
+                                    inforUpdate?.phoneNumber = value;
                                   });
                                 },
                               ),
@@ -184,10 +184,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: firstNameController,
                                     widthInput: 0.38,
                                     readOnly: false,
-                                    content: inforUpdate.firstName ?? "...",
+                                    content: inforUpdate?.firstName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate.firstName = value;
+                                        inforUpdate?.firstName = value;
                                       });
                                     },
                                   ),
@@ -197,10 +197,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     controller: lastNameController,
                                     widthInput: 0.38,
                                     readOnly: false,
-                                    content: inforUpdate.lastName ?? "...",
+                                    content: inforUpdate?.lastName ?? "...",
                                     onChangeText: (value) {
                                       setState(() {
-                                        inforUpdate.lastName = value;
+                                        inforUpdate?.lastName = value;
                                       });
                                     },
                                   ),
@@ -211,15 +211,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 label: 'Email',
                                 widthInput: 0.8,
                                 readOnly: true,
-                                content: inforUpdate.email ?? "...",
+                                content: inforUpdate?.email ?? "...",
                               ),
                               RoundGradientButton(
                                 width: screenWidth * 0.8,
                                 title: "Lưu",
                                 onPressed: () {
                                   _bloc.add(UpdateProfileEvent(
-                                      id: inforUpdate.id!,
-                                      userProfileModel: inforUpdate));
+                                      id: inforUpdate!.id!,
+                                      userProfileModel: inforUpdate!));
                                 },
                               ),
                             ],
@@ -257,9 +257,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         selectedImage!.path,
       );
       if (result != null) {
-        inforUpdate.avatar = result;
+        inforUpdate?.avatar = result;
         _bloc.add(UpdateProfileEvent(
-            id: inforUpdate.id!, userProfileModel: inforUpdate));
+            id: inforUpdate!.id!, userProfileModel: inforUpdate!));
       }
     }
   }

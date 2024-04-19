@@ -108,4 +108,17 @@ class FormatProvider {
     String formattedDate = outputFormat.format(parsedDate);
     return formattedDate;
   }
+
+  int countDays(DateTime startDate, DateTime endDate) {
+    int count = 0;
+    for (DateTime date = startDate;
+        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+        date = date.add(const Duration(days: 1))) {
+      if (date.weekday != DateTime.saturday &&
+          date.weekday != DateTime.sunday) {
+        count++;
+      }
+    }
+    return count;
+  }
 }

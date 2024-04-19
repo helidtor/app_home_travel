@@ -21,14 +21,16 @@ import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
-  int totalRoom;
   bool isAllowBack;
-  BookingHomestayModel bookingHomestayModel;
+  bool isFromPending;
+  UserProfileModel? userProfileModel;
+  BookingHomestayModel? bookingHomestayModel;
   ReviewBooking({
     super.key,
-    required this.totalRoom,
+    this.userProfileModel,
+    required this.isFromPending,
+    this.bookingHomestayModel,
     required this.isAllowBack,
-    required this.bookingHomestayModel,
   });
 
   @override
@@ -37,21 +39,36 @@ class ReviewBooking extends StatefulWidget {
 
 class _ReviewBookingState extends State<ReviewBooking> {
   bool isAllowBack = false;
+  bool isFromPending = false;
   String? imageDisplay;
-  late BookingHomestayModel booking;
   bool isCheck = false;
-  final _bloc = ReviewBookingBloc();
   bool isDisplay = false;
-  HomestayDetailModel? homestayDetail;
-  UserProfileModel? userInfor;
+  final _bloc = ReviewBookingBloc();
+  BookingHomestayModel? bookingInfor;
+  UserProfileModel? touristInfor;
+  double widthDisplay = 270;
+  double heightDisplay = 270;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    booking = widget.bookingHomestayModel;
-    isAllowBack = widget.isAllowBack;
-    _bloc.add(const GetHomestayOfBooking());
+    isFromPending = widget.isFromPending;
+    if (isFromPending) {
+      setState(() {
+        isAllowBack = false;
+      });
+      bookingInfor = widget.bookingHomestayModel;
+      touristInfor = widget.userProfileModel;
+    } else {
+      isAllowBack = widget.isAllowBack;
+      if (!isAllowBack) {
+        _bloc.add(const GetBookingPendingCreated());
+      } else {
+        bookingInfor = widget.bookingHomestayModel;
+        touristInfor = widget.userProfileModel;
+      }
+    }
   }
 
   @override
@@ -61,22 +78,13 @@ class _ReviewBookingState extends State<ReviewBooking> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        automaticallyImplyLeading: isAllowBack,
+        automaticallyImplyLeading: isFromPending ? true : isAllowBack,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        //   icon: const Icon(
-        //     Icons.keyboard_arrow_left,
-        //   ),
-        // ),
-        // centerTitle: true,
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            isAllowBack ? "Tổng quan đơn" : "Hoàn tất đơn",
+            isAllowBack ? "Hoàn tất đơn" : "Tổng quan đơn",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),
@@ -86,45 +94,48 @@ class _ReviewBookingState extends State<ReviewBooking> {
         ),
         backgroundColor: Colors.white,
         actions: [
-          (isAllowBack == false)
-              ? IconButton(
-                  onPressed: () {
-                    // Navigator.pop(context);
-                    // Navigator.pop(context);
-                    // Navigator.pop(context);
-                    _showAlertDialog(context);
-                  },
-                  icon: Icon(
-                    Icons.close_rounded,
-                    color: AppColors.primaryColor3.withOpacity(0.7),
-                    size: 27,
-                  ),
-                )
-              : const SizedBox(),
+          (isFromPending == true)
+              ? const SizedBox()
+              : (isAllowBack == false)
+                  ? IconButton(
+                      onPressed: () {
+                        // Navigator.pop(context);
+                        // Navigator.pop(context);
+                        // Navigator.pop(context);
+                        _showAlertDialog(context);
+                      },
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: AppColors.primaryColor3.withOpacity(0.7),
+                        size: 27,
+                      ),
+                    )
+                  : const SizedBox(),
         ],
       ),
       body: BlocConsumer<ReviewBookingBloc, ReviewBookingState>(
         bloc: _bloc,
         listener: (context, state) async {
           if (state is ReviewBookingLoading) {
-            onLoading(context);
-            return;
-          } else if (state is GetHomestayOfBookingSuccess) {
-            Navigator.pop(context);
-            homestayDetail = state.homestayModel;
-            homestayDetail?.checkInTime = booking.checkInDate;
-            homestayDetail?.checkOutTime = booking.checkOutDate;
-            isDisplay = true;
-            userInfor = state.touristInfor;
+            setState(() {
+              widthDisplay = 50;
+              heightDisplay = 50;
+              imageDisplay = 'assets/gifs/loading.gif';
+            });
+          } else if (state is GetBookingPendingCreatedSuccess) {
+            bookingInfor = state.bookingCreated;
+            touristInfor = state.userProfile;
           } else if (state is ReviewBookingFailure) {
-            Navigator.pop(context);
             showError(context, state.error);
-            isDisplay = false;
-            imageDisplay = 'assets/images/error_loading.png';
+            setState(() {
+              widthDisplay = 270;
+              heightDisplay = 270;
+              imageDisplay = 'assets/images/error_loading.png';
+            });
           }
         },
         builder: (context, state) {
-          return isDisplay
+          return (bookingInfor != null && touristInfor != null)
               ? SingleChildScrollView(
                   child: Center(
                     child: Column(
@@ -179,12 +190,21 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: (homestayDetail!
-                                                    .images!.isEmpty)
+                                            image: (bookingInfor!
+                                                    .bookingDetails![0]
+                                                    .room!
+                                                    .homeStay!
+                                                    .images!
+                                                    .isEmpty)
                                                 ? const AssetImage(
                                                     "assets/images/homestay_default.jpg")
-                                                : Image.network(homestayDetail!
-                                                        .images!.first.url!)
+                                                : Image.network(bookingInfor!
+                                                        .bookingDetails![0]
+                                                        .room!
+                                                        .homeStay!
+                                                        .images!
+                                                        .first
+                                                        .url!)
                                                     .image,
                                           ),
                                         ),
@@ -200,7 +220,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              homestayDetail!.name!,
+                                              bookingInfor!.bookingDetails![0]
+                                                  .room!.homeStay!.name!,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -225,10 +246,11 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  (booking.checkInDate !=
-                                                          booking.checkOutDate)
-                                                      ? '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(booking.checkOutDate.toString())}'
-                                                      : '${FormatProvider().convertDateTimeBooking(booking.checkInDate.toString())} (1 ngày)',
+                                                  (bookingInfor!.checkInDate !=
+                                                          bookingInfor!
+                                                              .checkOutDate)
+                                                      ? '${FormatProvider().convertDateTimeBooking(bookingInfor!.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(bookingInfor!.checkOutDate.toString())}'
+                                                      : '${FormatProvider().convertDateTimeBooking(bookingInfor!.checkInDate.toString())} (1 ngày)',
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     color: Colors.black
@@ -253,7 +275,11 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                 ),
                                                 Flexible(
                                                   child: Text(
-                                                    homestayDetail!.city!,
+                                                    bookingInfor!
+                                                        .bookingDetails![0]
+                                                        .room!
+                                                        .homeStay!
+                                                        .city!,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -279,7 +305,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                                   width: 2,
                                                 ),
                                                 Text(
-                                                  '${widget.totalRoom} phòng',
+                                                  '${bookingInfor!.bookingDetails!.length} phòng',
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     color: Colors.black
@@ -332,7 +358,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                             children: [
                                               TextSpan(
                                                   text:
-                                                      "${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ\n",
+                                                      "${FormatProvider().formatPrice(bookingInfor!.totalPrice.toString())} VNĐ\n",
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -362,8 +388,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => DetailBooking(
-                                                homestayDetailModel:
-                                                    homestayDetail!,
+                                                bookingHomestayModel:
+                                                    bookingInfor!,
                                               )),
                                     );
                                   },
@@ -442,7 +468,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       width: 2,
                                     ),
                                     Text(
-                                      '${userInfor!.lastName} ${userInfor!.firstName}',
+                                      '${touristInfor!.lastName} ${touristInfor!.firstName}',
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black.withOpacity(0.7),
@@ -468,7 +494,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       width: 2,
                                     ),
                                     Text(
-                                      userInfor!.phoneNumber!,
+                                      touristInfor!.phoneNumber!,
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black.withOpacity(0.7),
@@ -483,7 +509,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         const SizedBox(
                           height: 25,
                         ),
-                        !isAllowBack
+                        isFromPending
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 25),
                                 child: Row(
@@ -509,7 +535,33 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                   ],
                                 ),
                               )
-                            : const SizedBox(),
+                            : !isAllowBack
+                                ? Padding(
+                                    padding: const EdgeInsets.only(left: 25),
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                          activeColor: AppColors.primaryColor3,
+                                          shape: const RoundedRectangleBorder(),
+                                          value: isCheck,
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              isCheck = newValue!;
+                                            });
+                                          },
+                                        ),
+                                        const Expanded(
+                                          child: Text(
+                                              "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
+                                              style: TextStyle(
+                                                color: AppColors.grayColor,
+                                                fontSize: 12,
+                                              )),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : const SizedBox(),
                         // const SizedBox(
                         //   height: 100,
                         // ),
@@ -520,8 +572,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
               : Center(
                   child: (imageDisplay != null)
                       ? SizedBox(
-                          width: 350,
-                          height: 350,
+                          width: widthDisplay,
+                          height: heightDisplay,
                           child: Image.asset(
                             imageDisplay!,
                             fit: BoxFit.cover,
@@ -532,7 +584,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: !isAllowBack
+      floatingActionButton: (isFromPending == true)
           ? RoundGradientButton(
               circular: 10,
               width: screenWidth * 0.85,
@@ -545,15 +597,36 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   context: context,
                   builder: (BuildContext context) {
                     return CheckoutBooking(
-                      bookingHomestayModel: booking,
-                      balance: userInfor!.wallets!.first.balance!,
+                      bookingHomestayModel: bookingInfor!,
+                      balance: touristInfor!.wallets!.first.balance!,
                     );
                   },
                 );
               },
               textSize: 18,
             )
-          : const SizedBox(),
+          : !isAllowBack
+              ? RoundGradientButton(
+                  circular: 10,
+                  width: screenWidth * 0.85,
+                  title: 'Xác nhận',
+                  onPressed: () {
+                    // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
+                    //hiện khung nhập giá
+                    showModalBottomSheet<void>(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CheckoutBooking(
+                          bookingHomestayModel: bookingInfor!,
+                          balance: touristInfor!.wallets!.first.balance!,
+                        );
+                      },
+                    );
+                  },
+                  textSize: 18,
+                )
+              : const SizedBox(),
     );
   }
 
@@ -597,9 +670,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
               CupertinoDialogAction(
                   child: TextButton(
                 onPressed: () async {
-                  booking.status = 'CANCELLED';
-                  var checkUpdateBooking =
-                      await ApiBooking.updateBooking(bookingInput: booking);
+                  bookingInfor!.status = 'CANCELLED';
+                  var checkUpdateBooking = await ApiBooking.updateBooking(
+                      bookingInput: bookingInfor!);
                   print(checkUpdateBooking);
                   if (checkUpdateBooking) {
                     Navigator.pop(context);

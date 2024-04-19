@@ -53,6 +53,7 @@ class _ListBookingState extends State<ListBooking> {
                 padding: const EdgeInsets.all(10),
                 child: (typeHistory == 'PENDING')
                     ? PendingHistoryRow(
+                        userInfor: userInfor!,
                         bookingHomestayModel: listBooking![index])
                     : (typeHistory == 'DEPOSIT')
                         ? DepositHistoryRow(
@@ -60,9 +61,11 @@ class _ListBookingState extends State<ListBooking> {
                             bookingHomestayModel: listBooking![index])
                         : (typeHistory == 'PAID')
                             ? PaidHistoryRow(
+                                userInfor: userInfor!,
                                 bookingHomestayModel: listBooking![index])
                             : (typeHistory == 'CANCELLED')
                                 ? CancelledHistoryRow(
+                                    userInfor: userInfor!,
                                     bookingHomestayModel: listBooking![index])
                                 : const SizedBox(),
               ),

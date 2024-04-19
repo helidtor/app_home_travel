@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
@@ -10,8 +11,10 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class CancelledHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
+  UserProfileModel userInfor;
   CancelledHistoryRow({
     super.key,
+    required this.userInfor,
     required this.bookingHomestayModel,
   });
 
@@ -21,12 +24,14 @@ class CancelledHistoryRow extends StatefulWidget {
 
 class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
+  UserProfileModel? userInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     bookingHomestayModel = widget.bookingHomestayModel;
+    userInfor = widget.userInfor;
   }
 
   @override
@@ -127,7 +132,8 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ReviewBooking(
-                          totalRoom: 1,
+                          isFromPending: false,
+                          userProfileModel: userInfor,
                           bookingHomestayModel: bookingHomestayModel,
                           isAllowBack: true,
                         ),

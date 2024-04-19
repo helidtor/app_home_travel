@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
@@ -10,9 +11,11 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class PendingHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
+  UserProfileModel userInfor;
   PendingHistoryRow({
     super.key,
     required this.bookingHomestayModel,
+    required this.userInfor,
   });
 
   @override
@@ -21,11 +24,13 @@ class PendingHistoryRow extends StatefulWidget {
 
 class _PendingHistoryRowState extends State<PendingHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
+  UserProfileModel? userInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    userInfor = widget.userInfor;
     bookingHomestayModel = widget.bookingHomestayModel;
   }
 
@@ -123,13 +128,15 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    print('booking từ lịch sử là: $bookingHomestayModel');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ReviewBooking(
-                          totalRoom: 1,
+                          isFromPending: true,
+                          userProfileModel: userInfor,
                           bookingHomestayModel: bookingHomestayModel,
-                          isAllowBack: false,
+                          isAllowBack: true,
                         ),
                       ),
                     );

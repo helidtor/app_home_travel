@@ -89,7 +89,7 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         detailHomestay = HomestayDetailModel.fromMap(postsJson);
-        print("Thông tin get detail homestay: $detailHomestay");
+        // print("Thông tin get detail homestay: $detailHomestay");
         // print(
         //     "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
       }
@@ -186,7 +186,7 @@ class ApiHomestay {
         wishlist = (postsJson as List)
             .map<WishlistModel>((postJson) => WishlistModel.fromMap(postJson))
             .toList();
-        print("Thông tin get wishlist: $wishlist");
+        // print("Thông tin get wishlist: $wishlist");
         return wishlist[0];
       }
     } catch (e) {
@@ -252,33 +252,66 @@ class ApiHomestay {
     return listWishlist;
   }
 
-  // <<<< Get all feedback homestay by idHomestay >>>>
+  // <<<< Get all listFeedback homestay by idHomestay >>>>
   static Future<List<FeedbackModel>?> getFeedbackByIdHomeStay(
       {required String idHomestay}) async {
-    List<FeedbackModel>? feedback;
+    List<FeedbackModel>? listFeedback;
     try {
       var url =
           "$baseUrl/api/v1/Feedbacks?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&homeStayId=$idHomestay";
       Map<String, String> header = await ApiHeader.getHeader();
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      // print("TEST get all feedback: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      // print("TEST get all listFeedback: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
-        feedback = (postsJson as List)
+        listFeedback = (postsJson as List)
             .map<FeedbackModel>((postJson) => FeedbackModel.fromMap(postJson))
             .toList();
-        print("Thông tin get all feedback: $feedback");
-        return feedback;
+        print("Thông tin get all listFeedback: $listFeedback");
+        return listFeedback;
       } else {
-        print("Loi get all feedback");
+        print("Loi get all listFeedback");
         return null;
       }
     } catch (e) {
-      print("Loi get all feedback: $e");
+      print("Loi get all listFeedback: $e");
       return null;
     }
-    return null;
+  }
+
+  // <<<< get lastest Feedback of tourist >>>>
+  static Future<FeedbackModel?> getLastestFeedbackOfTourist(
+      {required String idHomestay}) async {
+    List<FeedbackModel>? listFeedback;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? idTourist = prefs.getString("idUserCurrent");
+
+    try {
+      var url =
+          "$baseUrl/api/v1/Feedbacks?pageSize=50&touristId=$idTourist&sortKey=CreatedDate&sortOrder=ASC&homeStayId=$idHomestay";
+      Map<String, String> header = await ApiHeader.getHeader();
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get all getLastestFeedbackOfTourist: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body getLastestFeedbackOfTourist sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listFeedback = (postsJson as List)
+            .map<FeedbackModel>((postJson) => FeedbackModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get all listFeedback: $listFeedback");
+        if (listFeedback.isNotEmpty) {
+          return listFeedback[0];
+        }
+      } else {
+        print("Loi get all listFeedback");
+        return null;
+      }
+    } catch (e) {
+      print("Loi get all listFeedback: $e");
+      return null;
+    }
   }
 }

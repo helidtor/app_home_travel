@@ -149,11 +149,14 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
+                          print(
+                              'Thông tin booking từ history: $bookingHomestayModel');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReviewBooking(
-                                totalRoom: 1,
+                                isFromPending: false,
+                                userProfileModel: userInfor,
                                 bookingHomestayModel: bookingHomestayModel,
                                 isAllowBack: true,
                               ),

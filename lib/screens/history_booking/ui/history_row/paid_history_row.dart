@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mobile_home_travel/models/user/profile_user_model.dart';
+import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
@@ -10,9 +12,12 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class PaidHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
+  UserProfileModel userInfor;
+
   PaidHistoryRow({
     super.key,
     required this.bookingHomestayModel,
+    required this.userInfor,
   });
 
   @override
@@ -21,12 +26,14 @@ class PaidHistoryRow extends StatefulWidget {
 
 class _PaidHistoryRowState extends State<PaidHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
+  UserProfileModel? userInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     bookingHomestayModel = widget.bookingHomestayModel;
+    userInfor = widget.userInfor;
   }
 
   @override
@@ -80,35 +87,10 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
                           'Tổng tiền',
                           '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
                           Icons.attach_money_sharp),
-                      // Text(
-                      //   bookingHomestayModel.id.toString(),
-                      //   style: TextStyle(
-                      //     overflow: TextOverflow.clip,
-                      //     // fontWeight: FontWeight.bold,
-                      //     fontSize: 13,
-                      //     color: Colors.black.withOpacity(0.8),
-                      //   ),
-                      // ),
-                      // Text(
-                      //   FormatProvider().convertDateTime(
-                      //       bookingHomestayModel.createdDate.toString()),
-                      //   style: TextStyle(
-                      //     fontStyle: FontStyle.italic,
-                      //     color: Colors.black.withOpacity(0.5),
-                      //     fontSize: 14,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
-                // Text(
-                //   '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
-                //   style: const TextStyle(
-                //     color: Color.fromARGB(255, 21, 149, 25),
-                //     fontWeight: FontWeight.bold,
-                //     fontSize: 14,
-                //   ),
-                // ),
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -121,41 +103,87 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ReviewBooking(
-                          totalRoom: 1,
-                          bookingHomestayModel: bookingHomestayModel,
-                          isAllowBack: true,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.4),
-                          width: 0.8,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        'Xem chi tiết',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black.withOpacity(0.7),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FeedbackHomestayScreen(
+                                homestayModel: bookingHomestayModel
+                                    .bookingDetails?[0].room!.homeStay!,
+                                isCreateFeedback: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 5),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor3.withOpacity(0.8),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Text(
+                              'Viết đánh giá',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReviewBooking(
+                                isFromPending: false,
+                                userProfileModel: userInfor,
+                                bookingHomestayModel: bookingHomestayModel,
+                                isAllowBack: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 10),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              'Xem chi tiết',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

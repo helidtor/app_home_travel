@@ -134,7 +134,7 @@ class FormatProvider {
         }
       }
       return count;
-    } else if (startDate.weekday == DateTime.saturday &&
+    } else if (startDate.weekday == DateTime.saturday ||
         startDate.weekday == DateTime.sunday) {
       return 1;
     } else {

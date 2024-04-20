@@ -2,14 +2,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 import 'package:mobile_home_travel/constants/keyMap.dart';
 import 'package:mobile_home_travel/screens/result_search/ui/result_search_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
-import 'package:mobile_home_travel/widgets/buttons/gradient_button.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 
 class AutocompleteMap extends StatefulWidget {
@@ -226,7 +224,14 @@ class FullMapState extends State<AutocompleteMap> {
                     color: AppColors.primaryColor3.withOpacity(0.7),
                   ),
                 )
-              : const SizedBox(),
+              : SizedBox(
+                  width: 5,
+                  height: 5,
+                  child: Image.asset(
+                    'assets/images/logo-notext.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
           actions: [
             Container(
               height: 50,

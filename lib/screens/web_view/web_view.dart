@@ -35,13 +35,13 @@ class _WebViewState extends State<WebView> {
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.endsWith('=SUCCESS')) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );
               showSuccess(context, 'Thanh toán thành công');
             } else if (request.url.endsWith('=FAILED')) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );

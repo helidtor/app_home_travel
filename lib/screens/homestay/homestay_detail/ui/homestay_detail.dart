@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -326,7 +327,6 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                 ),
                               ]),
                         ),
-
                         const Divider(
                           thickness: 25,
                           color: AppColors.backgroundApp,
@@ -550,6 +550,36 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                   ),
                                 ),
                               ]),
+                        ),
+                        const Divider(
+                          thickness: 25,
+                          color: AppColors.backgroundApp,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 25, bottom: 25),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Chính Sách',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text((homestayDetail!.depositRate != 0)
+                                  ? '✅ Cọc trước chỉ với ${homestayDetail!.depositRate}% tổng hóa đơn'
+                                  : '✅ Đặt trước hoàn toàn miễn phí'),
+                              Text((homestayDetail!.penaltyDate != null &&
+                                      homestayDetail!.penaltyDate != 0)
+                                  ? '✅ Hủy đơn miễn phí trước ${homestayDetail!.penaltyDate} ngày'
+                                  : '✅ Hủy đơn miễn phí bất cứ lúc nào'),
+                            ],
+                          ),
                         ),
                         const Divider(
                           thickness: 25,

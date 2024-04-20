@@ -1,17 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/screens/home/home_screen.dart';
-import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
@@ -76,7 +72,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Text(
-              isCheckOutDeposit ? 'Số tiền còn lại' : 'Gói thanh toán',
+              isCheckOutDeposit ? 'Hoàn tất thanh toán' : 'Gói thanh toán',
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -89,9 +85,10 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 ? Column(
                     children: [
                       _rowSelection(
-                        title: 'Thanh toán cọc',
+                        title:
+                            'Thanh toán cọc (${booking.bookingDetails![0].room!.homeStay!.depositRate!}%)',
                         description:
-                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! * booking.bookingDetails![0].room!.homeStay!.depositRate! / 100).toString())} VNĐ',
+                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! * booking.bookingDetails![0].room!.homeStay!.depositRate! / 100).toString())} vnđ',
                         icon: FontAwesomeIcons.scaleBalanced,
                         width: screenWidth * 0.85,
                         checkbox: Checkbox(
@@ -112,7 +109,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                       _rowSelection(
                         title: 'Thanh toán toàn bộ',
                         description:
-                            'Trả hết ${FormatProvider().formatPrice(booking.totalPrice.toString())} VNĐ',
+                            'Trả hết ${FormatProvider().formatPrice(booking.totalPrice.toString())} vnđ',
                         icon: FontAwesomeIcons.moneyBill,
                         width: screenWidth * 0.85,
                         checkbox: Checkbox(
@@ -132,7 +129,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 : _rowSelection(
                     title: 'Thanh toán nốt đơn',
                     description:
-                        'Số tiền còn thiếu ${FormatProvider().formatPrice(((booking.totalPrice)! / 2).toString())} VNĐ',
+                        'Số tiền còn thiếu: ${FormatProvider().formatPrice(((booking.totalPrice! * (100 - booking.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())} vnđ',
                     icon: FontAwesomeIcons.scaleBalanced,
                     width: screenWidth * 0.85,
                   ),
@@ -162,7 +159,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 _rowSelection(
                   title: 'Ví của tôi',
                   description:
-                      'Số dư: ${FormatProvider().formatPrice(balance.toString())}₫',
+                      'Số dư: ${FormatProvider().formatPrice(balance.toString())} vnđ',
                   icon: FontAwesomeIcons.wallet,
                   width: screenWidth * 0.85,
                   checkbox: Checkbox(

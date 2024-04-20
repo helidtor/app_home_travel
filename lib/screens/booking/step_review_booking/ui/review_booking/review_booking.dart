@@ -84,7 +84,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         title: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            isAllowBack ? "Hoàn tất đơn" : "Tổng quan đơn",
+            isAllowBack ? "Tổng quan đơn" : "Hoàn tất đơn",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black.withOpacity(0.65),
@@ -611,7 +611,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
               },
               textSize: 18,
             )
-          : !isAllowBack
+          : !isAllowBack //nếu không phải mở từ lịch sử đơn pending
               ? RoundGradientButton(
                   circular: 10,
                   width: screenWidth * 0.85,

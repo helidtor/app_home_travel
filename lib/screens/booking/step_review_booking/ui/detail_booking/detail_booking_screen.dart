@@ -8,8 +8,8 @@ import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/room_detail_booking.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/room_detail_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
@@ -209,19 +209,24 @@ class _DetailBookingState extends State<DetailBooking> {
               height: screenHeight * 0.5,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: Column(
-                  children: List.generate(
-                      bookingInfor.bookingDetails!.length,
-                      (index) => RoomDetailBooking(
-                            bookingDetailModel:
-                                bookingInfor.bookingDetails![index],
-                            countDayInWeek: FormatProvider().countNormalDays(
-                                DateTime.parse(bookingInfor.checkInDate!),
-                                DateTime.parse(bookingInfor.checkOutDate!)),
-                            countDayWeekend: FormatProvider().countWeekendDays(
-                                DateTime.parse(bookingInfor.checkInDate!),
-                                DateTime.parse(bookingInfor.checkOutDate!)),
-                          )),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Column(
+                    children: List.generate(
+                        bookingInfor.bookingDetails!.length,
+                        (index) => RoomDetailBooking(
+                              bookingDetailModel:
+                                  bookingInfor.bookingDetails![index],
+                              countDayInWeek: FormatProvider().countNormalDays(
+                                  DateTime.parse(bookingInfor.checkInDate!),
+                                  DateTime.parse(bookingInfor.checkOutDate!)),
+                              countDayWeekend: FormatProvider()
+                                  .countWeekendDays(
+                                      DateTime.parse(bookingInfor.checkInDate!),
+                                      DateTime.parse(
+                                          bookingInfor.checkOutDate!)),
+                            )),
+                  ),
                 ),
               ),
             )

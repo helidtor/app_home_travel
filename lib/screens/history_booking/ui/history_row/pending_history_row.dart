@@ -2,12 +2,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
+import 'package:mobile_home_travel/screens/history_booking/ui/history_screen.dart';
+import 'package:mobile_home_travel/screens/history_booking/utils/cancel_function.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 
 class PendingHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
@@ -129,44 +133,83 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    print('booking từ lịch sử là: $bookingHomestayModel');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ReviewBooking(
-                          isFromPending: true,
-                          userProfileModel: userInfor,
-                          bookingHomestayModel: bookingHomestayModel,
-                          isAllowBack: true,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor3.withOpacity(0.8),
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.4),
-                          width: 0.8,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Text(
-                        'Tiếp tục đặt',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.white,
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          print('booking từ lịch sử là: $bookingHomestayModel');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReviewBooking(
+                                isFromPending: true,
+                                userProfileModel: userInfor,
+                                bookingHomestayModel: bookingHomestayModel,
+                                isAllowBack: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 5),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor3.withOpacity(0.8),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Text(
+                              'Tiếp tục đặt',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          CancelFunctionProvider().dialogCancelPending(
+                              //hộp thoại hủy pending booking
+                              context,
+                              bookingHomestayModel);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 10),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor5.withOpacity(0.7),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Text(
+                              'Hủy đơn',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

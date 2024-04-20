@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
@@ -27,12 +27,17 @@ class RoomDetailBooking extends StatefulWidget {
 
 class _RoomDetailBookingState extends State<RoomDetailBooking> {
   late BookingDetailModel bookingDetailModel;
+  late int countDayInWeek;
+  late int countDayWeekend;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     bookingDetailModel = widget.bookingDetailModel;
+    countDayInWeek = widget.countDayInWeek;
+    countDayWeekend = widget.countDayWeekend;
+    print('ngày thường: $countDayInWeek \n ngày cuối tuần: $countDayWeekend');
   }
 
   @override
@@ -108,7 +113,7 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
               RowText().richText(
                 title: 'Tổng tiền phòng',
                 content:
-                    '${(FormatProvider().formatPrice((bookingDetailModel.room!.price! * widget.countDayInWeek + bookingDetailModel.room!.weekendPrice! * widget.countDayWeekend).toString()))} đ',
+                    '${(FormatProvider().formatPrice((bookingDetailModel.room!.price! * countDayInWeek + bookingDetailModel.room!.weekendPrice! * countDayWeekend).toString()))} đ',
                 icon: Icons.monetization_on_outlined,
               ),
               const SizedBox(
@@ -120,8 +125,8 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
             _detailPriceOfRoom(
               normalPrice: bookingDetailModel.room!.price!,
               weekendPrice: bookingDetailModel.room!.weekendPrice!,
-              quantityNormalDay: widget.countDayInWeek,
-              quantityWeekendDay: widget.countDayWeekend,
+              quantityNormalDay: countDayInWeek,
+              quantityWeekendDay: countDayWeekend,
             ),
           ],
         ),

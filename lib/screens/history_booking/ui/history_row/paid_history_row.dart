@@ -6,7 +6,7 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
@@ -150,14 +150,16 @@ class _PaidHistoryRowState extends State<PaidHistoryRow> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
+                          print(
+                              'Thông tin lịch sử booking này: $bookingHomestayModel');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReviewBooking(
+                                isAllowBack: true,
                                 isFromPending: false,
                                 userProfileModel: userInfor,
                                 bookingHomestayModel: bookingHomestayModel,
-                                isAllowBack: true,
                               ),
                             ),
                           );

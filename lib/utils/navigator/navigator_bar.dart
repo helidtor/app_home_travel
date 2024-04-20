@@ -12,9 +12,9 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 class NavigatorBar extends StatefulWidget {
   final int? stt;
   const NavigatorBar({
-    Key? key,
+    super.key,
     this.stt,
-  }) : super(key: key);
+  });
 
   @override
   State<NavigatorBar> createState() => _NavigatorBarState();
@@ -28,7 +28,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
   void initState() {
     super.initState();
     sttPage = widget.stt ?? 0;
-    body = (sttPage == 0) ? const HomePage() : const SettingsScreen();
+    body = _screenDisplay(sttPage);
   }
 
   @override
@@ -43,19 +43,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         onTap: (value) async {
           setState(() {
             sttPage = value;
-            if (sttPage == 0) {
-              body = const HomePage();
-            } else if (value == 1) {
-              body = AutocompleteMap(
-                isHaveBtnClose: false,
-              );
-            } else if (value == 2) {
-              body = const ChatScreen();
-            } else if (value == 3) {
-              body = const HistoryScreen();
-            } else if (value == 4) {
-              body = const SettingsScreen();
-            }
+            body = _screenDisplay(sttPage);
           });
         },
         height: 52,
@@ -71,5 +59,24 @@ class _NavigatorBarState extends State<NavigatorBar> {
         ],
       ),
     );
+  }
+
+  Widget _screenDisplay(int index) {
+    switch (index) {
+      case 0:
+        return const HomePage();
+      case 1:
+        return AutocompleteMap(
+          isHaveBtnClose: false,
+        );
+      case 2:
+        return const ChatScreen();
+      case 3:
+        return const HistoryScreen();
+      case 4:
+        return const SettingsScreen();
+      default:
+        return const HomePage();
+    }
   }
 }

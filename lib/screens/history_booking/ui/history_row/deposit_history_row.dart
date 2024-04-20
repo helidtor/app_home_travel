@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/util/row_text.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -90,7 +90,7 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                       RowText().richText(
                           title: 'Số tiền còn thiếu',
                           content:
-                              '${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice)! / 2).toString())}vnđ',
+                              '${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫',
                           icon: Icons.attach_money_sharp),
                     ],
                   ),
@@ -139,7 +139,47 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: const Text(
-                              'Thanh toán nốt',
+                              'Trả nốt',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CheckoutBooking(
+                                isCheckOutDeposit: true,
+                                bookingHomestayModel: bookingHomestayModel,
+                                balance: userInfor!.wallets!.first.balance!,
+                              );
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 5),
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor5.withOpacity(0.7),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.4),
+                                width: 0.8,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Text(
+                              'Hủy đơn',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

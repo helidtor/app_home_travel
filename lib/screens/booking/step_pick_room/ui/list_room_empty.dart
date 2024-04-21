@@ -69,7 +69,10 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         leading: IconButton(
-          onPressed: () {
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.remove(
+                'listIdPicked'); //clear data của list room đã chọn khi back về màn hình chọn ngày
             Navigator.pop(context);
           },
           icon: const Icon(

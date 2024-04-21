@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
+import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
 import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
 
@@ -11,6 +12,7 @@ import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
+import 'package:toastification/toastification.dart';
 
 class CheckoutBooking extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
@@ -85,10 +87,16 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 ? Column(
                     children: [
                       _rowSelection(
-                        title:
-                            'Thanh toán cọc (${booking.bookingDetails![0].room!.homeStay!.depositRate!}%)',
-                        description:
-                            'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! * booking.bookingDetails![0].room!.homeStay!.depositRate! / 100).toString())} vnđ',
+                        title: (booking.bookingDetails![0].room!.homeStay!
+                                    .depositRate! ==
+                                0)
+                            ? 'Ưu đãi 0₫'
+                            : 'Thanh toán cọc (${booking.bookingDetails![0].room!.homeStay!.depositRate!}%)',
+                        description: (booking.bookingDetails![0].room!.homeStay!
+                                    .depositRate! ==
+                                0)
+                            ? 'Đặt trước hoàn toàn miễn phí!'
+                            : 'Trả trước ${FormatProvider().formatPrice(((booking.totalPrice)! * booking.bookingDetails![0].room!.homeStay!.depositRate! / 100).toString())} vnđ',
                         icon: FontAwesomeIcons.scaleBalanced,
                         width: screenWidth * 0.85,
                         checkbox: Checkbox(
@@ -137,6 +145,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
           const SizedBox(
             height: 20,
           ),
+          //bảng chọn phương thức thanh toán
           Divider(
             thickness: 10,
             color: AppColors.primaryColor1.withOpacity(0.1),
@@ -212,9 +221,14 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                 height: screenHeight * 0.05,
                 title: 'Thanh toán',
                 onPressed: () async {
-                  if (isCheckedPayWallet) {
-                    if (balance >= (booking.totalPrice! / 2)) {
-                      var isPaid = await ApiBooking.checkoutByWallet(
+                  if (isCheckedPayWallet && isCheckedDeposit) {
+                    // trả ví và trả cọc
+                    if (balance >=
+                        (booking.totalPrice! *
+                            booking.bookingDetails![0].room!.homeStay!
+                                .depositRate! /
+                            100)) {
+                      var isPaid = await ApiBooking.checkoutDepositByWallet(
                           idBooking: booking.id!);
                       if (isPaid == true) {
                         //thanh toán thành công
@@ -234,9 +248,33 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                       showError(context,
                           'Số dư không đủ! Vui lòng nạp thêm tiền vào ví!');
                     }
-                  } else if (isCheckedPayCard) {
-                    var urlPayment =
-                        await ApiBooking.checkoutByCard(idBooking: booking.id!);
+                  } else if (isCheckedPayWallet && isCheckedPayFull) {
+                    //trả ví và trả full
+                    if (balance >= (booking.totalPrice!)) {
+                      var isPaid = await ApiBooking.checkoutFullByWallet(
+                          idBooking: booking.id!);
+                      if (isPaid == true) {
+                        //thanh toán thành công
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WalletScreen()),
+                        );
+                        showSuccess(context, 'Thanh toán thành công');
+                      } else {
+                        //thanh toán thất bại
+                        Navigator.pop(context);
+                        showError(context, 'Thanh toán lỗi');
+                      }
+                    } else {
+                      Navigator.pop(context);
+                      showError(context,
+                          'Số dư không đủ! Vui lòng nạp thêm tiền vào ví!');
+                    }
+                  } else if (isCheckedPayCard && isCheckedDeposit) {
+                    // trả thẻ và trả cọc
+                    var urlPayment = await ApiBooking.checkoutDepositByCard(
+                        idBooking: booking.id!);
                     if (urlPayment != null) {
                       print('Link thanh toán là $urlPayment');
                       Navigator.of(context).push(
@@ -245,8 +283,45 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                         ),
                       );
                     }
-                  } else if (isCheckedPayCard == false &&
-                      isCheckedPayWallet == false) {}
+                  } else if (isCheckedPayCard && isCheckedPayFull) {
+                    // trả thẻ và trả full
+                    var urlPayment = await ApiBooking.checkoutFullByCard(
+                        idBooking: booking.id!);
+                    if (urlPayment != null) {
+                      print('Link thanh toán là $urlPayment');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => WebView(url: urlPayment),
+                        ),
+                      );
+                    }
+                  } else if ((!isCheckedPayCard || //kiểm tra xem có tick chọn gói và phương thức thanh toán chưa
+                          !isCheckedPayWallet) &&
+                      (!isCheckedPayFull || !isCheckedDeposit)) {
+                    toastification.show(
+                        pauseOnHover: false,
+                        showProgressBar: false,
+                        progressBarTheme: const ProgressIndicatorThemeData(
+                          color: Colors.red,
+                        ),
+                        icon: const Icon(
+                          Icons.error_outline_rounded,
+                          color: Colors.red,
+                        ),
+                        foregroundColor: Colors.black,
+                        context: context,
+                        type: ToastificationType.error,
+                        style: ToastificationStyle.flatColored,
+                        title: const TextContent(
+                          contentText:
+                              'Vui lòng chọn gói và phương thức thanh toán!',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        autoCloseDuration: const Duration(milliseconds: 2000),
+                        animationDuration: const Duration(milliseconds: 250),
+                        alignment: Alignment.topCenter);
+                  }
                 }),
           ),
           const Spacer(),

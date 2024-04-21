@@ -198,8 +198,9 @@ class ApiBooking {
     return null;
   }
 
-  // <<<< Checkout by card >>>>
-  static Future<String?> checkoutByCard({required String idBooking}) async {
+  // <<<< Checkout deposit by card >>>>
+  static Future<String?> checkoutDepositByCard(
+      {required String idBooking}) async {
     String? link;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
@@ -209,14 +210,41 @@ class ApiBooking {
     try {
       var response = await http.get(Uri.parse(url.toString()), headers: header);
       print(
-          "TEST thanh toán bằng thẻ: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+          "TEST thanh toán deposit bằng thẻ: ${jsonDecode(utf8.decode(response.bodyBytes))}");
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         link = bodyConvert['data']['url'];
         print('Link thanh toán bằng thẻ là: $link');
         return link;
       } else {
-        print('Error pay by card');
+        print('Error pay deposit by card');
+        return null;
+      }
+    } catch (e) {
+      print("Loi thanh toán deposit thẻ: $e");
+    }
+    return null;
+  }
+
+// <<<< Checkout full by card >>>>
+  static Future<String?> checkoutFullByCard({required String idBooking}) async {
+    String? link;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    var url = "$baseUrl/api/v1/Bookings/$idBooking/PayFullByVNPay";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print(
+          "TEST thanh toán full bằng thẻ: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        link = bodyConvert['data']['url'];
+        print('Link thanh toán full bằng thẻ là: $link');
+        return link;
+      } else {
+        print('Error pay full by card');
         return null;
       }
     } catch (e) {
@@ -225,8 +253,9 @@ class ApiBooking {
     return null;
   }
 
-  // <<<< Checkout by wallet >>>>
-  static Future<bool?> checkoutByWallet({required String idBooking}) async {
+  // <<<< Checkout deposit by wallet >>>>
+  static Future<bool?> checkoutDepositByWallet(
+      {required String idBooking}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     var url = "$baseUrl/api/v1/Bookings/$idBooking/PayByWallet";
@@ -234,15 +263,37 @@ class ApiBooking {
     header.addAll({'Authorization': 'Bearer $token'});
     try {
       var response = await http.get(Uri.parse(url.toString()), headers: header);
-      print("TEST thanh toán bằng ví: ${jsonEncode(response.body)}");
+      print("TEST thanh toán cọc bằng ví: ${jsonEncode(response.body)}");
       if (response.statusCode == 200) {
         return true;
       } else {
-        print('Error pay by wallet');
+        print('Error pay deposit by wallet');
         return false;
       }
     } catch (e) {
-      print("Loi thanh toán ví: $e");
+      print("Loi thanh toán deposit bằng ví: $e");
+    }
+    return false;
+  }
+
+  // <<<< Checkout full by wallet >>>>
+  static Future<bool?> checkoutFullByWallet({required String idBooking}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    var url = "$baseUrl/api/v1/Bookings/$idBooking/PayFullByWallet";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print("TEST thanh toán full bằng ví: ${jsonEncode(response.body)}");
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        print('Error pay full by wallet');
+        return false;
+      }
+    } catch (e) {
+      print("Loi thanh toán full bằng ví: $e");
     }
     return false;
   }

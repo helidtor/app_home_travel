@@ -44,11 +44,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
           icon: const Icon(Icons.keyboard_arrow_left),
         ),
         // centerTitle: true,
-        title: Text(
+        title: const Text(
           "Chi Tiết Giao Dịch",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(182, 0, 0, 0),
+            color: Color.fromARGB(182, 0, 0, 0),
             fontSize: 20,
           ),
         ),
@@ -88,7 +88,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                 //loại giao dịch
                 Text(
                   FormatProvider().convertType(transactionModel.type!),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -108,7 +108,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Mã giao dịch',
                         style: TextStyle(
                           color: Colors.black54,
@@ -139,7 +139,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Trạng thái',
                         style: TextStyle(
                           color: Colors.black54,
@@ -148,7 +148,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                         ),
                       ),
                       (transactionModel.status == 'SUCCESS')
-                          ? Text(
+                          ? const Text(
                               'Thành công',
                               style: TextStyle(
                                 color: Colors.green,
@@ -156,7 +156,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 fontSize: 20,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               'Thất bại',
                               style: TextStyle(
                                 color: Colors.red,
@@ -172,7 +172,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Số tiền giao dịch',
                         style: TextStyle(
                           color: Colors.black54,
@@ -198,8 +198,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -227,7 +227,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Ngày giao dịch',
                         style: TextStyle(
                           color: Colors.black54,
@@ -238,7 +238,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       Text(
                         FormatProvider().convertDate(
                             transactionModel.createdDate.toString()),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -252,7 +252,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Giờ giao dịch',
                         style: TextStyle(
                           color: Colors.black54,
@@ -263,7 +263,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       Text(
                         FormatProvider().convertTime(
                             transactionModel.createdDate.toString()),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,

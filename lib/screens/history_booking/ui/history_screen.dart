@@ -51,7 +51,7 @@ class _HistoryScreenState extends State<HistoryScreen>
         title: const Padding(
           padding: EdgeInsets.only(left: 10),
           child: Text(
-            "Lịch sử đơn đặt homestay",
+            "Đơn đặt homestay",
             style: TextStyle(
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),

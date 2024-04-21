@@ -179,7 +179,7 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          CancelFunctionProvider().dialogCancelPending(
+                          CancelFunctionProvider().dialogCancelNoFine(
                               //hộp thoại hủy pending booking
                               context,
                               bookingHomestayModel);

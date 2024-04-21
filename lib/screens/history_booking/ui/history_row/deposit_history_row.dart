@@ -8,6 +8,7 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
+import 'package:mobile_home_travel/screens/history_booking/utils/cancel_function.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 
@@ -153,17 +154,28 @@ class _DepositHistoryRowState extends State<DepositHistoryRow> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          showModalBottomSheet<void>(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CheckoutBooking(
-                                isCheckOutDeposit: true,
-                                bookingHomestayModel: bookingHomestayModel,
-                                balance: userInfor!.wallets!.first.balance!,
-                              );
-                            },
-                          );
+                          print(
+                              '${DateTime.now()} Hủy đơn không mất phí? ${(DateTime.now().isBefore(DateTime.parse(bookingHomestayModel.checkInDate!).subtract(Duration(days: int.parse(bookingHomestayModel.bookingDetails![0].room!.homeStay!.penaltyDate!.toString())))))}');
+                          if (bookingHomestayModel.bookingDetails![0].room!
+                                      .homeStay!.penaltyDate! ==
+                                  0 ||
+                              bookingHomestayModel.bookingDetails![0].room!
+                                      .homeStay!.penaltyRate ==
+                                  0) {
+                            //kiểm tra xem có rate phạt và ngày phạt đền tiền hủy đơn hay không
+                            CancelFunctionProvider().dialogCancelNoFine(
+                                context, bookingHomestayModel);
+                          } else {
+                            //kiểm tra xem ngày hiện tại có nằm trong khoảng ngày cancel free hay không
+                            if (CancelFunctionProvider()
+                                .isCancelFree(bookingHomestayModel)) {
+                              CancelFunctionProvider().dialogCancelNoFine(
+                                  context, bookingHomestayModel);
+                            } else {
+                              CancelFunctionProvider().dialogCancelWithFine(
+                                  context, bookingHomestayModel);
+                            }
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10, right: 5),

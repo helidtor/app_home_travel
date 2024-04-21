@@ -70,8 +70,10 @@ class FormatProvider {
         return 'Thanh toán bằng ví';
       case 'PAID_WITH_VNPAY':
         return 'Thanh toán bằng thẻ';
+      case 'REFUND':
+        return 'Hoàn tiền vào ví';
       default:
-        return '';
+        return 'Giao dịch khác';
     }
   }
 
@@ -83,8 +85,10 @@ class FormatProvider {
         return 'assets/images/PAID_WITH_WALLET.png';
       case 'PAID_WITH_VNPAY':
         return 'assets/images/PAID_WITH_VNPAY.png';
+      case 'REFUND':
+        return 'assets/images/REFUND.png';
       default:
-        return '';
+        return 'assets/images/OTHER.png';
     }
   }
 
@@ -94,6 +98,8 @@ class FormatProvider {
         return true;
       case 'PAID_WITH_WALLET':
         return false;
+      case 'REFUND':
+        return true;
       case 'PAID_WITH_VNPAY':
         return false;
       default:

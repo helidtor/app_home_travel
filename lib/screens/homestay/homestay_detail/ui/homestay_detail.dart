@@ -441,7 +441,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '${homestayDetail!.rating.toString()}/5',
+                                                '${homestayDetail!.rating!.toStringAsFixed(1)}/5.0',
                                                 style: const TextStyle(
                                                     fontSize: 35,
                                                     color: AppColors

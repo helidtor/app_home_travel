@@ -44,12 +44,12 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: 195,
+              height: 200,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    height: 170,
+                    height: 175,
                     width: screenWidth * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(

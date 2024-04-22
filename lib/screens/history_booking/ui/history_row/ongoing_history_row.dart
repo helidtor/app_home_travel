@@ -100,8 +100,10 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                   icon: Icons.date_range_outlined),
                               RowText().richText(
                                   title: 'Thời gian ở',
-                                  content:
-                                      '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}',
+                                  content: (bookingHomestayModel.checkInDate ==
+                                          bookingHomestayModel.checkOutDate)
+                                      ? '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} (1 ngày)'
+                                      : '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}',
                                   icon: Icons.date_range_outlined),
                               (bookingHomestayModel.status == 'DEPOSIT')
                                   ? RowText().richText(

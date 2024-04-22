@@ -46,12 +46,12 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 195,
+        height: 200,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
-              height: 170, //để viền container cắt giữa ảnh
+              height: 175, //để viền container cắt giữa ảnh
               width: screenWidth * 0.8,
               decoration: BoxDecoration(
                   border: Border.all(
@@ -91,8 +91,10 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                             icon: Icons.date_range_outlined),
                         RowText().richText(
                             title: 'Thời gian ở',
-                            content:
-                                '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}',
+                            content: (bookingHomestayModel.checkInDate ==
+                                    bookingHomestayModel.checkOutDate)
+                                ? '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} (1 ngày)'
+                                : '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}',
                             icon: Icons.date_range_outlined),
                         RowText().richText(
                             title: 'Tổng tiền',

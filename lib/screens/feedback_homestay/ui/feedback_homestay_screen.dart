@@ -131,7 +131,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '${homestayModel.rating.toString()}/5',
+                                    '${homestayModel.rating.toStringAsFixed(1)}/5.0',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),
@@ -270,7 +270,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '${homestayModel.rating.toString()}/5',
+                                    '${homestayModel.rating.toStringAsFixed(1)}/5.0',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),

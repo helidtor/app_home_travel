@@ -10,6 +10,8 @@ class AppColors {
   static const secondaryColor1 = Color.fromARGB(235, 255, 214, 0);
   static const secondaryColor2 = Color.fromARGB(255, 81, 90, 226);
 
+  static const paleColor = Color.fromARGB(255, 147, 117, 228);
+
   static const backgroundApp = Color.fromARGB(255, 245, 242, 242);
 
   static Color palleteColor = Colors.black.withOpacity(0.1);

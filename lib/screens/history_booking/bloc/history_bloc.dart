@@ -21,7 +21,26 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         var touristInfor = await ApiUser.getProfile(
             id: idTourist); //lấy thông tin user để thanh toán
         print('Thông tin user khi chuyển tab history: $touristInfor');
-        var listBooking = await ApiBooking.getListBooking(status: event.status);
+        var listBooking;
+        switch (event.status) {
+          case 'PENDING':
+            listBooking = await ApiBooking.getListBooking(status: 'PENDING');
+          case 'UPCOMING':
+            listBooking = await ApiBooking.getListBooking(
+                status: 'DEPOSIT', status2: 'PAID');
+          case 'ONGOING':
+            listBooking = await ApiBooking.getListBooking(
+                status: 'DEPOSIT', status2: 'PAID');
+          case 'COMPLETED':
+            listBooking = await ApiBooking.getListBooking(status: 'PAID');
+          case 'CANCELLED':
+            listBooking = await ApiBooking.getListBooking(status: 'CANCELLED');
+          case 'OVERDUE':
+            listBooking =
+                await ApiBooking.getListBooking(status: 'PAYMENT SETTLEMENT');
+          default:
+            listBooking = await ApiBooking.getListBooking(status: 'PENDING');
+        }
         // print('Lấy list booking trong bloc: $listBooking');
         if (listBooking != null && touristInfor != null) {
           emit(GetHistorySuccess(

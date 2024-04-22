@@ -16,7 +16,7 @@ import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/row_room.da
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ListRoomEmpty extends StatefulWidget {
@@ -124,7 +124,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             );
           } else if (state is CreateBookingFailure) {
             Navigator.pop(context);
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
           } else if (state is CheckListRoomSuccess) {
             Navigator.pop(context);
             setState(() {

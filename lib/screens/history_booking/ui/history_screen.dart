@@ -9,7 +9,7 @@ import 'package:mobile_home_travel/screens/history_booking/bloc/history_event.da
 import 'package:mobile_home_travel/screens/history_booking/bloc/history_state.dart';
 import 'package:mobile_home_travel/screens/history_booking/ui/list_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -27,18 +27,20 @@ class _HistoryScreenState extends State<HistoryScreen>
   double widthDisplay = 270;
   double heightDisplay = 270;
   List<BookingHomestayModel>? listPendingBooking;
-  List<BookingHomestayModel>? listDepositBooking;
-  List<BookingHomestayModel>? listPaidBooking;
+  List<BookingHomestayModel>? listUpcomingBooking;
+  List<BookingHomestayModel>? listOngoingBooking;
+  List<BookingHomestayModel>? listCompletedBooking;
   List<BookingHomestayModel>? listCancelledBooking;
+  List<BookingHomestayModel>? listOverdueBooking;
   UserProfileModel? userInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    tabController = TabController(length: 6, vsync: this, initialIndex: 0);
     _bloc.add(GetListBooking(status: 'PENDING'));
-    //PENDING, DEPOSIT, CANCELLED, PAID
+    //PENDING, UPCOMING, CANCELLED, ONGOING
   }
 
   @override
@@ -74,42 +76,54 @@ class _HistoryScreenState extends State<HistoryScreen>
               case 'PENDING':
                 listPendingBooking = state.listBooking;
                 break;
-              case 'DEPOSIT':
-                listDepositBooking = state.listBooking;
+              case 'UPCOMING':
+                listUpcomingBooking = state.listBooking;
                 break;
-              case 'PAID':
-                listPaidBooking = state.listBooking;
+              case 'ONGOING':
+                listOngoingBooking = state.listBooking;
+                break;
+              case 'COMPLETED':
+                listCompletedBooking = state.listBooking;
                 break;
               case 'CANCELLED':
                 listCancelledBooking = state.listBooking;
+                break;
+              case 'OVERDUE':
+                listOverdueBooking = state.listBooking;
                 break;
             }
             // listBooking = state.listBooking;
             // print('Số lượng đơn: ${listBooking!.length}');
           } else if (state is ListBookingEmpty) {
             // Navigator.pop(context);
-            widthDisplay = 270;
-            heightDisplay = 270;
-            imageDisplay = 'assets/images/empty_list.png';
+            widthDisplay = 180;
+            heightDisplay = 180;
+            imageDisplay = 'assets/images/empty_cart.png';
             switch (state.type) {
               case 'PENDING':
                 listPendingBooking = null;
                 break;
-              case 'DEPOSIT':
-                listDepositBooking = null;
+              case 'UPCOMING':
+                listUpcomingBooking = null;
                 break;
-              case 'PAID':
-                listPaidBooking = null;
+              case 'ONGOING':
+                listOngoingBooking = null;
+                break;
+              case 'COMPLETED':
+                listCompletedBooking = null;
                 break;
               case 'CANCELLED':
                 listCancelledBooking = null;
+                break;
+              case 'OVERDUE':
+                listOverdueBooking = null;
                 break;
             }
           } else if (state is HistoryFailure) {
             // Navigator.pop(context);
             widthDisplay = 270;
             heightDisplay = 270;
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
             imageDisplay = 'assets/images/error_loading.png';
           }
         },
@@ -132,13 +146,19 @@ class _HistoryScreenState extends State<HistoryScreen>
                         _bloc.add(GetListBooking(status: 'PENDING'));
                         break;
                       case 1:
-                        _bloc.add(GetListBooking(status: 'DEPOSIT'));
+                        _bloc.add(GetListBooking(status: 'UPCOMING'));
                         break;
                       case 2:
-                        _bloc.add(GetListBooking(status: 'PAID'));
+                        _bloc.add(GetListBooking(status: 'ONGOING'));
                         break;
                       case 3:
+                        _bloc.add(GetListBooking(status: 'COMPLETED'));
+                        break;
+                      case 4:
                         _bloc.add(GetListBooking(status: 'CANCELLED'));
+                        break;
+                      case 5:
+                        _bloc.add(GetListBooking(status: 'OVERDUE'));
                         break;
                     }
                   },
@@ -147,13 +167,19 @@ class _HistoryScreenState extends State<HistoryScreen>
                       text: 'Chờ xác nhận',
                     ),
                     Tab(
-                      text: 'Đã đặt cọc',
+                      text: 'Sắp diễn ra',
                     ),
                     Tab(
-                      text: 'Đã thanh toán',
+                      text: 'Đang diễn ra',
+                    ),
+                    Tab(
+                      text: 'Đã hoàn tất',
                     ),
                     Tab(
                       text: 'Đã hủy',
+                    ),
+                    Tab(
+                      text: 'Quá hạn',
                     ),
                   ],
                   unselectedLabelStyle: const TextStyle(
@@ -180,21 +206,29 @@ class _HistoryScreenState extends State<HistoryScreen>
                         widthDisplay: widthDisplay,
                         typeHistory: 'PENDING'),
                     listBookingFunction(
-                        //deposit
+                        //upcoming
                         userInfor: userInfor,
                         imageDisplay: imageDisplay,
-                        listBooking: listDepositBooking,
+                        listBooking: listUpcomingBooking,
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay,
-                        typeHistory: 'DEPOSIT'),
+                        typeHistory: 'UPCOMING'),
                     listBookingFunction(
-                        //paid
+                        //ongoing
                         userInfor: userInfor,
                         imageDisplay: imageDisplay,
-                        listBooking: listPaidBooking,
+                        listBooking: listOngoingBooking,
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay,
-                        typeHistory: 'PAID'),
+                        typeHistory: 'ONGOING'),
+                    listBookingFunction(
+                        //completed
+                        userInfor: userInfor,
+                        imageDisplay: imageDisplay,
+                        listBooking: listCompletedBooking,
+                        heightDisplay: heightDisplay,
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'COMPLETED'),
                     listBookingFunction(
                         //cancelled
                         userInfor: userInfor,
@@ -203,6 +237,14 @@ class _HistoryScreenState extends State<HistoryScreen>
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay,
                         typeHistory: 'CANCELLED'),
+                    listBookingFunction(
+                        //overdue
+                        userInfor: userInfor,
+                        imageDisplay: imageDisplay,
+                        listBooking: listOverdueBooking,
+                        heightDisplay: heightDisplay,
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'OVERDUE'),
                   ],
                 ),
               ),
@@ -231,14 +273,36 @@ Widget listBookingFunction({
   } else {
     return Center(
       child: (imageDisplay != null)
-          ? SizedBox(
-              width: widthDisplay,
-              height: heightDisplay,
-              child: Image.asset(
-                imageDisplay,
-                fit: BoxFit.cover,
-              ),
-            )
+          ? (imageDisplay == 'assets/images/empty_cart.png')
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: widthDisplay,
+                      height: heightDisplay,
+                      child: Image.asset(
+                        imageDisplay,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const Text(
+                      'Chưa có đơn nào cả (7.7)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black38,
+                      ),
+                    )
+                  ],
+                )
+              : SizedBox(
+                  width: widthDisplay,
+                  height: heightDisplay,
+                  child: Image.asset(
+                    imageDisplay,
+                    fit: BoxFit.cover,
+                  ),
+                )
           : const SizedBox(),
     );
   }

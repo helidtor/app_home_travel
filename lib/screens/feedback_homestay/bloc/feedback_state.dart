@@ -27,3 +27,7 @@ class GetFeedbackFailure extends FeedbackState {
     required this.error,
   });
 }
+
+class CreateFeedbackSuccess extends FeedbackState {}
+
+class CreateFeedbackFailure extends FeedbackState {}

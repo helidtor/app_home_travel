@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/list_room_empty.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PickDate extends StatefulWidget {
@@ -158,7 +158,7 @@ class _PickDateState extends State<PickDate> {
                             dateCheckOut: _checkOutDate)),
                   );
                 } else {
-                  showError(context, 'Bạn chưa chọn ngày!');
+                  ErrorNotiProvider().showError(context, 'Bạn chưa chọn ngày!');
                 }
               },
               showActionButtons: true,

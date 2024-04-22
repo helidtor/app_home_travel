@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/history_booking/ui/history_row/cancelled_history_row.dart';
-import 'package:mobile_home_travel/screens/history_booking/ui/history_row/deposit_history_row.dart';
-import 'package:mobile_home_travel/screens/history_booking/ui/history_row/paid_history_row.dart';
+import 'package:mobile_home_travel/screens/history_booking/ui/history_row/completed_history_row.dart';
+import 'package:mobile_home_travel/screens/history_booking/ui/history_row/overdue_history_row.dart';
+import 'package:mobile_home_travel/screens/history_booking/ui/history_row/upcoming_history_row.dart';
+import 'package:mobile_home_travel/screens/history_booking/ui/history_row/ongoing_history_row.dart';
 import 'package:mobile_home_travel/screens/history_booking/ui/history_row/pending_history_row.dart';
 
 class ListBooking extends StatefulWidget {
@@ -49,26 +51,32 @@ class _ListBookingState extends State<ListBooking> {
           child: Column(
             children: List.generate(
               listBooking!.length,
-              (index) => Padding(
-                padding: const EdgeInsets.all(10),
-                child: (typeHistory == 'PENDING')
-                    ? PendingHistoryRow(
-                        userInfor: userInfor!,
-                        bookingHomestayModel: listBooking![index])
-                    : (typeHistory == 'DEPOSIT')
-                        ? DepositHistoryRow(
-                            userInfor: userInfor!,
-                            bookingHomestayModel: listBooking![index])
-                        : (typeHistory == 'PAID')
-                            ? PaidHistoryRow(
-                                userInfor: userInfor!,
-                                bookingHomestayModel: listBooking![index])
-                            : (typeHistory == 'CANCELLED')
-                                ? CancelledHistoryRow(
-                                    userInfor: userInfor!,
-                                    bookingHomestayModel: listBooking![index])
-                                : const SizedBox(),
-              ),
+              (index) => (typeHistory == 'PENDING')
+                  ? PendingHistoryRow(
+                      userInfor: userInfor!,
+                      bookingHomestayModel: listBooking![index])
+                  : (typeHistory == 'UPCOMING')
+                      ? UpcomingHistoryRow(
+                          userInfor: userInfor!,
+                          bookingHomestayModel: listBooking![index])
+                      : (typeHistory == 'ONGOING')
+                          ? OngoingHistoryRow(
+                              userInfor: userInfor!,
+                              bookingHomestayModel: listBooking![index])
+                          : (typeHistory == 'COMPLETED')
+                              ? CompletedHistoryRow(
+                                  userInfor: userInfor!,
+                                  bookingHomestayModel: listBooking![index])
+                              : (typeHistory == 'CANCELLED')
+                                  ? CancelledHistoryRow(
+                                      userInfor: userInfor!,
+                                      bookingHomestayModel: listBooking![index])
+                                  : (typeHistory == 'OVERDUE')
+                                      ? OverdueHistoryRow(
+                                          userInfor: userInfor!,
+                                          bookingHomestayModel:
+                                              listBooking![index])
+                                      : const SizedBox(),
             ),
           ),
         ),

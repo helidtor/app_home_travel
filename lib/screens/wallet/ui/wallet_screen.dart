@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/screens/transaction/transaction_row.dart';
@@ -15,7 +16,7 @@ import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/input_field.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/preset_price_wallet.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -88,7 +89,7 @@ class _WalletScreenState extends State<WalletScreen> {
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             imageDisplay = 'assets/images/error_loading.png';
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
           } else if (state is AddFundWalletSuccess) {
             Navigator.pop(context);
             Navigator.of(context).push(
@@ -108,7 +109,7 @@ class _WalletScreenState extends State<WalletScreen> {
             // }
           } else if (state is WalletFailure) {
             Navigator.pop(context);
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
           }
         },
         builder: (context, state) {
@@ -165,11 +166,10 @@ class _WalletScreenState extends State<WalletScreen> {
                                                   });
                                                 },
                                                 icon: Icon(
-                                                  Icons
-                                                      .invert_colors_off_rounded,
+                                                  FontAwesomeIcons.eyeSlash,
                                                   color: Colors.white
                                                       .withOpacity(0.9),
-                                                  size: 20,
+                                                  size: 15,
                                                 ),
                                               )
                                             : IconButton(
@@ -180,10 +180,10 @@ class _WalletScreenState extends State<WalletScreen> {
                                                   });
                                                 },
                                                 icon: Icon(
-                                                  Icons.invert_colors,
+                                                  FontAwesomeIcons.eye,
                                                   color: Colors.white
                                                       .withOpacity(0.9),
-                                                  size: 20,
+                                                  size: 15,
                                                 ),
                                               )
                                       ],

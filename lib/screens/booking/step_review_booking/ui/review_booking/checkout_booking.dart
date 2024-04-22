@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
-import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
@@ -140,6 +140,17 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                         'Số tiền còn thiếu: ${FormatProvider().formatPrice(((booking.totalPrice! * (100 - booking.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())} vnđ',
                     icon: FontAwesomeIcons.scaleBalanced,
                     width: screenWidth * 0.85,
+                    checkbox: Checkbox(
+                      activeColor: AppColors.primaryColor3,
+                      shape: const CircleBorder(),
+                      value: isCheckedDeposit,
+                      onChanged: (newValue) async {
+                        setState(() {
+                          isCheckedDeposit = newValue!;
+                          isCheckedPayFull = false;
+                        });
+                      },
+                    ),
                   ),
           ),
           const SizedBox(
@@ -237,15 +248,17 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                           MaterialPageRoute(
                               builder: (context) => const WalletScreen()),
                         );
-                        showSuccess(context, 'Thanh toán thành công');
+                        SuccessNotiProvider()
+                            .ToastSuccess(context, 'Thanh toán thành công!');
                       } else {
                         //thanh toán thất bại
                         Navigator.pop(context);
-                        showError(context, 'Thanh toán lỗi');
+                        ErrorNotiProvider()
+                            .showError(context, 'Thanh toán lỗi');
                       }
                     } else {
                       Navigator.pop(context);
-                      showError(context,
+                      ErrorNotiProvider().showError(context,
                           'Số dư không đủ! Vui lòng nạp thêm tiền vào ví!');
                     }
                   } else if (isCheckedPayWallet && isCheckedPayFull) {
@@ -260,15 +273,17 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                           MaterialPageRoute(
                               builder: (context) => const WalletScreen()),
                         );
-                        showSuccess(context, 'Thanh toán thành công');
+                        SuccessNotiProvider()
+                            .ToastSuccess(context, 'Thanh toán thành công!');
                       } else {
                         //thanh toán thất bại
                         Navigator.pop(context);
-                        showError(context, 'Thanh toán lỗi');
+                        ErrorNotiProvider()
+                            .showError(context, 'Thanh toán lỗi');
                       }
                     } else {
                       Navigator.pop(context);
-                      showError(context,
+                      ErrorNotiProvider().showError(context,
                           'Số dư không đủ! Vui lòng nạp thêm tiền vào ví!');
                     }
                   } else if (isCheckedPayCard && isCheckedDeposit) {

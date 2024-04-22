@@ -17,7 +17,7 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
@@ -130,7 +130,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
             touristInfor = state.userProfile;
           } else if (state is ReviewBookingFailure) {
             Navigator.pop(context);
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
             setState(() {
               widthDisplay = 270;
               heightDisplay = 270;

@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
-import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebView extends StatefulWidget {
@@ -39,13 +38,14 @@ class _WebViewState extends State<WebView> {
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );
-              showSuccess(context, 'Thanh toán thành công');
+              SuccessNotiProvider()
+                  .ToastSuccess(context, 'Giao dịch thành công!');
             } else if (request.url.endsWith('=FAILED')) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const WalletScreen()),
               );
-              showError(context, 'Thanh toán thất bại');
+              ErrorNotiProvider().showError(context, 'Thanh toán thất bại');
             }
             return NavigationDecision.navigate;
           },

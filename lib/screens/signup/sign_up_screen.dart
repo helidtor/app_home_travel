@@ -7,8 +7,8 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
-import 'package:mobile_home_travel/widgets/notification/success_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -352,15 +352,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       var checkSignUp = await ApiUser.signup(
                           userSignUpModel: userSignUpModel);
                       if (checkSignUp == true) {
-                        showSuccess(context, 'Đăng ký thành công');
+                        SuccessNotiProvider()
+                            .showSuccess(context, 'Đăng ký thành công');
                         router.go(RouteName.login);
                       } else {
                         print("Đăng ký không thành công: $checkSignUp");
-                        showError(context, 'Đăng ký thất bại');
+                        ErrorNotiProvider()
+                            .showError(context, 'Đăng ký thất bại');
                       }
                     } catch (e) {
                       print("Đăng ký không thành công: $e");
-                      showError(context, 'Đăng ký thất bại');
+                      ErrorNotiProvider()
+                          .showError(context, 'Đăng ký thất bại');
                     }
                     // SignOutGoogle(); test signout google (không liên quan)
                   },

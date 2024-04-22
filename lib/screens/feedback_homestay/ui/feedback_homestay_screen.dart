@@ -9,13 +9,15 @@ import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_bloc.
 import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_event.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/bloc/feedback_state.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_row.dart';
+import 'package:mobile_home_travel/screens/feedback_homestay/ui/modal_create_feedback.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class FeedbackHomestayScreen extends StatefulWidget {
-  HomestayModel? homestayModel;
-  HomestayDetailModel? homestayDetailModel;
+  HomestayModel? homestayModel; // từ detail homestay qua
+  HomestayDetailModel? homestayDetailModel; //từ lịch sử qua
   bool? isCreateFeedback;
   FeedbackHomestayScreen({
     super.key,
@@ -63,9 +65,11 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
           icon: const Icon(Icons.keyboard_arrow_left),
         ),
         // centerTitle: true,
-        title: const Text(
-          "Chi tiết đánh giá",
-          style: TextStyle(
+        title: Text(
+          (widget.homestayModel != null)
+              ? 'Đánh giá ${widget.homestayModel!.name}'
+              : 'Đánh giá ${widget.homestayDetailModel!.name}',
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Color.fromARGB(182, 0, 0, 0),
             fontSize: 20,
@@ -84,7 +88,13 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
             listFeedback = state.listFeedback;
           } else if (state is GetFeedbackFailure) {
             Navigator.pop(context);
-            showError(context, state.error);
+            ErrorNotiProvider().showError(context, state.error);
+          } else if (state is CreateFeedbackSuccess) {
+            Navigator.pop(context);
+            SuccessNotiProvider().ToastSuccess(context, 'Đánh giá thành công!');
+          } else if (state is CreateFeedbackFailure) {
+            Navigator.pop(context);
+            ErrorNotiProvider().ToastError(context, 'Đánh giá thất bại!');
           }
         },
         builder: (context, state) {
@@ -152,7 +162,23 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                               ),
                               isCreateFeedback
                                   ? GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return ModalCreateFeedback(
+                                                homestayId:
+                                                    (widget.homestayDetailModel !=
+                                                            null)
+                                                        ? (widget
+                                                            .homestayDetailModel!
+                                                            .rooms![0]
+                                                            .homeStay!
+                                                            .id!)
+                                                        : homestayModel.id,
+                                              );
+                                            });
+                                      },
                                       child: Padding(
                                         padding: const EdgeInsets.all(20),
                                         child: Container(
@@ -167,7 +193,7 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                                 BorderRadius.circular(5),
                                           ),
                                           child: const Text(
-                                            'Tạo đánh giá',
+                                            'Viết đánh giá',
                                             style: TextStyle(
                                               fontSize: 18,
                                               color: AppColors.primaryColor3,
@@ -213,13 +239,137 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                   ),
                 )
               : Center(
-                  child: SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: Image.asset(
-                      'assets/images/empty_list.png',
-                      fit: BoxFit.cover,
-                    ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Container(
+                          height: !isCreateFeedback
+                              ? screenHeight * 0.15 //nếu không cho feedback
+                              : screenHeight * 0.25,
+                          width: screenWidth * 0.95,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.primaryColor3,
+                              ),
+                              color: const Color.fromARGB(253, 255, 255, 255),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 0.5,
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 3),
+                                )
+                              ]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${homestayModel.rating.toString()}/5',
+                                    style: const TextStyle(
+                                        fontSize: 35,
+                                        color: AppColors.primaryColor3),
+                                  ),
+                                  AnimatedRatingBar(
+                                    activeFillColor: AppColors.primaryColor3,
+                                    strokeColor: AppColors.primaryColor3,
+                                    // initialRating: double.parse(
+                                    //     homestayModel.rating.toString()),
+                                    initialRating: double.parse(homestayModel
+                                        .rating!
+                                        .floor()
+                                        .toString()),
+                                    height: 45,
+                                    width: 200,
+                                    animationColor: Colors.red,
+                                    onRatingUpdate: (rating) {
+                                      debugPrint(rating.toString());
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '(${listFeedback.length} đánh giá)',
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor3),
+                              ),
+                              isCreateFeedback
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return ModalCreateFeedback(
+                                                homestayId:
+                                                    (widget.homestayDetailModel !=
+                                                            null)
+                                                        ? (widget
+                                                            .homestayDetailModel!
+                                                            .rooms![0]
+                                                            .homeStay!
+                                                            .id!)
+                                                        : homestayModel.id,
+                                              );
+                                            });
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: AppColors.primaryColor3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: const Text(
+                                            'Viết đánh giá',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: AppColors.primaryColor3,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: Image.asset(
+                              'assets/images/feedback_empty1.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const Text(
+                            'Chưa có đánh giá!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black26,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 );
         },

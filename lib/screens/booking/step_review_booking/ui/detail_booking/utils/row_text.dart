@@ -4,7 +4,10 @@ import 'package:mobile_home_travel/themes/app_colors.dart';
 
 class RowText {
   Widget richText(
-      {required String title, required String content, IconData? icon}) {
+      {required String title,
+      required String content,
+      IconData? icon,
+      TextStyle? textStyleContent}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,11 +36,12 @@ class RowText {
                 ),
                 TextSpan(
                   text: content,
-                  style: const TextStyle(
-                    height: 1.5,
-                    color: Colors.black87,
-                    fontSize: 12,
-                  ),
+                  style: textStyleContent ??
+                      const TextStyle(
+                        height: 1.5,
+                        color: Colors.black87,
+                        fontSize: 12,
+                      ),
                 ),
               ],
             ),

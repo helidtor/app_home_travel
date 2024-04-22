@@ -93,7 +93,8 @@ class _DetailBookingState extends State<DetailBooking> {
                         height: 10,
                       ),
                       RowText().richText(
-                          title: 'Mã đơn', content: '${bookingInfor.id}'),
+                          title: 'Mã đơn',
+                          content: bookingInfor.id!.substring(0, 13)),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Row(

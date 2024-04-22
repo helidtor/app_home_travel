@@ -24,6 +24,14 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         } else {
           emit(GetFeedbackFailure(error: 'Không có đánh giá!'));
         }
+      } else if (event is CreateFeedback) {
+        var checkCreate = await ApiHomestay.createFeedbackHomestay(
+            feedbackModel: event.feedbackModel);
+        if (checkCreate == true) {
+          emit(CreateFeedbackSuccess());
+        } else {
+          emit(CreateFeedbackFailure());
+        }
       }
     } catch (e) {
       emit(GetFeedbackFailure(error: 'Lỗi chi tiết đánh giá!'));

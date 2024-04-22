@@ -120,14 +120,20 @@ class ApiBooking {
 
   // <<<< Get list booking theo status >>>>
   static Future<List<BookingHomestayModel>?> getListBooking(
-      {required String status}) async {
+      {required String status, String? status2}) async {
     List<BookingHomestayModel>? listBooking;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);
     String? idTourist = prefs.getString("idUserCurrent");
+    var url;
     try {
-      var url =
-          "$baseUrl/api/v1/Bookings?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&status=$status&touristId=$idTourist";
+      if (status2 != null) {
+        url =
+            "$baseUrl/api/v1/Bookings?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&status=$status&status=$status2&touristId=$idTourist";
+      } else {
+        url =
+            "$baseUrl/api/v1/Bookings?pageSize=50&sortKey=CreatedDate&sortOrder=DESC&status=$status&touristId=$idTourist";
+      }
       Map<String, String> header = await ApiHeader.getHeader();
       header.addAll({'Authorization': 'Bearer $token'});
       var response = await http.get(Uri.parse(url.toString()), headers: header);
@@ -297,4 +303,6 @@ class ApiBooking {
     }
     return false;
   }
+
+  
 }

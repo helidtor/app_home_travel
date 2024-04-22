@@ -20,7 +20,7 @@ import 'package:mobile_home_travel/screens/homestay/homestay_detail/bloc/homesta
 import 'package:mobile_home_travel/screens/room/room_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
-import 'package:mobile_home_travel/widgets/notification/error_bottom.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class HomeStayDetail extends StatefulWidget {
@@ -111,7 +111,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
               Navigator.pop(context);
             } else if (state is GetDisplayFailure) {
               Navigator.pop(context);
-              showError(context, state.error);
+              ErrorNotiProvider().showError(context, state.error);
               imageDisplay = 'assets/images/error_loading.png';
             }
           },

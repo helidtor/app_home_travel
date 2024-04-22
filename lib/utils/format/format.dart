@@ -53,6 +53,10 @@ class FormatProvider {
     return DateFormat("dd/MM/yyyy").format(DateTime.parse(inputDate));
   }
 
+  String convertDateMonth(String inputDate) {
+    return DateFormat("dd/MM").format(DateTime.parse(inputDate));
+  }
+
   String convertDateTimeBooking(String inputDate) {
     return DateFormat("dd/MM/yy").format(DateTime.parse(inputDate));
   }

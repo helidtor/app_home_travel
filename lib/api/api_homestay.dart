@@ -54,7 +54,7 @@ class ApiHomestay {
         listHomestay = (postsJson as List)
             .map<HomestayModel>((postJson) => HomestayModel.fromMap(postJson))
             .toList();
-        print("Thông tin get all homestay by sort: $listHomestay");
+        // print("Thông tin get all homestay by sort: $listHomestay");
         if (listHomestay.isNotEmpty) {
           return listHomestay;
         } else {

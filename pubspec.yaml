@@ -61,6 +61,8 @@ dependencies:
   webview_flutter: ^4.7.0
   cloud_firestore: ^4.16.1
   animated_rating_bar: ^0.0.8
+  firebase_messaging: ^14.8.2
+  firebase_analytics: ^10.10.2
 
 dev_dependencies:
   flutter_test:

@@ -103,7 +103,7 @@ class FullMapState extends State<AutocompleteMap> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    backgroundColor: Colors.white,
                     titlePadding: EdgeInsets.zero,
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -187,7 +187,7 @@ class FullMapState extends State<AutocompleteMap> {
             });
 
             final url = Uri.parse(
-                'https://rsapi.goong.io/geocode?address=${coordinate['description']}&api_key=HZHyZbGnVTYLMnnm0v4RY7RVSXlScGp9nwd7LS6l');
+                'https://rsapi.goong.io/geocode?address=${coordinate['description']}&api_key=$keyMap');
             var response = await http.get(url);
             final jsonResponse = jsonDecode(response.body);
             details = jsonResponse['results'] as List<dynamic>;

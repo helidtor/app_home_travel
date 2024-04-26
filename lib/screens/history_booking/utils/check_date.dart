@@ -3,9 +3,11 @@ import 'package:mobile_home_travel/utils/format/format.dart';
 
 class checkDateProvider {
   bool isUpcomingDate(BookingHomestayModel bookingHomestayModel) {
-    //kiểm tra xem ngày hiện tại có trước ngày checkin không
+    String checkinTime =
+        '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkInTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())}';
+    //kiểm tra xem thời điểm hiện tại có trước ngày checkin không
     if (DateTime.now()
-        .isBefore(DateTime.parse(bookingHomestayModel.checkInDate!))) {
+        .isBefore(FormatProvider().convertStringToDateTime(checkinTime))) {
       return true;
     } else {
       return false;

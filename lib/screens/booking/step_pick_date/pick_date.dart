@@ -34,13 +34,14 @@ class _PickDateState extends State<PickDate> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(
-        'Giờ dùng để check là: ${FormatProvider().convertTo24HourFormat(FormatProvider().convertTimeEarlierOneHour(widget.checkinTime).toString())}');
+    // print(
+    //     'Giờ dùng để check là: ${FormatProvider().convertStringToDateTime('${FormatProvider().convertTo24HourFormat(FormatProvider().convertTimeEarlierOneHour(widget.checkinTime).toString())} - ${FormatProvider().convertDate(DateTime.now().toString())}')}');
     canPickToday = (DateTime.now().isBefore(FormatProvider()
             .convertStringToDateTime(
                 '${FormatProvider().convertTo24HourFormat(FormatProvider().convertTimeEarlierOneHour(widget.checkinTime).toString())} - ${FormatProvider().convertDate(DateTime.now().toString())}')))
         ? true //nếu thời gian hiện tại trước giờ checkin 1 tiếng thì cho chọn
         : false;
+    // print(canPickToday);
   }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {

@@ -172,7 +172,7 @@ class FormatProvider {
   String convertTo24HourFormat(String time) {
     DateTime dateTime = DateTime.parse(time);
     String formattedTime =
-        DateFormat('HH:mm a').format(dateTime); //định dạng giờ:phút sáng/chiều
+        DateFormat('hh:mm a').format(dateTime); //định dạng giờ:phút sáng/chiều
     return formattedTime;
   }
 
@@ -189,6 +189,7 @@ class FormatProvider {
     final dateTime = DateTime.parse(dateString);
     // Trừ đi một giờ
     final modifiedDateTime = dateTime.subtract(const Duration(hours: 1));
+    print('modifiedDateTime là $modifiedDateTime');
     return modifiedDateTime;
   }
 }

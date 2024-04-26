@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/firebase/auth_firebase.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
@@ -9,6 +12,7 @@ import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -29,13 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final userNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
-  bool _validateFirstName = false;
-  bool _validateLastName = false;
-  bool _validateEmail = false;
-  bool _validatePassword = false;
-  bool _validateRePassword = false;
-  bool _validateGender = false;
-  bool _validateDateOfBirth = false;
+  DateTime? _selectedDate;
   UserSignUpModel userSignUpModel = UserSignUpModel();
 
   @override
@@ -90,8 +88,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             userSignUpModel.firstName = value;
                           });
                         },
-                        errorText:
-                            _validateFirstName ? 'Vui lòng nhập họ!' : null,
                       ),
                     ),
                     const SizedBox(
@@ -109,8 +105,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             userSignUpModel.lastName = value;
                           });
                         },
-                        errorText:
-                            _validateLastName ? 'Vui lòng nhập tên!' : null,
                       ),
                     ),
                   ],
@@ -129,7 +123,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       userSignUpModel.email = value;
                     });
                   },
-                  errorText: _validateEmail ? 'Vui lòng nhập email!' : null,
                 ),
                 const SizedBox(
                   height: 5,
@@ -144,8 +137,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       userSignUpModel.phoneNumber = value;
                     });
                   },
-                  errorText:
-                      _validateEmail ? 'Vui lòng nhập số điện thoại!' : null,
                 ),
                 const SizedBox(
                   height: 5,
@@ -156,22 +147,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Row(
                   children: [
-                    // SizedBox(
-                    //   width: screenSize.width * 0.44,
-                    //   child: RoundTextField(
-                    //     hintText: "Giới tính",
-                    //     icon: "assets/icons/message_icon.png",
-                    //     textEditingController: genderController,
-                    //     textInputType: TextInputType.name,
-                    //     onChangeText: (value) {
-                    //       setState(() {
-                    //         userSignUpModel.gender = value;
-                    //       });
-                    //     },
-                    //     errorText:
-                    //         _validateGender ? 'Vui lòng chọn giới tính!' : null,
-                    //   ),
-                    // ),
                     SizedBox(
                       width: screenSize.width * 0.44,
                       child: Container(
@@ -222,26 +197,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-
                     const SizedBox(
                       width: 5,
                     ),
-                    SizedBox(
-                      width: screenSize.width * 0.44,
-                      child: RoundTextField(
-                        hintText: "Ngày sinh",
-                        icon: "assets/icons/message_icon.png",
-                        textEditingController: dateOfBirthController,
-                        textInputType: TextInputType.datetime,
-                        onChangeText: (value) {
-                          setState(() {
-                            userSignUpModel.dateOfBirth =
-                                FormatProvider().convertDateOfBirth(value);
-                          });
-                        },
-                        errorText: _validateDateOfBirth
-                            ? 'Vui lòng chọn ngày sinh!'
-                            : null,
+                    GestureDetector(
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: Container(
+                        width: screenSize.width * 0.44,
+                        decoration: BoxDecoration(
+                          color: AppColors.lightGrayColor,
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 16),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                FontAwesomeIcons.calendar,
+                                size: 20,
+                                color: AppColors.grayColor.withOpacity(0.6),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              _selectedDate == null
+                                  ? const Text(
+                                      'Ngày sinh',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.grayColor,
+                                      ),
+                                    )
+                                  : Text(
+                                      DateFormat('dd/MM/yyyy')
+                                          .format(_selectedDate!),
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        color: AppColors.blackColor,
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -261,8 +264,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       userSignUpModel.password = value;
                     });
                   },
-                  errorText:
-                      _validatePassword ? 'Vui lòng nhập mật khẩu!' : null,
                   rightIcon: TextButton(
                       onPressed: () {},
                       child: Container(
@@ -285,9 +286,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   icon: "assets/icons/lock_icon.png",
                   textEditingController: rePasswordController,
                   textInputType: TextInputType.text,
-                  errorText: _validateRePassword
-                      ? 'Vui lòng nhập lại mật khẩu!'
-                      : null,
                   isObscureText: true,
                   onChangeText: (value) {
                     setState(() {
@@ -342,6 +340,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundGradientButton(
                   title: "Đăng ký",
                   onPressed: () async {
+                    if (_selectedDate == null) {
+                      ErrorNotiProvider()
+                          .ToastError(context, 'Bạn chưa chọn ngày sinh!');
+                    } else {
+                      if (_selectedDate!.isAfter(DateTime.now()
+                          .subtract(const Duration(days: 6570)))) {
+                        ErrorNotiProvider()
+                            .showError(context, 'Người dùng chưa đủ 18 tuổi!');
+                        return;
+                      } else {
+                        userSignUpModel.dateOfBirth = DateFormat('yyyy-MM-dd')
+                            .format(_selectedDate!)
+                            .toString();
+                      }
+                    }
                     userSignUpModel.email = emailController.text;
                     userSignUpModel.phoneNumber = phoneNumberController.text;
                     userSignUpModel.password = passwordController.text;
@@ -353,12 +366,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           userSignUpModel: userSignUpModel);
                       if (checkSignUp == true) {
                         SuccessNotiProvider()
-                            .showSuccess(context, 'Đăng ký thành công');
+                            .ToastSuccess(context, 'Đăng ký thành công');
                         router.go(RouteName.login);
                       } else {
                         print("Đăng ký không thành công: $checkSignUp");
-                        ErrorNotiProvider()
-                            .showError(context, 'Đăng ký thất bại');
+                        ErrorNotiProvider().showError(
+                            context, 'Vui lòng nhập đủ các trường dữ liệu!');
                       }
                     } catch (e) {
                       print("Đăng ký không thành công: $e");
@@ -395,34 +408,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: () {},
-                //       child: Container(
-                //         width: 50,
-                //         height: 50,
-                //         alignment: Alignment.center,
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(14),
-                //           border: Border.all(
-                //             color: AppColors.primaryColor1.withOpacity(0.5),
-                //             width: 1,
-                //           ),
-                //         ),
-                //         child: Image.asset(
-                //           "assets/icons/google_icon.png",
-                //           width: 20,
-                //           height: 20,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 // * Chuyển sang màn hình đăng nhập
                 TextButton(
                     onPressed: () {
@@ -454,5 +439,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1925),
+      lastDate: DateTime.now(),
+      confirmText: 'Xác nhận',
+      cancelText: 'Hủy',
+      helpText: 'Chọn ngày sinh',
+      fieldLabelText: 'Nhập ngày sinh',
+      fieldHintText: 'tháng/ngày/năm',
+      errorFormatText: 'Định dạng sai',
+      errorInvalidText: 'Không hợp lệ',
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme:
+                const ColorScheme.light(primary: AppColors.primaryColor1),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 }

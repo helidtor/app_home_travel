@@ -25,8 +25,8 @@ class ErrorNotiProvider {
           color: Colors.red,
         ),
         icon: const Icon(
-          Icons.check_circle,
-          color: Colors.green,
+          Icons.error_rounded,
+          color: Colors.red,
         ),
         foregroundColor: Colors.black,
         context: context,
@@ -35,7 +35,7 @@ class ErrorNotiProvider {
         title: TextContent(
           contentText: errorMessage,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.black,
         ),
         autoCloseDuration: const Duration(milliseconds: 1500),
         animationDuration: const Duration(milliseconds: 500),

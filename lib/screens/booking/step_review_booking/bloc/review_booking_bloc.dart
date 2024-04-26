@@ -28,7 +28,7 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
               bookingCreated: bookingCreated[0], userProfile: userProfile));
         } else {
           emit(ReviewBookingFailure(
-              error: 'Lỗi lấy thông tin đơn booking vừa tạo'));
+              error: 'Lỗi lấy thông tin đơn đặt vừa tạo!'));
         }
       } else if (event is CheckoutBookingByCard) {
         String? urlCheckout =
@@ -36,7 +36,7 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         if (urlCheckout != null) {
           emit(CheckoutSuccessByCard(urlCheckout: urlCheckout));
         } else {
-          emit(ReviewBookingFailure(error: 'Lỗi thanh toán bằng thẻ'));
+          emit(ReviewBookingFailure(error: 'Lỗi thanh toán VN-PAY!'));
         }
       } else if (event is CheckoutBookingByWallet) {
         bool? isSuccess = await ApiBooking.checkoutDepositByWallet(
@@ -44,7 +44,7 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         if (isSuccess != null) {
           emit(CheckoutSuccessByWallet(noti: 'Thanh toán thành công'));
         } else {
-          emit(ReviewBookingFailure(error: 'Lỗi thanh toán bằng ví'));
+          emit(ReviewBookingFailure(error: 'Lỗi thanh toán bằng ví!'));
         }
       }
     } catch (e) {

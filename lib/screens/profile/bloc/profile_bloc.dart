@@ -23,7 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           if (user != null) {
             emit(ProfileStateSuccess(userProfileModel: user));
           } else {
-            emit(const ProfileStateFailure(error: "Lỗi thông tin"));
+            emit(const ProfileStateFailure(error: "Lỗi thông tin cá nhân!"));
           }
         } else if (event is UpdateProfileEvent) {
           var check =
@@ -31,11 +31,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           if (check == true) {
             emit(UpdateProfileSuccess());
           } else {
-            emit(const ProfileStateFailure(error: "Lỗi update profile"));
+            emit(const ProfileStateFailure(error: "Cập nhật thất bại!"));
           }
         }
       } else {
-        emit(const ProfileStateFailure(error: "Lỗi lấy id"));
+        emit(const ProfileStateFailure(error: "Lỗi id"));
       }
     } catch (e) {
       emit(const ProfileStateFailure(error: "Lỗi"));

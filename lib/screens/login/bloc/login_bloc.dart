@@ -31,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } else if (event is StartLoginEvent) {
         if (event.username == "" || event.password == "") {
           emit(const LoginFailure(
-              error: "Tài khoản & mật khẩu không được để trống!"));
+              error: "Số điện thoại & mật khẩu không được để trống!"));
         } else {
           var user = await ApiUser.login(
               phoneNumber: event.username, password: event.password);
@@ -42,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             emit(LoginSuccessState(userProfileModel: userLogin!));
           } else {
             emit(const LoginFailure(
-                error: "Tài khoản hoặc mật khẩu không chính xác!"));
+                error: "Số điện thoại hoặc mật khẩu không chính xác!"));
           }
         }
       }

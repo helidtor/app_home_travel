@@ -52,7 +52,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         }
       }
     } catch (e) {
-      emit(const HistoryFailure(error: "Lỗi lấy lịch sử đơn đặt"));
+      emit(const HistoryFailure(error: "Lỗi hiển thị lịch sử đơn đặt!"));
     }
   }
 }

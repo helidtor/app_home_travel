@@ -60,7 +60,9 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                 bookingHomestayDetail.roomId = e;
                 var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
                 if (roomPicked != null) {
-                  bookingHomestayDetail.price = roomPicked.price!;
+                  bookingHomestayDetail.price = roomPicked.price! *
+                          event.quantityNormalDays +
+                      (roomPicked.weekendPrice! * event.quantityWeekendDays);
                 }
                 //create booking detail
                 var checkCreateBookingDetail =
@@ -71,7 +73,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                 } else {
                   isSuccessAll = false;
                   emit(const CreateBookingFailure(
-                      error: 'Bạn đang có một đơn đợi xác nhận!'));
+                      error: 'Bạn đang có một đơn chờ xác nhận!'));
                 }
               }
             } else {
@@ -106,7 +108,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
       }
     } catch (e) {
       print("Loi CreateBooking: $e");
-      emit(const CreateBookingFailure(error: "Lỗi đơn đặt phòng"));
+      emit(const CreateBookingFailure(error: "Lỗi tạo đơn đặt phòng"));
     }
   }
 }

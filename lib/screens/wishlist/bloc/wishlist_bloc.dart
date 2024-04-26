@@ -19,12 +19,12 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
         if (listWishlist!.isNotEmpty) {
           emit(GetWishlistSuccess(listWishlist: listWishlist));
         } else {
-          emit(const WishlistEmpty(noti: 'Danh sách trống'));
+          emit(const WishlistEmpty(noti: 'Chưa có homestay yêu thích!'));
         }
       }
     } catch (e) {
       print("Loi get Wishlist: $e");
-      emit(const WishlistError(error: "Lỗi danh sách homestay yêu thích"));
+      emit(const WishlistError(error: "Lỗi danh sách homestay yêu thích!"));
     }
   }
 }

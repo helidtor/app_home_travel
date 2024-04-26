@@ -1,15 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/list_room_empty.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PickDate extends StatefulWidget {
-  const PickDate({super.key});
+  String checkinTime;
+  PickDate({
+    super.key,
+    required this.checkinTime,
+  });
 
   @override
   State<PickDate> createState() => _PickDateState();
@@ -22,6 +28,20 @@ class _PickDateState extends State<PickDate> {
   String _checkOutDate = '';
   int quantityNormalDays = 0;
   int quantityWeekendDays = 0;
+  bool canPickToday = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(
+        'Giờ dùng để check là: ${FormatProvider().convertTo24HourFormat(FormatProvider().convertTimeEarlierOneHour(widget.checkinTime).toString())}');
+    canPickToday = (DateTime.now().isBefore(FormatProvider()
+            .convertStringToDateTime(
+                '${FormatProvider().convertTo24HourFormat(FormatProvider().convertTimeEarlierOneHour(widget.checkinTime).toString())} - ${FormatProvider().convertDate(DateTime.now().toString())}')))
+        ? true //nếu thời gian hiện tại trước giờ checkin 1 tiếng thì cho chọn
+        : false;
+  }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(
@@ -107,6 +127,10 @@ class _PickDateState extends State<PickDate> {
             margin:
                 const EdgeInsets.only(left: 5, right: 5, top: 30, bottom: 5),
             child: SfDateRangePicker(
+              minDate: canPickToday
+                  ? DateTime.now()
+                  : DateTime.now().add(const Duration(days: 1)),
+              maxDate: DateTime.now().add(const Duration(days: 60)),
               viewSpacing: 50,
               enableMultiView: true,
               enablePastDates: false,

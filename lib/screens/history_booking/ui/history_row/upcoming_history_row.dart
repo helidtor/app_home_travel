@@ -182,7 +182,7 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                                 BorderRadius.circular(5),
                                           ),
                                           child: const Text(
-                                            'Trả nốt',
+                                            'T.toán nốt',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,
@@ -303,8 +303,8 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                   Positioned(
                     top: 0,
                     child: Container(
-                      width: 55,
-                      height: 55,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius:

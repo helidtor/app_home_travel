@@ -124,10 +124,7 @@ class FormatProvider {
     for (DateTime date = startDate;
         (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
         date = date.add(const Duration(days: 1))) {
-      if (date.weekday != DateTime.saturday &&
-          date.weekday != DateTime.sunday) {
-        count++;
-      }
+      count++;
     }
     return count;
   }
@@ -170,5 +167,28 @@ class FormatProvider {
     } else {
       return 0;
     }
+  }
+
+  String convertTo24HourFormat(String time) {
+    DateTime dateTime = DateTime.parse(time);
+    String formattedTime =
+        DateFormat('HH:mm a').format(dateTime); //định dạng giờ:phút sáng/chiều
+    return formattedTime;
+  }
+
+  DateTime convertStringToDateTime(String dateString) {
+    // Định dạng của chuỗi đầu vào
+    final inputFormat = DateFormat('HH:mm a - dd/MM/yyyy');
+    // Parse chuỗi thành DateTime
+    final dateTime = inputFormat.parse(dateString);
+    return dateTime;
+  }
+
+  DateTime convertTimeEarlierOneHour(String dateString) {
+    // Parse chuỗi thành DateTime
+    final dateTime = DateTime.parse(dateString);
+    // Trừ đi một giờ
+    final modifiedDateTime = dateTime.subtract(const Duration(hours: 1));
+    return modifiedDateTime;
   }
 }

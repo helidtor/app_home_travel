@@ -1,4 +1,5 @@
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 
 class checkDateProvider {
   bool isUpcomingDate(BookingHomestayModel bookingHomestayModel) {
@@ -12,18 +13,21 @@ class checkDateProvider {
   }
 
   bool isOngoingDate(BookingHomestayModel bookingHomestayModel) {
+    String checkinTime =
+        '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkInTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())}';
+    String checkoutTime = (bookingHomestayModel.checkInDate !=
+            bookingHomestayModel.checkOutDate) //nếu chỉ chọn đặt 1 ngày
+        ? '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}'
+        : '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())}';
     //kiểm tra xem ngày hiện tại có nằm trong khoảng ngày checkin - checkout không
     if ((DateTime.now().isAfter(
-              DateTime.parse(bookingHomestayModel.checkInDate!),
+              FormatProvider().convertStringToDateTime(checkinTime),
             ) &&
             DateTime.now().isBefore(
-              DateTime.parse(bookingHomestayModel.checkOutDate!),
+              FormatProvider().convertStringToDateTime(checkoutTime),
             )) ||
         DateTime.now().isAtSameMomentAs(
-          DateTime.parse(bookingHomestayModel.checkInDate!),
-        ) ||
-        DateTime.now().isAtSameMomentAs(
-          DateTime.parse(bookingHomestayModel.checkOutDate!),
+          FormatProvider().convertStringToDateTime(checkinTime),
         )) {
       return true;
     } else {
@@ -32,9 +36,16 @@ class checkDateProvider {
   }
 
   bool isCompleteDate(BookingHomestayModel bookingHomestayModel) {
-    //kiểm tra xem ngày hiện tại có trước ngày checkin không
+    String checkoutTime = (bookingHomestayModel.checkInDate !=
+            bookingHomestayModel.checkOutDate) //nếu chỉ chọn đặt 1 ngày
+        ? '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}'
+        : '${FormatProvider().convertTo24HourFormat(bookingHomestayModel.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())}';
+    //kiểm tra xem ngày hiện tại có nằm trong khoảng ngày checkin - checkout không
     if (DateTime.now()
-        .isAfter(DateTime.parse(bookingHomestayModel.checkOutDate!))) {
+            .isAfter(FormatProvider().convertStringToDateTime(checkoutTime)) ||
+        DateTime.now().isAtSameMomentAs(
+          FormatProvider().convertStringToDateTime(checkoutTime),
+        )) {
       return true;
     } else {
       return false;

@@ -75,7 +75,7 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                     width: 10,
                   ),
                   SizedBox(
-                    width: screenWidth * 0.6,
+                    width: screenWidth * 0.7,
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.center,

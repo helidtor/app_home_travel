@@ -56,7 +56,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
           Icon(Icons.search, color: Colors.white),
           Icon(Icons.chat, color: Colors.white),
           Icon(FontAwesomeIcons.bagShopping, color: Colors.white),
-          Icon(Icons.settings, color: Colors.white),
+          Icon(Icons.person, color: Colors.white),
         ],
       ),
     );

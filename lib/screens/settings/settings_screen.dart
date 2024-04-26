@@ -188,7 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     RowSetting(
                       weightLine: 0,
-                      textHeader: "Số dư",
+                      textHeader: "Ví của tôi",
                       textDescribe: "Quản lý ví của bạn",
                       icon: Icons.local_atm_rounded,
                       onPressed: () {

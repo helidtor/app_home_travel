@@ -71,7 +71,7 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                     width: 10,
                   ),
                   SizedBox(
-                    width: screenWidth * 0.6,
+                    width: screenWidth * 0.7,
                     child: Column(
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +81,7 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                             content: bookingHomestayModel.id!.substring(0, 13),
                             icon: Icons.qr_code),
                         RowText().richText(
-                            title: 'Thời gian đặt',
+                            title: 'Thời gian tạo',
                             content: FormatProvider().convertDateTime(
                                 bookingHomestayModel.createdDate.toString()),
                             icon: Icons.date_range_outlined),

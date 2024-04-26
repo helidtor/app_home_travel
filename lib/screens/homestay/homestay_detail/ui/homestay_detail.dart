@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:mobile_home_travel/models/homestay/general_homestay/general_amenitie_selecteds_model.dart';
@@ -557,6 +558,80 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 20, bottom: 25),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Thời gian nhận & trả phòng',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'NHẬN PHÒNG',
+                                            style: TextStyle(
+                                                color: AppColors.primaryColor3,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                              'từ ${FormatProvider().convertTo24HourFormat(homestayDetail!.checkInTime.toString())}'),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'TRẢ PHÒNG',
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor3,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                            'lúc ${FormatProvider().convertTo24HourFormat(homestayDetail!.checkOutTime.toString())}'),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 25,
+                          color: AppColors.backgroundApp,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
                               left: 20, right: 20, top: 25, bottom: 25),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -576,7 +651,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                   : '✅ Đặt trước hoàn toàn miễn phí'),
                               Text((homestayDetail!.penaltyDate != null &&
                                       homestayDetail!.penaltyDate != 0)
-                                  ? '✅ Hủy đơn miễn phí trước ${homestayDetail!.penaltyDate} ngày'
+                                  ? '✅ Hủy đơn miễn phí trước ${homestayDetail!.penaltyDate} ngày nhận phòng'
                                   : '✅ Hủy đơn miễn phí bất cứ lúc nào'),
                             ],
                           ),
@@ -620,7 +695,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const PickDate()),
+                                        builder: (context) => PickDate(checkinTime: homestayDetail!.checkInTime!,)),
                                   );
                                 },
                               ),

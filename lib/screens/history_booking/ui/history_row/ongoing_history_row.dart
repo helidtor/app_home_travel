@@ -82,7 +82,7 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                           width: 10,
                         ),
                         SizedBox(
-                          width: screenWidth * 0.6,
+                          width: screenWidth * 0.7,
                           child: Column(
                             // crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +183,7 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                                 BorderRadius.circular(5),
                                           ),
                                           child: const Text(
-                                            'Trả nốt',
+                                            'Thanh toán nốt',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,
@@ -195,48 +195,48 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                     ),
                                   )
                                 : const SizedBox(),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          FeedbackHomestayScreen(
-                                        homestayModel: bookingHomestayModel
-                                            .bookingDetails?[0].room!.homeStay!,
-                                        isCreateFeedback: true,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10, right: 5),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor3
-                                          .withOpacity(0.8),
-                                      border: Border.all(
-                                        color: Colors.black.withOpacity(0.4),
-                                        width: 0.8,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Text(
-                                      'Viết đánh giá',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Expanded(
+                            //   child: GestureDetector(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) =>
+                            //               FeedbackHomestayScreen(
+                            //             homestayModel: bookingHomestayModel
+                            //                 .bookingDetails?[0].room!.homeStay!,
+                            //             isCreateFeedback: true,
+                            //           ),
+                            //         ),
+                            //       );
+                            //     },
+                            //     child: Padding(
+                            //       padding:
+                            //           const EdgeInsets.only(left: 5, right: 5),
+                            //       child: Container(
+                            //         alignment: Alignment.center,
+                            //         height: 25,
+                            //         decoration: BoxDecoration(
+                            //           color: AppColors.primaryColor3
+                            //               .withOpacity(0.8),
+                            //           border: Border.all(
+                            //             color: Colors.black.withOpacity(0.4),
+                            //             width: 0.8,
+                            //           ),
+                            //           borderRadius: BorderRadius.circular(5),
+                            //         ),
+                            //         child: const Text(
+                            //           'Viết đánh giá',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 14,
+                            //             color: Colors.white,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
@@ -296,8 +296,8 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                   Positioned(
                     top: 0,
                     child: Container(
-                      width: 55,
-                      height: 55,
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius:

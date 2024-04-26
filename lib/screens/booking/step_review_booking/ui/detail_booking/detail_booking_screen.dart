@@ -28,12 +28,22 @@ class DetailBooking extends StatefulWidget {
 
 class _DetailBookingState extends State<DetailBooking> {
   late BookingHomestayModel bookingInfor;
+  String checkinTime = '';
+  String checkoutTime = '';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     bookingInfor = widget.bookingInfor;
+    setState(() {
+      checkinTime =
+          '${FormatProvider().convertTo24HourFormat(bookingInfor.bookingDetails![0].room!.homeStay!.checkInTime.toString())} - ${FormatProvider().convertDate(bookingInfor.checkInDate.toString())}';
+      checkoutTime = (bookingInfor.checkInDate !=
+              bookingInfor.checkOutDate) //nếu chỉ chọn đặt 1 ngày
+          ? '${FormatProvider().convertTo24HourFormat(bookingInfor.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingInfor.checkOutDate.toString())}'
+          : '${FormatProvider().convertTo24HourFormat(bookingInfor.bookingDetails![0].room!.homeStay!.checkOutTime.toString())} - ${FormatProvider().convertDate(bookingInfor.checkInDate.toString())}';
+    });
   }
 
   @override
@@ -139,12 +149,15 @@ class _DetailBookingState extends State<DetailBooking> {
                         ),
                       ),
                       RowText().richText(
-                          title: 'Thời gian',
-                          content: (bookingInfor.checkInDate !=
-                                  bookingInfor.checkOutDate)
-                              ? '${FormatProvider().convertDateTimeBooking(bookingInfor.checkInDate.toString())} - ${FormatProvider().convertDateTimeBooking(bookingInfor.checkOutDate.toString())}'
-                              : FormatProvider().convertDateTimeBooking(
-                                  bookingInfor.checkInDate.toString()),
+                          title: 'Thời gian nhận phòng',
+                          content: checkinTime,
+                          icon: Icons.calendar_month_outlined),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      RowText().richText(
+                          title: 'Thời gian trả phòng',
+                          content: checkoutTime,
                           icon: Icons.calendar_month_outlined),
                       const SizedBox(
                         height: 2,
@@ -153,7 +166,7 @@ class _DetailBookingState extends State<DetailBooking> {
                         title: 'Tổng số ngày',
                         content: (bookingInfor.checkInDate !=
                                 bookingInfor.checkOutDate)
-                            ? '${FormatProvider().countDays(DateTime.parse(bookingInfor.checkInDate!), DateTime.parse(bookingInfor.checkOutDate!))} ngày'
+                            ? '${FormatProvider().countDays(FormatProvider().convertStringToDateTime(checkinTime), FormatProvider().convertStringToDateTime(checkoutTime))} ngày'
                             : '1 ngày',
                         icon: Icons.numbers,
                       ),

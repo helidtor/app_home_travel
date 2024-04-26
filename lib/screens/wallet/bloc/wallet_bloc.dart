@@ -35,7 +35,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         if (link != null) {
           emit(AddFundWalletSuccess(link: link));
         } else {
-          emit(const AddFundWalletFailure(error: 'Lỗi nạp tiền'));
+          emit(const AddFundWalletFailure(error: 'Lỗi nạp tiền!'));
         }
       }
     } catch (e) {

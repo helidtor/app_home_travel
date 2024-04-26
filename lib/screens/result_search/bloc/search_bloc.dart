@@ -20,10 +20,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         if (listHomestay != null && listHomestay.isNotEmpty) {
           emit(SearchSuccess(list: listHomestay));
         } else if (listHomestay!.isEmpty) {
-          emit(const SearchEmpty(noti: "Không tìm thấy homestay!"));
+          emit(const SearchEmpty(noti: "Không tìm thấy homestay nào!"));
         }
       } else {
-        emit(const SearchError(error: "Lỗi tìm kiếm homestay"));
+        emit(const SearchError(error: "Lỗi tìm kiếm homestay!"));
       }
     } catch (e) {
       print("Loi tim kiem homestay: $e");

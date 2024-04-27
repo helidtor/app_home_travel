@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
-import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,9 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RoomPreview extends StatefulWidget {
   RoomModel roomModel;
   RoomPreview({
-    Key? key,
+    super.key,
     required this.roomModel,
-  }) : super(key: key);
+  });
 
   @override
   State<RoomPreview> createState() => _RoomPreviewState();

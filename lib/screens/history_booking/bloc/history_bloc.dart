@@ -38,6 +38,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           case 'OVERDUE':
             listBooking =
                 await ApiBooking.getListBooking(status: 'PAYMENT SETTLEMENT');
+          case 'REFUND':
+            listBooking =
+                await ApiBooking.getListBooking(status: 'REFUND');
           default:
             listBooking = await ApiBooking.getListBooking(status: 'PENDING');
         }

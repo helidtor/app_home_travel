@@ -7,6 +7,7 @@ import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:mobile_home_travel/widgets/others/row_setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -288,6 +289,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onPressed: () {
                         clearToken();
                         router.go(RouteName.login);
+                        SuccessNotiProvider()
+                            .ToastSuccess(context, 'Đăng xuất thành công!');
                       },
                       weightLine: 0,
                       textHeader: "Đăng xuất",
@@ -296,29 +299,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
               ),
-              // const Text(
-              //   'Profile',
-              //   style: TextStyle(
-              //     color: Colors.blue,
-              //     decoration: TextDecoration.underline,
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // InkWell(
-              //   onTap: () {
-              //     clearToken();
-              //     router.go(RouteName.login);
-              //   },
-              //   child: const Text(
-              //     'Logout',
-              //     style: TextStyle(
-              //       color: Colors.blue,
-              //       decoration: TextDecoration.underline,
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

@@ -24,11 +24,35 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         var bookingCreated = await ApiBooking.getListBooking(status: 'PENDINg');
         var userProfile = await ApiUser.getProfile(id: idTourist);
         if (bookingCreated != null && userProfile != null) {
-          emit(GetBookingPendingCreatedSuccess(
-              bookingCreated: bookingCreated[0], userProfile: userProfile));
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          var idHomestay = prefs.getString("idHomestay");
+          if (idHomestay != null) {
+            var listPolicies =
+                await ApiHomestay.getAllPolicy(homestayId: idHomestay);
+            if (listPolicies != null) {
+              print('Danh sách policy $listPolicies');
+              emit(GetBookingPendingCreatedSuccessWithPolicy(
+                  listPolicies: listPolicies,
+                  bookingCreated: bookingCreated[0],
+                  userProfile: userProfile));
+            } else {
+              emit(GetBookingPendingCreatedSuccess(
+                  bookingCreated: bookingCreated[0], userProfile: userProfile));
+            }
+          }
         } else {
           emit(ReviewBookingFailure(
               error: 'Lỗi lấy thông tin đơn đặt vừa tạo!'));
+        }
+      }
+      if (event is GetPolicyHomestayFromPending) {
+        var listPolicies =
+            await ApiHomestay.getAllPolicy(homestayId: event.idHomestay!);
+        if (listPolicies != null) {
+          print('Danh sách policy $listPolicies');
+          emit(GetPolicySuccessFromPending(listPolicies: listPolicies));
+        } else {
+          emit(GetPolicyFailFromPending());
         }
       } else if (event is CheckoutBookingByCard) {
         String? urlCheckout =

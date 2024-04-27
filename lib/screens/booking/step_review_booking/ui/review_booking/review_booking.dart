@@ -6,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
+import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
+import 'package:mobile_home_travel/models/homestay/policy/policy_title_model.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/policy_dialog.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
@@ -14,7 +17,7 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/revi
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/detail_booking_screen.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/checkout_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
@@ -48,6 +51,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
   UserProfileModel? touristInfor;
   double widthDisplay = 270;
   double heightDisplay = 270;
+  List<HomestayPolicySelectedModel> listPolicies = [];
 
   @override
   void initState() {
@@ -60,6 +64,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
       });
       bookingInfor = widget.bookingHomestayModel;
       touristInfor = widget.userProfileModel;
+      if (bookingInfor != null) {
+        _bloc.add(GetPolicyHomestayFromPending(
+            bookingInfor!.bookingDetails![0].room!.homeStayId!));
+      }
     } else {
       isAllowBack = widget.isAllowBack;
       if (!isAllowBack) {
@@ -128,6 +136,11 @@ class _ReviewBookingState extends State<ReviewBooking> {
             Navigator.pop(context);
             bookingInfor = state.bookingCreated;
             touristInfor = state.userProfile;
+          } else if (state is GetBookingPendingCreatedSuccessWithPolicy) {
+            Navigator.pop(context);
+            bookingInfor = state.bookingCreated;
+            touristInfor = state.userProfile;
+            listPolicies = state.listPolicies;
           } else if (state is ReviewBookingFailure) {
             Navigator.pop(context);
             ErrorNotiProvider().showError(context, state.error);
@@ -136,6 +149,11 @@ class _ReviewBookingState extends State<ReviewBooking> {
               heightDisplay = 270;
               imageDisplay = 'assets/images/error_loading.png';
             });
+          } else if (state is GetPolicySuccessFromPending) {
+            Navigator.pop(context);
+            listPolicies = state.listPolicies;
+          } else if (state is GetPolicyFailFromPending) {
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {
@@ -530,13 +548,42 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                         });
                                       },
                                     ),
-                                    const Expanded(
-                                      child: Text(
-                                          "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
-                                          style: TextStyle(
-                                            color: AppColors.grayColor,
-                                            fontSize: 12,
-                                          )),
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('Chính sách là: $listPolicies');
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return PolicyDialog(
+                                              listPolicies: listPolicies,
+                                            ); // Hiển thị hộp thoại
+                                          },
+                                        );
+                                      },
+                                      child: RichText(
+                                        overflow: TextOverflow.clip,
+                                        text: const TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  'Tiếp tục đồng nghĩa chấp nhận ',
+                                              style: TextStyle(
+                                                color: AppColors.grayColor,
+                                                fontSize: 13.5,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                                text:
+                                                    'Chính sách và\nĐiều khoản của Homestay',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 87, 81, 82),
+                                                  fontSize: 13,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -556,13 +603,52 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                             });
                                           },
                                         ),
-                                        const Expanded(
-                                          child: Text(
-                                              "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
-                                              style: TextStyle(
-                                                color: AppColors.grayColor,
-                                                fontSize: 12,
-                                              )),
+                                        // const Expanded(
+                                        //   child: Text(
+                                        //       "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Homestay",
+                                        //       style: TextStyle(
+                                        //         color: AppColors.grayColor,
+                                        //         fontSize: 12,
+                                        //       )),
+                                        // ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            print(
+                                                'Chính sách là: $listPolicies');
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return PolicyDialog(
+                                                  listPolicies: listPolicies,
+                                                ); // Hiển thị hộp thoại
+                                              },
+                                            );
+                                          },
+                                          child: RichText(
+                                            overflow: TextOverflow.clip,
+                                            text: const TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      'Tiếp tục đồng nghĩa chấp nhận ',
+                                                  style: TextStyle(
+                                                    color: AppColors.grayColor,
+                                                    fontSize: 13.5,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        'Chính sách và\nĐiều khoản của Homestay',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color.fromARGB(
+                                                          255, 87, 81, 82),
+                                                      fontSize: 13,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
                                         )
                                       ],
                                     ),
@@ -596,18 +682,22 @@ class _ReviewBookingState extends State<ReviewBooking> {
               width: screenWidth * 0.85,
               title: 'Xác nhận',
               onPressed: () {
-                // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
-                //hiện khung nhập giá
-                showModalBottomSheet<void>(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CheckoutBooking(
-                      bookingHomestayModel: bookingInfor!,
-                      balance: touristInfor!.wallets!.first.balance!,
-                    );
-                  },
-                );
+                isCheck
+                    ?
+                    // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
+                    //hiện khung nhập giá
+                    showModalBottomSheet<void>(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CheckoutBooking(
+                            bookingHomestayModel: bookingInfor!,
+                            balance: touristInfor!.wallets!.first.balance!,
+                          );
+                        },
+                      )
+                    : ErrorNotiProvider()
+                        .showError(context, 'Bạn chưa chấp nhận chính sách!');
               },
               textSize: 18,
             )
@@ -617,18 +707,22 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   width: screenWidth * 0.85,
                   title: 'Xác nhận',
                   onPressed: () {
-                    // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
-                    //hiện khung nhập giá
-                    showModalBottomSheet<void>(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CheckoutBooking(
-                          bookingHomestayModel: bookingInfor!,
-                          balance: touristInfor!.wallets!.first.balance!,
-                        );
-                      },
-                    );
+                    isCheck
+                        ?
+                        // _bloc.add(CheckoutBookingByCard(idBooking: booking.id!));
+                        //hiện khung nhập giá
+                        showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CheckoutBooking(
+                                bookingHomestayModel: bookingInfor!,
+                                balance: touristInfor!.wallets!.first.balance!,
+                              );
+                            },
+                          )
+                        : ErrorNotiProvider().showError(
+                            context, 'Bạn chưa chấp nhận chính sách!');
                   },
                   textSize: 18,
                 )

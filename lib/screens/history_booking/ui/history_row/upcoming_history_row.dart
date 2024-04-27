@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/checkout_booking.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/screens/history_booking/utils/cancel_function.dart';
 import 'package:mobile_home_travel/screens/history_booking/utils/check_date.dart';
@@ -48,12 +48,12 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: 200,
+              height: 215,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    height: 175, //để viền container cắt giữa ảnh
+                    height: 185, //để viền container cắt giữa ảnh
                     width: screenWidth * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -89,6 +89,14 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                     content: bookingHomestayModel.id!
                                         .substring(0, 13),
                                     icon: Icons.qr_code),
+                                RowText().richText(
+                                    title: 'Tên homestay',
+                                    content: bookingHomestayModel
+                                        .bookingDetails![0]
+                                        .room!
+                                        .homeStay!
+                                        .name!,
+                                    icon: Icons.home_outlined),
                                 RowText().richText(
                                     title: 'Thời gian đặt',
                                     content: FormatProvider().convertDateTime(

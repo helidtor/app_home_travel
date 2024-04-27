@@ -13,6 +13,8 @@ import 'package:mobile_home_travel/screens/profile/bloc/profile_state.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/field_profile.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
+import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 import 'package:toastification/toastification.dart';
 
@@ -77,51 +79,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 isShow = true;
               } else if (state is UpdateProfileSuccess) {
                 Navigator.pop(context);
-                toastification.show(
-                    pauseOnHover: false,
-                    progressBarTheme: const ProgressIndicatorThemeData(
-                      color: Colors.green,
-                    ),
-                    icon: const Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ),
-                    foregroundColor: Colors.black,
-                    context: context,
-                    type: ToastificationType.success,
-                    style: ToastificationStyle.minimal,
-                    title: const TextContent(
-                      contentText: "Cập nhật thành công!",
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    autoCloseDuration: const Duration(milliseconds: 1500),
-                    animationDuration: const Duration(milliseconds: 500),
-                    alignment: Alignment.topRight);
+                SuccessNotiProvider()
+                    .ToastSuccess(context, 'Cập nhật thành công!');
               } else if (state is ProfileStateFailure) {
                 Navigator.pop(context);
-                toastification.show(
-                    pauseOnHover: false,
-                    showProgressBar: false,
-                    progressBarTheme: const ProgressIndicatorThemeData(
-                      color: Colors.red,
-                    ),
-                    icon: const Icon(
-                      Icons.error_outline_rounded,
-                      color: Colors.red,
-                    ),
-                    foregroundColor: Colors.black,
-                    context: context,
-                    type: ToastificationType.error,
-                    style: ToastificationStyle.flatColored,
-                    title: TextContent(
-                      contentText: state.error,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    autoCloseDuration: const Duration(milliseconds: 2500),
-                    animationDuration: const Duration(milliseconds: 500),
-                    alignment: Alignment.topCenter);
+                ErrorNotiProvider().ToastError(context, state.error);
               }
             },
             builder: (context, state) {

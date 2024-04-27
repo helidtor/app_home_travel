@@ -7,6 +7,8 @@ import 'package:mobile_home_travel/models/booking/wishlist_model.dart';
 import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
+import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
+import 'package:mobile_home_travel/models/homestay/policy/policy_title_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiHomestay {
@@ -347,5 +349,36 @@ class ApiHomestay {
       print("Loi create feedback: $e");
     }
     return false;
+  }
+
+  // <<<< Get all policy >>>>
+  static Future<List<HomestayPolicySelectedModel>?> getAllPolicy(
+      {required String homestayId}) async {
+    List<HomestayPolicySelectedModel>? listPolicies;
+    try {
+      var url =
+          "$baseUrl/api/v1/HomeStayPolicySelecteds?pageSize=50&homeStayId=$homestayId";
+      Map<String, String> header = await ApiHeader.getHeader();
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get all policy: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body policy sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listPolicies = (postsJson as List)
+            .map<HomestayPolicySelectedModel>(
+                (postJson) => HomestayPolicySelectedModel.fromMap(postJson))
+            .toList();
+        // print("Thông tin get all policy: $listPolicies");
+        return listPolicies;
+      } else {
+        print("Loi get all policy");
+        return null;
+      }
+    } catch (e) {
+      print("Loi get all policy: $e");
+      return null;
+    }
+    return null;
   }
 }

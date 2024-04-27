@@ -14,6 +14,13 @@ class GetBookingPendingCreated extends ReviewBookingEvent {
   const GetBookingPendingCreated();
 }
 
+class GetPolicyHomestayFromPending extends ReviewBookingEvent {
+  String? idHomestay;
+  GetPolicyHomestayFromPending(
+    this.idHomestay,
+  );
+}
+
 class CheckoutBookingByCard extends ReviewBookingEvent {
   String idBooking;
   CheckoutBookingByCard({

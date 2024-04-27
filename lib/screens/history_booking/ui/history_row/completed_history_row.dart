@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
+import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/history_booking/utils/check_date.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
@@ -44,12 +45,12 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: 200,
+              height: 215,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    height: 175,
+                    height: 185,
                     width: screenWidth * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -84,6 +85,11 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                   content:
                                       bookingHomestayModel.id!.substring(0, 13),
                                   icon: Icons.qr_code),
+                              RowText().richText(
+                                  title: 'Tên homestay',
+                                  content: bookingHomestayModel
+                                      .bookingDetails![0].room!.homeStay!.name!,
+                                  icon: Icons.home_outlined),
                               RowText().richText(
                                   title: 'Thời gian đặt',
                                   content: FormatProvider().convertDateTime(
@@ -125,42 +131,93 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                         const SizedBox(
                           height: 10,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ReviewBooking(
-                                  isFromPending: false,
-                                  userProfileModel: userInfor,
-                                  bookingHomestayModel: bookingHomestayModel,
-                                  isAllowBack: true,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                border: Border.all(
-                                  color: Colors.black.withOpacity(0.4),
-                                  width: 0.8,
-                                ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text(
-                                'Xem chi tiết',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black.withOpacity(0.7),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          FeedbackHomestayScreen(
+                                        homestayModel: bookingHomestayModel
+                                            .bookingDetails?[0].room!.homeStay!,
+                                        isCreateFeedback: true,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 5, right: 5),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor3
+                                          .withOpacity(0.8),
+                                      border: Border.all(
+                                        color: Colors.black.withOpacity(0.4),
+                                        width: 0.8,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: const Text(
+                                      'Viết đánh giá',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ReviewBooking(
+                                        isFromPending: false,
+                                        userProfileModel: userInfor,
+                                        bookingHomestayModel:
+                                            bookingHomestayModel,
+                                        isAllowBack: true,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      border: Border.all(
+                                        color: Colors.black.withOpacity(0.4),
+                                        width: 0.8,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text(
+                                      'Xem chi tiết',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black.withOpacity(0.7),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 10,

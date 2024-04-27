@@ -41,7 +41,12 @@ class FormatProvider {
   }
 
   String convertDateTime(String inputDate) {
-    return DateFormat("dd/MM/yyyy - hh:mm:ss")
+    return DateFormat("dd/MM/yyyy - HH:mm:ss")
+        .format(DateTime.parse(inputDate));
+  }
+
+  String convertDateTimeFeedback(String inputDate) {
+    return DateFormat("dd/MM/yyyy - HH:mm:ss a")
         .format(DateTime.parse(inputDate));
   }
 

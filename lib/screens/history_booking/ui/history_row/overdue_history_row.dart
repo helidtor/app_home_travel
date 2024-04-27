@@ -42,12 +42,12 @@ class _OverdueHistoryRowState extends State<OverdueHistoryRow> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 200,
+        height: 215,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
-              height: 175,
+              height: 185,
               width: screenWidth * 0.8,
               decoration: BoxDecoration(
                   border: Border.all(
@@ -80,6 +80,11 @@ class _OverdueHistoryRowState extends State<OverdueHistoryRow> {
                             title: 'Mã đơn',
                             content: bookingHomestayModel.id!.substring(0, 13),
                             icon: Icons.qr_code),
+                        RowText().richText(
+                            title: 'Tên homestay',
+                            content: bookingHomestayModel
+                                .bookingDetails![0].room!.homeStay!.name!,
+                            icon: Icons.home_outlined),
                         RowText().richText(
                             title: 'Thời gian đặt',
                             content: FormatProvider().convertDateTime(

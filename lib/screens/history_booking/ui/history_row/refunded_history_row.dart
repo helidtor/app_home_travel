@@ -9,20 +9,20 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 
-class CancelledHistoryRow extends StatefulWidget {
+class RefundedHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
   UserProfileModel userInfor;
-  CancelledHistoryRow({
+  RefundedHistoryRow({
     super.key,
     required this.userInfor,
     required this.bookingHomestayModel,
   });
 
   @override
-  State<CancelledHistoryRow> createState() => _CancelledHistoryRowState();
+  State<RefundedHistoryRow> createState() => _RefundedHistoryRowState();
 }
 
-class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
+class _RefundedHistoryRowState extends State<RefundedHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
 

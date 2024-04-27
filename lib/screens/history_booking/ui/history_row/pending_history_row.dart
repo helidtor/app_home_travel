@@ -46,12 +46,12 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 200,
+        height: 215,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
-              height: 175, //để viền container cắt giữa ảnh
+              height: 185, //để viền container cắt giữa ảnh
               width: screenWidth * 0.8,
               decoration: BoxDecoration(
                   border: Border.all(
@@ -84,6 +84,11 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                             title: 'Mã đơn',
                             content: bookingHomestayModel.id!.substring(0, 13),
                             icon: Icons.qr_code),
+                        RowText().richText(
+                            title: 'Tên homestay',
+                            content: bookingHomestayModel
+                                .bookingDetails![0].room!.homeStay!.name!,
+                            icon: Icons.home_outlined),
                         RowText().richText(
                             title: 'Ngày tạo',
                             content: FormatProvider().convertDateTime(

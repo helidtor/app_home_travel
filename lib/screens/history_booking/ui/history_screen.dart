@@ -32,13 +32,14 @@ class _HistoryScreenState extends State<HistoryScreen>
   List<BookingHomestayModel>? listCompletedBooking;
   List<BookingHomestayModel>? listCancelledBooking;
   List<BookingHomestayModel>? listOverdueBooking;
+  List<BookingHomestayModel>? listRefundedBooking;
   UserProfileModel? userInfor;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = TabController(length: 6, vsync: this, initialIndex: 0);
+    tabController = TabController(length: 7, vsync: this, initialIndex: 0);
     _bloc.add(GetListBooking(status: 'PENDING'));
     //PENDING, UPCOMING, CANCELLED, ONGOING
   }
@@ -91,6 +92,9 @@ class _HistoryScreenState extends State<HistoryScreen>
               case 'OVERDUE':
                 listOverdueBooking = state.listBooking;
                 break;
+              case 'REFUND':
+                listRefundedBooking = state.listBooking;
+                break;
             }
             // listBooking = state.listBooking;
             // print('Số lượng đơn: ${listBooking!.length}');
@@ -117,6 +121,9 @@ class _HistoryScreenState extends State<HistoryScreen>
                 break;
               case 'OVERDUE':
                 listOverdueBooking = null;
+                break;
+              case 'REFUND':
+                listRefundedBooking = null;
                 break;
             }
           } else if (state is HistoryFailure) {
@@ -160,6 +167,9 @@ class _HistoryScreenState extends State<HistoryScreen>
                       case 5:
                         _bloc.add(GetListBooking(status: 'OVERDUE'));
                         break;
+                      case 6:
+                        _bloc.add(GetListBooking(status: 'REFUND'));
+                        break;
                     }
                   },
                   tabs: const [
@@ -179,7 +189,10 @@ class _HistoryScreenState extends State<HistoryScreen>
                       text: 'Đã hủy',
                     ),
                     Tab(
-                      text: 'Quá hạn',
+                      text: 'Quá hạn thanh toán',
+                    ),
+                    Tab(
+                      text: 'Đã hoàn tiền',
                     ),
                   ],
                   unselectedLabelStyle: const TextStyle(
@@ -245,6 +258,14 @@ class _HistoryScreenState extends State<HistoryScreen>
                         heightDisplay: heightDisplay,
                         widthDisplay: widthDisplay,
                         typeHistory: 'OVERDUE'),
+                    listBookingFunction(
+                        //refunded
+                        userInfor: userInfor,
+                        imageDisplay: imageDisplay,
+                        listBooking: listRefundedBooking,
+                        heightDisplay: heightDisplay,
+                        widthDisplay: widthDisplay,
+                        typeHistory: 'REFUND'),
                   ],
                 ),
               ),

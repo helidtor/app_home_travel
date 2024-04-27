@@ -76,7 +76,12 @@ class _ListBookingState extends State<ListBooking> {
                                           userInfor: userInfor!,
                                           bookingHomestayModel:
                                               listBooking![index])
-                                      : const SizedBox(),
+                                      : (typeHistory == 'REFUND')
+                                          ? OverdueHistoryRow(
+                                              userInfor: userInfor!,
+                                              bookingHomestayModel:
+                                                  listBooking![index])
+                                          : const SizedBox(),
             ),
           ),
         ),

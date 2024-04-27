@@ -40,65 +40,69 @@ class ApiUser {
     return userLoginModel;
   }
 
-//Signup
-  // static Future<bool?> signup(
-  //     {required UserSignUpModel userSignUpModel}) async {
-  //   // print('Thông tin tạo tài khoản: $userSignUpModel');
-  //   try {
-  //     final url = Uri.parse('$baseUrl/api/v1/Tourists');
-  //     Map<String, String> header = await ApiHeader.getHeader();
-  //     var body = json.encode(userSignUpModel.toMap());
-  //     var response = await http.post(Uri.parse(url.toString()),
-  //         headers: header, body: body);
-  //     print('Body là: $body');
-  //     if (response.statusCode == 200) {
-  //       print(
-  //           "Đăng ký thành công! ${response.statusCode} ${jsonDecode(response.body)}");
-  //       return true;
-  //     }
-  //   } catch (e) {
-  //     print("Lỗi đăng ký: $e");
-  //     return false;
-  //   }
-  //   return false;
-  // }
+// Signup
   static Future<bool?> signup(
       {required UserSignUpModel userSignUpModel}) async {
+    // print('Thông tin tạo tài khoản: $userSignUpModel');9704198526191432198
+
+
     try {
       final url = Uri.parse('$baseUrl/api/v1/Tourists');
       Map<String, String> header = await ApiHeader.getHeader();
-
-      var request = http.MultipartRequest('POST', url);
-
-      // Add headers
-      header.forEach((key, value) {
-        request.headers[key] = value;
-      });
-
-      // Add fields
-      request.fields['dateOfBirth'] = userSignUpModel.dateOfBirth!;
-      request.fields['password'] = userSignUpModel.password!;
-      request.fields['gender'] = userSignUpModel.gender!.toString();
-      request.fields['phoneNumber'] = userSignUpModel.phoneNumber!;
-      request.fields['email'] = userSignUpModel.email!;
-      request.fields['firstName'] = userSignUpModel.firstName!;
-      request.fields['lastName'] = userSignUpModel.lastName!;
-      var response = await http.Response.fromStream(await request.send());
-
+      var body = json.encode(userSignUpModel.toMap());
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: body);
+      print('Body là: $body');
       if (response.statusCode == 200) {
         print(
             "Đăng ký thành công! ${response.statusCode} ${jsonDecode(response.body)}");
         return true;
-      } else {
-        print(
-            "Đăng ký không thành công! ${response.statusCode} ${response.body}");
-        return false;
       }
     } catch (e) {
       print("Lỗi đăng ký: $e");
       return false;
     }
+    return false;
   }
+
+  // static Future<bool?> signup(
+  //     {required UserSignUpModel userSignUpModel}) async {
+  //   try {
+  //     final url = Uri.parse('$baseUrl/api/v1/Tourists');
+  //     Map<String, String> header = await ApiHeader.getHeader();
+
+  //     var request = http.MultipartRequest('POST', url);
+
+  //     // Add headers
+  //     header.forEach((key, value) {
+  //       request.headers[key] = value;
+  //     });
+
+  //     // Add fields
+  //     request.fields['dateOfBirth'] = userSignUpModel.dateOfBirth!;
+  //     request.fields['password'] = userSignUpModel.password!;
+  //     request.fields['gender'] = userSignUpModel.gender!.toString();
+  //     request.fields['phoneNumber'] = userSignUpModel.phoneNumber!;
+  //     request.fields['email'] = userSignUpModel.email!;
+  //     request.fields['firstName'] = userSignUpModel.firstName!;
+  //     request.fields['lastName'] = userSignUpModel.lastName!;
+  //     request.fields['avatar'] = userSignUpModel.avatar!;
+  //     var response = await http.Response.fromStream(await request.send());
+
+  //     if (response.statusCode == 200) {
+  //       print(
+  //           "Đăng ký thành công! ${response.statusCode} ${jsonDecode(response.body)}");
+  //       return true;
+  //     } else {
+  //       print(
+  //           "Đăng ký không thành công! ${response.statusCode} ${response.body}");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print("Lỗi đăng ký: $e");
+  //     return false;
+  //   }
+  // }
 
   // <<<< Get profile >>>>
   static Future<UserProfileModel?> getProfile({required String id}) async {

@@ -1,18 +1,19 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
-import 'package:mobile_home_travel/firebase/auth_firebase.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
-import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isCheck = false;
   String? dropdownValue;
+  File? selectedImage;
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -72,6 +74,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(
                   height: 5,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        pickImage();
+                      },
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: AppColors.grayColor.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: AppColors.grayColor.withOpacity(0.1),
+                            width: 1,
+                          ),
+                        ),
+                        child: (selectedImage == null)
+                            ? Center(
+                                child: Icon(
+                                  FontAwesomeIcons.image,
+                                  size: 30,
+                                  color: AppColors.grayColor.withOpacity(0.8),
+                                ),
+                              )
+                            : Image.file(selectedImage!),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    const Text(
+                      'Ảnh\nđại diện',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.grayColor,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -309,37 +354,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isCheck = !isCheck;
-                          });
-                        },
-                        icon: Icon(
-                          isCheck
-                              ? Icons.check_box_outlined
-                              : Icons.check_box_outline_blank_outlined,
-                          color: AppColors.grayColor,
-                        )),
-                    const Expanded(
-                      child: Text(
-                          "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản",
-                          style: TextStyle(
-                            color: AppColors.grayColor,
-                            fontSize: 12,
-                          )),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     IconButton(
+                //         onPressed: () {
+                //           setState(() {
+                //             isCheck = !isCheck;
+                //           });
+                //         },
+                //         icon: Icon(
+                //           isCheck
+                //               ? Icons.check_box_outlined
+                //               : Icons.check_box_outline_blank_outlined,
+                //           color: AppColors.grayColor,
+                //         )),
+                //     const Expanded(
+                //       child: Text(
+                //           "Tiếp tục đồng nghĩa chấp nhận Chính sách và\nĐiều khoản của Home Travel.",
+                //           style: TextStyle(
+                //             color: AppColors.grayColor,
+                //             fontSize: 12,
+                //           )),
+                //     )
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 RoundGradientButton(
                   title: "Đăng ký",
                   onPressed: () async {
+                    // print('avatar để tạo: ${userSignUpModel.avatar}');
                     if (_selectedDate == null) {
                       ErrorNotiProvider()
                           .ToastError(context, 'Bạn chưa chọn ngày sinh!');
@@ -469,5 +516,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _selectedDate = picked;
       });
     }
+  }
+
+  // Hàm xử lý khi chọn ảnh
+  void handleImageSelection() async {
+    if (selectedImage != null) {
+      var result = await ApiUser.uploadImage(
+        selectedImage!,
+        selectedImage!.path,
+      );
+      if (result != null) {
+        setState(() {
+          userSignUpModel.avatar = result;
+        });
+        print('Pick image success! ${userSignUpModel.avatar}');
+      }
+    }
+  }
+
+  Future pickImage() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      selectedImage = File(returnedImage!.path);
+      handleImageSelection();
+    });
   }
 }

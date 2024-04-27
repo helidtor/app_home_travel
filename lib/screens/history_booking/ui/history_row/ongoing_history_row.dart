@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/checkout_booking.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/history_booking/utils/check_date.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
@@ -52,12 +52,12 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: 200,
+              height: 215,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    height: 175, //để viền container cắt giữa ảnh
+                    height: 185, //để viền container cắt giữa ảnh
                     width: screenWidth * 0.8,
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -92,6 +92,11 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                   content:
                                       bookingHomestayModel.id!.substring(0, 13),
                                   icon: Icons.qr_code),
+                              RowText().richText(
+                                  title: 'Tên homestay',
+                                  content: bookingHomestayModel
+                                      .bookingDetails![0].room!.homeStay!.name!,
+                                  icon: Icons.home_outlined),
                               RowText().richText(
                                   title: 'Thời gian đặt',
                                   content: FormatProvider().convertDateTime(

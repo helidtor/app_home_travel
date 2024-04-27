@@ -192,69 +192,69 @@ class _LoginScreenState extends State<LoginScreen> {
                               username: username, password: password));
                         },
                       ),
-                      const SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            width: double.maxFinite,
-                            height: 1,
-                            color: AppColors.grayColor.withOpacity(0.5),
-                          )),
-                          const Text("  hoặc  ",
-                              style: TextStyle(
-                                  color: AppColors.grayColor,
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w400)),
-                          Expanded(
-                              child: Container(
-                            width: double.maxFinite,
-                            height: 1,
-                            color: AppColors.grayColor.withOpacity(0.5),
-                          )),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 26.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                signInWithGoogle();
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  border: Border.all(
-                                    color: AppColors.primaryColor1
-                                        .withOpacity(0.5),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Image.asset(
-                                  "assets/icons/google_icon.png",
-                                  width: 20,
-                                  height: 20,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      // const SizedBox(height: 15),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //         child: Container(
+                      //       width: double.maxFinite,
+                      //       height: 1,
+                      //       color: AppColors.grayColor.withOpacity(0.5),
+                      //     )),
+                      //     const Text("  hoặc  ",
+                      //         style: TextStyle(
+                      //             color: AppColors.grayColor,
+                      //             fontSize: 14,
+                      //             fontStyle: FontStyle.italic,
+                      //             fontWeight: FontWeight.w400)),
+                      //     Expanded(
+                      //         child: Container(
+                      //       width: double.maxFinite,
+                      //       height: 1,
+                      //       color: AppColors.grayColor.withOpacity(0.5),
+                      //     )),
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 26.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       GestureDetector(
+                      //         onTap: () {
+                      //           signInWithGoogle();
+                      //         },
+                      //         child: Container(
+                      //           width: 50,
+                      //           height: 50,
+                      //           alignment: Alignment.center,
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(14),
+                      //             border: Border.all(
+                      //               color: AppColors.primaryColor1
+                      //                   .withOpacity(0.5),
+                      //               width: 1,
+                      //             ),
+                      //           ),
+                      //           child: Image.asset(
+                      //             "assets/icons/google_icon.png",
+                      //             width: 20,
+                      //             height: 20,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         width: 30,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
                       TextButton(
                           onPressed: () {
                             router.go(RouteName.signup);
@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     text: "Chưa có tài khoản? ",
                                   ),
                                   TextSpan(
-                                      text: "Đăng ký",
+                                      text: "Đăng ký ngay",
                                       style: TextStyle(
                                           color: AppColors.primaryColor1,
                                           fontSize: 14,

@@ -646,7 +646,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text((homestayDetail!.depositRate != 0)
+                              Text((homestayDetail!.depositRate != 0 &&
+                                      homestayDetail!.depositRate != null)
                                   ? '✅ Cọc trước chỉ với ${homestayDetail!.depositRate}% tổng hóa đơn'
                                   : '✅ Đặt trước hoàn toàn miễn phí'),
                               Text((homestayDetail!.penaltyDate != null &&
@@ -695,7 +696,10 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => PickDate(checkinTime: homestayDetail!.checkInTime!,)),
+                                        builder: (context) => PickDate(
+                                              checkinTime:
+                                                  homestayDetail!.checkInTime!,
+                                            )),
                                   );
                                 },
                               ),

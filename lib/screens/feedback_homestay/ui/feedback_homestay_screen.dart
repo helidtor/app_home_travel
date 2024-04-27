@@ -131,7 +131,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '${homestayModel.rating.toStringAsFixed(1)}/5.0',
+                                    (homestayModel.rating != null)
+                                        ? '${homestayModel.rating.toStringAsFixed(1)}/5.0'
+                                        : '0.0/5.0',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),
@@ -270,7 +272,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '${homestayModel.rating.toStringAsFixed(1)}/5.0',
+                                    (homestayModel.rating != null)
+                                        ? '${homestayModel.rating.toStringAsFixed(1)}/5.0'
+                                        : '0.0/5.0',
                                     style: const TextStyle(
                                         fontSize: 35,
                                         color: AppColors.primaryColor3),
@@ -294,7 +298,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                                 ],
                               ),
                               Text(
-                                '(${listFeedback.length} đánh giá)',
+                                listFeedback.isNotEmpty
+                                    ? '(${listFeedback.length} đánh giá)'
+                                    : '(0 đánh giá)',
                                 style: const TextStyle(
                                     fontSize: 15,
                                     color: AppColors.primaryColor3),

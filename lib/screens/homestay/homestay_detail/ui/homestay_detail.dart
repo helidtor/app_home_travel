@@ -414,7 +414,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                           thickness: 25,
                           color: AppColors.backgroundApp,
                         ),
-                        (homestayDetail?.rating != 0)
+                        (homestayDetail?.rating != 0 &&
+                                homestayDetail?.rating != null)
                             ? Column(
                                 children: [
                                   Padding(

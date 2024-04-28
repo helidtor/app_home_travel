@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
-import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
@@ -414,7 +414,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (checkSignUp == true) {
                         SuccessNotiProvider()
                             .ToastSuccess(context, 'Đăng ký thành công');
-                        router.go(RouteName.login);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
+                        );
                       } else {
                         print("Đăng ký không thành công: $checkSignUp");
                         ErrorNotiProvider().showError(
@@ -458,7 +462,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // * Chuyển sang màn hình đăng nhập
                 TextButton(
                     onPressed: () {
-                      router.go(RouteName.login);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                      );
                     },
                     child: RichText(
                       textAlign: TextAlign.center,

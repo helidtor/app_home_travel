@@ -3,6 +3,7 @@ import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
@@ -288,7 +289,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     RowSetting(
                       onPressed: () {
                         clearToken();
-                        router.go(RouteName.login);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
+                        );
                         SuccessNotiProvider()
                             .ToastSuccess(context, 'Đăng xuất thành công!');
                       },

@@ -1,9 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/firebase/firebase_options.dart';
 import 'package:mobile_home_travel/firebase/firebase_provider.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/home/home_screen.dart';
+import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
+import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,12 +20,31 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String? token;
+
+  Future<void> checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(myToken);
+    print('Token dang nhap la: $token');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkToken();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       locale: const Locale('vi', 'VN'),
       title: 'Home Travel',
       debugShowCheckedModeBanner: false,
@@ -27,7 +54,11 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
-      routerConfig: router,
+      home: (token != null && token != "")
+          ? const NavigatorBar()
+          : const LoginScreen(),
+      navigatorKey: navigatorKey,
+      routes: {'/notification': (context) => const NotificationScreen()},
     );
   }
 }

@@ -11,6 +11,7 @@ import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homest
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_event.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/bloc/homestay_state.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_preview/ui/homestay_preview.dart';
+import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
@@ -28,25 +29,14 @@ class _HomePageState extends State<HomePage> {
   List<HomestayModel>? listHomestayRating;
   List<HomestayModel>? listHomestayNew;
   final _bloc = HomestayBloc();
-  String? token;
   String? displayScreen;
   double widthDisplay = 270;
   double heightDisplay = 270;
 
-  Future<void> checkToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(myToken);
-  }
-
   @override
   void initState() {
     super.initState();
-    checkToken();
-    if (token == "") {
-      router.go(RouteName.login);
-    } else {
-      _bloc.add(GetAllListHomestay());
-    }
+    _bloc.add(GetAllListHomestay());
   }
 
   @override

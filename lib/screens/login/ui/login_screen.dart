@@ -6,7 +6,9 @@ import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_bloc.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_event.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_state.dart';
+import 'package:mobile_home_travel/screens/signup/sign_up_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:mobile_home_travel/widgets/notification/toast.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
@@ -48,7 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
               return;
             } else if (state is LoginSecondState) {
               // Navigator.pop(context);
-              router.go(RouteName.navigator);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NavigatorBar()),
+              );
             } else if (state is LoginFirstState) {
               //chưa login
               Navigator.pop(context);
@@ -60,7 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
               // context
               //     .read<AuthenticationRepository>()
               //     .updateUser(state.userProfileModel);
-              router.go(RouteName.navigator);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NavigatorBar()),
+              );
               toastification.show(
                   showProgressBar: false,
                   pauseOnHover: false,
@@ -257,7 +265,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       // ),
                       TextButton(
                           onPressed: () {
-                            router.go(RouteName.signup);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen()),
+                            );
                           },
                           child: RichText(
                             textAlign: TextAlign.center,

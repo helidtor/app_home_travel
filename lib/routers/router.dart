@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
+import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator2.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
@@ -17,6 +18,7 @@ class RouteName {
   static const String setting = '/setting';
   static const String profile = '/profile';
   static const String wallet = '/wallet';
+  static const String notification = '/notification';
 
   static const publicRoutes = [
     login,
@@ -26,6 +28,7 @@ class RouteName {
     profile,
     setting,
     wallet,
+    notification,
   ];
 }
 
@@ -45,6 +48,10 @@ final router = GoRouter(
     GoRoute(
       path: RouteName.wallet,
       builder: (context, state) => const WalletScreen(),
+    ),
+    GoRoute(
+      path: RouteName.notification,
+      builder: (context, state) => const NotificationScreen(),
     ),
     GoRoute(
       path: RouteName.navigator,

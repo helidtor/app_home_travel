@@ -4,8 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/firebase/firebase_options.dart';
 import 'package:mobile_home_travel/firebase/firebase_provider.dart';
-import 'package:mobile_home_travel/routers/router.dart';
-import 'package:mobile_home_travel/screens/home/home_screen.dart';
+import 'package:mobile_home_travel/firebase/notification_services.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
@@ -16,7 +15,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseProvider().initNotifications();
+  await NotificationService().initNotifications();
   runApp(const MyApp());
 }
 

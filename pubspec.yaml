@@ -63,6 +63,7 @@ dependencies:
   animated_rating_bar: ^0.0.8
   firebase_messaging: ^14.8.2
   firebase_analytics: ^10.10.2
+  flutter_local_notifications: ^17.1.0
 
 dev_dependencies:
   flutter_test:

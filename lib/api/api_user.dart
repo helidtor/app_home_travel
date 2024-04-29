@@ -11,6 +11,56 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
 class ApiUser {
+//Subcribe noti
+  static Future<bool?> subcribeNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? idUser = prefs.getString("idUserCurrent");
+    String? fCMToken = prefs.getString("fCMToken");
+    print('value fcmtoken: $fCMToken');
+    final url = Uri.parse('$baseUrl/api/v1/Notifications/subscribe/$idUser');
+    Map<String, String> header = await ApiHeader.getHeader();
+    try {
+      final body = ["$fCMToken"];
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print("TEST noti: ${jsonEncode(body)}");
+      print("Status noti: ${jsonDecode(response.body)}");
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Loi noti: $e");
+      return false;
+    }
+  }
+
+//Unsubcribe noti
+  static Future<bool?> unsubcribeNotification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? idUser = prefs.getString("idUserCurrent");
+    String? fCMToken = prefs.getString("fCMToken");
+    print('value fcmtoken: $fCMToken');
+    final url = Uri.parse('$baseUrl/api/v1/Notifications/unsubscribe/$idUser');
+    Map<String, String> header = await ApiHeader.getHeader();
+    try {
+      final body = ["$fCMToken"];
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print("TEST huy noti: ${jsonEncode(body)}");
+      print("Status cancel noti: ${jsonDecode(response.body)}");
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Loi huy noti: $e");
+      return false;
+    }
+  }
+
 //Login
   static Future<UserLoginModel?> login(
       {required String phoneNumber, required String password}) async {
@@ -44,7 +94,6 @@ class ApiUser {
   static Future<bool?> signup(
       {required UserSignUpModel userSignUpModel}) async {
     // print('Thông tin tạo tài khoản: $userSignUpModel');9704198526191432198
-
 
     try {
       final url = Uri.parse('$baseUrl/api/v1/Tourists');
@@ -105,7 +154,7 @@ class ApiUser {
   // }
 
   // <<<< Get profile >>>>
-  static Future<UserProfileModel?> getProfile({required String id}) async {
+  static Future<UserProfileModel?> getProfile() async {
     UserProfileModel? userProfileModel;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(myToken);

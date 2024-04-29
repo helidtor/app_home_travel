@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/main.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
@@ -13,15 +14,18 @@ import 'package:mobile_home_travel/widgets/others/row_setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> clearToken() async {
+  var isUnSubcribe = await ApiUser.unsubcribeNotification();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(myToken, "");
-  prefs.setString("idUserCurrent", "");
+  if (isUnSubcribe == false) {
+    print('Chưa unsubcribe noti');
+  }
+  prefs.remove(myToken);
+  prefs.remove("idUserCurrent");
+  navigatorKey.currentState?.pushNamed('/login');
 }
 
 Future<UserProfileModel?> getUser() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? id = prefs.getString("idUserCurrent");
-  var userLogined = await ApiUser.getProfile(id: id!);
+  var userLogined = await ApiUser.getProfile();
   return userLogined;
 }
 
@@ -289,11 +293,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     RowSetting(
                       onPressed: () {
                         clearToken();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const LoginScreen()),
+                        // );
                         SuccessNotiProvider()
                             .ToastSuccess(context, 'Đăng xuất thành công!');
                       },

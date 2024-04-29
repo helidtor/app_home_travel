@@ -27,19 +27,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String? token;
+  // String? token;
 
-  Future<void> checkToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(myToken);
-    print('Token dang nhap la: $token');
-  }
+  // Future<void> checkToken() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   token = prefs.getString(myToken);
+  //   print('Token dang nhap la: $token');
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    checkToken();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   checkToken();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +53,15 @@ class _MyAppState extends State<MyApp> {
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
-      home: (token != null && token != "")
-          ? const NavigatorBar()
-          : const LoginScreen(),
+      // home: (token != null && token != "")
+      //     ? const NavigatorBar()
+      //     : const LoginScreen(),
+      home: const LoginScreen(),
       navigatorKey: navigatorKey,
-      routes: {'/notification': (context) => const NotificationScreen()},
+      routes: {
+        '/notification': (context) => const NotificationScreen(),
+        '/login': (context) => const LoginScreen(),
+      },
     );
   }
 }

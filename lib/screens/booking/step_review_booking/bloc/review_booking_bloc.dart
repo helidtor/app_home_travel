@@ -18,11 +18,9 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
     emit(ReviewBookingLoading());
     try {
       if (event is GetBookingPendingCreated) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String idTourist = prefs.getString("idUserCurrent")!;
 
         var bookingCreated = await ApiBooking.getListBooking(status: 'PENDINg');
-        var userProfile = await ApiUser.getProfile(id: idTourist);
+        var userProfile = await ApiUser.getProfile();
         if (bookingCreated != null && userProfile != null) {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           var idHomestay = prefs.getString("idHomestay");

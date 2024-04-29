@@ -18,8 +18,8 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       if (event is GetListBooking) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String idTourist = prefs.getString("idUserCurrent")!;
-        var touristInfor = await ApiUser.getProfile(
-            id: idTourist); //lấy thông tin user để thanh toán
+        var touristInfor =
+            await ApiUser.getProfile(); //lấy thông tin user để thanh toán
         print('Thông tin user khi chuyển tab history: $touristInfor');
         var listBooking;
         switch (event.status) {
@@ -39,8 +39,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
             listBooking =
                 await ApiBooking.getListBooking(status: 'PAYMENT SETTLEMENT');
           case 'REFUND':
-            listBooking =
-                await ApiBooking.getListBooking(status: 'REFUND');
+            listBooking = await ApiBooking.getListBooking(status: 'REFUND');
           default:
             listBooking = await ApiBooking.getListBooking(status: 'PENDING');
         }

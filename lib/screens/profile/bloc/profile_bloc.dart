@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       if (id != null) {
         if (event is GetProfileEvent) {
-          var user = await ApiUser.getProfile(id: id);
+          var user = await ApiUser.getProfile();
           if (user != null) {
             emit(ProfileStateSuccess(userProfileModel: user));
           } else {

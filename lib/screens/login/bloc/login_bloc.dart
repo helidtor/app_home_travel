@@ -18,8 +18,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (event is CheckLoginEvent) {
         String? id = prefs.getString("idUserCurrent");
-        if (id != "") {
-          var userModel = await ApiUser.getProfile(id: id!);
+        if (id != "" && id != null) {
+          var userModel = await ApiUser.getProfile();
           if (userModel != null) {
             emit(LoginSecondState(userProfileModel: userModel));
           } else {
@@ -38,7 +38,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           if (user != null) {
             prefs.setString(myToken, user.token ?? "");
             prefs.setString("idUserCurrent", user.id!);
-            var userLogin = await ApiUser.getProfile(id: user.id!);
+            var userLogin = await ApiUser.getProfile();
+            var isSubcribeNoti = await ApiUser.subcribeNotification();
+            print('Noti subcribe: $isSubcribeNoti');
             emit(LoginSuccessState(userProfileModel: userLogin!));
           } else {
             emit(const LoginFailure(

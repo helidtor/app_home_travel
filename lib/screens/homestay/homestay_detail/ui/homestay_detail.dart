@@ -201,17 +201,20 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    (homestayDetail!.name != null)
-                                        ? '${homestayDetail!.name}'
-                                        : 'Đang đợi cập nhật',
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontFamily:
-                                            GoogleFonts.tiltNeon().fontFamily,
-                                        fontWeight: FontWeight.bold,
-                                        color:
-                                            const Color.fromARGB(255, 0, 0, 0)),
+                                  Expanded(
+                                    child: Text(
+                                      (homestayDetail!.name != null)
+                                          ? '${homestayDetail!.name}'
+                                          : 'Đang đợi cập nhật',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontFamily:
+                                              GoogleFonts.tiltNeon().fontFamily,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromARGB(
+                                              255, 0, 0, 0)),
+                                    ),
                                   ),
                                   IconButton(
                                       onPressed: () {

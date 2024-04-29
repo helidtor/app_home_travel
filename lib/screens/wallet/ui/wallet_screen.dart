@@ -321,7 +321,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Container(
+                    SizedBox(
                       height: screenHeight * 0.47,
                       width: screenWidth,
                       child: (listTransaction.isNotEmpty)

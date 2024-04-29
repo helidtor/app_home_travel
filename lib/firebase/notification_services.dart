@@ -3,9 +3,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mobile_home_travel/firebase/firebase_provider.dart';
 import 'package:mobile_home_travel/main.dart';
-import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
@@ -32,7 +30,7 @@ class NotificationService {
 
     navigatorKey.currentState?.pushNamed(
       '/notification',
-      arguments: message,
+      // arguments: message,
     );
   }
 

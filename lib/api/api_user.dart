@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/models/notification/notification_model.dart';
 import 'package:mobile_home_travel/models/user/login_user_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
@@ -11,6 +12,38 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
 class ApiUser {
+// <<<< Get list notification >>>>
+  static Future<List<NotificationModel>?> getListNotification() async {
+    List<NotificationModel>? listNotification;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(myToken);
+    String? idTourist = prefs.getString('idUserCurrent');
+
+    try {
+      var url =
+          "$baseUrl/api/v1/Notifications?pageSize=50&receiverId=$idTourist&pageSize=50&sortKey=CreatedDate&sortOrder=DESC";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      print(
+          "TEST get notification: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        // print("Xem body sau khi convert: $bodyConvert");
+        var postsJson = bodyConvert['data'];
+        listNotification = (postsJson as List)
+            .map<NotificationModel>(
+                (postJson) => NotificationModel.fromMap(postJson))
+            .toList();
+        print("Thông tin get notification: $listNotification");
+      }
+    } catch (e) {
+      print("Loi get notification: $e");
+    }
+
+    return listNotification;
+  }
+
 //Subcribe noti
   static Future<bool?> subcribeNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -57,6 +90,31 @@ class ApiUser {
       }
     } catch (e) {
       print("Loi huy noti: $e");
+      return false;
+    }
+  }
+
+//read noti
+  static Future<bool?> readNoti({required String idNoti}) async {
+    final url = Uri.parse('$baseUrl/api/v1/Notifications');
+    Map<String, String> header = await ApiHeader.getHeader();
+    try {
+      final body = [
+        {
+          "id": idNoti,
+          "status": "READ",
+        }
+      ];
+      var response = await http.put(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print("TEST read noti: ${jsonEncode(body)}");
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Loi read noti: $e");
       return false;
     }
   }

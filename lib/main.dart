@@ -6,7 +6,7 @@ import 'package:mobile_home_travel/firebase/firebase_options.dart';
 import 'package:mobile_home_travel/firebase/firebase_provider.dart';
 import 'package:mobile_home_travel/firebase/notification_services.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
-import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
+import 'package:mobile_home_travel/screens/notifications/ui/notification_screen.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

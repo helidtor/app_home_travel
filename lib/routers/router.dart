@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
-import 'package:mobile_home_travel/screens/notifications/notification_screen.dart';
+import 'package:mobile_home_travel/screens/notifications/ui/notification_screen.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator2.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';

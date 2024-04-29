@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/main.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
+import 'package:mobile_home_travel/screens/notifications/ui/notification_screen.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/wallet_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
@@ -220,7 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       weightLine: 1,
                       textDescribe: "Xem những homestay bạn đã thích",
                       textHeader: "Homestay yêu thích",
-                      icon: Icons.save,
+                      icon: Icons.save_outlined,
                       iconLast: Icons.keyboard_arrow_right,
                       onPressed: () {
                         Navigator.push(
@@ -230,12 +231,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         );
                       },
                     ),
-                    const RowSetting(
+                    RowSetting(
                       weightLine: 1,
-                      textHeader: "Chính sách",
-                      textDescribe: "Xem thêm chính sách",
-                      icon: Icons.format_align_center_rounded,
+                      textHeader: "Thông báo",
+                      textDescribe: "Xem tất cả thông báo",
+                      icon: Icons.notifications_active_outlined,
                       iconLast: Icons.keyboard_arrow_right,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NotificationScreen()),
+                        );
+                      },
                     ),
                   ],
                 ),

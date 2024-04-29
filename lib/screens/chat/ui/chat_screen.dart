@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_home_travel/firebase/firebase_provider.dart';
 import 'package:mobile_home_travel/models/chat/user_chat_model.dart';
 import 'package:mobile_home_travel/screens/chat/ui/chat_row.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -10,11 +12,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
   @override
   void initState() {
-    // Provider.of<
-    // TODO: implement initState
+    Provider.of<FirebaseProvider>(context, listen: false);
     super.initState();
   }
 

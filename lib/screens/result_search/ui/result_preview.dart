@@ -6,6 +6,7 @@ import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_mod
 import 'package:mobile_home_travel/routers/router.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultPreview extends StatefulWidget {
@@ -34,8 +35,7 @@ class _ResultState extends State<ResultPreview> {
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("idHomestay", homestayModel.id!);
+        SharedPreferencesUtil.setIdHomestay(homestayModel.id!);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

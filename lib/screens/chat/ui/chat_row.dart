@@ -46,7 +46,7 @@ class _ChatRowState extends State<ChatRow> {
         ),
       ),
       subtitle: Text(
-        'Online ${FormatProvider().convertTime(widget.userChatModel.lastActive!)} trước',
+        'Online ${FormatProvider().convertTime(widget.userChatModel.lastChatTime!)} trước',
         maxLines: 2,
         style: const TextStyle(
           color: AppColors.primaryColor3,

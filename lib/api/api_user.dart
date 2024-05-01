@@ -8,6 +8,7 @@ import 'package:mobile_home_travel/models/notification/notification_model.dart';
 import 'package:mobile_home_travel/models/user/login_user_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -15,9 +16,8 @@ class ApiUser {
 // <<<< Get list notification >>>>
   static Future<List<NotificationModel>?> getListNotification() async {
     List<NotificationModel>? listNotification;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString('idUserCurrent');
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
 
     try {
       var url =
@@ -46,9 +46,8 @@ class ApiUser {
 
 //Subcribe noti
   static Future<bool?> subcribeNotification() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? idUser = prefs.getString("idUserCurrent");
-    String? fCMToken = prefs.getString("fCMToken");
+    String? idUser = SharedPreferencesUtil.getIdUserCurrent();
+    String? fCMToken = SharedPreferencesUtil.getFCMToken();
     print('value fcmtoken: $fCMToken');
     final url = Uri.parse('$baseUrl/api/v1/Notifications/subscribe/$idUser');
     Map<String, String> header = await ApiHeader.getHeader();
@@ -71,9 +70,8 @@ class ApiUser {
 
 //Unsubcribe noti
   static Future<bool?> unsubcribeNotification() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? idUser = prefs.getString("idUserCurrent");
-    String? fCMToken = prefs.getString("fCMToken");
+    String? idUser = SharedPreferencesUtil.getIdUserCurrent();
+    String? fCMToken = SharedPreferencesUtil.getFCMToken();
     print('value fcmtoken: $fCMToken');
     final url = Uri.parse('$baseUrl/api/v1/Notifications/unsubscribe/$idUser');
     Map<String, String> header = await ApiHeader.getHeader();
@@ -214,9 +212,8 @@ class ApiUser {
   // <<<< Get profile >>>>
   static Future<UserProfileModel?> getProfile() async {
     UserProfileModel? userProfileModel;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? id = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? id = SharedPreferencesUtil.getIdUserCurrent();
     try {
       var url = "$baseUrl/api/v1/Tourists/$id";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -238,9 +235,8 @@ class ApiUser {
   //Update profile
   static Future<bool> updateProfile(
       {required UserProfileModel userProfileModel, required String id}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     print('Thông tin cập nhật gồm: $userProfileModel');
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     try {
       var url = "$baseUrl/api/v1/Tourists/$id";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -263,8 +259,7 @@ class ApiUser {
 
   //Upload avatar
   static Future<String?> uploadImage(File image, String imageName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     final url = Uri.parse('$baseUrl/api/v1/Files');
     final headers = {
       'accept': '*/*',

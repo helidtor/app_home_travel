@@ -9,6 +9,7 @@ import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_det
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
 import 'package:mobile_home_travel/models/homestay/policy/policy_title_model.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiHomestay {
@@ -77,8 +78,7 @@ class ApiHomestay {
   static Future<HomestayDetailModel?> getDetailHomestay(
       {required String idHomestay}) async {
     HomestayDetailModel? detailHomestay;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
 
     try {
       var url = "$baseUrl/api/v1/Homestays/$idHomestay";
@@ -106,8 +106,7 @@ class ApiHomestay {
   static Future<List<HomestayModel>?> searchHomestay(
       int? capacity, String location) async {
     List<HomestayModel>? homestay;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     print("Location là: $location");
     try {
       var url =
@@ -137,10 +136,9 @@ class ApiHomestay {
   // <<<< Add Wishlist homestay >>>>
   static Future<bool?> wishlistHomestay() async {
     WishlistModel? wishlistModel;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
-    String? idHomestay = prefs.getString("idHomestay");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
+    String? idHomestay = SharedPreferencesUtil.getIdHomestay();
     var url = "$baseUrl/api/v1/TouristFavoriteHomestays";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -157,7 +155,7 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         wishlistModel = WishlistModel.fromMap(postsJson);
-        prefs.setString('idWishlist', wishlistModel.id!);
+        SharedPreferencesUtil.setIdWishlist(wishlistModel.id!);
         return true;
       } else {
         print('Error wishlist');
@@ -173,8 +171,7 @@ class ApiHomestay {
   static Future<WishlistModel?> getWishlistByIdTouristAndHomeStay(
       {required String idTourist, required String idHomestay}) async {
     List<WishlistModel>? wishlist;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     try {
       var url =
           "$baseUrl/api/v1/TouristFavoriteHomestays?pageSize=50&touristId=$idTourist&homeStayId=$idHomestay";
@@ -200,9 +197,8 @@ class ApiHomestay {
 
   // <<<< Delete Wishlist homestay >>>>
   static Future<bool?> deleteWishlistHomestay() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idWishlist = prefs.getString('idWishlist');
+    String? token = SharedPreferencesUtil.getToken();
+    String? idWishlist = SharedPreferencesUtil.getIdWishlist();
     var url = "$baseUrl/api/v1/TouristFavoriteHomestays/$idWishlist";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -226,9 +222,8 @@ class ApiHomestay {
   // <<<< Get wishlist >>>>
   static Future<List<WishlistModel>?> getListWishlist() async {
     List<WishlistModel>? listWishlist;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString('idUserCurrent');
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
 
     try {
       var url =
@@ -287,8 +282,7 @@ class ApiHomestay {
   static Future<FeedbackModel?> getLastestFeedbackOfTourist(
       {required String idHomestay}) async {
     List<FeedbackModel>? listFeedback;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
 
     try {
       var url =
@@ -320,9 +314,8 @@ class ApiHomestay {
   // <<<< create feedback homestay >>>>
   static Future<bool?> createFeedbackHomestay(
       {required FeedbackModel feedbackModel}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
     var url = "$baseUrl/api/v1/Feedbacks";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});

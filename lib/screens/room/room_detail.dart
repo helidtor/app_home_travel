@@ -12,13 +12,13 @@ import 'package:mobile_home_travel/screens/homestay/homestay_preview/ui/homestay
 import 'package:mobile_home_travel/screens/room/room_preview.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 Future<RoomModel?> getRoomDetail() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? idRoom = prefs.getString("idRoom");
+  String? idRoom = SharedPreferencesUtil.getIdRoom();
   var roomDetail = await ApiRoom.getRoomDetail(idRoom: idRoom!);
   print('Id room từ prefs là: $idRoom');
   return roomDetail;

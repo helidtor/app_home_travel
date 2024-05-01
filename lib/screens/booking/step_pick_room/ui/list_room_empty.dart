@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/api/api_room.dart';
@@ -111,8 +112,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             return;
           } else if (state is CreateBookingSuccess) {
             Navigator.pop(context);
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setStringList("listIdPicked", []);
+            SharedPreferencesUtil.setListIdPicked([]);
             outputBooking = state.bookingHomestayModel;
             Navigator.pushReplacement(
               context,

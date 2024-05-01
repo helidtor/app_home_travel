@@ -7,7 +7,7 @@ class UserChatModel {
   String? email;
   String? phone;
   String? image;
-  String? lastActive;
+  String? lastChatTime;
   bool? isOnline;
   UserChatModel({
     this.uid,
@@ -15,7 +15,7 @@ class UserChatModel {
     this.email,
     this.phone,
     this.image,
-    this.lastActive,
+    this.lastChatTime,
     this.isOnline,
   });
 
@@ -25,7 +25,7 @@ class UserChatModel {
     String? email,
     String? phone,
     String? image,
-    String? lastActive,
+    String? lastChatTime,
     bool? isOnline,
   }) {
     return UserChatModel(
@@ -34,7 +34,7 @@ class UserChatModel {
       email: email ?? this.email,
       phone: phone ?? this.phone,
       image: image ?? this.image,
-      lastActive: lastActive ?? this.lastActive,
+      lastChatTime: lastChatTime ?? this.lastChatTime,
       isOnline: isOnline ?? this.isOnline,
     );
   }
@@ -46,7 +46,7 @@ class UserChatModel {
       'email': email,
       'phone': phone,
       'image': image,
-      'lastActive': lastActive,
+      'lastChatTime': lastChatTime,
       'isOnline': isOnline,
     };
   }
@@ -58,8 +58,8 @@ class UserChatModel {
       email: map['email'] != null ? map['email'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
       image: map['image'] != null ? map['image'] as String : null,
-      lastActive:
-          map['lastActive'] != null ? map['lastActive'] as String : null,
+      lastChatTime:
+          map['lastChatTime'] != null ? map['lastChatTime'] as String : null,
       isOnline: map['isOnline'] != null ? map['isOnline'] as bool : null,
     );
   }
@@ -71,7 +71,7 @@ class UserChatModel {
 
   @override
   String toString() {
-    return 'UserChatModel(uid: $uid, name: $name, email: $email, phone: $phone, image: $image, lastActive: $lastActive, isOnline: $isOnline)';
+    return 'UserChatModel(uid: $uid, name: $name, email: $email, phone: $phone, image: $image, lastChatTime: $lastChatTime, isOnline: $isOnline)';
   }
 
   @override
@@ -83,7 +83,7 @@ class UserChatModel {
         other.email == email &&
         other.phone == phone &&
         other.image == image &&
-        other.lastActive == lastActive &&
+        other.lastChatTime == lastChatTime &&
         other.isOnline == isOnline;
   }
 
@@ -94,7 +94,7 @@ class UserChatModel {
         email.hashCode ^
         phone.hashCode ^
         image.hashCode ^
-        lastActive.hashCode ^
+        lastChatTime.hashCode ^
         isOnline.hashCode;
   }
 }

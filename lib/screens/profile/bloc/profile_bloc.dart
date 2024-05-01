@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_event.dart';
 import 'package:mobile_home_travel/screens/profile/bloc/profile_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileStateInitial()) {
@@ -13,8 +13,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   profileBloc(Emitter<ProfileState> emit, ProfileEvent event) async {
     emit(ProfileStateLoading());
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = prefs.getString("idUserCurrent");
+    String? id = SharedPreferencesUtil.getIdUserCurrent();
 
     try {
       if (id != null) {
@@ -26,8 +25,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             emit(const ProfileStateFailure(error: "Lỗi thông tin cá nhân!"));
           }
         } else if (event is UpdateProfileEvent) {
-          var check =
-              await ApiUser.updateProfile(userProfileModel: event.userProfileModel, id: event.id);
+          var check = await ApiUser.updateProfile(
+              userProfileModel: event.userProfileModel, id: event.id);
           if (check == true) {
             emit(UpdateProfileSuccess());
           } else {

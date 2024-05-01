@@ -3,6 +3,7 @@ import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_event.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_state.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -14,10 +15,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   loginUser(Emitter<LoginState> emit, LoginEvent event) async {
     emit(LoginLoading());
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
       if (event is CheckLoginEvent) {
-        String? id = prefs.getString("idUserCurrent");
+        String? id = SharedPreferencesUtil.getIdUserCurrent();
         if (id != "" && id != null) {
           var userModel = await ApiUser.getProfile();
           if (userModel != null) {
@@ -36,8 +35,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           var user = await ApiUser.login(
               phoneNumber: event.username, password: event.password);
           if (user != null) {
-            prefs.setString(myToken, user.token ?? "");
-            prefs.setString("idUserCurrent", user.id!);
+            SharedPreferencesUtil.setToken(user.token ?? "");
+            SharedPreferencesUtil.setIdUserCurrent(user.id!);
+            SharedPreferencesUtil.setPhoneNumber(user.phoneNumber!);
             var userLogin = await ApiUser.getProfile();
             var isSubcribeNoti = await ApiUser.subcribeNotification();
             print('Noti subcribe: $isSubcribeNoti');

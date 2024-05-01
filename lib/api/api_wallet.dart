@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,9 +13,8 @@ class ApiWallet {
   // <<<< Get wallet >>>>
   static Future<WalletModel?> getWallet() async {
     List<WalletModel>? listWallet;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
     try {
       var url = "$baseUrl/api/v1/Wallets?pageSize=50&touristId=$idTourist";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -42,9 +42,8 @@ class ApiWallet {
   // <<<< Add funds to wallet >>>>
   static Future<String?> addFund({required double amountFund}) async {
     String? link;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
     var url = "$baseUrl/api/v1/VnPays/Topup";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -75,9 +74,8 @@ class ApiWallet {
   static Future<List<TransactionModel>?> getAllTransaction(
       {required String idWallet}) async {
     List<TransactionModel>? transaction;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString('idUserCurrent');
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
 
     try {
       // var url = "$baseUrl/api/v1/Transactions?pageSize=50&walletId=$idWallet";

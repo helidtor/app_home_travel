@@ -4,6 +4,7 @@ import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
@@ -18,12 +19,10 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
     emit(ReviewBookingLoading());
     try {
       if (event is GetBookingPendingCreated) {
-
         var bookingCreated = await ApiBooking.getListBooking(status: 'PENDINg');
         var userProfile = await ApiUser.getProfile();
         if (bookingCreated != null && userProfile != null) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          var idHomestay = prefs.getString("idHomestay");
+          var idHomestay = SharedPreferencesUtil.getIdHomestay();
           if (idHomestay != null) {
             var listPolicies =
                 await ApiHomestay.getAllPolicy(homestayId: idHomestay);

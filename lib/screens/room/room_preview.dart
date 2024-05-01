@@ -3,6 +3,7 @@ import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomPreview extends StatefulWidget {
@@ -31,8 +32,7 @@ class _RoomPreviewState extends State<RoomPreview> {
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("idRoom", roomModel.id!);
+        SharedPreferencesUtil.setIdRoom(roomModel.id!);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

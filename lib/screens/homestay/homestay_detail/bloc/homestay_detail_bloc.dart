@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/bloc/homestay_detail_state.dart';
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/bloc/homestay_detail_event.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomestayDetailBloc
@@ -17,10 +18,9 @@ class HomestayDetailBloc
     emit(HomestayDetailLoading());
     try {
       if (event is GetInforDisplay) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String? idHomestay = prefs.getString('idHomestay');
-        String? idTourist = prefs.getString('idUserCurrent');
-        prefs.setStringList('listIdPicked', []); // xóa list id phòng được chọn
+        String? idHomestay = SharedPreferencesUtil.getIdHomestay();
+        String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
+        SharedPreferencesUtil.setListIdPicked([]); // xóa list id phòng được chọn
         var homestayDetail =
             await ApiHomestay.getDetailHomestay(idHomestay: idHomestay!);
         if (homestayDetail != null) {
@@ -28,7 +28,7 @@ class HomestayDetailBloc
           var isWishlist = await ApiHomestay.getWishlistByIdTouristAndHomeStay(
               idHomestay: idHomestay, idTourist: idTourist!);
           if (isWishlist != null) {
-            prefs.setString('idWishlist', isWishlist.id!);
+            SharedPreferencesUtil.setIdWishlist(isWishlist.id!);
             emit(GetDisplaySuccess(
                 homestayDetailModel: homestayDetail, iswishlist: true));
           } else {

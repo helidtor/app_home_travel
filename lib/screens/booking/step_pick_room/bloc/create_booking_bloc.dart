@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/models/booking/create_booking_detail_model.da
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_state.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
@@ -28,9 +29,8 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
             bookingHomestayModel; // return result when success
         CreateBookingDetailModel bookingHomestayDetail =
             CreateBookingDetailModel();
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         List<String>? listIdRoomPicked =
-            prefs.getStringList('listIdPicked') ?? [];
+            SharedPreferencesUtil.getListIdPicked() ?? [];
         if (listIdRoomPicked.isNotEmpty) {
           totalRoom = listIdRoomPicked.length;
           for (var e in listIdRoomPicked) {
@@ -90,9 +90,8 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
               bookingHomestayModel: bookingHomestayModel!));
         }
       } else if (event is CheckListRoom) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String idHomestay = prefs.getString("idHomestay")!;
-        String idUser = prefs.getString("idUserCurrent")!;
+        String idHomestay = SharedPreferencesUtil.getIdHomestay()!;
+        String idUser = SharedPreferencesUtil.getIdUserCurrent()!;
         var listRoomEmpty = await ApiRoom.getAllRoomEmptyByDate(
                 homeStayId: idHomestay,
                 dateCheckIn: event.checkInDate,

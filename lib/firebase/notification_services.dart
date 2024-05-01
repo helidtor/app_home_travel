@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mobile_home_travel/main.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
@@ -90,8 +91,7 @@ class NotificationService {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     if (fCMToken != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('fCMToken', fCMToken);
+      SharedPreferencesUtil.setFCMToken(fCMToken);
     }
     print('fcmToken: $fCMToken');
     initPushNotifications();

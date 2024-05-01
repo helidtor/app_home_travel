@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/booking/create_booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBooking {
@@ -14,8 +15,7 @@ class ApiBooking {
       required int totalCapacity}) async {
     // print('Thông tin booking nhập vào để tạo booking là: $bookingInput');
     BookingHomestayModel? bookingHomestayModel;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     try {
       var url = "$baseUrl/api/v1/Bookings";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -57,8 +57,7 @@ class ApiBooking {
   //Tạo booking detail
   static Future<bool> createBookingDetail(
       {required CreateBookingDetailModel bookingHomestayDetail}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     try {
       var url = "$baseUrl/api/v1/BookingDetails";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -89,8 +88,7 @@ class ApiBooking {
   static Future<bool> updateBooking(
       {required BookingHomestayModel bookingInput}) async {
     // print('Thông tin booking nhập vào để update booking là: $bookingInput');
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     try {
       var url = "$baseUrl/api/v1/Bookings/${bookingInput.id}";
       Map<String, String> header = await ApiHeader.getHeader();
@@ -122,9 +120,8 @@ class ApiBooking {
   static Future<List<BookingHomestayModel>?> getListBooking(
       {required String status, String? status2}) async {
     List<BookingHomestayModel>? listBooking;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
     var url;
     try {
       if (status2 != null) {
@@ -168,9 +165,8 @@ class ApiBooking {
   static Future<List<BookingHomestayModel>?> getBookingDetailById(
       {required String id}) async {
     List<BookingHomestayModel>? listBooking;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
-    String? idTourist = prefs.getString("idUserCurrent");
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
     try {
       var url =
           "$baseUrl/api/v1/Bookings?pageSize=50&bookingId=$id&touristId=$idTourist";
@@ -208,8 +204,7 @@ class ApiBooking {
   static Future<String?> checkoutDepositByCard(
       {required String idBooking}) async {
     String? link;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     var url = "$baseUrl/api/v1/Bookings/$idBooking/PayByVNPay";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -235,8 +230,7 @@ class ApiBooking {
 // <<<< Checkout full by card >>>>
   static Future<String?> checkoutFullByCard({required String idBooking}) async {
     String? link;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     var url = "$baseUrl/api/v1/Bookings/$idBooking/PayFullByVNPay";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -262,8 +256,7 @@ class ApiBooking {
   // <<<< Checkout deposit by wallet >>>>
   static Future<bool?> checkoutDepositByWallet(
       {required String idBooking}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     var url = "$baseUrl/api/v1/Bookings/$idBooking/PayByWallet";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -284,8 +277,7 @@ class ApiBooking {
 
   // <<<< Checkout full by wallet >>>>
   static Future<bool?> checkoutFullByWallet({required String idBooking}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     var url = "$baseUrl/api/v1/Bookings/$idBooking/PayFullByWallet";
     Map<String, String> header = await ApiHeader.getHeader();
     header.addAll({'Authorization': 'Bearer $token'});
@@ -303,6 +295,4 @@ class ApiBooking {
     }
     return false;
   }
-
-  
 }

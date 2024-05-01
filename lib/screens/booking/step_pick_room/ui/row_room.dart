@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/utils/format/format.dart';
@@ -45,8 +46,7 @@ class _RowRoomState extends State<RowRoom> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("idRoom", roomEmpty.id!);
+        SharedPreferencesUtil.setIdRoom(roomEmpty.id!);
         Navigator.push(
           // ignore: use_build_context_synchronously
           context,
@@ -121,17 +121,15 @@ class _RowRoomState extends State<RowRoom> {
                   setState(() {
                     isChecked = newValue!;
                   });
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
                   //save list id room picked in prefs
-                  listIdPicked = prefs.getStringList("listIdPicked") ?? [];
+                  listIdPicked = SharedPreferencesUtil.getListIdPicked() ?? [];
                   if (isChecked) {
                     listIdPicked.add(roomEmpty.id!);
                   } else {
                     listIdPicked.remove(roomEmpty.id!);
                   }
                   print('List id picked current: $listIdPicked');
-                  prefs.setStringList("listIdPicked", listIdPicked);
+                  SharedPreferencesUtil.setListIdPicked(listIdPicked);
                 },
               ),
             ],

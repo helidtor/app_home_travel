@@ -13,6 +13,7 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail
 import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailBooking extends StatefulWidget {
@@ -123,12 +124,8 @@ class _DetailBookingState extends State<DetailBooking> {
                             GestureDetector(
                               // xem lại thông tin homestay
                               onTap: () async {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setString(
-                                    "idHomestay",
-                                    bookingInfor
-                                        .bookingDetails![0].room!.homeStayId!);
+                                SharedPreferencesUtil.setIdHomestay(bookingInfor
+                                    .bookingDetails![0].room!.homeStayId!);
                                 // ignore: use_build_context_synchronously
                                 Navigator.push(
                                   context,

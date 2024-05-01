@@ -3,6 +3,7 @@ import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrl.dart';
 import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,8 +11,7 @@ class ApiRoom {
   // <<<< Get room by id >>>>
   static Future<RoomModel?> getRoomDetail({required String idRoom}) async {
     RoomModel? roomDetail;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
 
     try {
       var url = "$baseUrl/api/v1/Rooms/$idRoom";
@@ -41,8 +41,7 @@ class ApiRoom {
       required String dateCheckIn,
       required String dateCheckOut}) async {
     List<RoomModel>? listRoom;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(myToken);
+    String? token = SharedPreferencesUtil.getToken();
     // print(
     //     'Thông tin search room empty: $homeStayId, $dateCheckIn, $dateCheckOut');
     try {

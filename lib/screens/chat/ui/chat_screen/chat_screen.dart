@@ -44,7 +44,7 @@ class ChatScreen extends StatelessWidget {
 
           return ListView.separated(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            // padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: users.length,
             separatorBuilder: (context, index) => const SizedBox(
               height: 10,

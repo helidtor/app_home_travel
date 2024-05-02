@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animated_rating_bar/widgets/animated_rating_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/firebase/firebase_chat_provider.dart';
+import 'package:mobile_home_travel/models/chat/user_chat_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
+import 'package:mobile_home_travel/screens/chat/ui/chat_detail/chat_detail_screen.dart';
 import 'package:mobile_home_travel/screens/feedback_homestay/ui/feedback_homestay_screen.dart';
 import 'package:mobile_home_travel/screens/wishlist/ui/wishlist_screen.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
@@ -734,11 +737,25 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                 await ApiUser.getOwner(idOwner: homestayDetail!.ownerId!);
             var userProfile = await ApiUser.getProfile();
             if (ownerProfile != null && userProfile != null) {
+              UserChatModel owner =
+                  UserChatModel.fromJson(ownerProfile.toMap());
+              // owner.avatar = ownerProfile.avatar;
+              // owner.email = ownerProfile.email;
+              // owner.firstName = ownerProfile.firstName;
+              // owner.lastName = ownerProfile.lastName;
+              owner.phoneNumber = "";
+              owner.lastTimeChat = Timestamp.now();
+              print(owner);
               FirebaseChatProvider().createUserChat(userProfile, ownerProfile);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatDetailScreen(owner: owner)),
+              );
             }
           },
           backgroundColor:
-              AppColors.primaryColor3.withOpacity(0.8), // Icon của nút
+              AppColors.primaryColor3.withOpacity(0.5), // Icon của nút
           elevation: 10,
           shape: const CircleBorder(),
           child: const Icon(

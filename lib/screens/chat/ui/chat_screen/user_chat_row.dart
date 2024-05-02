@@ -56,7 +56,6 @@ class _UserChatRowState extends State<UserChatRow> {
       ),
       subtitle: Text(
         'online lúc ${FormatProvider().formatDateChat(widget.userChatModel.lastTimeChat!)}',
-        // '',
         maxLines: 2,
         style: TextStyle(
           color: Colors.black.withOpacity(0.7),

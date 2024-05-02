@@ -5,12 +5,14 @@ class MessageFirebase {
   Timestamp? createdAt;
   String? phoneNumber;
   String? userSentId;
+  String? typeMessage;
 
   MessageFirebase({
     this.content,
     this.createdAt,
     this.phoneNumber,
     this.userSentId,
+    this.typeMessage,
   });
 
   MessageFirebase.fromJson(Map<String, dynamic> json) {
@@ -18,6 +20,7 @@ class MessageFirebase {
     createdAt = json['createdAt'];
     phoneNumber = json['phoneNumber'];
     userSentId = json['userSentId'];
+    typeMessage = json['typeMessage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,6 +29,7 @@ class MessageFirebase {
     data['createdAt'] = createdAt;
     data['phoneNumber'] = phoneNumber;
     data['userSentId'] = userSentId;
+    data['typeMessage'] = typeMessage;
     return data;
   }
 }

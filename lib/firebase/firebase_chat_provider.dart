@@ -40,11 +40,14 @@ class FirebaseChatProvider extends ChangeNotifier {
 
   //gửi 1 tin nhắn mới
   Future<void> addMessage(
-      {required String message, required String idOwner}) async {
+      {required String content,
+      required String typeMessage,
+      required String idOwner}) async {
     MessageFirebase messageFirebase = MessageFirebase(
       userSentId: idCurrentUser,
-      content: message,
+      content: content,
       createdAt: Timestamp.now(),
+      typeMessage: typeMessage,
       phoneNumber: SharedPreferencesUtil.getPhoneNumber(),
     );
 
@@ -66,7 +69,8 @@ class FirebaseChatProvider extends ChangeNotifier {
   }
 
   //tạo box chat với user khác
-  Future<void> createUserChat(UserProfileModel userCurrent, UserProfileModel userOwner) async {
+  Future<void> createUserChat(
+      UserProfileModel userCurrent, UserProfileModel userOwner) async {
     CollectionReference userChatCollection =
         FirebaseFirestore.instance.collection('userChat');
 

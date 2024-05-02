@@ -195,9 +195,11 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                         child: GestureDetector(
                           onTap: () {
                             CancelFunctionProvider().dialogCancelNoFine(
-                                //hộp thoại hủy pending booking
-                                context,
-                                bookingHomestayModel);
+                              //hộp thoại hủy pending booking
+                              context,
+                              bookingHomestayModel,
+                              true,
+                            );
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5, right: 10),

@@ -232,6 +232,29 @@ class ApiUser {
     return userProfileModel;
   }
 
+// <<<< Get owner >>>>
+  static Future<UserProfileModel?> getOwner({required String idOwner}) async {
+    UserProfileModel? userProfileModel;
+    String? token = SharedPreferencesUtil.getToken();
+
+    try {
+      var url = "$baseUrl/api/v1/Owners/$idOwner";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.get(Uri.parse(url.toString()), headers: header);
+      // print("TEST get owner: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        userProfileModel = UserProfileModel.fromMap(bodyConvert['data']);
+        // print("Thông tin model từ get owner: $userProfileModel");
+        return userProfileModel;
+      }
+    } catch (e) {
+      print("Loi get owner: $e");
+    }
+    return userProfileModel;
+  }
+
   //Update profile
   static Future<bool> updateProfile(
       {required UserProfileModel userProfileModel, required String id}) async {

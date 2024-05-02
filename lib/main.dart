@@ -100,7 +100,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/firebase/firebase_options.dart';
-import 'package:mobile_home_travel/firebase/firebase_provider.dart';
+import 'package:mobile_home_travel/firebase/firebase_chat_provider.dart';
 import 'package:mobile_home_travel/firebase/notification_services.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/screens/notifications/ui/notification_screen.dart';
@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => FirebaseProvider(),
+      create: (_) => FirebaseChatProvider(),
       child: MaterialApp(
         locale: const Locale('vi', 'VN'),
         title: 'Home Travel',

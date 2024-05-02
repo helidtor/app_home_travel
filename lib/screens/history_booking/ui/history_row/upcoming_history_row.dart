@@ -215,14 +215,20 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                           0) {
                                     //kiểm tra xem có rate phạt và ngày phạt đền tiền hủy đơn hay không
                                     CancelFunctionProvider().dialogCancelNoFine(
-                                        context, bookingHomestayModel);
+                                      context,
+                                      bookingHomestayModel,
+                                      false,
+                                    );
                                   } else {
                                     //kiểm tra xem ngày hiện tại có nằm trong khoảng ngày cancel free hay không
                                     if (CancelFunctionProvider()
                                         .isCancelFree(bookingHomestayModel)) {
                                       CancelFunctionProvider()
                                           .dialogCancelNoFine(
-                                              context, bookingHomestayModel);
+                                        context,
+                                        bookingHomestayModel,
+                                        false,
+                                      );
                                     } else {
                                       CancelFunctionProvider()
                                           .dialogCancelWithFine(

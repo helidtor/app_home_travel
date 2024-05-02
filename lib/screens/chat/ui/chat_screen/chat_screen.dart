@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_home_travel/firebase/firebase_provider.dart';
+import 'package:mobile_home_travel/firebase/firebase_chat_provider.dart';
 import 'package:mobile_home_travel/models/chat/user_chat_model.dart';
 import 'package:mobile_home_travel/screens/chat/ui/chat_screen/user_chat_row.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,8 @@ class ChatScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<List<UserChatModel>>(
-        stream: Provider.of<FirebaseProvider>(context).getAllUserChat(), //lấy tất cả user đang có cuộc trò chuyện
+        stream: Provider.of<FirebaseChatProvider>(context)
+            .getAllUserChat(), //lấy tất cả user đang có cuộc trò chuyện
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(

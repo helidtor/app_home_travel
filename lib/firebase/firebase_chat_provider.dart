@@ -5,7 +5,7 @@ import 'package:mobile_home_travel/models/chat/user_chat_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 
-class FirebaseProvider extends ChangeNotifier {
+class FirebaseChatProvider extends ChangeNotifier {
   static final fireStore = FirebaseFirestore.instance;
   List<MessageFirebase> messages = [];
   String? idCurrentUser = SharedPreferencesUtil.getIdUserCurrent();
@@ -65,23 +65,37 @@ class FirebaseProvider extends ChangeNotifier {
         .add(messageFirebase.toJson());
   }
 
-  Future<void> createUserChat(String idUser, UserProfileModel userOwner) async {
+  //tạo box chat với user khác
+  Future<void> createUserChat(UserProfileModel userCurrent, UserProfileModel userOwner) async {
     CollectionReference userChatCollection =
         FirebaseFirestore.instance.collection('userChat');
 
     try {
-      await userChatCollection.doc(idUser).set({
-        'withUser': {
-          userOwner.id: {
-            'id': userOwner.id,
-            'avatar': userOwner.avatar,
-            'email': userOwner.email,
-            'firstName': userOwner.firstName,
-            'lastName': userOwner.lastName,
-            'lastTimeChat': Timestamp.now(),
-            'phoneNumber': userOwner.phoneNumber,
-          }
-        }
+      await userChatCollection
+          .doc(userCurrent.id)
+          .collection('withUser')
+          .doc(userOwner.id)
+          .set({
+        'id': userOwner.id,
+        'avatar': userOwner.avatar,
+        'email': userOwner.email,
+        'firstName': userOwner.firstName,
+        'lastName': userOwner.lastName,
+        'lastTimeChat': Timestamp.now(),
+        'phoneNumber': userOwner.phoneNumber,
+      });
+      await userChatCollection
+          .doc(userOwner.id)
+          .collection('withUser')
+          .doc(userCurrent.id)
+          .set({
+        'id': userCurrent.id,
+        'avatar': userCurrent.avatar,
+        'email': userCurrent.email,
+        'firstName': userCurrent.firstName,
+        'lastName': userCurrent.lastName,
+        'lastTimeChat': Timestamp.now(),
+        'phoneNumber': userCurrent.phoneNumber,
       });
       print('User chat created successfully!');
     } catch (e) {

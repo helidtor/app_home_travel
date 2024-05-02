@@ -47,7 +47,7 @@ class _UserChatRowState extends State<UserChatRow> {
         ],
       ),
       title: Text(
-        '${widget.userChatModel.firstName!} ${widget.userChatModel.lastName!}',
+        '${widget.userChatModel.lastName!} ${widget.userChatModel.firstName!}',
         style: const TextStyle(
           color: Colors.black,
           fontSize: 18,

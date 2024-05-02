@@ -770,7 +770,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
               CupertinoDialogAction(
                   child: TextButton(
                 onPressed: () async {
-                  bookingInfor!.status = 'CANCELLED';
+                  bookingInfor!.status = 'EXPIRED';
                   var checkUpdateBooking = await ApiBooking.updateBooking(
                       bookingInput: bookingInfor!);
                   print(checkUpdateBooking);

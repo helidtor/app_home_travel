@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                          bottom: 15, left: 40, top: 15, right: 20),
+                          bottom: 15, left: 40, top: 15, right: 15),
                       child: Container(
                         // ảnh ava
                         width: 60,
@@ -122,30 +122,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
                     (user?.firstName != null &&
                             user?.lastName != null &&
                             user?.email != null)
-                        ? RichText(
-                            text: TextSpan(
+                        ? SizedBox(
+                            width: screenSize.width * 0.52,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextSpan(
-                                  text: '${user!.firstName} ${user!.lastName}',
+                                Text(
+                                  '${user!.firstName} ${user!.lastName}',
                                   style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
                                     color: Color.fromARGB(205, 0, 0, 0),
-                                    fontSize: 25,
+                                    fontSize: 23,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                TextSpan(
-                                  text: '\n${user!.email}',
+                                Text(
+                                  '${user!.email}',
                                   style: const TextStyle(
                                     fontSize: 15,
-                                    color: Color.fromARGB(132, 0, 0, 0),
+                                    color: Color.fromARGB(95, 0, 0, 0),
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           )

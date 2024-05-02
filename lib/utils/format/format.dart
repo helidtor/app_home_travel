@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class FormatProvider {
@@ -196,5 +197,11 @@ class FormatProvider {
     final modifiedDateTime = dateTime.subtract(const Duration(hours: 1));
     print('modifiedDateTime là $modifiedDateTime');
     return modifiedDateTime;
+  }
+
+  String formatDateChat(Timestamp timestamp) {
+    final dateTime = timestamp.toDate();
+    final formatter = DateFormat('dd/MM H:mm a');
+    return formatter.format(dateTime);
   }
 }

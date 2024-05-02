@@ -2,10 +2,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:mobile_home_travel/screens/chat/ui/chat_screen/chat_screen.dart';
 import 'package:mobile_home_travel/screens/autocomplete_map/autocomplete_map.dart';
-import 'package:mobile_home_travel/screens/chat/demo/chat_screen.dart';
-import 'package:mobile_home_travel/screens/chat/ui/chat_screen.dart';
 import 'package:mobile_home_travel/screens/history_booking/ui/history_screen.dart';
 import 'package:mobile_home_travel/screens/home/home_screen.dart';
 import 'package:mobile_home_travel/screens/settings/settings_screen.dart';
@@ -72,7 +70,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
           isHaveBtnClose: false,
         );
       case 2:
-        return const ChatScreen();
+        return ChatScreen();
       case 3:
         return const HistoryScreen();
       case 4:

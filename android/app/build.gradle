@@ -23,7 +23,6 @@ if (flutterVersionName == null) {
 }
 
 android {
-    ndkVersion "25.1.8937393"
     namespace "com.example.mobile_home_travel"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
@@ -69,3 +68,5 @@ flutter {
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 }
+
+apply plugin: 'com.google.gms.google-services'

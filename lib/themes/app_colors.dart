@@ -26,6 +26,11 @@ class AppColors {
 
   static List<Color> get primaryG => [primaryColor1, primaryColor2];
   static List<Color> get secondaryG => [secondaryColor1, secondaryColor2];
+  static List<Color> get thirdG => [
+        const Color.fromARGB(255, 111, 77, 202),
+        // const Color.fromARGB(255, 146, 88, 218),
+        const Color.fromARGB(255, 168, 50, 165)
+      ];
 
   static Color get lightGray => const Color(0xffF7F8F8);
   static Color get black => const Color(0xff1D1617);

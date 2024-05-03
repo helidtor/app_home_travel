@@ -10,6 +10,7 @@ import 'package:mobile_home_travel/api/api_user.dart';
 import 'package:mobile_home_travel/models/user/sign_up_user_model.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/check_password_valid/check_password_valid.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/input/round_text_field.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
@@ -23,9 +24,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  bool isShowPassword = true;
+  bool isShowRePassword = true;
   bool isCheck = false;
   String? dropdownValue;
   File? selectedImage;
+  String? newPassword;
+  String? rePassword;
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -303,14 +308,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   icon: "assets/icons/lock_icon.png",
                   textEditingController: passwordController,
                   textInputType: TextInputType.text,
-                  isObscureText: true,
+                  isObscureText: isShowPassword,
                   onChangeText: (value) {
                     setState(() {
                       userSignUpModel.password = value;
+                      newPassword = value;
                     });
                   },
                   rightIcon: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isShowPassword = !isShowPassword;
+                        });
+                      },
                       child: Container(
                           alignment: Alignment.center,
                           width: 20,
@@ -331,14 +341,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   icon: "assets/icons/lock_icon.png",
                   textEditingController: rePasswordController,
                   textInputType: TextInputType.text,
-                  isObscureText: true,
+                  isObscureText: isShowRePassword,
                   onChangeText: (value) {
                     setState(() {
                       // userSignUpModel.confirmPassword = value;
+                      rePassword = value;
                     });
                   },
                   rightIcon: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isShowRePassword = !isShowRePassword;
+                        });
+                      },
                       child: Container(
                           alignment: Alignment.center,
                           width: 20,
@@ -409,20 +424,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     userSignUpModel.firstName = firstNameController.text;
                     print(userSignUpModel);
                     try {
-                      var checkSignUp = await ApiUser.signup(
-                          userSignUpModel: userSignUpModel);
-                      if (checkSignUp == true) {
-                        SuccessNotiProvider()
-                            .ToastSuccess(context, 'Đăng ký thành công');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
+                      if (rePassword == null || newPassword == null) {
+                        //check không đc để trống
+                        ErrorNotiProvider().ToastError(
+                            context, 'Vui lòng điền đủ các trường!');
                       } else {
-                        print("Đăng ký không thành công: $checkSignUp");
-                        ErrorNotiProvider().showError(
-                            context, 'Vui lòng nhập đủ các trường dữ liệu!');
+                        if (newPassword == rePassword) {
+                          //check nếu mật khẩu không trùng khớp
+                          if (CheckPasswordValid()
+                                      .isPasswordValid(newPassword!) ==
+                                  true &&
+                              CheckPasswordValid()
+                                      .isPasswordValid(rePassword!) ==
+                                  true) {
+                            //check format đúng hay không
+                            var checkSignUp = await ApiUser.signup(
+                                userSignUpModel: userSignUpModel);
+                            if (checkSignUp == true) {
+                              SuccessNotiProvider()
+                                  .ToastSuccess(context, 'Đăng ký thành công');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()),
+                              );
+                            } else {
+                              print("Đăng ký không thành công: $checkSignUp");
+                              ErrorNotiProvider().showError(context,
+                                  'Vui lòng nhập đủ các trường dữ liệu!');
+                            }
+                          } else {
+                            ErrorNotiProvider().ToastError(context,
+                                'Mật khẩu mới phải chứa ít nhất 8 ký tự & chữ hoa & chữ thường!');
+                          }
+                        } else {
+                          ErrorNotiProvider().ToastError(
+                              context, 'Mật khẩu mới không trùng khớp!');
+                        }
                       }
                     } catch (e) {
                       print("Đăng ký không thành công: $e");

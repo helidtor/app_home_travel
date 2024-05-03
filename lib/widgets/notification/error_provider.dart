@@ -37,8 +37,8 @@ class ErrorNotiProvider {
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
-        autoCloseDuration: const Duration(milliseconds: 1500),
+        autoCloseDuration: const Duration(milliseconds: 2000),
         animationDuration: const Duration(milliseconds: 500),
-        alignment: Alignment.topRight);
+        alignment: Alignment.topCenter);
   }
 }

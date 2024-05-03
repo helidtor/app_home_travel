@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final bool _validatePassword = false;
   bool checkLogin = false;
   final _bloc = LoginBloc();
+  bool isShowPassword = true;
 
   @override
   void initState() {
@@ -165,13 +166,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: "Mật khẩu",
                         icon: "assets/icons/lock_icon.png",
                         textInputType: TextInputType.text,
-                        isObscureText: true,
+                        isObscureText: isShowPassword,
                         textEditingController: passwordController,
                         errorText: _validatePassword
                             ? 'Vui lòng nhập mật khẩu!'
                             : null,
                         rightIcon: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                isShowPassword = !isShowPassword;
+                              });
+                            },
                             child: Container(
                                 alignment: Alignment.center,
                                 width: 20,

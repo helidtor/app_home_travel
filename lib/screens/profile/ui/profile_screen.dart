@@ -129,13 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 label: 'SĐT',
                                 controller: phoneController,
                                 widthInput: 0.8,
-                                readOnly: false,
+                                readOnly: true,
                                 content: inforUpdate?.phoneNumber ?? "...",
-                                onChangeText: (value) {
-                                  setState(() {
-                                    inforUpdate?.phoneNumber = value;
-                                  });
-                                },
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

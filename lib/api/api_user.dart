@@ -280,6 +280,35 @@ class ApiUser {
     }
   }
 
+//Change password
+  static Future<num>? changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    String? token = SharedPreferencesUtil.getToken();
+    String? idUserCurrent = SharedPreferencesUtil.getIdUserCurrent();
+    try {
+      var url =
+          "$baseUrl/api/v1/Tourists/$idUserCurrent/changePassword?oldPassword=$oldPassword&newPassword=$newPassword";
+      Map<String, String> header = await ApiHeader.getHeader();
+      header.addAll({'Authorization': 'Bearer $token'});
+      var response = await http.put(Uri.parse(url.toString()), headers: header);
+      if (response.statusCode == 200) {
+        print("Đổi mật khẩu thành công");
+        return 200;
+      } else if (response.statusCode == 400) {
+        print("Mật khẩu cũ không chính xác ${jsonDecode(response.body)}");
+        return 400;
+      } else {
+        print("Loi đổi password");
+        return 404;
+      }
+    } catch (e) {
+      print("Loi change password: $e");
+      return 404;
+    }
+  }
+
   //Upload avatar
   static Future<String?> uploadImage(File image, String imageName) async {
     String? token = SharedPreferencesUtil.getToken();

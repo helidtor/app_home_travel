@@ -4,6 +4,7 @@ import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/main.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';
+import 'package:mobile_home_travel/screens/change_password/change_password.dart';
 import 'package:mobile_home_travel/screens/login/ui/login_screen.dart';
 import 'package:mobile_home_travel/screens/notifications/ui/notification_screen.dart';
 import 'package:mobile_home_travel/screens/profile/ui/profile_screen.dart';
@@ -272,9 +273,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ],
                 ),
-                child: const Column(
+                child: Column(
                   children: [
                     RowSetting(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChangePasswordScreen(),
+                          ),
+                        );
+                      },
                       weightLine: 0,
                       textHeader: "Đổi mật khẩu",
                       icon: Icons.password,
@@ -300,8 +309,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                   children: [
                     RowSetting(
-                      onPressed: () {
-                        clearToken();
+                      onPressed: () async {
+                        await clearToken();
                         // Navigator.push(
                         //   context,
                         //   MaterialPageRoute(

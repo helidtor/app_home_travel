@@ -121,7 +121,7 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                         fontSize: 13,
                                       ),
                                       content:
-                                          'Đã đặt cọc (còn thiếu: ${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫)',
+                                          'Đã cọc (còn thiếu: ${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫)',
                                       icon: Icons.playlist_add_check_rounded)
                                   : RowText().richText(
                                       textStyleContent: const TextStyle(

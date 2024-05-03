@@ -482,6 +482,7 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     FeedbackHomestayScreen(
+                                                  isCreateFeedback: false,
                                                   homestayDetailModel:
                                                       homestayDetail!,
                                                 ),
@@ -547,9 +548,13 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
                                       homestayDetail!.rooms!.length,
                                       (index) => Padding(
                                         padding: const EdgeInsets.all(10),
-                                        child: RoomPreview(
-                                            roomModel:
-                                                homestayDetail!.rooms![index]),
+                                        child: homestayDetail!
+                                                    .rooms![index].status ==
+                                                'ACTIVE'
+                                            ? RoomPreview(
+                                                roomModel: homestayDetail!
+                                                    .rooms![index])
+                                            : const SizedBox(),
                                       ),
                                     ),
                                   ),
@@ -739,13 +744,8 @@ class _HomeStayDetailState extends State<HomeStayDetail> {
             if (ownerProfile != null && userProfile != null) {
               UserChatModel owner =
                   UserChatModel.fromJson(ownerProfile.toMap());
-              // owner.avatar = ownerProfile.avatar;
-              // owner.email = ownerProfile.email;
-              // owner.firstName = ownerProfile.firstName;
-              // owner.lastName = ownerProfile.lastName;
               owner.phoneNumber = "";
               owner.lastTimeChat = Timestamp.now();
-              print(owner);
               FirebaseChatProvider().createUserChat(userProfile, ownerProfile);
               Navigator.push(
                 context,

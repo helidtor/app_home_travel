@@ -292,29 +292,29 @@ class _WalletScreenState extends State<WalletScreen> {
                       ),
                     ),
                     const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Giao dịch gần nhất',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Xem tất cả',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor3,
-                                ),
-                              )),
+                          // TextButton(
+                          //     onPressed: () {},
+                          //     child: const Text(
+                          //       'Xem tất cả',
+                          //       style: TextStyle(
+                          //         fontSize: 14,
+                          //         fontStyle: FontStyle.italic,
+                          //         fontWeight: FontWeight.bold,
+                          //         color: AppColors.primaryColor3,
+                          //       ),
+                          //     )),
                         ],
                       ),
                     ),

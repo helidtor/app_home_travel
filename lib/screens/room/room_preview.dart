@@ -85,7 +85,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                     children: [
                       Text(
                         '${FormatProvider().formatNumber((roomModel.acreage != null) ? roomModel.acreage.toString() : '0')}m\u00b2',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
                           color: Colors.black,
                         ),
@@ -99,7 +99,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                             (roomModel.numberOfBeds != null)
                                 ? '${roomModel.numberOfBeds} giường'
                                 : '',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontStyle: FontStyle.italic,
                               fontSize: 11,
                               color: Colors.black,
@@ -124,7 +124,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                     height: 45,
                     child: Text(
                       '${roomModel.name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -147,7 +147,7 @@ class _RoomPreviewState extends State<RoomPreview> {
                         ),
                         Text(
                           '${FormatProvider().formatPrice((roomModel.price != null) ? roomModel.price.toString() : '0')}₫',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                          style: const TextStyle(fontSize: 12, color: Colors.black),
                         ),
                       ],
                     ),

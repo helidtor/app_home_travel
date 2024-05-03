@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 
 class FormatProvider {
   String formatNumber(String input) {
-    final formatter = NumberFormat("#,###");
+    // final formatter = NumberFormat("#,###");
+    var formatter = NumberFormat.decimalPattern('vi_VN');
     final number = num.parse(input);
     return formatter.format(number);
   }
@@ -15,13 +16,15 @@ class FormatProvider {
   }
 
   String formatPrice(String input) {
-    final formatter = NumberFormat("#,###");
+    // final formatter = NumberFormat("#,###");
+    var formatter = NumberFormat.decimalPattern('vi_VN');
     final number = num.parse(input);
     return formatter.format(number);
   }
 
   String formatWalletToTopUp(String input) {
-    final formatter = NumberFormat("#,###");
+    // final formatter = NumberFormat("#,###");
+    var formatter = NumberFormat.decimalPattern('vi_VN');
     final number = num.parse(input);
     return formatter.format(number);
   }

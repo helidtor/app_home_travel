@@ -24,6 +24,7 @@ Future<void> clearToken() async {
   prefs.remove(myToken);
   prefs.remove("idUserCurrent");
   navigatorKey.currentState?.pushNamed('/login');
+  print('User id hiện tại là: ${prefs.get('idUserCurrent')}');
 }
 
 Future<UserProfileModel?> getUser() async {

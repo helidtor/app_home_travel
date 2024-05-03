@@ -42,18 +42,20 @@ class ChatScreen extends StatelessWidget {
 
           List<UserChatModel> users = snapshot.data ?? [];
 
-          return ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            // padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: users.length,
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 10,
-            ),
-            itemBuilder: (context, index) => users[index].phoneNumber !=
-                    FirebaseAuth.instance.currentUser?.phoneNumber
-                ? UserChatRow(userChatModel: users[index])
-                : const SizedBox(),
-          );
+          return users != []
+              ? ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  // padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: users.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemBuilder: (context, index) => users[index].phoneNumber !=
+                          FirebaseAuth.instance.currentUser?.phoneNumber
+                      ? UserChatRow(userChatModel: users[index])
+                      : const SizedBox(),
+                )
+              : const SizedBox();
         },
       ),
     );

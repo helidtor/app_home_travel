@@ -71,12 +71,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             ),
             title: Row(
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    widget.owner.avatar!,
-                  ),
-                ),
+                widget.owner.avatar != null
+                    ? CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage(
+                          widget.owner.avatar!,
+                        ),
+                      )
+                    : const CircleAvatar(
+                        radius: 20,
+                        backgroundImage:
+                            AssetImage('assets/images/no_avatar.png'),
+                      ),
                 const SizedBox(
                   width: 15,
                 ),

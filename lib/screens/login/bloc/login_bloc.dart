@@ -38,6 +38,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             SharedPreferencesUtil.setToken(user.token ?? "");
             SharedPreferencesUtil.setIdUserCurrent(user.id!);
             SharedPreferencesUtil.setPhoneNumber(user.phoneNumber!);
+            print('User id hiện tại là: ${user.id}');
             var userLogin = await ApiUser.getProfile();
             var isSubcribeNoti = await ApiUser.subcribeNotification();
             print('Noti subcribe: $isSubcribeNoti');

@@ -64,12 +64,14 @@ class _ResultState extends State<RowNotification> {
               Container(
                 width: screenSize.width * 0.2,
                 height: screenSize.width * 0.2,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(253, 255, 255, 255),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(253, 255, 255, 255),
                   borderRadius: BorderRadius.all(Radius.circular(500)),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("assets/images/homestay_default.jpg"),
+                    image: notificationModel.image == null
+                        ? const AssetImage("assets/images/homestay_default.jpg")
+                        : Image.network(notificationModel.image!).image,
                     // image: AssetImage("assets/images/homestay_default.jpg"),
                   ),
                 ),

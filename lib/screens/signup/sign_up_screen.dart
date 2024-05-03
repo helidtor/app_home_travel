@@ -455,11 +455,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           } else {
                             ErrorNotiProvider().ToastError(context,
-                                'Mật khẩu mới phải chứa ít nhất 8 ký tự & chữ hoa & chữ thường!');
+                                'Mật khẩu phải chứa ít nhất 8 ký tự & chữ hoa & chữ thường!');
                           }
                         } else {
                           ErrorNotiProvider().ToastError(
-                              context, 'Mật khẩu mới không trùng khớp!');
+                              context, 'Mật khẩu không trùng khớp!');
                         }
                       }
                     } catch (e) {

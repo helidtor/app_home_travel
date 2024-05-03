@@ -32,10 +32,15 @@ class _UserChatRowState extends State<UserChatRow> {
       leading: Stack(
         alignment: Alignment.bottomRight,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(widget.userChatModel.avatar!),
-          ),
+          widget.userChatModel.avatar != null
+              ? CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(widget.userChatModel.avatar!),
+                )
+              : const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage('assets/images/no_avatar.png'),
+                ),
           // Padding(
           //   padding: const EdgeInsets.only(bottom: 10),
           //   child: CircleAvatar(

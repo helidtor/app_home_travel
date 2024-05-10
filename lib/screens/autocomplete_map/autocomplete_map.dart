@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-import 'package:mobile_home_travel/constants/keyMap.dart';
+import 'package:mobile_home_travel/constant/keyMap.dart';
 import 'package:mobile_home_travel/screens/result_search/ui/result_search_screen.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';

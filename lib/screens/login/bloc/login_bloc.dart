@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
-import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/constant/myToken.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_event.dart';
 import 'package:mobile_home_travel/screens/login/bloc/login_state.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';

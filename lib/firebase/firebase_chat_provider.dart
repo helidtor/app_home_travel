@@ -8,15 +8,14 @@ import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 class FirebaseChatProvider extends ChangeNotifier {
   static final fireStore = FirebaseFirestore.instance;
   List<MessageFirebase> messages = [];
-  String? idCurrentUser = SharedPreferencesUtil.getIdUserCurrent();
 
   //lấy tất cả user đang chat với bản thân
-  Stream<List<UserChatModel>> getAllUserChat() {
+  Stream<List<UserChatModel>> getAllUserChat({required String idCurrentUser}) {
     return FirebaseFirestore.instance
         .collection('userChat')
         .doc(idCurrentUser)
         .collection('withUser')
-        .orderBy('lastTimeChat')
+        .orderBy('lastTimeChat', descending: true)
         .snapshots(includeMetadataChanges: true)
         .map((querySnapshot) => querySnapshot.docs
             .map((doc) => UserChatModel.fromJson(doc.data()))
@@ -24,7 +23,8 @@ class FirebaseChatProvider extends ChangeNotifier {
   }
 
   //lấy tất cả tin nhắn đang chat với 1 user
-  Stream<List<MessageFirebase>> getMessage({required String idOwner}) {
+  Stream<List<MessageFirebase>> getMessage(
+      {required String idOwner, required String idCurrentUser}) {
     return FirebaseFirestore.instance
         .collection('messages')
         .doc(idCurrentUser)
@@ -41,6 +41,7 @@ class FirebaseChatProvider extends ChangeNotifier {
   //gửi 1 tin nhắn mới
   Future<void> addMessage(
       {required String content,
+      required String idCurrentUser,
       required String typeMessage,
       required String idOwner}) async {
     MessageFirebase messageFirebase = MessageFirebase(
@@ -66,6 +67,8 @@ class FirebaseChatProvider extends ChangeNotifier {
         .doc(idCurrentUser)
         .collection('message')
         .add(messageFirebase.toJson());
+
+    await updateTimeChat(idCurrentUser, idOwner);
   }
 
   //tạo box chat với user khác
@@ -104,6 +107,56 @@ class FirebaseChatProvider extends ChangeNotifier {
       print('User chat created successfully!');
     } catch (e) {
       print('Failed to create user chat: $e');
+    }
+  }
+
+  //update time chat
+  Future<void> updateTimeChat(String idUserCurrent, String idUserOwner) async {
+    CollectionReference userChatCollection =
+        FirebaseFirestore.instance.collection('userChat');
+
+    try {
+      await userChatCollection
+          .doc(idUserCurrent)
+          .collection('withUser')
+          .doc(idUserOwner)
+          .update({'lastTimeChat': Timestamp.now()});
+
+      await userChatCollection
+          .doc(idUserOwner)
+          .collection('withUser')
+          .doc(idUserCurrent)
+          .update({'lastTimeChat': Timestamp.now()});
+
+      print('Update time chat successfully!');
+    } catch (e) {
+      print('Failed to update time chat: $e');
+    }
+  }
+
+  //Delete box chat
+  Future<void> deleteBoxChat(String idUserCurrent, String idUserOwner) async {
+    CollectionReference userChatCollection =
+        FirebaseFirestore.instance.collection('userChat');
+    CollectionReference boxChatCollection =
+        FirebaseFirestore.instance.collection('messages');
+
+    try {
+      await boxChatCollection
+          .doc(idUserCurrent)
+          .collection('withUser')
+          .doc(idUserOwner)
+          .delete();
+
+      await userChatCollection
+          .doc(idUserCurrent)
+          .collection('withUser')
+          .doc(idUserOwner)
+          .delete();
+
+      print('Delete box chat successfully!');
+    } catch (e) {
+      print('Failed to delete box chat: $e');
     }
   }
 }

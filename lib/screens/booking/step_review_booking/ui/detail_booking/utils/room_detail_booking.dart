@@ -103,6 +103,13 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
           subtitle: Column(
             children: [
               RowText().richText(
+                  title: 'Sức chứa',
+                  content: bookingDetailModel.room!.capacity!.toString(),
+                  icon: Icons.person_add_alt),
+              const SizedBox(
+                height: 3,
+              ),
+              RowText().richText(
                   title: 'Số giường',
                   content: bookingDetailModel.room!.numberOfBeds!.toString(),
                   icon: Icons.bed_outlined),

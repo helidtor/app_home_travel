@@ -16,7 +16,7 @@ import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 class ChatDetailScreen extends StatefulWidget {
   final UserChatModel owner;
 
-  ChatDetailScreen({
+  const ChatDetailScreen({
     super.key,
     required this.owner,
   });
@@ -41,6 +41,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   void sendMessage({required String typeMessage, String? content}) async {
     try {
       await FirebaseChatProvider().addMessage(
+          idCurrentUser: userId!,
           typeMessage: typeMessage,
           content: content ?? _messageController.text,
           idOwner: widget.owner.id!);
@@ -118,6 +119,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       child: StreamBuilder<List<MessageFirebase>>(
                         stream: Provider.of<FirebaseChatProvider>(context)
                             .getMessage(
+                                idCurrentUser: userId!,
                                 idOwner: widget.owner.id!), //lấy tin nhắn
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -135,8 +137,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           }
 
                           if (snapshot.hasData && snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text('Chưa có tin nhắn'),
+                            return Center(
+                              child: Text(
+                                'Chưa có tin nhắn',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white.withOpacity(0.6),
+                                    fontSize: 17),
+                              ),
                             );
                           }
 

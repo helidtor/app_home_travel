@@ -3,10 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:mobile_home_travel/firebase/firebase_chat_provider.dart';
 import 'package:mobile_home_travel/models/chat/user_chat_model.dart';
 import 'package:mobile_home_travel/screens/chat/ui/chat_screen/user_chat_row.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:provider/provider.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  String? idCurrentUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    idCurrentUser = SharedPreferencesUtil.getIdUserCurrent();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +35,9 @@ class ChatScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<List<UserChatModel>>(
-        stream: Provider.of<FirebaseChatProvider>(context)
-            .getAllUserChat(), //lấy tất cả user đang có cuộc trò chuyện
+        stream: Provider.of<FirebaseChatProvider>(context).getAllUserChat(
+            idCurrentUser:
+                idCurrentUser!), //lấy tất cả user đang có cuộc trò chuyện
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -40,9 +56,12 @@ class ChatScreen extends StatelessWidget {
             return const Center(child: Text("Đã xảy ra lỗi"));
           }
 
-          List<UserChatModel> users = snapshot.data ?? [];
+          List<UserChatModel> users =
+              (snapshot.hasData && snapshot.data!.isNotEmpty)
+                  ? snapshot.data!
+                  : [];
 
-          return users != []
+          return users.isNotEmpty
               ? ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   // padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -52,10 +71,35 @@ class ChatScreen extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) => users[index].phoneNumber !=
                           FirebaseAuth.instance.currentUser?.phoneNumber
-                      ? UserChatRow(userChatModel: users[index])
+                      ? UserChatRow(
+                          userChatModel: users[index],
+                          idUserCurrent: idCurrentUser!,
+                        )
                       : const SizedBox(),
                 )
-              : const SizedBox();
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: Image.asset(
+                          'assets/images/no_message.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        'Tin nhắn trống!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.black38,
+                        ),
+                      )
+                    ],
+                  ),
+                );
         },
       ),
     );

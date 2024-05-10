@@ -29,6 +29,7 @@ class SharedPreferencesUtil {
   }
 
   static String? getIdUserCurrent() {
+    print('Id của user hiện tại: ${_prefsInstance.getString('idUserCurrent')}');
     return _prefsInstance.getString('idUserCurrent');
   }
 

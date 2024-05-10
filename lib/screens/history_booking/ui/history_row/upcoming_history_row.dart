@@ -295,7 +295,7 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      'Xem chi tiết',
+                                      'Xem đơn',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,

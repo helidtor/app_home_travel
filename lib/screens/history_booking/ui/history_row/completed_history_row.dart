@@ -207,7 +207,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
-                                      'Xem chi tiết',
+                                      'Xem đơn',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.black.withOpacity(0.7),

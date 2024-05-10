@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:mobile_home_travel/constant/data_constant/preset_price.dart';
+import 'package:mobile_home_travel/constants/data_constant/preset_price.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 

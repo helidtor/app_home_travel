@@ -1,4 +1,4 @@
-import 'package:mobile_home_travel/constant/myToken.dart';
+import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesUtil {

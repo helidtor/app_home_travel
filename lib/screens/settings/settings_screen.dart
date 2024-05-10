@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
-import 'package:mobile_home_travel/constant/myToken.dart';
+import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/main.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/routers/router.dart';

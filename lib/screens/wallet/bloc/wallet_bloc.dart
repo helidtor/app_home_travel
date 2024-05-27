@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_wallet.dart';
+import 'package:mobile_home_travel/models/bank/bank_model.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';
@@ -24,8 +25,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
             emit(WalletSuccess(
                 walletModel: wallet, listTransaction: listTransaction));
           } else {
-            emit(WalletSuccess(
-                walletModel: wallet, listTransaction: const []));
+            emit(WalletSuccess(walletModel: wallet, listTransaction: const []));
           }
         } else {
           const WalletFailure(error: "Lỗi ví");
@@ -36,6 +36,14 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           emit(AddFundWalletSuccess(link: link));
         } else {
           emit(const AddFundWalletFailure(error: 'Lỗi nạp tiền!'));
+        }
+      } else if (event is GetListBank) {
+        List<BankModel>? listBank;
+        listBank = await ApiWallet.getListBank();
+        if (listBank!.isNotEmpty) {
+          emit(GetListBankSuccess(listBank: listBank));
+        } else {
+          emit(const GetListBankFailure(msg: 'Rút tiền hiện không khả dụng!'));
         }
       }
     } catch (e) {

@@ -224,19 +224,17 @@ class _DetailBookingState extends State<DetailBooking> {
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Column(
                     children: List.generate(
-                        bookingInfor.bookingDetails!.length,
-                        (index) => RoomDetailBooking(
-                              bookingDetailModel:
-                                  bookingInfor.bookingDetails![index],
-                              countDayInWeek: FormatProvider().countNormalDays(
-                                  DateTime.parse(bookingInfor.checkInDate!),
-                                  DateTime.parse(bookingInfor.checkOutDate!)),
-                              countDayWeekend: FormatProvider()
-                                  .countWeekendDays(
-                                      DateTime.parse(bookingInfor.checkInDate!),
-                                      DateTime.parse(
-                                          bookingInfor.checkOutDate!)),
-                            )),
+                      bookingInfor.bookingDetails!.length,
+                      (index) => RoomDetailBooking(
+                        bookingDetailModel: bookingInfor.bookingDetails![index],
+                        countDayInWeek: FormatProvider().countNormalDays(
+                            DateTime.parse(bookingInfor.checkInDate!),
+                            DateTime.parse(bookingInfor.checkOutDate!)),
+                        countDayWeekend: FormatProvider().countWeekendDays(
+                            DateTime.parse(bookingInfor.checkInDate!),
+                            DateTime.parse(bookingInfor.checkOutDate!)),
+                      ),
+                    ),
                   ),
                 ),
               ),

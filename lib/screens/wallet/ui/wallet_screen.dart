@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/screens/transaction/transaction_row.dart';
+import 'package:mobile_home_travel/screens/wallet/ui/withdraw_wallet_screen.dart';
 import 'package:mobile_home_travel/screens/web_view/web_view.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
@@ -15,7 +14,7 @@ import 'package:mobile_home_travel/screens/wallet/bloc/wallet_event.dart';
 import 'package:mobile_home_travel/screens/wallet/bloc/wallet_state.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
-import 'package:mobile_home_travel/widgets/input/input_field.dart';
+import 'package:mobile_home_travel/widgets/input/input_field_price.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 import 'package:mobile_home_travel/screens/wallet/ui/preset_price_wallet.dart';
@@ -70,6 +69,18 @@ class _WalletScreenState extends State<WalletScreen> {
           style: TextStyle(
               color: Colors.black, fontSize: 23, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _bloc.add(GetListBank());
+            },
+            icon: const Icon(
+              FontAwesomeIcons.arrowRightFromBracket,
+              color: Colors.black,
+              size: 22,
+            ),
+          )
+        ],
         backgroundColor: Colors.white,
       ),
       body: BlocConsumer<WalletBloc, WalletState>(
@@ -110,6 +121,19 @@ class _WalletScreenState extends State<WalletScreen> {
           } else if (state is WalletFailure) {
             Navigator.pop(context);
             ErrorNotiProvider().showError(context, state.error);
+          } else if (state is GetListBankSuccess) {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => WithdrawWalletScreen(
+                        listBank: state.listBank,
+                        walletModel: wallet,
+                      )),
+            );
+          } else if (state is GetListBankFailure) {
+            Navigator.pop(context);
+            ErrorNotiProvider().showError(context, state.msg);
           }
         },
         builder: (context, state) {

@@ -44,7 +44,9 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return checkDateProvider().isUpcomingDate(bookingHomestayModel)
+    return 
+    // checkDateProvider().isUpcomingDate(bookingHomestayModel)
+    (bookingHomestayModel.isCheckin == null)
         ? Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:mobile_home_travel/models/bank/bank_model.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
@@ -42,4 +43,16 @@ class AddFundWalletSuccess extends WalletState {
   final String link;
 
   const AddFundWalletSuccess({required this.link});
+}
+
+class GetListBankFailure extends WalletState {
+  final String msg;
+
+  const GetListBankFailure({required this.msg});
+}
+
+class GetListBankSuccess extends WalletState {
+  final List<BankModel> listBank;
+
+  const GetListBankSuccess({required this.listBank});
 }

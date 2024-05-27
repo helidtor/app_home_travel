@@ -177,19 +177,19 @@ class _HistoryScreenState extends State<HistoryScreen>
                       text: 'Chờ xác nhận',
                     ),
                     Tab(
-                      text: 'Sắp diễn ra',
+                      text: 'Đợi nhận phòng',
                     ),
                     Tab(
-                      text: 'Đang diễn ra',
+                      text: 'Đã nhận phòng',
                     ),
                     Tab(
-                      text: 'Đã hoàn tất',
+                      text: 'Đã trả phòng',
                     ),
                     Tab(
                       text: 'Đã hủy',
                     ),
                     Tab(
-                      text: 'Quá hạn thanh toán',
+                      text: 'Trả phòng trễ',
                     ),
                     Tab(
                       text: 'Đã hoàn tiền',

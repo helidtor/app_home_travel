@@ -16,3 +16,5 @@ class AddFundWallet extends WalletEvent {
     required this.amount,
   });
 }
+
+class GetListBank extends WalletEvent {}

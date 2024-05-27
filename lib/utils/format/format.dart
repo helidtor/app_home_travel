@@ -71,7 +71,7 @@ class FormatProvider {
   }
 
   String formatString(String input) {
-    String cleanedInput = input.replaceAll(',', '');
+    String cleanedInput = input.replaceAll('.', '');
     return cleanedInput;
   }
 
@@ -85,6 +85,8 @@ class FormatProvider {
         return 'Thanh toán bằng thẻ';
       case 'REFUND':
         return 'Hoàn tiền vào ví';
+      case 'WITHDRAW':
+        return 'Rút tiền';
       default:
         return 'Giao dịch khác';
     }
@@ -100,6 +102,8 @@ class FormatProvider {
         return 'assets/images/PAID_WITH_VNPAY.png';
       case 'REFUND':
         return 'assets/images/REFUND.png';
+      case 'WITHDRAW':
+        return 'assets/images/OTHER.png';
       default:
         return 'assets/images/OTHER.png';
     }
@@ -115,6 +119,8 @@ class FormatProvider {
         return true;
       case 'PAID_WITH_VNPAY':
         return false;
+      case 'WITHDRAW':
+        return false;
       default:
         return false;
     }
@@ -128,13 +134,30 @@ class FormatProvider {
     return formattedDate;
   }
 
+  DateTime convertOriginalDate(DateTime inputDate) {
+    DateTime originalDateTime = inputDate;
+    DateTime newDateTime = DateTime(
+      originalDateTime.year,
+      originalDateTime.month,
+      originalDateTime.day,
+    );
+    return newDateTime;
+  }
+
   int countDays(DateTime startDate, DateTime endDate) {
     int count = 0;
-    for (DateTime date = startDate;
-        (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+    //convert về giờ phút giây = 0 để so sánh isBefore
+    DateTime dateStart = convertOriginalDate(startDate);
+    DateTime dateEnd = convertOriginalDate(endDate);
+
+    for (DateTime date = dateStart;
+        (date.isBefore(dateEnd));
         date = date.add(const Duration(days: 1))) {
       count++;
+      print(
+          'lần thứ $count  ngày ${FormatProvider().convertDate(date.toString())}');
     }
+    print('tổng số ngày là $count');
     return count;
   }
 
@@ -142,7 +165,7 @@ class FormatProvider {
     int count = 0;
     if (!startDate.isAtSameMomentAs(endDate)) {
       for (DateTime date = startDate;
-          (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+          (date.isBefore(endDate));
           date = date.add(const Duration(days: 1))) {
         if (date.weekday == DateTime.saturday ||
             date.weekday == DateTime.sunday) {
@@ -159,10 +182,11 @@ class FormatProvider {
   }
 
   int countNormalDays(DateTime startDate, DateTime endDate) {
+    print('bbbbbb $endDate $startDate');
     int count = 0;
     if (!startDate.isAtSameMomentAs(endDate)) {
       for (DateTime date = startDate;
-          (date.isBefore(endDate) || date.isAtSameMomentAs(endDate));
+          (date.isBefore(endDate));
           date = date.add(const Duration(days: 1))) {
         if (date.weekday != DateTime.saturday &&
             date.weekday != DateTime.sunday) {

@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrlApi.dart';
-import 'package:mobile_home_travel/constants/myToken.dart';
+import 'package:mobile_home_travel/models/bank/bank_model.dart';
 import 'package:mobile_home_travel/models/wallet/transaction_model.dart';
 import 'package:mobile_home_travel/models/wallet/wallet_model.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ApiWallet {
@@ -104,5 +103,53 @@ class ApiWallet {
       print("Loi get all transaction: $e");
     }
     return null;
+  }
+
+  // <<<< Get list bank >>>>
+  static Future<List<BankModel>?> getListBank() async {
+    List<BankModel>? listWallet;
+    try {
+      var url = "https://api.vietqr.io/v2/banks";
+      var response = await http.get(Uri.parse(url.toString()));
+      // print(
+      //     "TEST get list bank: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      var bodyConvert = jsonDecode(response.body);
+      var postsJson = bodyConvert['data'];
+      listWallet = (postsJson as List)
+          .map<BankModel>((postJson) => BankModel.fromMap(postJson))
+          .toList();
+      // print("Thông tin model từ get list bank: $listWallet");
+      return listWallet;
+    } catch (e) {
+      print("Loi get list bank: $e");
+    }
+    return null;
+  }
+
+  // <<<< Withdraw wallet >>>>
+  static Future<String?> withdrawWallet({
+    required String idWallet,
+    required num amount,
+    required String bankName,
+    required String bankNumber,
+  }) async {
+    try {
+      print('Số tiền rút trong api là: $amount');
+      var url =
+          "$baseUrl/api/v1/Wallets/$idWallet/WithDraw?amount=$amount&bankName=$bankName&bankNumber=$bankNumber";
+      var response = await http.get(Uri.parse(url.toString()));
+      var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+      var result = bodyConvert['msg'];
+      print("TEST rút wallet: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        return result;
+      } else {
+        print('Lỗi rút ví');
+        return result;
+      }
+    } catch (e) {
+      print("Loi rút wallet: $e");
+    }
+    return 'Tính năng rút tiền đang gặp trục trặc!';
   }
 }

@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/input/text_content.dart';
 
@@ -12,22 +14,24 @@ class InputField extends StatefulWidget {
   final double? heightInput;
   final String? content;
   final Function? onChangeText;
+  final Color? textColor;
   const InputField({
-    Key? key,
+    super.key,
     this.hintText,
     required this.controller,
     required this.widthInput,
-    this.content,
     this.heightInput,
+    this.content,
     this.onChangeText,
-  }) : super(key: key);
+    this.textColor,
+  });
 
   @override
   State<InputField> createState() => _InputFieldState();
 }
 
 class _InputFieldState extends State<InputField> {
-  static const _locale = 'en';
+  static const _locale = 'vi_VN';
   String _formatNumber(String s) =>
       NumberFormat.decimalPattern(_locale).format(int.parse(s));
   @override
@@ -57,11 +61,11 @@ class _InputFieldState extends State<InputField> {
             minLines: 1,
             maxLines: null,
             style:
-                TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),
+                TextStyle(color: widget.textColor ?? Colors.black.withOpacity(0.6), fontSize: 17),
             decoration: InputDecoration(
               suffixText: 'VNĐ',
               suffixStyle: TextStyle(
-                color: Colors.black.withOpacity(0.4),
+                color: widget.textColor ?? Colors.black.withOpacity(0.4),
                 fontSize: 17,
               ),
               labelText: widget.hintText,
@@ -90,7 +94,7 @@ class _InputFieldState extends State<InputField> {
               ),
             ),
             onChanged: (text) {
-              text = _formatNumber(text.replaceAll(',', ''));
+              text = _formatNumber(text.replaceAll('.', ''));
               controller.value = TextEditingValue(
                 text: text,
                 selection: TextSelection.collapsed(offset: text.length),

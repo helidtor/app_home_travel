@@ -3,6 +3,8 @@ import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/api/api_room.dart';
 import 'package:mobile_home_travel/models/booking/create_booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/models/booking/input_calculate_price_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_state.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
@@ -20,10 +22,9 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
     emit(CreateBookingLoading());
     try {
       if (event is CreateBooking) {
-        double totalNormalPrice = 0;
-        double totalWeekendPrice = 0;
         int totalCapacity = 0;
         int totalRoom = 0;
+        num totalPriceBooking = 0;
         bool isSuccessAll = false;
         BookingHomestayModel?
             bookingHomestayModel; // return result when success
@@ -31,39 +32,50 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
             CreateBookingDetailModel();
         List<String>? listIdRoomPicked =
             SharedPreferencesUtil.getListIdPicked() ?? [];
+        List<InputCalculatePriceModel> listInput = [];
+        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
+        List<PriceRoomModel> listResultPrice = [];
         if (listIdRoomPicked.isNotEmpty) {
           totalRoom = listIdRoomPicked.length;
           for (var e in listIdRoomPicked) {
-            //cộng dồn giá dựa trên list id phòng được chọn
+            //tính tổng sức chứa
             var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
             if (roomPicked != null) {
-              totalNormalPrice += roomPicked.price!;
               totalCapacity += roomPicked.capacity!;
-              if (roomPicked.weekendPrice != null) {
-                totalWeekendPrice += roomPicked.weekendPrice!;
+            }
+            //thêm input data vào để tính giá các phòng trong khoảng ngày checkin checkout
+            inputCalculate.roomId = e;
+            print('list nhập Id hiện tại ${inputCalculate.roomId}');
+            inputCalculate.startDate = event.bookingHomestayModel.checkInDate;
+            inputCalculate.endDate = event.bookingHomestayModel.checkOutDate;
+            listInput.add(inputCalculate);
+            print('List nhập: $listInput');
+          }
+          if (totalCapacity != 0 && listInput.isNotEmpty) {
+            print('List nhập 2: $listInput');
+            var inputBooking = event.bookingHomestayModel;
+            inputBooking.totalCapacity = totalCapacity;
+            listResultPrice =
+                await ApiBooking.calculatePrice(inputCalculate: listInput);
+            if (listResultPrice.isNotEmpty) {
+              for (var e in listResultPrice) {
+                totalPriceBooking += e.totalPrice!;
+                //cộng tổng giá tiền đơn booking
+              }
+              if (totalPriceBooking != 0) {
+                inputBooking.totalPrice = totalPriceBooking;
               }
             }
-          }
-          if (totalNormalPrice != 0 && totalCapacity != 0) {
-            var inputBooking = event.bookingHomestayModel;
-            inputBooking.totalPrice =
-                totalNormalPrice * event.quantityNormalDays +
-                    (totalWeekendPrice *
-                        event.quantityWeekendDays); //giá tổng nhân với số ngày
             //create booking
             var bookingInfor = await ApiBooking.createBooking(
                 bookingInput: inputBooking, totalCapacity: totalCapacity);
-            if (bookingInfor != null) {
+            if (bookingInfor != null && listResultPrice.isNotEmpty) {
+              print('Đây là list price: $listResultPrice');
               bookingHomestayModel = bookingInfor;
-              for (var e in listIdRoomPicked) {
+              for (var e in listResultPrice) {
                 bookingHomestayDetail.bookingId = bookingInfor.id;
-                bookingHomestayDetail.roomId = e;
-                var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
-                if (roomPicked != null) {
-                  bookingHomestayDetail.price = roomPicked.price! *
-                          event.quantityNormalDays +
-                      (roomPicked.weekendPrice! * event.quantityWeekendDays);
-                }
+                bookingHomestayDetail.price = e.totalPrice;
+                bookingHomestayDetail.roomId = e.bookingDetail!.first.roomId;
                 //create booking detail
                 var checkCreateBookingDetail =
                     await ApiBooking.createBookingDetail(
@@ -80,12 +92,18 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
               emit(const CreateBookingFailure(
                   error: 'Bạn đang có một đơn chờ xác nhận!'));
             }
+          } else {
+            emit(const CreateBookingFailure(
+                error: 'Bạn đang có một đơn chờ xác nhận!'));
           }
         } else {
           emit(const CreateBookingFailure(error: 'Bạn chưa chọn phòng!'));
         }
         if (isSuccessAll) {
           emit(CreateBookingSuccess(
+              listIdRoom: listIdRoomPicked,
+              startDate: event.bookingHomestayModel.checkInDate!,
+              endDate: event.bookingHomestayModel.checkOutDate!,
               totalRoom: totalRoom,
               bookingHomestayModel: bookingHomestayModel!));
         }
@@ -103,7 +121,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
           emit(CheckListRoomFailure());
         }
       } else {
-        emit(const CreateBookingFailure(error: "Lỗi tạo đơn đặt phòng"));
+        emit(const CreateBookingFailure(error: "Lỗi tạo đơn đặt phòng!"));
       }
     } catch (e) {
       print("Loi CreateBooking: $e");

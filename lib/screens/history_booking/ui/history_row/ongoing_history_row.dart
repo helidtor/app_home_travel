@@ -29,11 +29,15 @@ class OngoingHistoryRow extends StatefulWidget {
 class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
+  List<String> listIdRoom = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    listIdRoom = widget.bookingHomestayModel.bookingDetails!
+        .map((e) => e.roomId!)
+        .toList();
     bookingHomestayModel = widget.bookingHomestayModel;
     // print(
     //     'Ngày checkin ${bookingHomestayModel.checkInDate} Ngày checkout ${bookingHomestayModel.checkOutDate}');
@@ -260,7 +264,12 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => ReviewBooking(
-                                            isFromPending: false,
+                                            startDate: bookingHomestayModel
+                                                .checkInDate!,
+                                            endDate: bookingHomestayModel
+                                                .checkOutDate!,
+                                            listIdRoom: listIdRoom,
+                                            isFromCreatePendingBooking: false,
                                             userProfileModel: userInfor,
                                             bookingHomestayModel:
                                                 bookingHomestayModel,

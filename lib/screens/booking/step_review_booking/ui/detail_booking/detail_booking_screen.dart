@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_home_travel/constants/data_constant/preset_price.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/room_detail_booking.dart';
@@ -14,13 +17,14 @@ import 'package:mobile_home_travel/screens/homestay/homestay_detail/ui/homestay_
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailBooking extends StatefulWidget {
   BookingHomestayModel bookingInfor;
+  List<PriceRoomModel> listResultPrice;
   DetailBooking({
     super.key,
     required this.bookingInfor,
+    required this.listResultPrice,
   });
 
   @override
@@ -31,11 +35,13 @@ class _DetailBookingState extends State<DetailBooking> {
   late BookingHomestayModel bookingInfor;
   String checkinTime = '';
   String checkoutTime = '';
+  late List<PriceRoomModel> listResultPrice;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    listResultPrice = widget.listResultPrice;
     bookingInfor = widget.bookingInfor;
     setState(() {
       checkinTime =
@@ -221,24 +227,19 @@ class _DetailBookingState extends State<DetailBooking> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 40),
                   child: Column(
                     children: List.generate(
                       bookingInfor.bookingDetails!.length,
                       (index) => RoomDetailBooking(
+                        detailPriceRoom: listResultPrice[index].bookingDetail!,
                         bookingDetailModel: bookingInfor.bookingDetails![index],
-                        countDayInWeek: FormatProvider().countNormalDays(
-                            DateTime.parse(bookingInfor.checkInDate!),
-                            DateTime.parse(bookingInfor.checkOutDate!)),
-                        countDayWeekend: FormatProvider().countWeekendDays(
-                            DateTime.parse(bookingInfor.checkInDate!),
-                            DateTime.parse(bookingInfor.checkOutDate!)),
                       ),
                     ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

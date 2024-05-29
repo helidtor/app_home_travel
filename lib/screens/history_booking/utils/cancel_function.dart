@@ -9,8 +9,10 @@ import 'package:mobile_home_travel/widgets/input/text_content.dart';
 import 'package:toastification/toastification.dart';
 
 class CancelFunctionProvider {
-  void dialogCancelNoFine(BuildContext context,
-      BookingHomestayModel bookingHomestayModel, bool isFromPending) {
+  void dialogCancelNoFine(
+      BuildContext context,
+      BookingHomestayModel bookingHomestayModel,
+      bool isFromCreatePendingBooking) {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
@@ -33,7 +35,7 @@ class CancelFunctionProvider {
                 child: TextButton(
               onPressed: () async {
                 bookingHomestayModel.status =
-                    isFromPending ? 'EXPIRED' : 'CANCELLED';
+                    isFromCreatePendingBooking ? 'EXPIRED' : 'CANCELLED';
                 var checkUpdateBooking = await ApiBooking.updateBooking(
                     bookingInput: bookingHomestayModel);
                 print(checkUpdateBooking);

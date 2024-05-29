@@ -141,6 +141,7 @@ class FormatProvider {
       originalDateTime.month,
       originalDateTime.day,
     );
+    // print('sau khi convert: $newDateTime');
     return newDateTime;
   }
 
@@ -154,10 +155,10 @@ class FormatProvider {
         (date.isBefore(dateEnd));
         date = date.add(const Duration(days: 1))) {
       count++;
-      print(
-          'lần thứ $count  ngày ${FormatProvider().convertDate(date.toString())}');
+      // print(
+      //     'lần thứ $count  ngày ${FormatProvider().convertDate(date.toString())}');
     }
-    print('tổng số ngày là $count');
+    // print('tổng số ngày là $count');
     return count;
   }
 
@@ -182,7 +183,7 @@ class FormatProvider {
   }
 
   int countNormalDays(DateTime startDate, DateTime endDate) {
-    print('bbbbbb $endDate $startDate');
+    // print('bbbbbb $endDate $startDate');
     int count = 0;
     if (!startDate.isAtSameMomentAs(endDate)) {
       for (DateTime date = startDate;
@@ -211,9 +212,10 @@ class FormatProvider {
 
   DateTime convertStringToDateTime(String dateString) {
     // Định dạng của chuỗi đầu vào
-    final inputFormat = DateFormat('HH:mm a - dd/MM/yyyy');
+    final inputFormat = DateFormat('hh:mm a - dd/MM/yyyy');
     // Parse chuỗi thành DateTime
     final dateTime = inputFormat.parse(dateString);
+    // print('time sau khi convert từ chuỗi thành date: $dateTime');
     return dateTime;
   }
 

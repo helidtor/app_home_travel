@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
@@ -25,17 +26,21 @@ class GetBookingPendingCreatedSuccessWithPolicy extends ReviewBookingState {
   BookingHomestayModel bookingCreated;
   UserProfileModel userProfile;
   List<HomestayPolicySelectedModel> listPolicies;
+  List<PriceRoomModel> listResultPrice;
   GetBookingPendingCreatedSuccessWithPolicy({
     required this.bookingCreated,
     required this.userProfile,
     required this.listPolicies,
+    required this.listResultPrice,
   });
 }
 
 class GetPolicySuccessFromPending extends ReviewBookingState {
   List<HomestayPolicySelectedModel> listPolicies;
+  List<PriceRoomModel> listResultPrice;
   GetPolicySuccessFromPending({
     required this.listPolicies,
+    required this.listResultPrice,
   });
 }
 
@@ -44,9 +49,11 @@ class GetPolicyFailFromPending extends ReviewBookingState {}
 class GetBookingPendingCreatedSuccess extends ReviewBookingState {
   BookingHomestayModel bookingCreated;
   UserProfileModel userProfile;
+  List<PriceRoomModel> listResultPrice;
   GetBookingPendingCreatedSuccess({
     required this.bookingCreated,
     required this.userProfile,
+    required this.listResultPrice,
   });
 }
 

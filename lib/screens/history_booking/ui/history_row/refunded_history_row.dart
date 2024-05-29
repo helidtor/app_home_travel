@@ -25,6 +25,7 @@ class RefundedHistoryRow extends StatefulWidget {
 class _RefundedHistoryRowState extends State<RefundedHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
+  List<String> listIdRoom = [];
 
   @override
   void initState() {
@@ -32,6 +33,9 @@ class _RefundedHistoryRowState extends State<RefundedHistoryRow> {
     super.initState();
     bookingHomestayModel = widget.bookingHomestayModel;
     userInfor = widget.userInfor;
+    listIdRoom = widget.bookingHomestayModel.bookingDetails!
+        .map((e) => e.roomId!)
+        .toList();
   }
 
   @override
@@ -131,7 +135,10 @@ class _RefundedHistoryRowState extends State<RefundedHistoryRow> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ReviewBooking(
-                            isFromPending: false,
+                            startDate: bookingHomestayModel.checkInDate!,
+                            endDate: bookingHomestayModel.checkOutDate!,
+                            listIdRoom: listIdRoom,
+                            isFromCreatePendingBooking: false,
                             userProfileModel: userInfor,
                             bookingHomestayModel: bookingHomestayModel,
                             isAllowBack: true,

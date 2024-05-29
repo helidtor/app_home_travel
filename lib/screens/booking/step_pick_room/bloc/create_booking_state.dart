@@ -18,9 +18,15 @@ class CreateBookingLoading extends CreateBookingState {}
 class CreateBookingSuccess extends CreateBookingState {
   BookingHomestayModel bookingHomestayModel;
   int totalRoom;
+  String startDate;
+  String endDate;
+  List<String> listIdRoom;
   CreateBookingSuccess({
     required this.bookingHomestayModel,
     required this.totalRoom,
+    required this.startDate,
+    required this.endDate,
+    required this.listIdRoom,
   });
 }
 

@@ -25,12 +25,16 @@ class CancelledHistoryRow extends StatefulWidget {
 class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
+  List<String> listIdRoom = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     bookingHomestayModel = widget.bookingHomestayModel;
+    listIdRoom = widget.bookingHomestayModel.bookingDetails!
+        .map((e) => e.roomId!)
+        .toList();
     userInfor = widget.userInfor;
   }
 
@@ -131,7 +135,10 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ReviewBooking(
-                            isFromPending: false,
+                            startDate: bookingHomestayModel.checkInDate!,
+                            endDate: bookingHomestayModel.checkOutDate!,
+                            listIdRoom: listIdRoom,
+                            isFromCreatePendingBooking: false,
                             userProfileModel: userInfor,
                             bookingHomestayModel: bookingHomestayModel,
                             isAllowBack: true,

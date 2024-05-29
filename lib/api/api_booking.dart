@@ -2,13 +2,55 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile_home_travel/api/api_header.dart';
 import 'package:mobile_home_travel/constants/baseUrlApi.dart';
-import 'package:mobile_home_travel/constants/myToken.dart';
 import 'package:mobile_home_travel/models/booking/create_booking_detail_model.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
+import 'package:mobile_home_travel/models/booking/input_calculate_price_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBooking {
+  //Tính giá phòng
+  static Future<List<PriceRoomModel>> calculatePrice(
+      {required List<InputCalculatePriceModel> inputCalculate}) async {
+    // print('Thông tin phòng nhập vào để tính tiền phòng là: $inputCalculate');
+    List<PriceRoomModel> listPriceRoom = [];
+    try {
+      var url = "$baseUrl/api/v1/Bookings/Amount";
+      Map<String, String> header = await ApiHeader.getHeader();
+      List<Map<String, dynamic>> jsonList =
+          inputCalculate.map((model) => model.toJson()).toList();
+      // print('Thông tin các phòng nhập vào để tính tiền: $jsonList');
+      final body = json.encode(jsonList);
+      // print('Body nè: $body');
+      var response = await http.post(Uri.parse(url.toString()),
+          headers: header, body: body);
+      // print(
+      //     'Thông tin trả về giá phòng trong api: ${jsonDecode(utf8.decode(response.bodyBytes))}');
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(response.body);
+        if (bodyConvert['success'] == true) {
+          var postsJson = bodyConvert['data'];
+          print('Thông tin trả về giá phòng từ api $postsJson');
+          listPriceRoom = (postsJson as List)
+              .map<PriceRoomModel>(
+                  (postJson) => PriceRoomModel.fromMap(postJson))
+              .toList();
+          print('Thông tin trả về giá phòng ${listPriceRoom.first}');
+          return listPriceRoom;
+        } else {
+          print(
+              "Lỗi tính tiền phòng: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+        }
+      } else {
+        print(
+            "Lỗi tính tiền room: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      }
+    } catch (e) {
+      print("Error calculate price room: $e");
+    }
+    return listPriceRoom;
+  }
+
   //Tạo booking
   static Future<BookingHomestayModel?> createBooking(
       {required BookingHomestayModel bookingInput,
@@ -31,8 +73,8 @@ class ApiBooking {
       // print('Body nè: $body');
       var response = await http.post(Uri.parse(url.toString()),
           headers: header, body: jsonEncode(body));
-      print(
-          'Thông tin đơn booking được tạo trong api: ${jsonDecode(utf8.decode(response.bodyBytes))}');
+      // print(
+      //     'Thông tin đơn booking được tạo trong api: ${jsonDecode(utf8.decode(response.bodyBytes))}');
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         // print('Thông tin đơn booking được tạo trong api: $bodyConvert');

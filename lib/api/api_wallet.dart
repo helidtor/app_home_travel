@@ -93,7 +93,7 @@ class ApiWallet {
             .map<TransactionModel>(
                 (postJson) => TransactionModel.fromMap(postJson))
             .toList();
-        print("Thông tin get all transaction: $transaction");
+        // print("Thông tin get all transaction: $transaction");
         return transaction;
       } else {
         print('Lỗi get lịch sử gd');

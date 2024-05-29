@@ -3,37 +3,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:mobile_home_travel/api/api_booking.dart';
-import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
-import 'package:mobile_home_travel/models/homestay/policy/policy_title_model.dart';
-import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/policy_dialog.dart';
-import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
-import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
+import 'package:mobile_home_travel/models/homestay/policy/homestay_policy_selected_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_bloc.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/detail_booking_screen.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/checkout_booking.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/policy_dialog.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
   bool isAllowBack;
-  bool isFromPending;
+  bool isFromCreatePendingBooking;
+  String startDate;
+  String endDate;
+  List<String> listIdRoom;
   UserProfileModel? userProfileModel;
   BookingHomestayModel? bookingHomestayModel;
   ReviewBooking({
     super.key,
-    this.userProfileModel,
-    required this.isFromPending,
-    this.bookingHomestayModel,
     required this.isAllowBack,
+    required this.isFromCreatePendingBooking,
+    required this.startDate,
+    required this.endDate,
+    required this.listIdRoom,
+    this.userProfileModel,
+    this.bookingHomestayModel,
   });
 
   @override
@@ -42,7 +46,7 @@ class ReviewBooking extends StatefulWidget {
 
 class _ReviewBookingState extends State<ReviewBooking> {
   bool isAllowBack = false;
-  bool isFromPending = false;
+  bool isFromCreatePendingBooking = false;
   String? imageDisplay;
   bool isCheck = false;
   bool isDisplay = false;
@@ -52,26 +56,41 @@ class _ReviewBookingState extends State<ReviewBooking> {
   double widthDisplay = 270;
   double heightDisplay = 270;
   List<HomestayPolicySelectedModel> listPolicies = [];
+  List<PriceRoomModel> listResultPrice = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    isFromPending = widget.isFromPending;
-    if (isFromPending) {
+    isFromCreatePendingBooking = widget.isFromCreatePendingBooking;
+    if (isFromCreatePendingBooking) {
+      //khi xem đơn pending lúc vừa tạo đơn xong
       setState(() {
         isAllowBack = false;
       });
       bookingInfor = widget.bookingHomestayModel;
       touristInfor = widget.userProfileModel;
       if (bookingInfor != null) {
-        _bloc.add(GetPolicyHomestayFromPending(
-            bookingInfor!.bookingDetails![0].room!.homeStayId!));
+        _bloc.add(
+          GetPolicyHomestayFromPending(
+            bookingInfor!.bookingDetails![0].room!.homeStayId!,
+            widget.startDate,
+            widget.endDate,
+            widget.listIdRoom,
+          ),
+        );
       }
     } else {
+      //khi xem đơn pending từ history
       isAllowBack = widget.isAllowBack;
       if (!isAllowBack) {
-        _bloc.add(const GetBookingPendingCreated());
+        _bloc.add(
+          GetBookingPendingCreated(
+            widget.startDate,
+            widget.endDate,
+            widget.listIdRoom,
+          ),
+        );
       } else {
         bookingInfor = widget.bookingHomestayModel;
         touristInfor = widget.userProfileModel;
@@ -86,7 +105,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        automaticallyImplyLeading: isFromPending ? true : isAllowBack,
+        automaticallyImplyLeading:
+            isFromCreatePendingBooking ? true : isAllowBack,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         title: Padding(
@@ -102,7 +122,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         ),
         backgroundColor: Colors.white,
         actions: [
-          (isFromPending == true)
+          (isFromCreatePendingBooking == true)
               ? const SizedBox()
               : (isAllowBack == false)
                   ? IconButton(
@@ -135,10 +155,12 @@ class _ReviewBookingState extends State<ReviewBooking> {
           } else if (state is GetBookingPendingCreatedSuccess) {
             Navigator.pop(context);
             bookingInfor = state.bookingCreated;
+            listResultPrice = state.listResultPrice;
             touristInfor = state.userProfile;
           } else if (state is GetBookingPendingCreatedSuccessWithPolicy) {
             Navigator.pop(context);
             bookingInfor = state.bookingCreated;
+            listResultPrice = state.listResultPrice;
             touristInfor = state.userProfile;
             listPolicies = state.listPolicies;
           } else if (state is ReviewBookingFailure) {
@@ -152,6 +174,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
           } else if (state is GetPolicySuccessFromPending) {
             Navigator.pop(context);
             listPolicies = state.listPolicies;
+            listResultPrice = state.listResultPrice;
           } else if (state is GetPolicyFailFromPending) {
             Navigator.pop(context);
           }
@@ -410,6 +433,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => DetailBooking(
+                                                listResultPrice:
+                                                    listResultPrice,
                                                 bookingInfor: bookingInfor!,
                                               )),
                                     );
@@ -533,7 +558,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         const SizedBox(
                           height: 25,
                         ),
-                        isFromPending
+                        isFromCreatePendingBooking
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 25),
                                 child: Row(
@@ -676,7 +701,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: (isFromPending == true)
+      floatingActionButton: (isFromCreatePendingBooking == true)
           ? RoundGradientButton(
               circular: 10,
               width: screenWidth * 0.85,

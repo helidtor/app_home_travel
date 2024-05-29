@@ -11,13 +11,26 @@ abstract class ReviewBookingEvent extends Equatable {
 }
 
 class GetBookingPendingCreated extends ReviewBookingEvent {
-  const GetBookingPendingCreated();
+  String startDate;
+  String endDate;
+  List<String> listIdRoom;
+  GetBookingPendingCreated(
+    this.startDate,
+    this.endDate,
+    this.listIdRoom,
+  );
 }
 
 class GetPolicyHomestayFromPending extends ReviewBookingEvent {
   String? idHomestay;
+  String startDate;
+  String endDate;
+  List<String> listIdRoom;
   GetPolicyHomestayFromPending(
     this.idHomestay,
+    this.startDate,
+    this.endDate,
+    this.listIdRoom,
   );
 }
 

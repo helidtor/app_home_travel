@@ -118,7 +118,10 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
               context,
               MaterialPageRoute(
                   builder: (context) => ReviewBooking(
-                        isFromPending: false,
+                        listIdRoom: state.listIdRoom,
+                        startDate: state.startDate,
+                        endDate: state.endDate,
+                        isFromCreatePendingBooking: false,
                         isAllowBack: false,
                       )),
             );

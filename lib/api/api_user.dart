@@ -223,7 +223,7 @@ class ApiUser {
       if (response.statusCode == 200) {
         var bodyConvert = jsonDecode(response.body);
         userProfileModel = UserProfileModel.fromMap(bodyConvert['data']);
-        print("Thông tin model từ get profile: $userProfileModel");
+        // print("Thông tin model từ get profile: $userProfileModel");
         return userProfileModel;
       }
     } catch (e) {

@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/api/api_user.dart';
+import 'package:mobile_home_travel/models/booking/input_calculate_price_model.dart';
+import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/bloc/review_booking_state.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
@@ -19,22 +21,44 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
     emit(ReviewBookingLoading());
     try {
       if (event is GetBookingPendingCreated) {
-        var bookingCreated = await ApiBooking.getListBooking(status: 'PENDINg');
+        String startDate = event.startDate;
+        String endDate = event.endDate;
+        List<String> listIdRoom = event.listIdRoom;
+        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
+        List<PriceRoomModel> listResultPrice = [];
+        List<InputCalculatePriceModel> listInput = [];
+        for (var e in listIdRoom) {
+          inputCalculate.startDate = startDate;
+          inputCalculate.endDate = endDate;
+          inputCalculate.roomId = e;
+          listInput.add(inputCalculate);
+        }
+        if (listInput.isNotEmpty) {
+          listResultPrice =
+              await ApiBooking.calculatePrice(inputCalculate: listInput);
+        }
+        var bookingCreated = await ApiBooking.getListBooking(status: 'PENDING');
         var userProfile = await ApiUser.getProfile();
-        if (bookingCreated != null && userProfile != null) {
+        if (bookingCreated != null &&
+            userProfile != null &&
+            listResultPrice.isNotEmpty) {
           var idHomestay = SharedPreferencesUtil.getIdHomestay();
           if (idHomestay != null) {
             var listPolicies =
                 await ApiHomestay.getAllPolicy(homestayId: idHomestay);
             if (listPolicies != null) {
-              print('Danh sách policy $listPolicies');
+              // print('Danh sách policy $listPolicies');
               emit(GetBookingPendingCreatedSuccessWithPolicy(
+                  listResultPrice: listResultPrice,
                   listPolicies: listPolicies,
                   bookingCreated: bookingCreated[0],
                   userProfile: userProfile));
             } else {
               emit(GetBookingPendingCreatedSuccess(
-                  bookingCreated: bookingCreated[0], userProfile: userProfile));
+                listResultPrice: listResultPrice,
+                bookingCreated: bookingCreated[0],
+                userProfile: userProfile,
+              ));
             }
           }
         } else {
@@ -43,11 +67,30 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         }
       }
       if (event is GetPolicyHomestayFromPending) {
+        String startDate = event.startDate;
+        String endDate = event.endDate;
+        List<String> listIdRoom = event.listIdRoom;
+        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
+        List<PriceRoomModel> listResultPrice = [];
+        List<InputCalculatePriceModel> listInput = [];
+        for (var e in listIdRoom) {
+          inputCalculate.startDate = startDate;
+          inputCalculate.endDate = endDate;
+          inputCalculate.roomId = e;
+          listInput.add(inputCalculate);
+        }
+        if (listInput.isNotEmpty) {
+          listResultPrice =
+              await ApiBooking.calculatePrice(inputCalculate: listInput);
+        }
         var listPolicies =
             await ApiHomestay.getAllPolicy(homestayId: event.idHomestay!);
-        if (listPolicies != null) {
-          print('Danh sách policy $listPolicies');
-          emit(GetPolicySuccessFromPending(listPolicies: listPolicies));
+        if (listPolicies != null && listResultPrice.isNotEmpty) {
+          // print('Danh sách policy $listPolicies');
+          emit(GetPolicySuccessFromPending(
+            listPolicies: listPolicies,
+            listResultPrice: listResultPrice,
+          ));
         } else {
           emit(GetPolicyFailFromPending());
         }

@@ -21,6 +21,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         if (wallet != null) {
           listTransaction =
               await ApiWallet.getAllTransaction(idWallet: wallet.id!);
+          //get tất cả giao dịch
           if (listTransaction!.isNotEmpty) {
             emit(WalletSuccess(
                 walletModel: wallet, listTransaction: listTransaction));

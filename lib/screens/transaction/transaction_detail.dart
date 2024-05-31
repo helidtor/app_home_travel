@@ -203,6 +203,74 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                 ),
+                (transactionModel.bankName != null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Ngân hàng',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 75,
+                            ),
+                            Flexible(
+                              child: Text(
+                                textAlign: TextAlign.end,
+                                transactionModel.bankName!,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+                (transactionModel.bankNumber != null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Tài khoản nhận',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 75,
+                            ),
+                            Flexible(
+                              child: Text(
+                                textAlign: TextAlign.end,
+                                transactionModel.bankNumber!,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
@@ -234,30 +302,37 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nguồn tiền',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
+                (FormatProvider().convertSourceMoney(transactionModel.type!) !=
+                        null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Nguồn tiền',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            Text(
+                              (FormatProvider().convertSourceMoney(
+                                          transactionModel.type!) ==
+                                      true)
+                                  ? 'Ví của tôi'
+                                  : 'VN PAY',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        'Ví của tôi',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      )
+                    : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(

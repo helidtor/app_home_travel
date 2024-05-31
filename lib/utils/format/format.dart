@@ -92,6 +92,23 @@ class FormatProvider {
     }
   }
 
+  bool? convertSourceMoney(String inputType) {
+    switch (inputType) {
+      case 'TOPUP':
+        return false;
+      case 'PAID_WITH_WALLET':
+        return true;
+      case 'PAID_WITH_VNPAY':
+        return false;
+      case 'REFUND':
+        return null;
+      case 'WITHDRAW':
+        return true;
+      default:
+        return null;
+    }
+  }
+
   String convertTypeImage(String inputType) {
     switch (inputType) {
       case 'TOPUP':

@@ -9,6 +9,8 @@ class TransactionModel {
   String? createdDate;
   String? bookingId;
   String? walletId;
+  String? bankName;
+  String? bankNumber;
   TransactionModel({
     this.id,
     this.price,
@@ -17,6 +19,8 @@ class TransactionModel {
     this.createdDate,
     this.bookingId,
     this.walletId,
+    this.bankName,
+    this.bankNumber,
   });
 
   TransactionModel copyWith({
@@ -27,6 +31,8 @@ class TransactionModel {
     String? createdDate,
     String? bookingId,
     String? walletId,
+    String? bankName,
+    String? bankNumber,
   }) {
     return TransactionModel(
       id: id ?? this.id,
@@ -36,6 +42,8 @@ class TransactionModel {
       createdDate: createdDate ?? this.createdDate,
       bookingId: bookingId ?? this.bookingId,
       walletId: walletId ?? this.walletId,
+      bankName: bankName ?? this.bankName,
+      bankNumber: bankNumber ?? this.bankNumber,
     );
   }
 
@@ -48,6 +56,8 @@ class TransactionModel {
       'createdDate': createdDate,
       'bookingId': bookingId,
       'walletId': walletId,
+      'bankName': bankName,
+      'bankNumber': bankNumber,
     };
   }
 
@@ -57,43 +67,51 @@ class TransactionModel {
       price: map['price'] != null ? map['price'] as num : null,
       status: map['status'] != null ? map['status'] as String : null,
       type: map['type'] != null ? map['type'] as String : null,
-      createdDate: map['createdDate'] != null ? map['createdDate'] as String : null,
+      createdDate:
+          map['createdDate'] != null ? map['createdDate'] as String : null,
       bookingId: map['bookingId'] != null ? map['bookingId'] as String : null,
       walletId: map['walletId'] != null ? map['walletId'] as String : null,
+      bankName: map['bankName'] != null ? map['bankName'] as String : null,
+      bankNumber:
+          map['bankNumber'] != null ? map['bankNumber'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionModel.fromJson(String source) => TransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TransactionModel.fromJson(String source) =>
+      TransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'TransactionModel(id: $id, price: $price, status: $status, type: $type, createdDate: $createdDate, bookingId: $bookingId, walletId: $walletId)';
+    return 'TransactionModel(id: $id, price: $price, status: $status, type: $type, createdDate: $createdDate, bookingId: $bookingId, walletId: $walletId, bankName: $bankName, bankNumber: $bankNumber)';
   }
 
   @override
   bool operator ==(covariant TransactionModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.price == price &&
-      other.status == status &&
-      other.type == type &&
-      other.createdDate == createdDate &&
-      other.bookingId == bookingId &&
-      other.walletId == walletId;
+
+    return other.id == id &&
+        other.price == price &&
+        other.status == status &&
+        other.type == type &&
+        other.createdDate == createdDate &&
+        other.bookingId == bookingId &&
+        other.walletId == walletId &&
+        other.bankName == bankName &&
+        other.bankNumber == bankNumber;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      price.hashCode ^
-      status.hashCode ^
-      type.hashCode ^
-      createdDate.hashCode ^
-      bookingId.hashCode ^
-      walletId.hashCode;
+        price.hashCode ^
+        status.hashCode ^
+        type.hashCode ^
+        createdDate.hashCode ^
+        bookingId.hashCode ^
+        walletId.hashCode ^
+        bankName.hashCode ^
+        bankNumber.hashCode;
   }
 }

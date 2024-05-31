@@ -30,7 +30,9 @@ class _ResultState extends State<RowNotification> {
     // TODO: implement initState
     super.initState();
     notificationModel = widget.notificationModel;
-    notificationModel.status == 'SENT' ? isRead = false : isRead = true;
+    notificationModel.status == null
+        ? isRead = false
+        : (notificationModel.status == 'SENT' ? isRead = false : isRead = true);
   }
 
   @override

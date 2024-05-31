@@ -322,7 +322,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Giao dịch gần nhất',
+                            'Lịch sử giao dịch',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,

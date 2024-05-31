@@ -21,12 +21,14 @@ class GetBookingPendingCreated extends ReviewBookingEvent {
   );
 }
 
-class GetPolicyHomestayFromPending extends ReviewBookingEvent {
+class GetPolicyHomestayFromPendingHistory extends ReviewBookingEvent {
+  bool isFromPendingHistory;
   String? idHomestay;
   String startDate;
   String endDate;
   List<String> listIdRoom;
-  GetPolicyHomestayFromPending(
+  GetPolicyHomestayFromPendingHistory(
+    this.isFromPendingHistory,
     this.idHomestay,
     this.startDate,
     this.endDate,

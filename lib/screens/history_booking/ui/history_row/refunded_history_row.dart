@@ -138,7 +138,7 @@ class _RefundedHistoryRowState extends State<RefundedHistoryRow> {
                             startDate: bookingHomestayModel.checkInDate!,
                             endDate: bookingHomestayModel.checkOutDate!,
                             listIdRoom: listIdRoom,
-                            isFromCreatePendingBooking: false,
+                            isFromHistoryPendingBooking: false,
                             userProfileModel: userInfor,
                             bookingHomestayModel: bookingHomestayModel,
                             isAllowBack: true,

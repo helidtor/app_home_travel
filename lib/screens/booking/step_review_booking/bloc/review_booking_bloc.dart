@@ -24,16 +24,17 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
         String startDate = event.startDate;
         String endDate = event.endDate;
         List<String> listIdRoom = event.listIdRoom;
-        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
         List<PriceRoomModel> listResultPrice = [];
         List<InputCalculatePriceModel> listInput = [];
         for (var e in listIdRoom) {
+          InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
           inputCalculate.startDate = startDate;
           inputCalculate.endDate = endDate;
           inputCalculate.roomId = e;
           listInput.add(inputCalculate);
         }
         if (listInput.isNotEmpty) {
+          print('đây là dữ liệu nhập vào để tính giá phòng: $listInput');
           listResultPrice =
               await ApiBooking.calculatePrice(inputCalculate: listInput);
         }
@@ -66,31 +67,39 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
               error: 'Lỗi lấy thông tin đơn đặt vừa tạo!'));
         }
       }
-      if (event is GetPolicyHomestayFromPending) {
+      if (event is GetPolicyHomestayFromPendingHistory) {
         String startDate = event.startDate;
         String endDate = event.endDate;
         List<String> listIdRoom = event.listIdRoom;
-        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
         List<PriceRoomModel> listResultPrice = [];
         List<InputCalculatePriceModel> listInput = [];
         for (var e in listIdRoom) {
+          InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
           inputCalculate.startDate = startDate;
           inputCalculate.endDate = endDate;
           inputCalculate.roomId = e;
           listInput.add(inputCalculate);
         }
         if (listInput.isNotEmpty) {
+          print('đây là dữ liệu nhập vào để tính giá phòng: $listInput');
           listResultPrice =
               await ApiBooking.calculatePrice(inputCalculate: listInput);
         }
         var listPolicies =
             await ApiHomestay.getAllPolicy(homestayId: event.idHomestay!);
         if (listPolicies != null && listResultPrice.isNotEmpty) {
+          // print('List price từ history: $listResultPrice');
           // print('Danh sách policy $listPolicies');
-          emit(GetPolicySuccessFromPending(
-            listPolicies: listPolicies,
-            listResultPrice: listResultPrice,
-          ));
+          if (event.isFromPendingHistory) {
+            emit(GetPolicySuccessFromPending(
+              listPolicies: listPolicies,
+              listResultPrice: listResultPrice,
+            ));
+          } else {
+            emit(GetDetailHistorySuccess(
+              listResultPrice: listResultPrice,
+            ));
+          }
         } else {
           emit(GetPolicyFailFromPending());
         }

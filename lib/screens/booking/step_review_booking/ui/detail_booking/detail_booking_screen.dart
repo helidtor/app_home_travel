@@ -232,7 +232,12 @@ class _DetailBookingState extends State<DetailBooking> {
                     children: List.generate(
                       bookingInfor.bookingDetails!.length,
                       (index) => RoomDetailBooking(
-                        detailPriceRoom: listResultPrice[index].bookingDetail!,
+                        detailPriceRoom: _matchDetailBookingWithPrice(
+                          //match idRoom của đơn detail để tìm ra id phòng trùng trong list giá
+                          index,
+                          listResultPrice,
+                          bookingInfor.bookingDetails![index],
+                        )!,
                         bookingDetailModel: bookingInfor.bookingDetails![index],
                       ),
                     ),
@@ -245,4 +250,17 @@ class _DetailBookingState extends State<DetailBooking> {
       ),
     );
   }
+}
+
+List<BookingDetailModel>? _matchDetailBookingWithPrice(
+  int index,
+  List<PriceRoomModel> listPriceDetail,
+  BookingDetailModel detailBookingToMatch,
+) {
+  for (var e in listPriceDetail) {
+    if (e.bookingDetail!.first.roomId == detailBookingToMatch.roomId) {
+      return e.bookingDetail; //nếu list tính giá có id phòng trùng thì lấy
+    }
+  }
+  return null;
 }

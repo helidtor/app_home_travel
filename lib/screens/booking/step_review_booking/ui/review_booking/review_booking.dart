@@ -23,7 +23,7 @@ import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
   bool isAllowBack;
-  bool isFromCreatePendingBooking;
+  bool isFromHistoryPendingBooking;
   String startDate;
   String endDate;
   List<String> listIdRoom;
@@ -32,7 +32,7 @@ class ReviewBooking extends StatefulWidget {
   ReviewBooking({
     super.key,
     required this.isAllowBack,
-    required this.isFromCreatePendingBooking,
+    required this.isFromHistoryPendingBooking,
     required this.startDate,
     required this.endDate,
     required this.listIdRoom,
@@ -46,7 +46,7 @@ class ReviewBooking extends StatefulWidget {
 
 class _ReviewBookingState extends State<ReviewBooking> {
   bool isAllowBack = false;
-  bool isFromCreatePendingBooking = false;
+  bool isFromHistoryPendingBooking = false;
   String? imageDisplay;
   bool isCheck = false;
   bool isDisplay = false;
@@ -62,9 +62,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isFromCreatePendingBooking = widget.isFromCreatePendingBooking;
-    if (isFromCreatePendingBooking) {
-      //khi xem đơn pending lúc vừa tạo đơn xong
+    isFromHistoryPendingBooking = widget.isFromHistoryPendingBooking;
+    if (isFromHistoryPendingBooking) {
+      //khi xem đơn pending từ history
       setState(() {
         isAllowBack = false;
       });
@@ -72,7 +72,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
       touristInfor = widget.userProfileModel;
       if (bookingInfor != null) {
         _bloc.add(
-          GetPolicyHomestayFromPending(
+          GetPolicyHomestayFromPendingHistory(
+            true,
             bookingInfor!.bookingDetails![0].room!.homeStayId!,
             widget.startDate,
             widget.endDate,
@@ -81,9 +82,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
         );
       }
     } else {
-      //khi xem đơn pending từ history
+      //khi xem đơn từ history
       isAllowBack = widget.isAllowBack;
       if (!isAllowBack) {
+        //lấy ra đơn pending vừa tạo
         _bloc.add(
           GetBookingPendingCreated(
             widget.startDate,
@@ -92,8 +94,18 @@ class _ReviewBookingState extends State<ReviewBooking> {
           ),
         );
       } else {
+        //lấy ra đơn từ history
         bookingInfor = widget.bookingHomestayModel;
         touristInfor = widget.userProfileModel;
+        _bloc.add(
+          GetPolicyHomestayFromPendingHistory(
+            false,
+            bookingInfor!.bookingDetails![0].room!.homeStayId!,
+            widget.startDate,
+            widget.endDate,
+            widget.listIdRoom,
+          ),
+        );
       }
     }
   }
@@ -106,7 +118,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
       extendBody: true,
       appBar: AppBar(
         automaticallyImplyLeading:
-            isFromCreatePendingBooking ? true : isAllowBack,
+            isFromHistoryPendingBooking ? true : isAllowBack,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.grey,
         title: Padding(
@@ -122,7 +134,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         ),
         backgroundColor: Colors.white,
         actions: [
-          (isFromCreatePendingBooking == true)
+          (isFromHistoryPendingBooking == true)
               ? const SizedBox()
               : (isAllowBack == false)
                   ? IconButton(
@@ -174,6 +186,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
           } else if (state is GetPolicySuccessFromPending) {
             Navigator.pop(context);
             listPolicies = state.listPolicies;
+            listResultPrice = state.listResultPrice;
+          } else if (state is GetDetailHistorySuccess) {
+            Navigator.pop(context);
             listResultPrice = state.listResultPrice;
           } else if (state is GetPolicyFailFromPending) {
             Navigator.pop(context);
@@ -429,14 +444,18 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    print(
+                                        'Đây là list price của detail phòng: $listResultPrice');
+                                    print(
+                                        'Đây là model booking infor: $bookingInfor');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => DetailBooking(
-                                                listResultPrice:
-                                                    listResultPrice,
-                                                bookingInfor: bookingInfor!,
-                                              )),
+                                        builder: (context) => DetailBooking(
+                                          listResultPrice: listResultPrice,
+                                          bookingInfor: bookingInfor!,
+                                        ),
+                                      ),
                                     );
                                   },
                                   child: Container(
@@ -558,7 +577,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         const SizedBox(
                           height: 25,
                         ),
-                        isFromCreatePendingBooking
+                        isFromHistoryPendingBooking
                             ? Padding(
                                 padding: const EdgeInsets.only(left: 25),
                                 child: Row(
@@ -701,7 +720,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: (isFromCreatePendingBooking == true)
+      floatingActionButton: (isFromHistoryPendingBooking == true)
           ? RoundGradientButton(
               circular: 10,
               width: screenWidth * 0.85,

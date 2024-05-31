@@ -33,11 +33,12 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
         List<String>? listIdRoomPicked =
             SharedPreferencesUtil.getListIdPicked() ?? [];
         List<InputCalculatePriceModel> listInput = [];
-        InputCalculatePriceModel? inputCalculate = InputCalculatePriceModel();
         List<PriceRoomModel> listResultPrice = [];
         if (listIdRoomPicked.isNotEmpty) {
           totalRoom = listIdRoomPicked.length;
           for (var e in listIdRoomPicked) {
+            InputCalculatePriceModel inputCalculate =
+                InputCalculatePriceModel();
             //tính tổng sức chứa
             var roomPicked = await ApiRoom.getRoomDetail(idRoom: e);
             if (roomPicked != null) {
@@ -45,14 +46,11 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
             }
             //thêm input data vào để tính giá các phòng trong khoảng ngày checkin checkout
             inputCalculate.roomId = e;
-            print('list nhập Id hiện tại ${inputCalculate.roomId}');
             inputCalculate.startDate = event.bookingHomestayModel.checkInDate;
             inputCalculate.endDate = event.bookingHomestayModel.checkOutDate;
             listInput.add(inputCalculate);
-            print('List nhập: $listInput');
           }
           if (totalCapacity != 0 && listInput.isNotEmpty) {
-            print('List nhập 2: $listInput');
             var inputBooking = event.bookingHomestayModel;
             inputBooking.totalCapacity = totalCapacity;
             listResultPrice =
@@ -85,16 +83,16 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                 } else {
                   isSuccessAll = false;
                   emit(const CreateBookingFailure(
-                      error: 'Bạn đang có một đơn chờ xác nhận!'));
+                      error: 'Bạn đang có một đơn chờ xác nhận! 401'));
                 }
               }
             } else {
               emit(const CreateBookingFailure(
-                  error: 'Bạn đang có một đơn chờ xác nhận!'));
+                  error: 'Bạn đang có một đơn chờ xác nhận! 402'));
             }
           } else {
             emit(const CreateBookingFailure(
-                error: 'Bạn đang có một đơn chờ xác nhận!'));
+                error: 'Bạn đang có một đơn chờ xác nhận! 403'));
           }
         } else {
           emit(const CreateBookingFailure(error: 'Bạn chưa chọn phòng!'));

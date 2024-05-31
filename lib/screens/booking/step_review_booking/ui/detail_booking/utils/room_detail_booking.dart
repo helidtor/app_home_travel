@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
+import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_price_detail.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
@@ -115,12 +116,44 @@ class _RoomDetailBookingState extends State<RoomDetailBooking> {
                     '${(FormatProvider().formatPrice(detailPriceRoom.first.totalPrice.toString()))} đ',
                 icon: Icons.monetization_on_outlined,
               ),
-              const SizedBox(
-                height: 3,
-              ),
             ],
           ),
-          children: [],
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Divider(
+                  thickness: 1,
+                  color: Color.fromARGB(255, 212, 209, 209),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12, top: 3),
+                  child: Text(
+                    'Chi tiết giá phòng',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black.withOpacity(0.6)),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 5, bottom: 15, left: 20),
+                    child: Column(
+                      children: List.generate(
+                        detailPriceRoom.length,
+                        (index) => RowPriceDetail(
+                          priceDetail: detailPriceRoom[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

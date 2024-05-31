@@ -254,7 +254,7 @@ class _CheckoutBookingState extends State<CheckoutBooking> {
                         //thanh toán thất bại
                         Navigator.pop(context);
                         ErrorNotiProvider()
-                            .showError(context, 'Thanh toán thất bại!');
+                            .ToastError(context, 'Thanh toán thất bại!');
                       }
                     } else {
                       Navigator.pop(context);

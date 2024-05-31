@@ -28,7 +28,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
   List<String> listIdRoom = [];
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -202,7 +202,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                             endDate: bookingHomestayModel
                                                 .checkOutDate!,
                                             listIdRoom: listIdRoom,
-                                            isFromCreatePendingBooking: false,
+                                            isFromHistoryPendingBooking: false,
                                             userProfileModel: userInfor,
                                             bookingHomestayModel:
                                                 bookingHomestayModel,

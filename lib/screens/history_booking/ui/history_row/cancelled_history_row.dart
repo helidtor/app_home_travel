@@ -138,7 +138,7 @@ class _CancelledHistoryRowState extends State<CancelledHistoryRow> {
                             startDate: bookingHomestayModel.checkInDate!,
                             endDate: bookingHomestayModel.checkOutDate!,
                             listIdRoom: listIdRoom,
-                            isFromCreatePendingBooking: false,
+                            isFromHistoryPendingBooking: false,
                             userProfileModel: userInfor,
                             bookingHomestayModel: bookingHomestayModel,
                             isAllowBack: true,

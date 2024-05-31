@@ -110,24 +110,6 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                             content:
                                 '${FormatProvider().formatPrice(bookingHomestayModel.totalPrice.toString())}vnđ',
                             icon: Icons.attach_money_sharp),
-                        // Text(
-                        //   bookingHomestayModel.id.toString(),
-                        //   style: TextStyle(
-                        //     overflow: TextOverflow.clip,
-                        //     // fontWeight: FontWeight.bold,
-                        //     fontSize: 13,
-                        //     color: Colors.black.withOpacity(0.8),
-                        //   ),
-                        // ),
-                        // Text(
-                        //   FormatProvider().convertDateTime(
-                        //       bookingHomestayModel.createdDate.toString()),
-                        //   style: TextStyle(
-                        //     fontStyle: FontStyle.italic,
-                        //     color: Colors.black.withOpacity(0.5),
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -165,7 +147,7 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                                   startDate: bookingHomestayModel.checkInDate!,
                                   endDate: bookingHomestayModel.checkOutDate!,
                                   listIdRoom: listIdRoom,
-                                  isFromCreatePendingBooking: true,
+                                  isFromHistoryPendingBooking: true,
                                   userProfileModel: userInfor,
                                   bookingHomestayModel: bookingHomestayModel,
                                   isAllowBack: true,

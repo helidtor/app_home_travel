@@ -44,6 +44,13 @@ class GetPolicySuccessFromPending extends ReviewBookingState {
   });
 }
 
+class GetDetailHistorySuccess extends ReviewBookingState {
+  List<PriceRoomModel> listResultPrice;
+  GetDetailHistorySuccess({
+    required this.listResultPrice,
+  });
+}
+
 class GetPolicyFailFromPending extends ReviewBookingState {}
 
 class GetBookingPendingCreatedSuccess extends ReviewBookingState {

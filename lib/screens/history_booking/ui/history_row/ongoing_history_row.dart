@@ -269,7 +269,7 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                             endDate: bookingHomestayModel
                                                 .checkOutDate!,
                                             listIdRoom: listIdRoom,
-                                            isFromCreatePendingBooking: false,
+                                            isFromHistoryPendingBooking: false,
                                             userProfileModel: userInfor,
                                             bookingHomestayModel:
                                                 bookingHomestayModel,

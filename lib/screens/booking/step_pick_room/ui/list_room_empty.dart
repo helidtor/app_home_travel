@@ -121,7 +121,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                         listIdRoom: state.listIdRoom,
                         startDate: state.startDate,
                         endDate: state.endDate,
-                        isFromCreatePendingBooking: false,
+                        isFromHistoryPendingBooking: false,
                         isAllowBack: false,
                       )),
             );

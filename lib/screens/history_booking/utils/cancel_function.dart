@@ -12,7 +12,7 @@ class CancelFunctionProvider {
   void dialogCancelNoFine(
       BuildContext context,
       BookingHomestayModel bookingHomestayModel,
-      bool isFromCreatePendingBooking) {
+      bool isFromHistoryPendingBooking) {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
@@ -35,7 +35,7 @@ class CancelFunctionProvider {
                 child: TextButton(
               onPressed: () async {
                 bookingHomestayModel.status =
-                    isFromCreatePendingBooking ? 'EXPIRED' : 'CANCELLED';
+                    isFromHistoryPendingBooking ? 'EXPIRED' : 'CANCELLED';
                 var checkUpdateBooking = await ApiBooking.updateBooking(
                     bookingInput: bookingHomestayModel);
                 print(checkUpdateBooking);

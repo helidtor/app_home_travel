@@ -156,8 +156,14 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                       var isCreated = await ApiHomestay.editFeedbackHomestay(
                           feedbackModel: feedbackModel);
                       if (isCreated == true) {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavigatorBar(
+                              stt: 0,
+                            ),
+                          ),
+                        );
                         SuccessNotiProvider()
                             .ToastSuccess(context, 'Sửa đánh giá thành công!');
                       } else {

@@ -225,6 +225,8 @@ class _PickDateState extends State<PickDate> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ListRoomEmpty(
+                                        dateEndDisplay: _displayCheckoutDate,
+                                        dateStartDisplay: _displayCheckinDate,
                                         dateCheckIn: _checkInDate,
                                         dateCheckOut: _checkOutDate)),
                               )

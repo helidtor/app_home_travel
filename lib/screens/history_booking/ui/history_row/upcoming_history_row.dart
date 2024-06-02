@@ -55,12 +55,12 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  height: 215,
+                  height: 250,
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
                       Container(
-                        height: 185, //để viền container cắt giữa ảnh
+                        height: 220, //để viền container cắt giữa ảnh
                         width: screenWidth * 0.8,
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -121,20 +121,37 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                             ? '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} (1 ngày)'
                                             : '${FormatProvider().convertDate(bookingHomestayModel.checkInDate.toString())} - ${FormatProvider().convertDate(bookingHomestayModel.checkOutDate.toString())}',
                                         icon: Icons.date_range_outlined),
+                                    RowText().richText(
+                                        textStyleContent: const TextStyle(
+                                          height: 1.5,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromARGB(255, 49, 152, 52),
+                                          fontSize: 14,
+                                        ),
+                                        title: 'Tổng tiền',
+                                        content:
+                                            '${(FormatProvider().formatPrice(bookingHomestayModel.totalPrice!.toString())).toString()}₫',
+                                        icon: Icons.playlist_add_check_rounded),
                                     (bookingHomestayModel.status == 'DEPOSIT')
-                                        ? RowText().richText(
-                                            title: 'Trạng thái',
-                                            textStyleContent: const TextStyle(
-                                              height: 1.5,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  235, 200, 154, 63),
-                                              fontSize: 13,
-                                            ),
-                                            content:
-                                                'Đã cọc (còn thiếu: ${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫)',
-                                            icon: Icons
-                                                .playlist_add_check_rounded)
+                                        ? Column(
+                                            children: [
+                                              RowText().richText(
+                                                  title: 'Trạng thái',
+                                                  textStyleContent:
+                                                      const TextStyle(
+                                                    height: 1.5,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        235, 200, 154, 63),
+                                                    fontSize: 13,
+                                                  ),
+                                                  content:
+                                                      'Đã trả ${FormatProvider().formatPrice((bookingHomestayModel.totalPrice! - (bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫ (thiếu: ${FormatProvider().formatPrice(((bookingHomestayModel.totalPrice! * (100 - bookingHomestayModel.bookingDetails![0].room!.homeStay!.depositRate!) / 100)).toString())}₫)',
+                                                  icon: Icons
+                                                      .playlist_add_check_rounded),
+                                            ],
+                                          )
                                         : RowText().richText(
                                             textStyleContent: const TextStyle(
                                               height: 1.5,
@@ -144,7 +161,8 @@ class _UpcomingHistoryRowState extends State<UpcomingHistoryRow> {
                                               fontSize: 14,
                                             ),
                                             title: 'Trạng thái',
-                                            content: 'Đã thanh toán toàn bộ',
+                                            content:
+                                                'Đã trả toàn bộ ${(FormatProvider().formatPrice(bookingHomestayModel.totalPrice!.toString())).toString()}₫',
                                             icon: Icons
                                                 .playlist_add_check_rounded),
                                   ],

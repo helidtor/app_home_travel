@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mobile_home_travel/api/api_room.dart';
-import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_bloc.dart';
@@ -16,6 +14,8 @@ import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_bo
 import 'package:mobile_home_travel/screens/booking/step_pick_room/ui/row_room.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
@@ -23,10 +23,14 @@ import 'package:mobile_home_travel/widgets/others/loading.dart';
 class ListRoomEmpty extends StatefulWidget {
   String dateCheckIn;
   String dateCheckOut;
+  String dateStartDisplay;
+  String dateEndDisplay;
   ListRoomEmpty({
     super.key,
     required this.dateCheckIn,
     required this.dateCheckOut,
+    required this.dateStartDisplay,
+    required this.dateEndDisplay,
   });
 
   @override
@@ -75,11 +79,11 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
         ),
         // centerTitle: true,
         title: Text(
-          "Chọn phòng",
+          "Chọn phòng (${widget.dateStartDisplay} - ${widget.dateEndDisplay})",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black.withOpacity(0.65),
-            fontSize: 20,
+            fontSize: 17,
           ),
         ),
         backgroundColor: Colors.white,

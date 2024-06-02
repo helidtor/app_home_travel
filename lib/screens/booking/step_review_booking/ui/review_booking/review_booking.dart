@@ -20,6 +20,7 @@ import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
+import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class ReviewBooking extends StatefulWidget {
@@ -821,6 +822,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
+                    SuccessNotiProvider()
+                        .ToastSuccess(context, 'Lưu đơn thành công!');
                   }
                 },
                 child: const Text(

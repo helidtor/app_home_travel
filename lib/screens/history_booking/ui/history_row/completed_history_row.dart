@@ -47,7 +47,8 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
 
     return
         // (checkDateProvider().isCompleteDate(bookingHomestayModel))
-        (bookingHomestayModel.isCheckin == false)
+        (bookingHomestayModel.isCheckin == false ||
+                bookingHomestayModel.status == 'DONE')
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -142,7 +143,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                               height: 10,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
                                   child: GestureDetector(
@@ -152,18 +153,24 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FeedbackHomestayScreen(
+                                            idBooking: bookingHomestayModel.id,
                                             homestayModel: bookingHomestayModel
                                                 .bookingDetails?[0]
                                                 .room!
                                                 .homeStay!,
-                                            isCreateFeedback: true,
+
+                                            isCreateFeedback:
+                                                (bookingHomestayModel
+                                                        .feedbacks!.isNotEmpty)
+                                                    ? null //cho sửa
+                                                    : true, //cho tạo
                                           ),
                                         ),
                                       );
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
+                                          left: 20, right: 10),
                                       child: Container(
                                         alignment: Alignment.center,
                                         height: 25,
@@ -178,9 +185,12 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
-                                        child: const Text(
-                                          'Viết đánh giá',
-                                          style: TextStyle(
+                                        child: Text(
+                                          (bookingHomestayModel
+                                                  .feedbacks!.isNotEmpty)
+                                              ? 'Sửa đánh giá'
+                                              : 'Viết đánh giá',
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
                                             color: Colors.white,
@@ -212,8 +222,8 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                       );
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 20),
                                       child: Container(
                                         alignment: Alignment.center,
                                         height: 25,
@@ -228,7 +238,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                               BorderRadius.circular(5),
                                         ),
                                         child: Text(
-                                          'Xem đơn',
+                                          'Chi tiết',
                                           style: TextStyle(
                                             fontSize: 12,
                                             color:

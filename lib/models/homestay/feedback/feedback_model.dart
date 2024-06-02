@@ -5,6 +5,7 @@ import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 
 class FeedbackModel {
   String? id;
+  String? bookingId;
   String? description;
   num? rating;
   String? createdDate;
@@ -13,6 +14,7 @@ class FeedbackModel {
   UserProfileModel? tourist;
   FeedbackModel({
     this.id,
+    this.bookingId,
     this.description,
     this.rating,
     this.createdDate,
@@ -23,6 +25,7 @@ class FeedbackModel {
 
   FeedbackModel copyWith({
     String? id,
+    String? bookingId,
     String? description,
     num? rating,
     String? createdDate,
@@ -32,6 +35,7 @@ class FeedbackModel {
   }) {
     return FeedbackModel(
       id: id ?? this.id,
+      bookingId: bookingId ?? this.bookingId,
       description: description ?? this.description,
       rating: rating ?? this.rating,
       createdDate: createdDate ?? this.createdDate,
@@ -44,6 +48,7 @@ class FeedbackModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'bookingId': bookingId,
       'description': description,
       'rating': rating,
       'createdDate': createdDate,
@@ -56,17 +61,13 @@ class FeedbackModel {
   factory FeedbackModel.fromMap(Map<String, dynamic> map) {
     return FeedbackModel(
       id: map['id'] != null ? map['id'] as String : null,
-      description:
-          map['description'] != null ? map['description'] as String : null,
+      bookingId: map['bookingId'] != null ? map['bookingId'] as String : null,
+      description: map['description'] != null ? map['description'] as String : null,
       rating: map['rating'] != null ? map['rating'] as num : null,
-      createdDate:
-          map['createdDate'] != null ? map['createdDate'] as String : null,
+      createdDate: map['createdDate'] != null ? map['createdDate'] as String : null,
       touristId: map['touristId'] != null ? map['touristId'] as String : null,
-      homeStayId:
-          map['homeStayId'] != null ? map['homeStayId'] as String : null,
-      tourist: map['tourist'] != null
-          ? UserProfileModel.fromMap(map['tourist'] as Map<String, dynamic>)
-          : null,
+      homeStayId: map['homeStayId'] != null ? map['homeStayId'] as String : null,
+      tourist: map['tourist'] != null ? UserProfileModel.fromMap(map['tourist'] as Map<String,dynamic>) : null,
     );
   }
 
@@ -77,30 +78,33 @@ class FeedbackModel {
 
   @override
   String toString() {
-    return 'FeedbackModel(id: $id, description: $description, rating: $rating, createdDate: $createdDate, touristId: $touristId, homeStayId: $homeStayId, tourist: $tourist)';
+    return 'FeedbackModel(id: $id, bookingId: $bookingId, description: $description, rating: $rating, createdDate: $createdDate, touristId: $touristId, homeStayId: $homeStayId, tourist: $tourist)';
   }
 
   @override
   bool operator ==(covariant FeedbackModel other) {
     if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.description == description &&
-        other.rating == rating &&
-        other.createdDate == createdDate &&
-        other.touristId == touristId &&
-        other.homeStayId == homeStayId &&
-        other.tourist == tourist;
+  
+    return 
+      other.id == id &&
+      other.bookingId == bookingId &&
+      other.description == description &&
+      other.rating == rating &&
+      other.createdDate == createdDate &&
+      other.touristId == touristId &&
+      other.homeStayId == homeStayId &&
+      other.tourist == tourist;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        description.hashCode ^
-        rating.hashCode ^
-        createdDate.hashCode ^
-        touristId.hashCode ^
-        homeStayId.hashCode ^
-        tourist.hashCode;
+      bookingId.hashCode ^
+      description.hashCode ^
+      rating.hashCode ^
+      createdDate.hashCode ^
+      touristId.hashCode ^
+      homeStayId.hashCode ^
+      tourist.hashCode;
   }
 }

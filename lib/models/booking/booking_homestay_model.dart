@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:mobile_home_travel/models/booking/booking_detail_model.dart';
+import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
 
 class BookingHomestayModel {
@@ -16,9 +17,9 @@ class BookingHomestayModel {
   String? touristId;
   bool? isCheckin;
   num? totalCapacity;
-
   UserProfileModel? tourist;
   List<BookingDetailModel>? bookingDetails;
+  List<FeedbackModel>? feedbacks;
   BookingHomestayModel({
     this.id,
     this.totalPrice,
@@ -31,6 +32,7 @@ class BookingHomestayModel {
     this.totalCapacity,
     this.tourist,
     this.bookingDetails,
+    this.feedbacks,
   });
 
   BookingHomestayModel copyWith({
@@ -45,6 +47,7 @@ class BookingHomestayModel {
     num? totalCapacity,
     UserProfileModel? tourist,
     List<BookingDetailModel>? bookingDetails,
+    List<FeedbackModel>? feedbacks,
   }) {
     return BookingHomestayModel(
       id: id ?? this.id,
@@ -58,6 +61,7 @@ class BookingHomestayModel {
       totalCapacity: totalCapacity ?? this.totalCapacity,
       tourist: tourist ?? this.tourist,
       bookingDetails: bookingDetails ?? this.bookingDetails,
+      feedbacks: feedbacks ?? this.feedbacks,
     );
   }
 
@@ -74,6 +78,7 @@ class BookingHomestayModel {
       'totalCapacity': totalCapacity,
       'tourist': tourist?.toMap(),
       'bookingDetails': bookingDetails?.map((x) => x.toMap()).toList(),
+      'feedbacks': feedbacks?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -102,6 +107,13 @@ class BookingHomestayModel {
               ),
             )
           : null,
+      feedbacks: map['feedbacks'] != null
+          ? List<FeedbackModel>.from(
+              (map['feedbacks']).map<FeedbackModel?>(
+                (x) => FeedbackModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
@@ -112,7 +124,7 @@ class BookingHomestayModel {
 
   @override
   String toString() {
-    return 'BookingHomestayModel(id: $id, totalPrice: $totalPrice, checkInDate: $checkInDate, checkOutDate: $checkOutDate, status: $status, createdDate: $createdDate, touristId: $touristId, isCheckin: $isCheckin, totalCapacity: $totalCapacity, tourist: $tourist, bookingDetails: $bookingDetails)';
+    return 'BookingHomestayModel(id: $id, totalPrice: $totalPrice, checkInDate: $checkInDate, checkOutDate: $checkOutDate, status: $status, createdDate: $createdDate, touristId: $touristId, isCheckin: $isCheckin, totalCapacity: $totalCapacity, tourist: $tourist, bookingDetails: $bookingDetails, feedbacks: $feedbacks)';
   }
 
   @override
@@ -129,7 +141,8 @@ class BookingHomestayModel {
         other.isCheckin == isCheckin &&
         other.totalCapacity == totalCapacity &&
         other.tourist == tourist &&
-        listEquals(other.bookingDetails, bookingDetails);
+        listEquals(other.bookingDetails, bookingDetails) &&
+        listEquals(other.feedbacks, feedbacks);
   }
 
   @override
@@ -144,6 +157,7 @@ class BookingHomestayModel {
         isCheckin.hashCode ^
         totalCapacity.hashCode ^
         tourist.hashCode ^
-        bookingDetails.hashCode;
+        bookingDetails.hashCode ^
+        feedbacks.hashCode;
   }
 }

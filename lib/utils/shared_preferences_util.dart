@@ -65,6 +65,14 @@ class SharedPreferencesUtil {
     return _prefsInstance.getString('idRoom');
   }
 
+  static void setTimeTarget(String timeTarget) {
+    _prefsInstance.setString('timeTarget', timeTarget);
+  }
+
+  static String? getTimeTarget() {
+    return _prefsInstance.getString('timeTarget');
+  }
+
   static void setListIdPicked(List<String> listIdPicked) {
     _prefsInstance.setStringList('listIdPicked', listIdPicked);
   }

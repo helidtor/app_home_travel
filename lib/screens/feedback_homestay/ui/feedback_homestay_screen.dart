@@ -16,11 +16,14 @@ import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
 
 class FeedbackHomestayScreen extends StatefulWidget {
-  HomestayModel? homestayModel; // từ detail homestay qua
-  HomestayDetailModel? homestayDetailModel; //từ lịch sử qua
-  bool? isCreateFeedback;
+  String? idBooking;
+  HomestayModel? homestayModel; // từ detail homestay sang
+  HomestayDetailModel? homestayDetailModel; //từ lịch sử sang
+  bool?
+      isCreateFeedback; // null: sửa feedback; true: tạo feedback; false: ko cho feedback
   FeedbackHomestayScreen({
     super.key,
+    this.idBooking,
     this.isCreateFeedback,
     this.homestayModel,
     this.homestayDetailModel,
@@ -33,7 +36,7 @@ class FeedbackHomestayScreen extends StatefulWidget {
 class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
   var homestayModel;
   final _bloc = FeedbackBloc();
-  bool isCreateFeedback = true;
+  bool? isCreateFeedback;
 
   @override
   void initState() {
@@ -43,9 +46,8 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
     if (homestayModel.id != null) {
       _bloc.add(GetFeedBackHomestay(idHomestay: homestayModel.id!));
     }
-    if (widget.isCreateFeedback != null) {
-      isCreateFeedback = widget.isCreateFeedback!;
-    }
+    isCreateFeedback = widget.isCreateFeedback;
+    print('tạo hay sửa hay ko cho: $isCreateFeedback');
   }
 
   @override
@@ -98,121 +100,120 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
           }
         },
         builder: (context, state) {
-          return (listFeedback.isNotEmpty)
-              ? Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Container(
-                          height: !isCreateFeedback
-                              ? screenHeight * 0.15 //nếu không cho feedback
-                              : screenHeight * 0.25,
-                          width: screenWidth * 0.95,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.primaryColor3,
-                              ),
-                              color: const Color.fromARGB(253, 255, 255, 255),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 3),
-                                )
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    (homestayModel.rating != null)
-                                        ? '${homestayModel.rating.toStringAsFixed(1)}/5.0'
-                                        : '0.0/5.0',
-                                    style: const TextStyle(
-                                        fontSize: 35,
-                                        color: AppColors.primaryColor3),
-                                  ),
-                                  AnimatedRatingBar(
-                                    activeFillColor: AppColors.primaryColor3,
-                                    strokeColor: AppColors.primaryColor3,
-                                    // initialRating: double.parse(
-                                    //     homestayModel.rating.toString()),
-                                    initialRating: double.parse(homestayModel
-                                        .rating!
-                                        .floor()
-                                        .toString()),
-                                    height: 45,
-                                    width: 200,
-                                    animationColor: Colors.red,
-                                    onRatingUpdate: (rating) {
-                                      debugPrint(rating.toString());
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '(${listFeedback.length} đánh giá)',
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor3),
-                              ),
-                              isCreateFeedback
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        showDialog<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return ModalCreateFeedback(
-                                                homestayId:
-                                                    (widget.homestayDetailModel !=
-                                                            null)
-                                                        ? (widget
-                                                            .homestayDetailModel!
-                                                            .rooms![0]
-                                                            .homeStay!
-                                                            .id!)
-                                                        : homestayModel.id,
-                                              );
-                                            });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20),
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: AppColors.primaryColor3,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: const Text(
-                                            'Viết đánh giá',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: AppColors.primaryColor3,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
+          return Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Container(
+                    height:
+                        (isCreateFeedback == null || isCreateFeedback == true)
+                            ? screenHeight * 0.25 // cho sửa hoặc tạo feedback
+                            : screenHeight * 0.15, // nếu không cho feedback
+                    width: screenWidth * 0.95,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.primaryColor3,
                         ),
-                      ),
-                      SizedBox(
-                        height: !isCreateFeedback
-                            ? screenHeight * 0.65 //nếu không cho feedback
-                            : screenHeight * 0.58,
+                        color: const Color.fromARGB(253, 255, 255, 255),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 0.5,
+                            blurRadius: 10,
+                            offset: const Offset(0, 3),
+                          )
+                        ]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              (homestayModel.rating != null)
+                                  ? '${homestayModel.rating.toStringAsFixed(1)}/5.0'
+                                  : '0.0/5.0',
+                              style: const TextStyle(
+                                  fontSize: 35, color: AppColors.primaryColor3),
+                            ),
+                            AnimatedRatingBar(
+                              activeFillColor: AppColors.primaryColor3,
+                              strokeColor: AppColors.primaryColor3,
+                              // initialRating: double.parse(
+                              //     homestayModel.rating.toString()),
+                              initialRating: double.parse(
+                                  homestayModel.rating!.floor().toString()),
+                              height: 45,
+                              width: 200,
+                              animationColor: Colors.red,
+                              onRatingUpdate: (rating) {
+                                debugPrint(rating.toString());
+                              },
+                            ),
+                          ],
+                        ),
+                        Text(
+                          '(${listFeedback.length} đánh giá)',
+                          style: const TextStyle(
+                              fontSize: 15, color: AppColors.primaryColor3),
+                        ),
+                        (isCreateFeedback == null || isCreateFeedback == true)
+                            ? GestureDetector(
+                                onTap: () {
+                                  showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ModalCreateFeedback(
+                                          bookingId: widget.idBooking!,
+                                          homestayId:
+                                              (widget.homestayDetailModel !=
+                                                      null)
+                                                  ? (widget.homestayDetailModel!
+                                                      .rooms![0].homeStay!.id!)
+                                                  : homestayModel.id,
+                                        );
+                                      });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        color: AppColors.primaryColor3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text(
+                                      (isCreateFeedback == null)
+                                          ? 'Sửa đánh giá'
+                                          : 'Viết đánh giá',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: AppColors.primaryColor3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+                (listFeedback.isNotEmpty)
+                    ? SizedBox(
+                        height: (isCreateFeedback == null ||
+                                isCreateFeedback == true)
+                            ? screenHeight *
+                                0.58 //nếu cho sửa hoặc tạo feedback
+                            : screenHeight *
+                                0.65, //nếu không cho sửa hoặc tạo feedback
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Column(
@@ -237,126 +238,11 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                           ),
                         ),
                       )
-                    ],
-                  ),
-                )
-              : Center(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Container(
-                          height: !isCreateFeedback
-                              ? screenHeight * 0.15 //nếu không cho feedback
-                              : screenHeight * 0.25,
-                          width: screenWidth * 0.95,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.primaryColor3,
-                              ),
-                              color: const Color.fromARGB(253, 255, 255, 255),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  spreadRadius: 0.5,
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 3),
-                                )
-                              ]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    (homestayModel.rating != null)
-                                        ? '${homestayModel.rating.toStringAsFixed(1)}/5.0'
-                                        : '0.0/5.0',
-                                    style: const TextStyle(
-                                        fontSize: 35,
-                                        color: AppColors.primaryColor3),
-                                  ),
-                                  AnimatedRatingBar(
-                                    activeFillColor: AppColors.primaryColor3,
-                                    strokeColor: AppColors.primaryColor3,
-                                    // initialRating: double.parse(
-                                    //     homestayModel.rating.toString()),
-                                    initialRating: double.parse(homestayModel
-                                        .rating!
-                                        .floor()
-                                        .toString()),
-                                    height: 45,
-                                    width: 200,
-                                    animationColor: Colors.red,
-                                    onRatingUpdate: (rating) {
-                                      debugPrint(rating.toString());
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                listFeedback.isNotEmpty
-                                    ? '(${listFeedback.length} đánh giá)'
-                                    : '(0 đánh giá)',
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor3),
-                              ),
-                              isCreateFeedback
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        showDialog<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return ModalCreateFeedback(
-                                                homestayId:
-                                                    (widget.homestayDetailModel !=
-                                                            null)
-                                                        ? (widget
-                                                            .homestayDetailModel!
-                                                            .rooms![0]
-                                                            .homeStay!
-                                                            .id!)
-                                                        : homestayModel.id,
-                                              );
-                                            });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20),
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: AppColors.primaryColor3,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: const Text(
-                                            'Viết đánh giá',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: AppColors.primaryColor3,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Column(
+                    : Column(
                         children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
                           SizedBox(
                             width: 150,
                             height: 150,
@@ -375,9 +261,9 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                           )
                         ],
                       ),
-                    ],
-                  ),
-                );
+              ],
+            ),
+          );
         },
       ),
     );

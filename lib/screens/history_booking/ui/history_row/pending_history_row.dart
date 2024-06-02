@@ -2,16 +2,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/user/profile_user_model.dart';
-import 'package:mobile_home_travel/screens/history_booking/ui/history_screen.dart';
 import 'package:mobile_home_travel/screens/history_booking/utils/cancel_function.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/booking/booking_homestay_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/detail_booking/utils/row_text.dart';
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/review_booking.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
-import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 
 class PendingHistoryRow extends StatefulWidget {
   BookingHomestayModel bookingHomestayModel;
@@ -30,6 +29,8 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
   late BookingHomestayModel bookingHomestayModel;
   UserProfileModel? userInfor;
   List<String> listIdRoom = [];
+  String? targetTime;
+  List<int>? listTimeCountdown;
 
   @override
   void initState() {
@@ -40,12 +41,17 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
         .map((e) => e.roomId!)
         .toList();
     bookingHomestayModel = widget.bookingHomestayModel;
+    targetTime = SharedPreferencesUtil.getTimeTarget();
+    listTimeCountdown = FormatProvider()
+        .countTimeBookingPending(DateTime.now().toString(), targetTime!);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    Duration countDownDuration = Duration(
+        minutes: listTimeCountdown!.first, seconds: listTimeCountdown!.last);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -241,6 +247,14 @@ class _PendingHistoryRowState extends State<PendingHistoryRow> {
                         : const AssetImage('assets/images/waiting_booking.png'),
                   ),
                 ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 40,
+              child: SlideCountdown(
+                duration: countDownDuration,
+                onDone: () {},
               ),
             ),
           ],

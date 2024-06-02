@@ -1,23 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/models/homestay/room/room_model.dart';
 import 'package:mobile_home_travel/screens/room/room_detail.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 
 class RowRoom extends StatefulWidget {
   RoomModel room;
-  int quantityNormalDays;
-  int quantityWeekendDays;
+  num priceRoom;
   RowRoom({
     super.key,
     required this.room,
-    required this.quantityNormalDays,
-    required this.quantityWeekendDays,
+    required this.priceRoom,
   });
 
   @override
@@ -28,18 +26,14 @@ class _RowRoomState extends State<RowRoom> {
   List<String> listIdPicked = [];
   late RoomModel roomEmpty;
   bool isChecked = false;
-  late int quantityNormalDays;
-  late int quantityWeekendDays;
+  late num priceRoom;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     roomEmpty = widget.room;
-    quantityNormalDays = widget.quantityNormalDays;
-    quantityWeekendDays = widget.quantityWeekendDays;
-    print(
-        'Row room ngày thường: $quantityNormalDays, ngày cuối tuần: $quantityWeekendDays');
+    priceRoom = widget.priceRoom;
   }
 
   @override
@@ -105,7 +99,7 @@ class _RowRoomState extends State<RowRoom> {
                       size: 20,
                     ),
                     Text(
-                      ' ${FormatProvider().formatPrice((roomEmpty.price != null) ? (roomEmpty.price! * quantityNormalDays + ((roomEmpty.weekendPrice != null) ? (roomEmpty.weekendPrice! * quantityWeekendDays) : 0)).toString() : '0')}₫',
+                      ' ${FormatProvider().formatPrice(priceRoom.toString())}₫',
                       style: const TextStyle(
                         fontSize: 12,
                       ),

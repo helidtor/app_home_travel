@@ -294,7 +294,7 @@ class _OngoingHistoryRowState extends State<OngoingHistoryRow> {
                                               BorderRadius.circular(5),
                                         ),
                                         child: Text(
-                                          'Xem đơn',
+                                          'Chi tiết',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,

@@ -30,8 +30,6 @@ class _PickDateState extends State<PickDate> {
   String _checkOutDate = '';
   String _displayCheckinDate = '';
   String _displayCheckoutDate = '';
-  int quantityNormalDays = 0;
-  int quantityWeekendDays = 0;
   bool canPickToday = false;
   bool _isPicked = false;
   DateTime? startDate;
@@ -54,36 +52,30 @@ class _PickDateState extends State<PickDate> {
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(
       () {
-        print('a');
         if (args.value is PickerDateRange) {
-          startDate = args.value.startDate ?? null;
-          endDate = args.value.endDate ?? null;
-          _checkInDate =
-              DateFormat('yyyy/MM/dd').format(args.value.startDate ?? '');
-          // ignore: lines_longer_than_80_chars
-          _checkOutDate =
-              DateFormat('yyyy/MM/dd').format(args.value.endDate ?? '');
-          _displayCheckinDate =
-              DateFormat('dd/MM').format(args.value.startDate);
-          _displayCheckoutDate = DateFormat('dd/MM').format(args.value.endDate);
-          _isPicked = true;
-          //Đếm số ngày
-          if (args.value.endDate != null && args.value.startDate != null) {
-            quantityWeekendDays = FormatProvider().countWeekendDays(
-                args.value.startDate, args.value.endDate); //số ngày cuối tuần
-            quantityNormalDays = FormatProvider().countNormalDays(
-                args.value.startDate, args.value.endDate); //số ngày thường
-          } else if (args.value.startDate != null &&
-              args.value.endDate == null) {
-            //nếu chỉ chọn 1 ngày
-            if (args.value.startDate.weekday == DateTime.saturday ||
-                args.value.startDate.weekday == DateTime.sunday) {
-              quantityNormalDays = 0;
-              quantityWeekendDays = 1;
+          startDate = args.value.startDate;
+          endDate = args.value.endDate;
+          if (startDate != null && endDate != null) {
+            _checkInDate =
+                DateFormat('yyyy/MM/dd').format(args.value.startDate);
+            // ignore: lines_longer_than_80_chars
+            _checkOutDate = DateFormat('yyyy/MM/dd').format(args.value.endDate);
+            _displayCheckinDate =
+                DateFormat('dd/MM').format(args.value.startDate);
+            _displayCheckoutDate =
+                DateFormat('dd/MM').format(args.value.endDate);
+            print('start end $startDate $endDate');
+            if (startDate!.isBefore(endDate!)) {
+              _isPicked = true;
             } else {
-              quantityNormalDays = 1;
-              quantityWeekendDays = 0;
+              _isPicked = false;
             }
+          } else {
+            _checkInDate = '';
+            _checkOutDate = '';
+            _displayCheckinDate = '';
+            _displayCheckoutDate = '';
+            _isPicked = false;
           }
         }
       },
@@ -190,24 +182,6 @@ class _PickDateState extends State<PickDate> {
                         viewHeaderHeight: 0,
                         dayFormat: DateFormat.ABBR_WEEKDAY,
                         numberOfWeeksInView: 6),
-                    cancelText: "",
-                    confirmText: "Tiếp",
-                    // onSubmit: (e) {
-                    //   if (quantityNormalDays != 0 || quantityWeekendDays != 0) {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => ListRoomEmpty(
-                    //               quantityNormalDays: quantityNormalDays,
-                    //               quantityWeekendDays: quantityWeekendDays,
-                    //               dateCheckIn: _checkInDate,
-                    //               dateCheckOut: _checkOutDate)),
-                    //     );
-                    //   } else {
-                    //     ErrorNotiProvider()
-                    //         .showError(context, 'Bạn chưa chọn ngày!');
-                    //   }
-                    // },
                     showActionButtons: false,
                   ),
                 ),
@@ -223,13 +197,7 @@ class _PickDateState extends State<PickDate> {
                   (_displayCheckinDate.length > 2 &&
                           _displayCheckoutDate.length > 2)
                       ? 'Từ $_displayCheckinDate đến $_displayCheckoutDate (${FormatProvider().countDays(startDate!, endDate!)} ngày)'
-                      : (_displayCheckinDate.length > 2 &&
-                              _displayCheckoutDate == '')
-                          ? 'Vui lòng chọn ngày trả phòng'
-                          : (_displayCheckinDate == '' &&
-                                  _displayCheckoutDate == '')
-                              ? 'Vui lòng chọn ngày nhận & trả phòng'
-                              : '',
+                      : 'Vui lòng chọn ngày nhận & trả phòng',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
@@ -249,28 +217,17 @@ class _PickDateState extends State<PickDate> {
                       ),
                     ),
                     onPressed: () {
+                      print(
+                          'Ngày bắt đầu và kết thúc: $_checkInDate $_checkOutDate');
                       _isPicked
                           ? {
-                              if (quantityNormalDays != 0 ||
-                                  quantityWeekendDays != 0)
-                                {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ListRoomEmpty(
-                                            quantityNormalDays:
-                                                quantityNormalDays,
-                                            quantityWeekendDays:
-                                                quantityWeekendDays,
-                                            dateCheckIn: _checkInDate,
-                                            dateCheckOut: _checkOutDate)),
-                                  )
-                                }
-                              else
-                                {
-                                  ErrorNotiProvider()
-                                      .showError(context, 'Bạn chưa chọn ngày!')
-                                }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ListRoomEmpty(
+                                        dateCheckIn: _checkInDate,
+                                        dateCheckOut: _checkOutDate)),
+                              )
                             }
                           : {};
                     },

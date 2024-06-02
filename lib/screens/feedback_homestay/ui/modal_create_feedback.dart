@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animated_rating_bar/widgets/animated_rating_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
-
 import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/widgets/buttons/gradient_button.dart';
@@ -12,9 +12,11 @@ import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 
 class ModalCreateFeedback extends StatefulWidget {
+  String bookingId;
   String homestayId;
   ModalCreateFeedback({
     super.key,
+    required this.bookingId,
     required this.homestayId,
   });
 
@@ -130,6 +132,7 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                   circular: 10,
                   onPressed: () async {
                     feedbackModel.homeStayId = widget.homestayId;
+                    feedbackModel.bookingId = widget.bookingId;
                     print('đánh giá là: $feedbackModel');
                     var isCreated = await ApiHomestay.createFeedbackHomestay(
                         feedbackModel: feedbackModel);

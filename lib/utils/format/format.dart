@@ -54,6 +54,23 @@ class FormatProvider {
         .format(DateTime.parse(inputDate));
   }
 
+  DateTime createTargetTime(String inputDate) {
+    DateTime currentTime = DateTime.parse(inputDate);
+    DateTime targetTime = currentTime.add(const Duration(minutes: 15));
+    return targetTime;
+  }
+
+  List<int> countTimeBookingPending(String inputDate, String targetTime) {
+    DateTime currentTime = DateTime.parse(inputDate);
+    DateTime timeEnd = DateTime.parse(targetTime);
+    Duration difference = timeEnd.difference(currentTime);
+    int minutes = difference.inMinutes;
+    int seconds = difference.inSeconds % 60;
+    List<int> list = [minutes, seconds];
+    print('phút giây khác $currentTime\n$timeEnd\n$list');
+    return list;
+  }
+
   String convertTime(String inputDate) {
     return DateFormat("hh:mm:ss").format(DateTime.parse(inputDate));
   }
@@ -120,7 +137,7 @@ class FormatProvider {
       case 'REFUND':
         return 'assets/images/REFUND.png';
       case 'WITHDRAW':
-        return 'assets/images/OTHER.png';
+        return 'assets/images/WITHDRAW.png';
       default:
         return 'assets/images/OTHER.png';
     }
@@ -145,6 +162,14 @@ class FormatProvider {
 
   String convertDateOfBirth(String inputDate) {
     DateFormat inputFormat = DateFormat('dd/MM/yyyy');
+    DateFormat outputFormat = DateFormat('yyyy-MM-dd');
+    DateTime parsedDate = inputFormat.parse(inputDate);
+    String formattedDate = outputFormat.format(parsedDate);
+    return formattedDate;
+  }
+
+  String convertDateToCalculatePriceRoom(String inputDate) {
+    DateFormat inputFormat = DateFormat('yyyy/MM/dd');
     DateFormat outputFormat = DateFormat('yyyy-MM-dd');
     DateTime parsedDate = inputFormat.parse(inputDate);
     String formattedDate = outputFormat.format(parsedDate);

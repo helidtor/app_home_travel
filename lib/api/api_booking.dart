@@ -30,12 +30,12 @@ class ApiBooking {
         var bodyConvert = jsonDecode(response.body);
         if (bodyConvert['success'] == true) {
           var postsJson = bodyConvert['data'];
-          print('Thông tin trả về giá phòng từ api $postsJson');
+          // print('Thông tin trả về giá phòng từ api $postsJson');
           listPriceRoom = (postsJson as List)
               .map<PriceRoomModel>(
                   (postJson) => PriceRoomModel.fromMap(postJson))
               .toList();
-          print('Thông tin trả về giá phòng ${listPriceRoom.first}');
+          // print('Thông tin trả về giá phòng ${listPriceRoom.first}');
           return listPriceRoom;
         } else {
           print(
@@ -67,7 +67,7 @@ class ApiBooking {
         "checkInDate": bookingInput.checkInDate,
         "checkOutDate": bookingInput.checkOutDate,
         "totalCapacity": totalCapacity,
-        "status": "PENDING",
+        "status": "DRAFT",
         "touristId": bookingInput.touristId
       };
       // print('Body nè: $body');
@@ -129,7 +129,7 @@ class ApiBooking {
   //Cập nhật booking
   static Future<bool> updateBooking(
       {required BookingHomestayModel bookingInput}) async {
-    // print('Thông tin booking nhập vào để update booking là: $bookingInput');
+    print('Thông tin booking nhập vào để update booking là: $bookingInput');
     String? token = SharedPreferencesUtil.getToken();
     try {
       var url = "$baseUrl/api/v1/Bookings/${bookingInput.id}";

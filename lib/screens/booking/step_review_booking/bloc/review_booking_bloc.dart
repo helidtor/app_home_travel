@@ -38,7 +38,7 @@ class ReviewBookingBloc extends Bloc<ReviewBookingEvent, ReviewBookingState> {
           listResultPrice =
               await ApiBooking.calculatePrice(inputCalculate: listInput);
         }
-        var bookingCreated = await ApiBooking.getListBooking(status: 'PENDING');
+        var bookingCreated = await ApiBooking.getListBooking(status: 'DRAFT');
         var userProfile = await ApiUser.getProfile();
         if (bookingCreated != null &&
             userProfile != null &&

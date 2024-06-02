@@ -64,11 +64,11 @@ class _ResultState extends State<RowNotification> {
           child: Row(
             children: [
               Container(
-                width: screenSize.width * 0.2,
-                height: screenSize.width * 0.2,
+                width: screenSize.width * 0.17,
+                height: screenSize.width * 0.17,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(253, 255, 255, 255),
-                  borderRadius: BorderRadius.all(Radius.circular(500)),
+                  borderRadius: const BorderRadius.all(Radius.circular(500)),
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: notificationModel.image == null

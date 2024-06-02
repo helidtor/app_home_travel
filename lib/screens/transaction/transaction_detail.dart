@@ -122,7 +122,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       Flexible(
                         child: Text(
                           textAlign: TextAlign.end,
-                          transactionModel.id.toString(),
+                          transactionModel.id.toString().substring(0, 18),
                           overflow: TextOverflow.clip,
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.8),
@@ -203,74 +203,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                 ),
-                (transactionModel.bankName != null)
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Ngân hàng',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 75,
-                            ),
-                            Flexible(
-                              child: Text(
-                                textAlign: TextAlign.end,
-                                transactionModel.bankName!,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.8),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
-                (transactionModel.bankNumber != null)
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Tài khoản nhận',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 75,
-                            ),
-                            Flexible(
-                              child: Text(
-                                textAlign: TextAlign.end,
-                                transactionModel.bankNumber!,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.8),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
@@ -359,7 +291,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 60),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -383,6 +315,74 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ],
                   ),
                 ),
+                (transactionModel.bankNumber != null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Tài khoản nhận',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 75,
+                            ),
+                            Flexible(
+                              child: Text(
+                                textAlign: TextAlign.end,
+                                transactionModel.bankNumber!,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
+                (transactionModel.bankName != null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Ngân hàng',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 75,
+                            ),
+                            Flexible(
+                              child: Text(
+                                textAlign: TextAlign.end,
+                                transactionModel.bankName!,
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox(),
                 Divider(
                   indent: 10,
                   endIndent: 10,

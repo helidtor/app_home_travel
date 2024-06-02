@@ -23,14 +23,10 @@ import 'package:mobile_home_travel/widgets/others/loading.dart';
 class ListRoomEmpty extends StatefulWidget {
   String dateCheckIn;
   String dateCheckOut;
-  int quantityNormalDays;
-  int quantityWeekendDays;
   ListRoomEmpty({
     super.key,
     required this.dateCheckIn,
     required this.dateCheckOut,
-    required this.quantityNormalDays,
-    required this.quantityWeekendDays,
   });
 
   @override
@@ -44,15 +40,12 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
   BookingHomestayModel? outputBooking;
   BookingHomestayModel inputBooking = BookingHomestayModel();
   List<RoomModel> listRoom = [];
+  List<num> listPriceRoom = [];
   bool isChecked = false;
-  late int quantityNormalDays;
-  late int quantityWeekendDays;
 
   @override
   void initState() {
     super.initState();
-    quantityNormalDays = widget.quantityNormalDays;
-    quantityWeekendDays = widget.quantityWeekendDays;
     inputBooking.checkInDate =
         FormatProvider().convertDateTimeFormat(widget.dateCheckIn);
     inputBooking.checkOutDate =
@@ -135,6 +128,7 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
             });
             listRoom = state.listRoom;
             inputBooking.touristId = state.idUser;
+            listPriceRoom = state.listPrice;
           } else if (state is CheckListRoomFailure) {
             Navigator.pop(context);
             setState(() {
@@ -154,9 +148,8 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                       children: List.generate(
                           listRoom.length,
                           (index) => RowRoom(
+                                priceRoom: listPriceRoom[index],
                                 room: listRoom[index],
-                                quantityNormalDays: quantityNormalDays,
-                                quantityWeekendDays: quantityWeekendDays,
                               )),
                     ),
                   ),
@@ -186,8 +179,6 @@ class _ListRoomEmptyState extends State<ListRoomEmpty> {
                 onPressed: () {
                   _bloc.add(CreateBooking(
                     bookingHomestayModel: inputBooking,
-                    quantityNormalDays: quantityNormalDays,
-                    quantityWeekendDays: quantityWeekendDays,
                   ));
                 },
               ),

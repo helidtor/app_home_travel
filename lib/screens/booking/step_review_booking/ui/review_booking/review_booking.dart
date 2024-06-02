@@ -17,6 +17,7 @@ import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review
 import 'package:mobile_home_travel/screens/booking/step_review_booking/ui/review_booking/utils/policy_dialog.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
 import 'package:mobile_home_travel/utils/format/format.dart';
+import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
 import 'package:mobile_home_travel/widgets/others/loading.dart';
@@ -184,12 +185,23 @@ class _ReviewBookingState extends State<ReviewBooking> {
               imageDisplay = 'assets/images/error_loading.png';
             });
           } else if (state is GetPolicySuccessFromPending) {
+            //xem đơn pending từ history
             Navigator.pop(context);
             listPolicies = state.listPolicies;
             listResultPrice = state.listResultPrice;
           } else if (state is GetDetailHistorySuccess) {
+            //xem các đơn khác từ history
             Navigator.pop(context);
             listResultPrice = state.listResultPrice;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailBooking(
+                  listResultPrice: listResultPrice,
+                  bookingInfor: bookingInfor!,
+                ),
+              ),
+            );
           } else if (state is GetPolicyFailFromPending) {
             Navigator.pop(context);
           }
@@ -444,10 +456,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    print(
-                                        'Đây là list price của detail phòng: $listResultPrice');
-                                    print(
-                                        'Đây là model booking infor: $bookingInfor');
+                                    // print(
+                                    //     'Đây là list price của detail phòng: $listResultPrice');
+                                    // print(
+                                    //     'Đây là model booking infor: $bookingInfor');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -795,11 +807,21 @@ class _ReviewBookingState extends State<ReviewBooking> {
             actions: [
               CupertinoDialogAction(
                   child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                onPressed: () async {
+                  bookingInfor!.status = 'PENDING';
+                  String targetTime = FormatProvider()
+                      .createTargetTime(DateTime.now().toString())
+                      .toString();
+                  SharedPreferencesUtil.setTimeTarget(targetTime);
+                  var checkUpdateBooking = await ApiBooking.updateBooking(
+                      bookingInput: bookingInfor!);
+                  print(checkUpdateBooking);
+                  if (checkUpdateBooking) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text(
                   'Có',

@@ -91,7 +91,7 @@ class ApiHomestay {
         // print("Xem body sau khi convert: $bodyConvert");
         var postsJson = bodyConvert['data'];
         detailHomestay = HomestayDetailModel.fromMap(postsJson);
-        print("Thông tin get detail homestay: $detailHomestay");
+        // print("Thông tin get detail homestay: $detailHomestay");
         // print(
         //     "Thông tin get detail tiện ích chung: ${detailHomestay.homeStayGeneralAmenitieTitles}");
       }
@@ -321,6 +321,7 @@ class ApiHomestay {
     header.addAll({'Authorization': 'Bearer $token'});
     try {
       final body = {
+        'bookingId': feedbackModel.bookingId,
         'description': feedbackModel.description,
         'rating': feedbackModel.rating,
         'touristId': idTourist,

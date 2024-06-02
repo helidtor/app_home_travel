@@ -39,10 +39,12 @@ class CreateBookingFailure extends CreateBookingState {
 class CheckListRoomSuccess extends CreateBookingState {
   final List<RoomModel> listRoom;
   final String idUser;
+  final List<num> listPrice;
 
   const CheckListRoomSuccess({
     required this.listRoom,
     required this.idUser,
+    required this.listPrice,
   });
 }
 

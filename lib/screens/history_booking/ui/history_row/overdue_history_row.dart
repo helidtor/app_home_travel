@@ -160,7 +160,7 @@ class _OverdueHistoryRowState extends State<OverdueHistoryRow> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
-                          'Xem đơn',
+                          'Chi tiết',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.7),

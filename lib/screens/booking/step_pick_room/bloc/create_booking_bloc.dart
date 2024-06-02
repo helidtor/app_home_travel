@@ -7,6 +7,7 @@ import 'package:mobile_home_travel/models/booking/input_calculate_price_model.da
 import 'package:mobile_home_travel/models/booking/price_room_model.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_event.dart';
 import 'package:mobile_home_travel/screens/booking/step_pick_room/bloc/create_booking_state.dart';
+import 'package:mobile_home_travel/utils/format/format.dart';
 import 'package:mobile_home_travel/utils/shared_preferences_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,7 +69,7 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
             var bookingInfor = await ApiBooking.createBooking(
                 bookingInput: inputBooking, totalCapacity: totalCapacity);
             if (bookingInfor != null && listResultPrice.isNotEmpty) {
-              print('Đây là list price: $listResultPrice');
+              // print('Đây là list price: $listResultPrice');
               bookingHomestayModel = bookingInfor;
               for (var e in listResultPrice) {
                 bookingHomestayDetail.bookingId = bookingInfor.id;
@@ -106,6 +107,9 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
               bookingHomestayModel: bookingHomestayModel!));
         }
       } else if (event is CheckListRoom) {
+        List<InputCalculatePriceModel> listInput = [];
+        List<PriceRoomModel> listResultPrice = [];
+        List<num> listPriceRoom = [];
         String idHomestay = SharedPreferencesUtil.getIdHomestay()!;
         String idUser = SharedPreferencesUtil.getIdUserCurrent()!;
         var listRoomEmpty = await ApiRoom.getAllRoomEmptyByDate(
@@ -114,7 +118,38 @@ class CreateBookingBloc extends Bloc<CreateBookingEvent, CreateBookingState> {
                 dateCheckOut: event.checkOutDate) ??
             [];
         if (listRoomEmpty.isNotEmpty) {
-          emit(CheckListRoomSuccess(listRoom: listRoomEmpty, idUser: idUser));
+          for (var e in listRoomEmpty) {
+            InputCalculatePriceModel inputCalculate =
+                InputCalculatePriceModel();
+            //thêm input data vào để tính giá các phòng trong khoảng ngày checkin checkout
+            inputCalculate.roomId = e.id;
+            inputCalculate.startDate = FormatProvider()
+                .convertDateToCalculatePriceRoom(event.checkInDate);
+            inputCalculate.endDate = FormatProvider()
+                .convertDateToCalculatePriceRoom(event.checkOutDate);
+            listInput.add(inputCalculate);
+            print('ngày bắt đầu tính: ${event.checkInDate}');
+            print('ngày kết thúc tính: ${inputCalculate.startDate}');
+          }
+          if (listInput.isNotEmpty) {
+            print('list input tính price room là: $listInput');
+            listResultPrice =
+                await ApiBooking.calculatePrice(inputCalculate: listInput);
+            if (listResultPrice.isNotEmpty) {
+              for (var e in listResultPrice) {
+                listPriceRoom.add(e.totalPrice!);
+              }
+              if (listPriceRoom.isNotEmpty) {
+                emit(CheckListRoomSuccess(
+                  listRoom: listRoomEmpty,
+                  idUser: idUser,
+                  listPrice: listPriceRoom,
+                ));
+              } else {
+                emit(CheckListRoomFailure());
+              }
+            }
+          }
         } else {
           emit(CheckListRoomFailure());
         }

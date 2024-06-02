@@ -7,7 +7,7 @@ class FeedbackModel {
   String? id;
   String? bookingId;
   String? description;
-  num? rating;
+  double? rating;
   String? createdDate;
   String? touristId;
   String? homeStayId;
@@ -27,7 +27,7 @@ class FeedbackModel {
     String? id,
     String? bookingId,
     String? description,
-    num? rating,
+    double? rating,
     String? createdDate,
     String? touristId,
     String? homeStayId,
@@ -62,12 +62,17 @@ class FeedbackModel {
     return FeedbackModel(
       id: map['id'] != null ? map['id'] as String : null,
       bookingId: map['bookingId'] != null ? map['bookingId'] as String : null,
-      description: map['description'] != null ? map['description'] as String : null,
-      rating: map['rating'] != null ? map['rating'] as num : null,
-      createdDate: map['createdDate'] != null ? map['createdDate'] as String : null,
+      description:
+          map['description'] != null ? map['description'] as String : null,
+      rating: map['rating'] != null ? map['rating'] as double : null,
+      createdDate:
+          map['createdDate'] != null ? map['createdDate'] as String : null,
       touristId: map['touristId'] != null ? map['touristId'] as String : null,
-      homeStayId: map['homeStayId'] != null ? map['homeStayId'] as String : null,
-      tourist: map['tourist'] != null ? UserProfileModel.fromMap(map['tourist'] as Map<String,dynamic>) : null,
+      homeStayId:
+          map['homeStayId'] != null ? map['homeStayId'] as String : null,
+      tourist: map['tourist'] != null
+          ? UserProfileModel.fromMap(map['tourist'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -84,27 +89,26 @@ class FeedbackModel {
   @override
   bool operator ==(covariant FeedbackModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.bookingId == bookingId &&
-      other.description == description &&
-      other.rating == rating &&
-      other.createdDate == createdDate &&
-      other.touristId == touristId &&
-      other.homeStayId == homeStayId &&
-      other.tourist == tourist;
+
+    return other.id == id &&
+        other.bookingId == bookingId &&
+        other.description == description &&
+        other.rating == rating &&
+        other.createdDate == createdDate &&
+        other.touristId == touristId &&
+        other.homeStayId == homeStayId &&
+        other.tourist == tourist;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      bookingId.hashCode ^
-      description.hashCode ^
-      rating.hashCode ^
-      createdDate.hashCode ^
-      touristId.hashCode ^
-      homeStayId.hashCode ^
-      tourist.hashCode;
+        bookingId.hashCode ^
+        description.hashCode ^
+        rating.hashCode ^
+        createdDate.hashCode ^
+        touristId.hashCode ^
+        homeStayId.hashCode ^
+        tourist.hashCode;
   }
 }

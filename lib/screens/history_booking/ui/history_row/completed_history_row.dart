@@ -35,6 +35,7 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
     super.initState();
     bookingHomestayModel = widget.bookingHomestayModel;
     userInfor = widget.userInfor;
+    print('bookingmodel ${bookingHomestayModel.feedbacks}');
     listIdRoom = widget.bookingHomestayModel.bookingDetails!
         .map((e) => e.roomId!)
         .toList();
@@ -152,19 +153,37 @@ class _CompletedHistoryRowState extends State<CompletedHistoryRow> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              FeedbackHomestayScreen(
-                                            idBooking: bookingHomestayModel.id,
-                                            homestayModel: bookingHomestayModel
-                                                .bookingDetails?[0]
-                                                .room!
-                                                .homeStay!,
-
-                                            isCreateFeedback:
-                                                (bookingHomestayModel
-                                                        .feedbacks!.isNotEmpty)
-                                                    ? null //cho sửa
-                                                    : true, //cho tạo
-                                          ),
+                                              (bookingHomestayModel
+                                                      .feedbacks!.isNotEmpty)
+                                                  ? FeedbackHomestayScreen(
+                                                      myFeedback:
+                                                          bookingHomestayModel
+                                                              .feedbacks!.first,
+                                                      idBooking:
+                                                          bookingHomestayModel
+                                                              .id,
+                                                      homestayModel:
+                                                          bookingHomestayModel
+                                                              .bookingDetails?[
+                                                                  0]
+                                                              .room!
+                                                              .homeStay!,
+                                                      isCreateFeedback:
+                                                          null, //cho sửa
+                                                    )
+                                                  : FeedbackHomestayScreen(
+                                                      idBooking:
+                                                          bookingHomestayModel
+                                                              .id,
+                                                      homestayModel:
+                                                          bookingHomestayModel
+                                                              .bookingDetails?[
+                                                                  0]
+                                                              .room!
+                                                              .homeStay!,
+                                                      isCreateFeedback:
+                                                          true, //cho tạo
+                                                    ),
                                         ),
                                       );
                                     },

@@ -331,7 +331,7 @@ class ApiHomestay {
           headers: header, body: jsonEncode(body));
       print(
           "TEST create feedback: ${jsonDecode(utf8.decode(response.bodyBytes))}");
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
         print("Xem body create feedback sau khi convert: $bodyConvert");
         return true;
@@ -341,6 +341,43 @@ class ApiHomestay {
       }
     } catch (e) {
       print("Loi create feedback: $e");
+    }
+    return false;
+  }
+
+  // <<<< create feedback homestay >>>>
+  static Future<bool?> editFeedbackHomestay(
+      {required FeedbackModel feedbackModel}) async {
+    String? token = SharedPreferencesUtil.getToken();
+    String? idTourist = SharedPreferencesUtil.getIdUserCurrent();
+    print('feedback dùng để sửa là: $feedbackModel');
+    var url = "$baseUrl/api/v1/Feedbacks/${feedbackModel.id}";
+    Map<String, String> header = await ApiHeader.getHeader();
+    header.addAll({'Authorization': 'Bearer $token'});
+    try {
+      final body = {
+        'id': feedbackModel.id,
+        'bookingId': feedbackModel.bookingId,
+        'description': feedbackModel.description,
+        'rating': feedbackModel.rating,
+        'touristId': idTourist,
+        'homeStayId': feedbackModel.homeStayId,
+        'createdDate': feedbackModel.createdDate,
+      };
+      var response = await http.put(Uri.parse(url.toString()),
+          headers: header, body: jsonEncode(body));
+      print(
+          "TEST edit feedback: ${jsonDecode(utf8.decode(response.bodyBytes))}");
+      if (response.statusCode == 200) {
+        var bodyConvert = jsonDecode(utf8.decode(response.bodyBytes));
+        print("Xem body edit feedback sau khi convert: $bodyConvert");
+        return true;
+      } else {
+        print('Error edit feedback');
+        return false;
+      }
+    } catch (e) {
+      print("Loi edit feedback: $e");
     }
     return false;
   }

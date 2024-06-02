@@ -19,7 +19,6 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         var listFeedback = await ApiHomestay.getFeedbackByIdHomeStay(
             idHomestay: event.idHomestay);
         if (listFeedback != null) {
-          print('Feedback là: $listFeedback');
           emit(GetFeedbackSuccess(listFeedback: listFeedback));
         } else {
           emit(GetFeedbackFailure(error: 'Không có đánh giá!'));

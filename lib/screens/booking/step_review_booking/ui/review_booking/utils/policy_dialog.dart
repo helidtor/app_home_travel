@@ -41,14 +41,20 @@ class _PolicyDialogState extends State<PolicyDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Divider(
-              height: 1,
-              color: AppColors.primaryColor1), // Đường kẻ giữa title và content
-          const SizedBox(height: 10),
+          const Text(
+            '*Mọi chi phí phát sinh sẽ được thanh toán trực tiếp tại quầy tiếp tân',
+            style: TextStyle(
+                color: Colors.red, fontStyle: FontStyle.italic, fontSize: 12),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Divider(height: 1, color: AppColors.primaryColor1),
+          // Đường kẻ giữa title và content
           Center(
             child: listPolicies.isNotEmpty
                 ? SizedBox(
-                    height: screenHeight * 0.55,
+                    height: screenHeight * 0.53,
                     child: SingleChildScrollView(
                       child: Column(
                         children: List.generate(

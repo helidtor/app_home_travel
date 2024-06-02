@@ -2,6 +2,7 @@
 import 'package:animated_rating_bar/widgets/animated_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_detail_model.dart';
 import 'package:mobile_home_travel/models/homestay/general_homestay/homestay_model.dart';
@@ -21,9 +22,11 @@ class FeedbackHomestayScreen extends StatefulWidget {
   HomestayDetailModel? homestayDetailModel; //từ lịch sử sang
   bool?
       isCreateFeedback; // null: sửa feedback; true: tạo feedback; false: ko cho feedback
+  FeedbackModel? myFeedback;
   FeedbackHomestayScreen({
     super.key,
     this.idBooking,
+    this.myFeedback,
     this.isCreateFeedback,
     this.homestayModel,
     this.homestayDetailModel,
@@ -40,14 +43,12 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     homestayModel = widget.homestayModel ?? widget.homestayDetailModel;
     if (homestayModel.id != null) {
       _bloc.add(GetFeedBackHomestay(idHomestay: homestayModel.id!));
     }
     isCreateFeedback = widget.isCreateFeedback;
-    print('tạo hay sửa hay ko cho: $isCreateFeedback');
   }
 
   @override
@@ -164,18 +165,39 @@ class _FeedbackHomestayScreenState extends State<FeedbackHomestayScreen> {
                             ? GestureDetector(
                                 onTap: () {
                                   showDialog<void>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ModalCreateFeedback(
-                                          bookingId: widget.idBooking!,
-                                          homestayId:
-                                              (widget.homestayDetailModel !=
-                                                      null)
-                                                  ? (widget.homestayDetailModel!
-                                                      .rooms![0].homeStay!.id!)
-                                                  : homestayModel.id,
-                                        );
-                                      });
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return (isCreateFeedback == null)
+                                          //null thì cho sửa feedback
+                                          ? ModalCreateFeedback(
+                                              feedback: widget.myFeedback,
+                                              isEdit: true,
+                                              bookingId: widget.idBooking!,
+                                              homestayId:
+                                                  (widget.homestayDetailModel !=
+                                                          null)
+                                                      ? (widget
+                                                          .homestayDetailModel!
+                                                          .rooms![0]
+                                                          .homeStay!
+                                                          .id!)
+                                                      : homestayModel.id,
+                                            )
+                                          : ModalCreateFeedback(
+                                              isEdit: false,
+                                              bookingId: widget.idBooking!,
+                                              homestayId:
+                                                  (widget.homestayDetailModel !=
+                                                          null)
+                                                      ? (widget
+                                                          .homestayDetailModel!
+                                                          .rooms![0]
+                                                          .homeStay!
+                                                          .id!)
+                                                      : homestayModel.id,
+                                            );
+                                    },
+                                  );
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(20),

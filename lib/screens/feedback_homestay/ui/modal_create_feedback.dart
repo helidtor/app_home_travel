@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ffi';
+
 import 'package:animated_rating_bar/widgets/animated_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,7 @@ import 'package:mobile_home_travel/api/api_booking.dart';
 import 'package:mobile_home_travel/api/api_homestay.dart';
 import 'package:mobile_home_travel/models/homestay/feedback/feedback_model.dart';
 import 'package:mobile_home_travel/themes/app_colors.dart';
+import 'package:mobile_home_travel/utils/navigator/navigator_bar.dart';
 import 'package:mobile_home_travel/widgets/buttons/gradient_button.dart';
 import 'package:mobile_home_travel/widgets/buttons/round_gradient_button.dart';
 import 'package:mobile_home_travel/widgets/notification/error_provider.dart';
@@ -14,10 +17,14 @@ import 'package:mobile_home_travel/widgets/notification/success_provider.dart';
 class ModalCreateFeedback extends StatefulWidget {
   String bookingId;
   String homestayId;
+  FeedbackModel? feedback;
+  bool isEdit;
   ModalCreateFeedback({
     super.key,
     required this.bookingId,
     required this.homestayId,
+    this.feedback,
+    required this.isEdit,
   });
 
   @override
@@ -26,6 +33,15 @@ class ModalCreateFeedback extends StatefulWidget {
 
 class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
   FeedbackModel feedbackModel = FeedbackModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.feedback != null) {
+      feedbackModel = widget.feedback!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +87,9 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                     strokeColor: AppColors.primaryColor3,
                     // initialRating: double.parse(
                     //     homestayModel.rating.toString()),
-                    initialRating: 0,
+                    initialRating: (feedbackModel.rating != null)
+                        ? double.parse(feedbackModel.rating.toString())
+                        : 0,
                     height: 100,
                     width: 300,
                     animationColor: Colors.red,
@@ -83,9 +101,9 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'Viết đánh giá',
-                  style: TextStyle(
+                Text(
+                  (widget.isEdit) ? 'Sửa đánh giá' : 'Viết đánh giá',
+                  style: const TextStyle(
                     fontSize: 22,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -116,7 +134,7 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    hintText: "Nhập đánh giá...",
+                    hintText: feedbackModel.description ?? "Nhập đánh giá...",
                     hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
                   ),
                   onChanged: (text) {
@@ -128,23 +146,44 @@ class _ModalCreateFeedbackState extends State<ModalCreateFeedback> {
                 ),
                 RoundGradientButton(
                   textSize: 20,
-                  title: 'Tạo',
+                  title: widget.isEdit ? 'Sửa' : 'Tạo',
                   circular: 10,
                   onPressed: () async {
                     feedbackModel.homeStayId = widget.homestayId;
                     feedbackModel.bookingId = widget.bookingId;
-                    print('đánh giá là: $feedbackModel');
-                    var isCreated = await ApiHomestay.createFeedbackHomestay(
-                        feedbackModel: feedbackModel);
-                    if (isCreated == true) {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      SuccessNotiProvider()
-                          .ToastSuccess(context, 'Đánh giá thành công!');
+                    print('đánh giá sửa hoặc tạo là: $feedbackModel');
+                    if (widget.isEdit == true) {
+                      var isCreated = await ApiHomestay.editFeedbackHomestay(
+                          feedbackModel: feedbackModel);
+                      if (isCreated == true) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        SuccessNotiProvider()
+                            .ToastSuccess(context, 'Sửa đánh giá thành công!');
+                      } else {
+                        Navigator.pop(context);
+                        ErrorNotiProvider()
+                            .ToastError(context, 'Sửa đánh giá thất bại!');
+                      }
                     } else {
-                      Navigator.pop(context);
-                      ErrorNotiProvider()
-                          .ToastError(context, 'Đánh giá thất bại!');
+                      var isCreated = await ApiHomestay.createFeedbackHomestay(
+                          feedbackModel: feedbackModel);
+                      if (isCreated == true) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavigatorBar(
+                              stt: 0,
+                            ),
+                          ),
+                        );
+                        SuccessNotiProvider()
+                            .ToastSuccess(context, 'Đánh giá thành công!');
+                      } else {
+                        Navigator.pop(context);
+                        ErrorNotiProvider()
+                            .ToastError(context, 'Đánh giá thất bại!');
+                      }
                     }
                   },
                 ),
